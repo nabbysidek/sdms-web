@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "./components/layout/Layout";
-import SignIn from "./pages/log masuk/SignIn";
-import SignUp from "./pages/daftar masuk/SignUp";
+import SignIn from "./views/auth/SignIn";
+import SignUp from "./views/auth/SignUp";
 import NoPage from "./pages/NoPage";
 import Profile from "./pages/profil/Profil";
 import Dashboard from "./pages/dashboard/Index";
