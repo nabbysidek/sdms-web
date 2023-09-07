@@ -57,6 +57,13 @@ function SignUp() {
               </Form.Control.Feedback>
             </Form.Group>
 
+            <Form.Group className="mb-3" controlId="signUpStaffID">
+              <Form.Control type="text" placeholder="ID Kakitangan" required />
+              <Form.Control.Feedback type="invalid">
+                Sila masukkan ID kakitangan anda
+              </Form.Control.Feedback>
+            </Form.Group>
+
             <Form.Group className="mb-3" controlId="signUpStaffPassword">
               <Form.Control
                 type="password"
