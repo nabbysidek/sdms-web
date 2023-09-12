@@ -1,59 +1,93 @@
 import React from "react";
 import "./Auth.css";
+import styled from "styled-components";
 
-import { useState } from "react";
+// import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+const PageContainer = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80");
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 function SignIn() {
-  // INPUT VALIDATION: ENSURE FILLED
-  const [validated, setValidated] = useState(false);
+  // FORM VERIFICATION
+  // Ensure that the input fields are filled
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
-    <div>
-      <div className="SignInFormContainer FormContainer">
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          {/* SIGN IN FORM TEXT HEADER */}
-          <div className="signInFormHeader">
-            <img src="" alt="aim-logo" />
-            <h1>Jabatan Audit Dalaman</h1>
-            <h3>Selamat Datang</h3>
-            <p>Masukkan maklumat log masuk anda</p>
-          </div>
+    <PageContainer>
+      <Form
+        className="SignInFormContainer FormContainer"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* SIGN IN FORM TEXT HEADER */}
+        <div className="signInFormHeader">
+          <img src="" alt="aim-logo" />
+          <h1>Jabatan Audit Dalaman</h1>
+          <h3>Selamat Datang</h3>
+          <p>Masukkan maklumat log masuk anda</p>
+        </div>
 
-          {/* SIGN IN FORM CONTENT */}
-          <Form.Group className="mb-3" controlId="signInStaffId">
-            <Form.Control
-              required
-              type="text"
-              placeholder="Masukkan ID kakitangan anda"
-            />
-            <Form.Control.Feedback type="invalid">
-              Sila masukkan ID kakitangan anda
-            </Form.Control.Feedback>
-          </Form.Group>
+        {/* SIGN IN FORM CONTENT */}
+        <Form.Group className="mb-3" controlId="staffId">
+          <Form.Label className="formLabel">Id Kakitangan</Form.Label>
+          <Controller
+            name="staffId"
+            control={control}
+            defaultValue=""
+            rules={{ required: "ID kakitangan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control type="text" placeholder="123456" {...field} />
+            )}
+          />
+          {errors.staffId && (
+            <Form.Text className="text-danger">
+              {errors.staffId.message}
+            </Form.Text>
+          )}
+        </Form.Group>
 
-          <Form.Group className="mb-3" controlId="signInPassword">
-            <Form.Control
-              required
-              type="password"
-              placeholder="Masukkan kata laluan anda"
-            ></Form.Control>
-            <Form.Control.Feedback type="invalid">
-              Sila masukkan kata laluan anda
-            </Form.Control.Feedback>
-          </Form.Group>
+        <Form.Group className="mb-3" controlId="staffPassword">
+          <Form.Label className="formLabel">Kata Laluan</Form.Label>
+          <Controller
+            name="staffPassword"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Kata laluan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control
+                type="password"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                {...field}
+              />
+            )}
+          />
+          {errors.staffPassword && (
+            <Form.Text className="text-danger">
+              {errors.staffPassword.message}
+            </Form.Text>
+          )}
+        </Form.Group>
 
           <div className="forgotPasswordCta">
             <Link to="/">Lupa Kata Laluan?</Link>
@@ -64,15 +98,14 @@ function SignIn() {
             Log Masuk{" "}
           </Button>
 
-          {/* CREATE ACCOUNT CTA */}
-          <div className="createAccountCta">
-            <p>
-              Bagi pengguna baru, sila {<Link to="/signup">tekan di sini</Link>}
-            </p>
-          </div>
-        </Form>
-      </div>
-    </div>
+        {/* CREATE ACCOUNT CTA */}
+        <div className="createAccountCta">
+          <p>
+            Bagi pengguna baru, sila {<Link to="/signup">tekan di sini</Link>}
+          </p>
+        </div>
+      </Form>
+    </PageContainer>
   );
 }
 
