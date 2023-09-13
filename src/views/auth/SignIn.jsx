@@ -39,16 +39,41 @@ function SignIn() {
   // MODAL DISPLAY
   // useState hook to manage modal dislay's visibility
   const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+
   const handleCloseModal1 = () => setShowModal1(false);
   const handleShowModal1 = () => setShowModal1(true);
+
+  const handleCloseModal2 = () => setShowModal2(false);
+  const handleShowModal2 = () => setShowModal2(true);
+
+  const [inputValue, setInputValue] = useState("");
+
+  const handleBothModals = () => {
+    handleCloseModal1();
+    handleShowModal2();
+  };
 
   const buttons1 = [
     {
       label: "Tetap Semula Kata Laluan",
       variant: "primary",
-      onClick: handleCloseModal1,
+      onClick: handleBothModals,
     },
   ];
+
+  const buttons2 = [
+    {
+      label: "Tetap Semula Kata Laluan",
+      variant: "primary",
+      onClick: handleCloseModal2,
+    },
+  ];
+
+  // Handle modal displays with input fields
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
 
   return (
     <PageContainer>
@@ -123,6 +148,26 @@ function SignIn() {
             buttons={buttons1}
           />
         </div>
+
+        <TemplateModal
+          show={showModal2}
+          handleClose={handleCloseModal2}
+          title="Sahkan Emel Kakitangan Anda"
+          content={
+            <div>
+              <p>
+                Sila sertakan e-mel kakitangan anda untuk tujuan pengesahan.
+              </p>
+              <input
+                type="email"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="nama@aim.gov.my"
+              />
+            </div>
+          }
+          buttons={buttons2}
+        />
 
         <Button variant="primary" type="submit">
           {" "}

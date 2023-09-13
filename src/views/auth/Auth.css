@@ -9,7 +9,7 @@ html,body
     padding: 0px;
     overflow-x: hidden; 
 }
-h1, h3, p {
+h1, h3{
     text-align: center;
     color: var(--white);
 }
@@ -52,6 +52,10 @@ a {
 
 .FormContainer h3 {
   font-weight: 500;
+}
+
+.FormContainer p {
+  text-align: center;
 }
 
 .SignInFormContainer {
