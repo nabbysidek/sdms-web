@@ -1,0 +1,12 @@
+.btn {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.15em;
+    font-weight: 700;
+    border-color: #204198;
+    background-color: #204198;
+  }
+  
+  .btn:hover {
+    color: #204198;
+    background-color: #FFFFFF;
+  }

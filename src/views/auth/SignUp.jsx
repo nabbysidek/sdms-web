@@ -49,7 +49,7 @@ function SignUp() {
 
         {/* SIGN IN FORM CONTENT */}
         <Form.Group className="mb-3" controlId="staffId">
-          <Form.Label className="formLabel">Id Kakitangan</Form.Label>
+          <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
           <Controller
             name="staffId"
             control={control}
@@ -67,7 +67,7 @@ function SignUp() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffEmail">
-          <Form.Label className="formLabel">Emel Kakitangan</Form.Label>
+          <Form.Label className="FormLabel">Emel Kakitangan</Form.Label>
           <Controller
             name="staffEmail"
             control={control}
@@ -89,7 +89,7 @@ function SignUp() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
-          <Form.Label className="formLabel">Kata Laluan</Form.Label>
+          <Form.Label className="FormLabel">Kata Laluan</Form.Label>
           <Controller
             name="staffPassword"
             control={control}
@@ -111,7 +111,7 @@ function SignUp() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
-          <Form.Label className="formLabel">Ulang Kata Laluan</Form.Label>
+          <Form.Label className="FormLabel">Ulang Kata Laluan</Form.Label>
           <Controller
             name="staffEmail"
             control={control}
@@ -131,10 +131,6 @@ function SignUp() {
             </Form.Text>
           )}
         </Form.Group>
-
-        <div className="forgotPasswordCta">
-          <Link to="/">Lupa Kata Laluan?</Link>
-        </div>
 
         <Button variant="primary" type="submit">
           {" "}

@@ -11,6 +11,7 @@ html,body
 }
 h1, h3, p {
     text-align: center;
+    color: var(--white);
 }
 
 a {
@@ -41,7 +42,6 @@ a {
 }
 
 .FormContainer {
-  color: var(--white);
   background-color: rgba(255, 255, 255, 0.35);
 }
 
@@ -67,6 +67,10 @@ a {
   font-style: italic;
   text-align: right;
   padding-bottom: 10px;
+}
+
+.FormLabel {
+  color: var(--white);
 }
 
 .createAccountCta, .signInCta {

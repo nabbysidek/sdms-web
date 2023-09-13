@@ -2,12 +2,14 @@ import React from "react";
 import "./Auth.css";
 import styled from "styled-components";
 
-// import { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+
+import TemplateModal from "../../components/modal/TemplateModal";
 
 const PageContainer = styled.div`
   background-image: url("https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80");
@@ -34,6 +36,20 @@ function SignIn() {
     console.log(data);
   };
 
+  // MODAL DISPLAY
+  // useState hook to manage modal dislay's visibility
+  const [showModal1, setShowModal1] = useState(false);
+  const handleCloseModal1 = () => setShowModal1(false);
+  const handleShowModal1 = () => setShowModal1(true);
+
+  const buttons1 = [
+    {
+      label: "Tetap Semula Kata Laluan",
+      variant: "primary",
+      onClick: handleCloseModal1,
+    },
+  ];
+
   return (
     <PageContainer>
       <Form
@@ -50,7 +66,7 @@ function SignIn() {
 
         {/* SIGN IN FORM CONTENT */}
         <Form.Group className="mb-3" controlId="staffId">
-          <Form.Label className="formLabel">Id Kakitangan</Form.Label>
+          <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
           <Controller
             name="staffId"
             control={control}
@@ -68,7 +84,7 @@ function SignIn() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
-          <Form.Label className="formLabel">Kata Laluan</Form.Label>
+          <Form.Label className="FormLabel">Kata Laluan</Form.Label>
           <Controller
             name="staffPassword"
             control={control}
@@ -89,14 +105,29 @@ function SignIn() {
           )}
         </Form.Group>
 
-          <div className="forgotPasswordCta">
-            <Link to="/">Lupa Kata Laluan?</Link>
-          </div>
+        <div className="forgotPasswordCta">
+          <Link to="#" onClick={handleShowModal1}>
+            Lupa Kata Laluan?
+          </Link>
 
-          <Button variant="primary" type="submit">
-            {" "}
-            Log Masuk{" "}
-          </Button>
+          <TemplateModal
+            show={showModal1}
+            handleClose={handleCloseModal1}
+            title="Tetap Semula Kata Laluan"
+            content={
+              <p>
+                Klik butang sahkan emel kakitangan untuk menetap semula kata
+                laluan
+              </p>
+            }
+            buttons={buttons1}
+          />
+        </div>
+
+        <Button variant="primary" type="submit">
+          {" "}
+          Log Masuk{" "}
+        </Button>
 
         {/* CREATE ACCOUNT CTA */}
         <div className="createAccountCta">
