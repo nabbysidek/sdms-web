@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import "./Auth.css";
-import styled from "styled-components";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
