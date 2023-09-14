@@ -1,63 +1,129 @@
 import React from "react";
 import "./Auth.css";
+import backgroundImage from "../../assets/background-img.jpg";
+import aimLogo from "../../assets/aim-logo.svg";
 
-import { useState } from "react";
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+
+const PageContainer = styled.div`
+  background-image: url(${backgroundImage});
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 function SignUp() {
-  // FORM INPUT VALIDATION: ENSURE FILLED
-  const [validated, setValidated] = useState(false);
+  // FORM VERIFICATION
+  // Ensure that the input fields are filled
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
-    <div className="SignUpFormContainer FormContainer">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        {/* SIGN UP FORM HEADER */}
-        <div className="signUpFormHeader">
-          <img src="" alt="aim-logo" />
+    <PageContainer>
+      <Form
+        className="SignUpFormContainer FormContainer"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* SIGN IN FORM TEXT HEADER */}
+        <div className="signInFormHeader">
+          <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
-          <h3>Permohonan Akses</h3>
-          <p>Masukkan maklumat kakitangan anda</p>
+          <h3>Bina Akaun Baharu</h3>
         </div>
 
-        {/* SIGN UP FORM CONTENT */}
-        <Form.Group className="mb-3" controlId="signUpStaffEmail">
-          <Form.Control type="email" placeholder="Emel Kakitangan" required />
-          <Form.Control.Feedback type="invalid">
-            Sila masukkan emel kakitangan anda
-          </Form.Control.Feedback>
+        {/* SIGN IN FORM CONTENT */}
+        <Form.Group className="mb-3" controlId="staffId">
+          <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
+          <Controller
+            name="staffId"
+            control={control}
+            defaultValue=""
+            rules={{ required: "ID kakitangan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control type="text" placeholder="123456" {...field} />
+            )}
+          />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="signUpStaffPassword">
-          <Form.Control type="password" placeholder="Kata Laluan" required />
-          <Form.Control.Feedback type="invalid">
-            Sila masukkan emel kakitangan anda
-          </Form.Control.Feedback>
+        <Form.Group className="mb-3" controlId="staffEmail">
+          <Form.Label className="FormLabel">Emel Kakitangan</Form.Label>
+          <Controller
+            name="staffEmail"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Kata laluan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control
+                type="email"
+                placeholder="nama@aim.gov.my"
+                {...field}
+              />
+            )}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="staffPassword">
+          <Form.Label className="FormLabel">Kata Laluan</Form.Label>
+          <Controller
+            name="staffPassword"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Kata laluan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control
+                type="password"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                {...field}
+              />
+            )}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="staffPassword">
+          <Form.Label className="FormLabel">Ulang Kata Laluan</Form.Label>
+          <Controller
+            name="staffEmail"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Kata laluan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control
+                type="password"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                {...field}
+              />
+            )}
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Mohon Akses
+          {" "}
+          Mohon Akses{" "}
         </Button>
 
-        {/* REDIRECT TO SIGN IN PAGE CTA */}
-        <div className="signInCta">
-          <p>
-            Klik di sini untuk kembali semula ke{" "}
-            {<Link to="/">halaman log masuk</Link>}
-          </p>
+        {/* CREATE ACCOUNT CTA */}
+        <div className="createAccountCta">
+          <p>Jika ingin log masuk semula {<Link to="/">tekan di sini</Link>}</p>
         </div>
       </Form>
-    </div>
+    </PageContainer>
   );
 }
 

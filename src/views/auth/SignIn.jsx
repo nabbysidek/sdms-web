@@ -1,63 +1,124 @@
 import React from "react";
+import "./Auth.css";
+import backgroundImage from "../../assets/background-img.jpg";
+import aimLogo from "../../assets/aim-logo.svg";
 
+import styled from "styled-components";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import "./Auth.css";
-const backgroundImage = require("../../assets/backgroundImage.jpg");
+import TemplateModal from "../../components/modal/TemplateModal";
+
+const PageContainer = styled.div`
+  background-image: url(${backgroundImage});
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 function SignIn() {
-  // INPUT VALIDATION: ENSURE FILLED
-  const [validated, setValidated] = useState(false);
+  // FORM VERIFICATION
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
+  const onSubmit = (data) => {
+    // Handle form submission logic here
+    console.log(data);
   };
 
+  // MODAL DISPLAY
+  // useState hook to manage modal display's visibility
+  const [showModal1, setShowModal1] = useState(false);
+
+  const handleCloseModal1 = () => setShowModal1(false);
+  const handleShowModal1 = () => setShowModal1(true);
+
+  const buttons1 = [
+    {
+      label: "Sahkan Emel",
+      variant: "primary",
+      onClick: handleCloseModal1,
+    },
+  ];
+
   return (
-    <div className="SignInFormContainer FormContainer">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <PageContainer>
+      <Form
+        className="SignInFormContainer FormContainer"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* SIGN IN FORM TEXT HEADER */}
         <div className="signInFormHeader">
-          <img src="" alt="aim-logo" />
+          <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <h3>Selamat Datang</h3>
           <p>Masukkan maklumat log masuk anda</p>
         </div>
 
         {/* SIGN IN FORM CONTENT */}
-        <Form.Group className="mb-3" controlId="signInStaffId">
-          <Form.Control
-            required
-            type="text"
-            placeholder="Masukkan ID kakitangan anda"
+        <Form.Group className="mb-3" controlId="staffId">
+          <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
+          <Controller
+            name="staffId"
+            control={control}
+            defaultValue=""
+            rules={{ required: "ID kakitangan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control type="text" placeholder="123456" {...field} />
+            )}
           />
-          <Form.Control.Feedback type="invalid">
-            Sila masukkan ID kakitangan anda
-          </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="signInPassword">
-          <Form.Control
-            required
-            type="password"
-            placeholder="Masukkan kata laluan anda"
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Sila masukkan kata laluan anda
-          </Form.Control.Feedback>
+        <Form.Group className="mb-3" controlId="staffPassword">
+          <Form.Label className="FormLabel">Kata Laluan</Form.Label>
+          <Controller
+            name="staffPassword"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Kata laluan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control
+                type="password"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                {...field}
+              />
+            )}
+          />
         </Form.Group>
 
         <div className="forgotPasswordCta">
-          <Link to="/">Lupa Kata Laluan?</Link>
+          <Link to="#" onClick={handleShowModal1}>
+            Lupa Kata Laluan?
+          </Link>
+
+          <TemplateModal
+            show={showModal1}
+            handleClose={handleCloseModal1}
+            title="Menetap Semula Kata Laluan"
+            content={
+              <div>
+                <p>
+                  Untuk menetap semula kata laluan anda, kami perlu mengesahkan
+                  emel kakitangan anda. Sila sertakan e-mel kakitangan anda
+                  untuk tujuan pengesahan.
+                </p>
+                <input type="email" placeholder="nama@aim.gov.my" />
+              </div>
+            }
+            buttons={buttons1}
+          />
         </div>
 
         <Button variant="primary" type="submit">
@@ -72,7 +133,7 @@ function SignIn() {
           </p>
         </div>
       </Form>
-    </div>
+    </PageContainer>
   );
 }
 
