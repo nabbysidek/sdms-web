@@ -1,7 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import "./Auth.css";
+import backgroundImage from "../../assets/background-img.jpg";
+import aimLogo from "../../assets/aim-logo.svg";
 
+import styled from "styled-components";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -12,7 +14,7 @@ import Form from "react-bootstrap/Form";
 import TemplateModal from "../../components/modal/TemplateModal";
 
 const PageContainer = styled.div`
-  background-image: url("https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80");
+  background-image: url(${backgroundImage});
   background-size: cover;
   background-position: center center;
   width: 100%;
@@ -25,7 +27,6 @@ const PageContainer = styled.div`
 
 function SignIn() {
   // FORM VERIFICATION
-  // Ensure that the input fields are filled
   const {
     control,
     handleSubmit,
@@ -33,47 +34,24 @@ function SignIn() {
   } = useForm();
 
   const onSubmit = (data) => {
+    // Handle form submission logic here
     console.log(data);
   };
 
   // MODAL DISPLAY
-  // useState hook to manage modal dislay's visibility
+  // useState hook to manage modal display's visibility
   const [showModal1, setShowModal1] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
 
   const handleCloseModal1 = () => setShowModal1(false);
   const handleShowModal1 = () => setShowModal1(true);
 
-  const handleCloseModal2 = () => setShowModal2(false);
-  const handleShowModal2 = () => setShowModal2(true);
-
-  const [inputValue, setInputValue] = useState("");
-
-  const handleBothModals = () => {
-    handleCloseModal1();
-    handleShowModal2();
-  };
-
   const buttons1 = [
     {
-      label: "Tetap Semula Kata Laluan",
+      label: "Sahkan Emel",
       variant: "primary",
-      onClick: handleBothModals,
+      onClick: handleCloseModal1,
     },
   ];
-
-  const buttons2 = [
-    {
-      label: "Tetap Semula Kata Laluan",
-      variant: "primary",
-      onClick: handleCloseModal2,
-    },
-  ];
-
-  // Handle modal displays with input fields
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
 
   return (
     <PageContainer>
@@ -83,7 +61,7 @@ function SignIn() {
       >
         {/* SIGN IN FORM TEXT HEADER */}
         <div className="signInFormHeader">
-          <img src="" alt="aim-logo" />
+          <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <h3>Selamat Datang</h3>
           <p>Masukkan maklumat log masuk anda</p>
@@ -101,11 +79,6 @@ function SignIn() {
               <Form.Control type="text" placeholder="123456" {...field} />
             )}
           />
-          {errors.staffId && (
-            <Form.Text className="text-danger">
-              {errors.staffId.message}
-            </Form.Text>
-          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
@@ -123,11 +96,6 @@ function SignIn() {
               />
             )}
           />
-          {errors.staffPassword && (
-            <Form.Text className="text-danger">
-              {errors.staffPassword.message}
-            </Form.Text>
-          )}
         </Form.Group>
 
         <div className="forgotPasswordCta">
@@ -138,36 +106,20 @@ function SignIn() {
           <TemplateModal
             show={showModal1}
             handleClose={handleCloseModal1}
-            title="Tetap Semula Kata Laluan"
+            title="Menetap Semula Kata Laluan"
             content={
-              <p>
-                Klik butang sahkan emel kakitangan untuk menetap semula kata
-                laluan
-              </p>
+              <div>
+                <p>
+                  Untuk menetap semula kata laluan anda, kami perlu mengesahkan
+                  emel kakitangan anda. Sila sertakan e-mel kakitangan anda
+                  untuk tujuan pengesahan.
+                </p>
+                <input type="email" placeholder="nama@aim.gov.my" />
+              </div>
             }
             buttons={buttons1}
           />
         </div>
-
-        <TemplateModal
-          show={showModal2}
-          handleClose={handleCloseModal2}
-          title="Sahkan Emel Kakitangan Anda"
-          content={
-            <div>
-              <p>
-                Sila sertakan e-mel kakitangan anda untuk tujuan pengesahan.
-              </p>
-              <input
-                type="email"
-                value={inputValue}
-                onChange={handleInputChange}
-                placeholder="nama@aim.gov.my"
-              />
-            </div>
-          }
-          buttons={buttons2}
-        />
 
         <Button variant="primary" type="submit">
           {" "}

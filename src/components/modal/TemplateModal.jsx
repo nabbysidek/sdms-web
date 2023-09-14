@@ -2,16 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import "./TemplateModal.css";
 
 function TemplateModal(props) {
-  const {
-    show,
-    handleClose,
-    title,
-    content,
-    inputLabel,
-    inputValue,
-    onInputChange,
-    buttons,
-  } = props;
+  const { show, handleClose, title, content, buttons } = props;
 
   return (
     <>
@@ -19,20 +10,7 @@ function TemplateModal(props) {
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {content}
-          {inputLabel && (
-            <div>
-              <label>{inputLabel}</label>
-              <input
-                type="email"
-                className="form-control"
-                value={inputValue}
-                onChange={onInputChange}
-              />
-            </div>
-          )}
-        </Modal.Body>
+        <Modal.Body>{content}</Modal.Body>
         <Modal.Footer>
           {buttons.map((button, index) => (
             <button

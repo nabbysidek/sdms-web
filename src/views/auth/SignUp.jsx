@@ -1,8 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import "./Auth.css";
+import backgroundImage from "../../assets/background-img.jpg";
+import aimLogo from "../../assets/aim-logo.svg";
 
-// import { useState } from "react";
+import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 const PageContainer = styled.div`
-  background-image: url("https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80");
+  background-image: url(${backgroundImage});
   background-size: cover;
   background-position: center center;
   width: 100%;
@@ -42,7 +43,7 @@ function SignUp() {
       >
         {/* SIGN IN FORM TEXT HEADER */}
         <div className="signInFormHeader">
-          <img src="" alt="aim-logo" />
+          <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <h3>Bina Akaun Baharu</h3>
         </div>
@@ -59,11 +60,6 @@ function SignUp() {
               <Form.Control type="text" placeholder="123456" {...field} />
             )}
           />
-          {errors.staffId && (
-            <Form.Text className="text-danger">
-              {errors.staffId.message}
-            </Form.Text>
-          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffEmail">
@@ -81,11 +77,6 @@ function SignUp() {
               />
             )}
           />
-          {errors.staffEmail && (
-            <Form.Text className="text-danger">
-              {errors.staffEmail.message}
-            </Form.Text>
-          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
@@ -103,11 +94,6 @@ function SignUp() {
               />
             )}
           />
-          {errors.staffPassword && (
-            <Form.Text className="text-danger">
-              {errors.staffPassword.message}
-            </Form.Text>
-          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
@@ -125,11 +111,6 @@ function SignUp() {
               />
             )}
           />
-          {errors.staffPassword && (
-            <Form.Text className="text-danger">
-              {errors.staffPassword.message}
-            </Form.Text>
-          )}
         </Form.Group>
 
         <Button variant="primary" type="submit">
