@@ -1,5 +1,6 @@
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import "./TemplateModal.css";
+import "./Modal.css";
 
 function TemplateModal(props) {
   const { show, handleClose, title, content, buttons } = props;

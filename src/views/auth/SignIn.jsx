@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import TemplateModal from "../../components/modal/TemplateModal";
+import FormModal from "../../components/modal/FormModal";
 
 const PageContainer = styled.div`
   background-image: url(${backgroundImage});
@@ -42,15 +42,20 @@ function SignIn() {
   // useState hook to manage modal display's visibility
   const [showModal1, setShowModal1] = useState(false);
 
-  const handleCloseModal1 = () => setShowModal1(false);
-  const handleShowModal1 = () => setShowModal1(true);
+  const handleFormSubmit = (formData) => {
+    // Handle the form submission (e.g., send data to a server)
+    console.log("Form Data:", formData);
+    setShowModal1(false); // Close the modal after submission
+  };
 
-  const buttons1 = [
+  const formFields = [
+    // { name: "name", label: "Name", required: true },
     {
-      label: "Sahkan Emel",
-      variant: "primary",
-      onClick: handleCloseModal1,
+      name: "email",
+      type: "email",
+      required: true,
     },
+    // { name: "message", label: "Message", required: true },
   ];
 
   return (
@@ -99,25 +104,25 @@ function SignIn() {
         </Form.Group>
 
         <div className="forgotPasswordCta">
-          <Link to="#" onClick={handleShowModal1}>
+          <Link to="#" onClick={() => setShowModal1(true)}>
             Lupa Kata Laluan?
           </Link>
 
-          <TemplateModal
+          <FormModal
             show={showModal1}
-            handleClose={handleCloseModal1}
-            title="Menetap Semula Kata Laluan"
+            onHide={() => setShowModal1(false)}
+            title="Sahkan Emel Kakitangan Anda"
             content={
-              <div>
-                <p>
-                  Untuk menetap semula kata laluan anda, kami perlu mengesahkan
-                  emel kakitangan anda. Sila sertakan e-mel kakitangan anda
-                  untuk tujuan pengesahan.
-                </p>
-                <input type="email" placeholder="nama@aim.gov.my" />
-              </div>
+              <p>
+                Untuk menetap semula kata laluan anda, kami perlu mengesahkan
+                emel kakitangan anda. Sila sertakan e-mel kakitangan anda untuk
+                tujuan pengesahan.
+              </p>
             }
-            buttons={buttons1}
+            onSubmit={handleFormSubmit}
+            formFields={formFields}
+            submitLabel="Sahkan Emel"
+            showCancelButton={false}
           />
         </div>
 
