@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { render } from "react-dom";
+// import { render } from "react-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
-function ForgotPasswordModal() {
+function ForgotPasswordModal({ onClose }) {
   const [step, setStep] = useState(1); // initialize to one as step begins at 1
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
@@ -34,70 +36,87 @@ function ForgotPasswordModal() {
     // Otherwise, handle any error scenarios.
     // Assuming the reset password is successful
     setResetSuccess(true);
+
+    handleNextStep();
   };
 
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return (
+  return (
+    <Modal show={true} onHide={onClose} centered>
+      <Modal.Header>
+        <Modal.Title>
+          {step === 1 && "Sahkan Emel Kakitangan Anda"}
+          {step === 2 && "Masukkan Kod Pengesahan"}
+          {step === 3 && "Set Kata Laluan Baharu"}
+          {step === 4 && "Kata Laluan Baharu Berjaya Diset"}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {step === 1 && (
           <div>
-            <h2>Langkah 1: Sahkan Emel Kakitangan Anfa</h2>
+            <p>
+              Sila berikan kami e-mel kakitangan anda untuk tujuan pengesahan.
+            </p>
             <input
               type="email"
               placeholder="Emel kakitangan"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button onClick={handleSubmitEmail}>Seterusnya</button>
+            <Button variant="primary" onClick={handleSubmitEmail}>
+              Seterusnya
+            </Button>
           </div>
-        );
-      case 2:
-        return (
+        )}
+
+        {step === 2 && (
           <div>
-            <h2>Langkah 2: Masukkan Kod Pengesahan</h2>
+            <p>
+              E-mel dengan kod pengesahan baru sahaja dihantar ke e-mel
+              kakitangan yang anda berikan. Sila masukkan kod di sini.
+            </p>
             <input
               type="text"
               placeholder="Kod Pengesahan"
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value)}
             />
-            <button onClick={handleSubmitVerificationCode}>Seterusnya</button>
-            <button onClick={handlePreviousStep}>Kembali</button>
+            <Button variant="primary" onClick={handleSubmitVerificationCode}>
+              Seterusnya
+            </Button>
+            <Button variant="secondary" onClick={handlePreviousStep}>
+              Kembali
+            </Button>
           </div>
-        );
-      case 3:
-        return (
+        )}
+
+        {step === 3 && (
           <div>
-            <h2>Langkah 3: Tetap Kata Laluan Baharu</h2>
+            <p>Sila tetapkan kata laluan baharu anda</p>
             <input
               type="password"
               placeholder="Kata Laluan Baharu"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <button onClick={handleSubmitNewPassword}>Tetap Kata Laluan</button>
-            <button onClick={handlePreviousStep}>Kembali</button>
+            <Button variant="primary" onClick={handleSubmitNewPassword}>
+              Seterusnya
+            </Button>
+            <Button variant="secondary" onClick={handlePreviousStep}>
+              Kembali
+            </Button>
           </div>
-        );
-      case 4:
-        return (
+        )}
+
+        {step === 4 && (
           <div>
-            <h2>Tetapan Kata Laluan Baharu Berjaya</h2>
             <p>
               Kata laluan anda telah diset semula. Sila cuba log masuk ke sistem
               sekali lagi
             </p>
           </div>
-        );
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className="forgotPasswordModal">
-      {resetSuccess ? renderStep() : <div>{renderStep}</div>}
-    </div>
+        )}
+      </Modal.Body>
+    </Modal>
   );
 }
 

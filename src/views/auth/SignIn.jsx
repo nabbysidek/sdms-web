@@ -5,13 +5,12 @@ import aimLogo from "../../assets/aim-logo.svg";
 
 import styled from "styled-components";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import FormModal from "../../components/modal/FormModal";
+import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
 
 const PageContainer = styled.div`
   background-image: url(${backgroundImage});
@@ -26,37 +25,21 @@ const PageContainer = styled.div`
 `;
 
 function SignIn() {
-  // FORM VERIFICATION
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [showModal, setShowModal] = useState(false);
+  const { control, handleSubmit } = useForm();
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const onSubmit = (data) => {
-    // Handle form submission logic here
+    // handle form submission here
     console.log(data);
   };
-
-  // MODAL DISPLAY
-  // useState hook to manage modal display's visibility
-  const [showModal1, setShowModal1] = useState(false);
-
-  const handleFormSubmit = (formData) => {
-    // Handle the form submission (e.g., send data to a server)
-    console.log("Form Data:", formData);
-    setShowModal1(false); // Close the modal after submission
-  };
-
-  const formFields = [
-    // { name: "name", label: "Name", required: true },
-    {
-      name: "email",
-      type: "email",
-      required: true,
-    },
-    // { name: "message", label: "Message", required: true },
-  ];
 
   return (
     <PageContainer>
@@ -104,26 +87,10 @@ function SignIn() {
         </Form.Group>
 
         <div className="forgotPasswordCta">
-          <Link to="#" onClick={() => setShowModal1(true)}>
+          <Link to="#" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
-
-          <FormModal
-            show={showModal1}
-            onHide={() => setShowModal1(false)}
-            title="Sahkan Emel Kakitangan Anda"
-            content={
-              <p>
-                Untuk menetap semula kata laluan anda, kami perlu mengesahkan
-                emel kakitangan anda. Sila sertakan e-mel kakitangan anda untuk
-                tujuan pengesahan.
-              </p>
-            }
-            onSubmit={handleFormSubmit}
-            formFields={formFields}
-            submitLabel="Sahkan Emel"
-            showCancelButton={false}
-          />
+          {showModal && <ForgotPasswordModal onClose={closeModal} />}
         </div>
 
         <Button variant="primary" type="submit">
