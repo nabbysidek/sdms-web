@@ -1,6 +1,6 @@
 import React from "react";
 import "./Auth.css";
-import backgroundImage from "../../assets/background-img.jpg";
+import backgroundImage from "../../assets/background-img.png";
 import aimLogo from "../../assets/aim-logo.svg";
 
 import styled from "styled-components";
