@@ -3,6 +3,7 @@ import { useState } from "react";
 // import { render } from "react-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import "./ForgotPasswordModal.css";
 
 function ForgotPasswordModal({ onClose }) {
   const [step, setStep] = useState(1); // initialize to one as step begins at 1
@@ -42,8 +43,8 @@ function ForgotPasswordModal({ onClose }) {
 
   return (
     <Modal show={true} onHide={onClose} centered>
-      <Modal.Header>
-        <Modal.Title>
+      <Modal.Header closeButton>
+        <Modal.Title className="modalHeader">
           {step === 1 && "Sahkan Emel Kakitangan Anda"}
           {step === 2 && "Masukkan Kod Pengesahan"}
           {step === 3 && "Set Kata Laluan Baharu"}
@@ -62,7 +63,11 @@ function ForgotPasswordModal({ onClose }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Button variant="primary" onClick={handleSubmitEmail}>
+            <Button
+              className="button buttonPrimary"
+              variant="primary"
+              onClick={handleSubmitEmail}
+            >
               Seterusnya
             </Button>
           </div>
@@ -80,10 +85,18 @@ function ForgotPasswordModal({ onClose }) {
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value)}
             />
-            <Button variant="primary" onClick={handleSubmitVerificationCode}>
+            <Button
+              className="button buttonPrimary"
+              variant="primary"
+              onClick={handleSubmitVerificationCode}
+            >
               Seterusnya
             </Button>
-            <Button variant="secondary" onClick={handlePreviousStep}>
+            <Button
+              className="button buttonSecondary"
+              variant="secondary"
+              onClick={handlePreviousStep}
+            >
               Kembali
             </Button>
           </div>
@@ -98,10 +111,18 @@ function ForgotPasswordModal({ onClose }) {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <Button variant="primary" onClick={handleSubmitNewPassword}>
+            <Button
+              className="button buttonPrimary"
+              variant="primary"
+              onClick={handleSubmitNewPassword}
+            >
               Seterusnya
             </Button>
-            <Button variant="secondary" onClick={handlePreviousStep}>
+            <Button
+              className="button buttonSecondary"
+              variant="secondary"
+              onClick={handlePreviousStep}
+            >
               Kembali
             </Button>
           </div>
