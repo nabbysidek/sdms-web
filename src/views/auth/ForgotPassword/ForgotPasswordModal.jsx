@@ -64,7 +64,7 @@ function ForgotPasswordModal({ onClose }) {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button
-              className="button buttonPrimary"
+              className="forgotPasswordBtn buttonPrimary"
               variant="primary"
               onClick={handleSubmitEmail}
             >
@@ -86,14 +86,14 @@ function ForgotPasswordModal({ onClose }) {
               onChange={(e) => setVerificationCode(e.target.value)}
             />
             <Button
-              className="button buttonPrimary"
+              className="forgotPasswordBtn buttonPrimary"
               variant="primary"
               onClick={handleSubmitVerificationCode}
             >
               Seterusnya
             </Button>
             <Button
-              className="button buttonSecondary"
+              className="forgotPasswordBtn buttonSecondary"
               variant="secondary"
               onClick={handlePreviousStep}
             >
@@ -112,14 +112,14 @@ function ForgotPasswordModal({ onClose }) {
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <Button
-              className="button buttonPrimary"
+              className="forgotPasswordBtn buttonPrimary"
               variant="primary"
               onClick={handleSubmitNewPassword}
             >
               Seterusnya
             </Button>
             <Button
-              className="button buttonSecondary"
+              className="forgotPasswordBtn buttonSecondary"
               variant="secondary"
               onClick={handlePreviousStep}
             >
