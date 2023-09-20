@@ -1,17 +1,16 @@
 import React from "react";
 import "./Auth.css";
-import backgroundImage from "../../assets/background-img.jpg";
+import backgroundImage from "../../assets/background-img.png";
 import aimLogo from "../../assets/aim-logo.svg";
 
 import styled from "styled-components";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import TemplateModal from "../../components/modal/TemplateModal";
+import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
 
 const PageContainer = styled.div`
   background-image: url(${backgroundImage});
@@ -26,32 +25,21 @@ const PageContainer = styled.div`
 `;
 
 function SignIn() {
-  // FORM VERIFICATION
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [showModal, setShowModal] = useState(false);
+  const { control, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    // Handle form submission logic here
-    console.log(data);
+  const openModal = () => {
+    setShowModal(true);
   };
 
-  // MODAL DISPLAY
-  // useState hook to manage modal display's visibility
-  const [showModal1, setShowModal1] = useState(false);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
-  const handleCloseModal1 = () => setShowModal1(false);
-  const handleShowModal1 = () => setShowModal1(true);
-
-  const buttons1 = [
-    {
-      label: "Sahkan Emel",
-      variant: "primary",
-      onClick: handleCloseModal1,
-    },
-  ];
+  const onSubmit = (data) => {
+    // handle form submission here
+    console.log(data);
+  };
 
   return (
     <PageContainer>
@@ -99,26 +87,10 @@ function SignIn() {
         </Form.Group>
 
         <div className="forgotPasswordCta">
-          <Link to="#" onClick={handleShowModal1}>
+          <Link to="#" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
-
-          <TemplateModal
-            show={showModal1}
-            handleClose={handleCloseModal1}
-            title="Menetap Semula Kata Laluan"
-            content={
-              <div>
-                <p>
-                  Untuk menetap semula kata laluan anda, kami perlu mengesahkan
-                  emel kakitangan anda. Sila sertakan e-mel kakitangan anda
-                  untuk tujuan pengesahan.
-                </p>
-                <input type="email" placeholder="nama@aim.gov.my" />
-              </div>
-            }
-            buttons={buttons1}
-          />
+          {showModal && <ForgotPasswordModal onClose={closeModal} />}
         </div>
 
         <Button variant="primary" type="submit">
