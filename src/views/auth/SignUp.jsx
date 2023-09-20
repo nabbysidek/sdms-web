@@ -42,7 +42,7 @@ function SignUp() {
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* SIGN IN FORM TEXT HEADER */}
-        <div className="signInFormHeader">
+        <div className="formHeader">
           <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <h3>Bina Akaun Baharu</h3>
@@ -113,14 +113,21 @@ function SignUp() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" className="authButton" type="submit">
           {" "}
           Mohon Akses{" "}
         </Button>
 
         {/* CREATE ACCOUNT CTA */}
         <div className="createAccountCta">
-          <p>Jika ingin log masuk semula {<Link to="/">tekan di sini</Link>}</p>
+          <p>
+            Jika ingin log masuk semula{" "}
+            {
+              <Link to="/" className="allAuthLink">
+                tekan di sini
+              </Link>
+            }
+          </p>
         </div>
       </Form>
     </PageContainer>

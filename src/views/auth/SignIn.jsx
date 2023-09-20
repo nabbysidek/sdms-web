@@ -48,7 +48,7 @@ function SignIn() {
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* SIGN IN FORM TEXT HEADER */}
-        <div className="signInFormHeader">
+        <div className="formHeader">
           <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <h3>Selamat Datang</h3>
@@ -87,13 +87,13 @@ function SignIn() {
         </Form.Group>
 
         <div className="forgotPasswordCta">
-          <Link to="#" onClick={openModal}>
+          <Link to="#" className="allAuthLink" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
           {showModal && <ForgotPasswordModal onClose={closeModal} />}
         </div>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" className="authButton" type="submit">
           {" "}
           Log Masuk{" "}
         </Button>
@@ -101,7 +101,12 @@ function SignIn() {
         {/* CREATE ACCOUNT CTA */}
         <div className="createAccountCta">
           <p>
-            Bagi pengguna baru, sila {<Link to="/signup">tekan di sini</Link>}
+            Bagi pengguna baru, sila{" "}
+            {
+              <Link to="/signup" className="allAuthLink">
+                tekan di sini
+              </Link>
+            }
           </p>
         </div>
       </Form>

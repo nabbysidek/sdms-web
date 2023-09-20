@@ -1,24 +1,23 @@
 /* *********************** */
 /* VARIABLES */
 /* *********************** */
-html,body
-{
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    overflow-x: hidden; 
+#root {
+  /* BG IMAGE FILL THE ENTIRE VIEWPORT */
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
 }
-h1, h3 {
+
+.formHeader h1, h3 {
     text-align: center;
     color: var(--white);
 }
 
-a {
+.allAuthLink {
   color: var(--white);
 }
 
-.btn {
+.authButton {
   width: 100%;
   font-family: "Open Sans", sans-serif;
   font-size: 1.15em;
@@ -27,7 +26,7 @@ a {
   background-color: var(--darkblue);
 }
 
-.btn:hover {
+.authButton:hover {
   color: var(--darkblue);
   background-color: var(--white);
 }
