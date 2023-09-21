@@ -14,6 +14,7 @@ import Pelaporan from "./pages/pelaporan/Pelaporan";
 import JenisAudit from "./pages/tetapan kriteria/JenisAudit";
 import TambahKriteria from "./pages/tetapan kriteria/TambahKriteria";
 import SkopKriteria from "./pages/tetapan kriteria/SkopKriteria";
+import SkopSemakan from "./pages/tetapan kriteria/SkopSemakan";
 import TambahKakitangan from "./pages/tetapan kriteria/TambahKakitangan";
 import TetapanPengguna from "./pages/tetapan pengguna/TetapanPengguna";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/pelaporan" element={<Pelaporan />} />
           <Route path="/tambahkriteria" element={<TambahKriteria />} />
           <Route path="/skopkriteria" element={<SkopKriteria />} />
+          <Route path="/skopsemakan" element={<SkopSemakan />} />
           <Route path="/jenisaudit" element={<JenisAudit />} />
           <Route path="/tambahkakitangan" element={<TambahKakitangan />} />
           <Route path="/tetapanpengguna" element={<TetapanPengguna />} />
