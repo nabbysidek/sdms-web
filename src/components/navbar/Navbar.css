@@ -1,0 +1,12 @@
+.titleAim {
+    float: right;
+    margin-left: 10px;
+    color: var(--black);
+}
+
+.container {
+    /* Ensure the navbar brand item is aligned to the left  */
+    margin-left: 10px;
+    margin-right: 40px;
+    max-width: 1280px;
+  }
