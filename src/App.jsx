@@ -9,12 +9,11 @@ import SignUp from "./views/auth/SignUp";
 import NoPage from "./pages/NoPage";
 import Profile from "./pages/profil/Profil";
 import Dashboard from "./pages/dashboard/Index";
-import Carian from "./pages/carian/Carian";
 import Pelaporan from "./pages/pelaporan/Pelaporan";
+import Laporan from "./pages/laporan/Laporan";
 import JenisAudit from "./pages/tetapan kriteria/JenisAudit";
 import TambahKriteria from "./pages/tetapan kriteria/TambahKriteria";
 import SkopKriteria from "./pages/tetapan kriteria/SkopKriteria";
-import SkopSemakan from "./pages/tetapan kriteria/SkopSemakan";
 import TambahKakitangan from "./pages/tetapan kriteria/TambahKakitangan";
 import TetapanPengguna from "./pages/tetapan pengguna/TetapanPengguna";
 
@@ -23,19 +22,21 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />} />
           <Route index element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/carian" element={<Carian />} />
-          <Route path="/pelaporan" element={<Pelaporan />} />
-          <Route path="/tambahkriteria" element={<TambahKriteria />} />
-          <Route path="/skopkriteria" element={<SkopKriteria />} />
-          <Route path="/skopsemakan" element={<SkopSemakan />} />
-          <Route path="/jenisaudit" element={<JenisAudit />} />
-          <Route path="/tambahkakitangan" element={<TambahKakitangan />} />
-          <Route path="/tetapanpengguna" element={<TetapanPengguna />} />
+
+          <Route path="/" element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/pelaporan" element={<Pelaporan />} />
+            <Route path="/laporan" element={<Laporan />} />
+            <Route path="/tambahkriteria" element={<TambahKriteria />} />
+            <Route path="/skopkriteria" element={<SkopKriteria />} />
+            <Route path="/jenisaudit" element={<JenisAudit />} />
+            <Route path="/tambahkakitangan" element={<TambahKakitangan />} />
+            <Route path="/tetapanpengguna" element={<TetapanPengguna />} />
+          </Route>
+
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
