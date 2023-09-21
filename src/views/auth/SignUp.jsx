@@ -45,10 +45,27 @@ function SignUp() {
         <div className="formHeader">
           <img className="Logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
-          <h3>Bina Akaun Baharu</h3>
+          <p>Sila isi ruangan kosong untuk bina akaun baharu</p>
         </div>
 
         {/* SIGN IN FORM CONTENT */}
+        <Form.Group className="mb-3" controlId="staffName">
+          <Form.Label className="FormLabel">Nama Kakitangan</Form.Label>
+          <Controller
+            name="staffName"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Nama kakitangan diperlukan" }}
+            render={({ field }) => (
+              <Form.Control
+                type="text"
+                placeholder="Aina binti Abdul"
+                {...field}
+              />
+            )}
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="staffId">
           <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
           <Controller
@@ -79,39 +96,43 @@ function SignUp() {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="staffPassword">
-          <Form.Label className="FormLabel">Kata Laluan</Form.Label>
-          <Controller
-            name="staffPassword"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Kata laluan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control
-                type="password"
-                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                {...field}
+        <div className="formFieldsContainer">
+          <div className="formFieldPair">
+            <Form.Group className="mb-3" controlId="staffPassword">
+              <Form.Label className="FormLabel">Kata Laluan</Form.Label>
+              <Controller
+                name="staffPassword"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Kata laluan diperlukan" }}
+                render={({ field }) => (
+                  <Form.Control
+                    type="password"
+                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                    {...field}
+                  />
+                )}
               />
-            )}
-          />
-        </Form.Group>
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="staffPassword">
-          <Form.Label className="FormLabel">Ulang Kata Laluan</Form.Label>
-          <Controller
-            name="staffEmail"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Kata laluan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control
-                type="password"
-                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                {...field}
+            <Form.Group className="mb-3" controlId="staffPassword">
+              <Form.Label className="FormLabel">Ulang Kata Laluan</Form.Label>
+              <Controller
+                name="staffEmail"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Kata laluan diperlukan" }}
+                render={({ field }) => (
+                  <Form.Control
+                    type="password"
+                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                    {...field}
+                  />
+                )}
               />
-            )}
-          />
-        </Form.Group>
+            </Form.Group>
+          </div>
+        </div>
 
         <Button variant="primary" className="authButton" type="submit">
           {" "}

@@ -63,11 +63,29 @@
 }
 
 .SignUpFormContainer {
-  width: 350px;
+  /* width: 50%; */
   padding: 30px 40px 10px; 
 }
 
+.formFieldsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formFieldPair {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Add some spacing between the Form.Group elements within a pair */
+.formFieldPair .mb-3 {
+  margin-right: 10px; /* Adjust this margin as needed for spacing */
+}
+
 .Logo {
+  width: 70%;
+  margin-left: 50px;
   padding-bottom: 10px;
 }
 
