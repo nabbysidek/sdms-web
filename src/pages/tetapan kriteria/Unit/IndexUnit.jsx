@@ -1,7 +1,7 @@
 import React from "react";
 
-function SkopSemakan() {
+function IndexUnit() {
   return <div></div>;
 }
 
-export default SkopSemakan;
+export default IndexUnit;
