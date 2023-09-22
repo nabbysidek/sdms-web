@@ -1,12 +1,28 @@
-.titleAim {
-    float: right;
-    margin-left: 10px;
-    color: var(--black);
+.mainNavbar {
+    background-color: var(--darkblue);
 }
 
-.container {
-    /* Ensure the navbar brand item is aligned to the left  */
+.mainNavbar-user {
+    font-family: "Open Sans", sans-serif;
+    color: var(--white);
     margin-left: 10px;
-    margin-right: 40px;
+}
+
+.titleAim {
+    float: right;
+    margin: 14px auto auto 10px;
+    font-weight: bold;
+    color: var(--white);
+}
+
+.mainNavbarContainer {
+    /* Ensure the navbar brand item is aligned to the left  */
+    margin-left: 5px;
+    margin-right: 30px;
     max-width: 1280px;
+  }
+
+  .custom-collapse {
+    /* margin: 10px auto; */
+    color: var(--white);
   }

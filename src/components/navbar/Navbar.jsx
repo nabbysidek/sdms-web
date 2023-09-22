@@ -3,7 +3,8 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
-import { FaUser } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
+import MediaQuery from "react-responsive";
 
 import "./Navbar.css";
 import aimLogo from "../../assets/aim-logo.svg";
@@ -15,8 +16,8 @@ function NavBar() {
 
   return (
     <>
-      <Navbar bg="light shadow" expand="lg">
-        <Container>
+      <Navbar variant="dark" expand="lg" className="mainNavbar">
+        <Container className="mainNavbarContainer">
           <Navbar.Brand onClick={clickAimLogo}>
             <Image
               src={aimLogo}
@@ -25,13 +26,22 @@ function NavBar() {
               className="d-inline-block align-top"
             />
             {""}
-            <h3 className="titleAim">JABATAN AUDIT DALAMAN</h3>
+            <h5 className="titleAim">Jabatan Audit Dalaman</h5>
           </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text onClick={clickUserIcon}>
-              <FaUser className="user-icon" size={20} />
-            </Navbar.Text>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className="justify-content-end custom-collapse"
+          >
+            <Nav>
+              <Navbar.Text onClick={clickUserIcon}>
+                <FaUserCircle className="user-icon" size={30} color="white" />
+
+                <MediaQuery maxWidth={767}>
+                  <span className="mainNavbar-user">Profil Pengguna</span>
+                </MediaQuery>
+              </Navbar.Text>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
