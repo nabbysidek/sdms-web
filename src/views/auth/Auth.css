@@ -59,7 +59,8 @@
 }
 
 .SignInFormContainer {
-  padding: 50px 50px 30px; 
+  width: 350px;
+  padding: 30px 40px 10px; 
 }
 
 .SignUpFormContainer {
