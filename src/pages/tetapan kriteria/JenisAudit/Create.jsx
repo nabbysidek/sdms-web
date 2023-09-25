@@ -1,7 +1,7 @@
 import React from "react";
 
-function create() {
+function CreateJenisAudit() {
   return <div></div>;
 }
 
-export default create;
+export default CreateJenisAudit;

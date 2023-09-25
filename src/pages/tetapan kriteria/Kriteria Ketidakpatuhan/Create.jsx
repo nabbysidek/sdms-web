@@ -1,7 +1,7 @@
 import React from "react";
 
-function Create() {
+function CreateKriteriaKetidakpatuhan() {
   return <div></div>;
 }
 
-export default Create;
+export default CreateKriteriaKetidakpatuhan;

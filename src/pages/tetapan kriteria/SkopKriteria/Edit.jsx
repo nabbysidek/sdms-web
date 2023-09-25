@@ -1,7 +1,7 @@
 import React from "react";
 
-function Edit() {
+function EditSkopKriteria() {
   return <div></div>;
 }
 
-export default Edit;
+export default EditSkopKriteria;

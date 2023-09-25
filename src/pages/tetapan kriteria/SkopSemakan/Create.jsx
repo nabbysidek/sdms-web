@@ -1,7 +1,7 @@
 import React from "react";
 
-function Create() {
+function CreateSkopSemakan() {
   return <div></div>;
 }
 
-export default Create;
+export default CreateSkopSemakan;

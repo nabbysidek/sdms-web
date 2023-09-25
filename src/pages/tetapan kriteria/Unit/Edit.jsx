@@ -1,7 +1,7 @@
 import React from "react";
 
-function Edit() {
+function EditUnit() {
   return <div></div>;
 }
 
-export default Edit;
+export default EditUnit;

@@ -1,7 +1,7 @@
 import React from "react";
 
-function Create() {
+function CreateCawangan() {
   return <div></div>;
 }
 
-export default Create;
+export default CreateCawangan;

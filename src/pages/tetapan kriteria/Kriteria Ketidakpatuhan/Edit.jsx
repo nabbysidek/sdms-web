@@ -1,7 +1,7 @@
 import React from "react";
 
-function Edit() {
+function EditKriteriaKetidakpatuhan() {
   return <div></div>;
 }
 
-export default Edit;
+export default EditKriteriaKetidakpatuhan;

@@ -1,7 +1,7 @@
 import React from "react";
 
-function Edit() {
+function EditJabatan() {
   return <div></div>;
 }
 
-export default Edit;
+export default EditJabatan;

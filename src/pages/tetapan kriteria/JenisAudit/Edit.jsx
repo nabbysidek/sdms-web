@@ -1,7 +1,7 @@
 import React from "react";
 
-function Edit() {
+function EditJenisAudit() {
   return <div></div>;
 }
 
-export default Edit;
+export default EditJenisAudit;
