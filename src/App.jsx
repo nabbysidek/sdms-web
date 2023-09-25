@@ -11,17 +11,17 @@ import Profile from "./pages/profil/Profil";
 import Dashboard from "./pages/dashboard/Index";
 import Pelaporan from "./pages/pelaporan/Pelaporan";
 import Laporan from "./pages/laporan/Laporan";
-import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/IndexKriteriaKetidakpatuhan";
-import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/IndexKakitangan";
-import IndexJenisAudit from "./pages/tetapan kriteria/JenisAudit/IndexJenisAudit";
-import IndexSkopKriteria from "./pages/tetapan kriteria/SkopKriteria/IndexSkopKriteria";
-import IndexSkopSemakan from "./pages/tetapan kriteria/SkopSemakan/IndexSkopSemakan";
-import IndexBahagian from "./pages/tetapan kriteria/Bahagian/IndexBahagian";
-import IndexJabatan from "./pages/tetapan kriteria/Jabatan/IndexJabatan";
-import IndexUnit from "./pages/tetapan kriteria/Unit/IndexUnit";
-import IndexWilayah from "./pages/tetapan kriteria/Wilayah/IndexWilayah";
-import IndexCawangan from "./pages/tetapan kriteria/Cawangan/IndexCawangan";
-import IndexTetapanPengguna from "./pages/tetapan pengguna/IndexTetapanPengguna";
+import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/Index";
+import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/Index";
+import IndexJenisAudit from "./pages/tetapan kriteria/JenisAudit/Index";
+import IndexSkopKriteria from "./pages/tetapan kriteria/SkopKriteria/Index";
+import IndexSkopSemakan from "./pages/tetapan kriteria/SkopSemakan/Index";
+import IndexBahagian from "./pages/tetapan kriteria/Bahagian/Index";
+import IndexJabatan from "./pages/tetapan kriteria/Jabatan/Index";
+import IndexUnit from "./pages/tetapan kriteria/Unit/Index";
+import IndexWilayah from "./pages/tetapan kriteria/Wilayah/Index";
+import IndexCawangan from "./pages/tetapan kriteria/Cawangan/Index";
+import IndexTetapanPengguna from "./pages/tetapan pengguna/Index";
 
 function App() {
   return (

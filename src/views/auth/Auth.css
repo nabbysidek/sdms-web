@@ -1,6 +1,7 @@
 /* *********************** */
 /* VARIABLES */
 /* *********************** */
+
 #root {
   /* BG IMAGE FILL THE ENTIRE VIEWPORT */
   width: 100%;
@@ -64,24 +65,28 @@
 }
 
 .SignUpFormContainer {
-  /* width: 50%; */
   padding: 30px 40px 10px; 
 }
 
 .formFieldsContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:start;
 }
 
 .formFieldPair {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 /* Add some spacing between the Form.Group elements within a pair */
 .formFieldPair .mb-3 {
-  margin-right: 10px; /* Adjust this margin as needed for spacing */
+  width: 100%;
+}
+
+.with-margin {
+  margin-right: 10px;
 }
 
 .Logo {
@@ -102,4 +107,8 @@
 
 .createAccountCta, .signInCta {
   margin-top: 12px;
+}
+
+body {
+  font-size: 12px;
 }

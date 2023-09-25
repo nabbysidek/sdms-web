@@ -98,7 +98,7 @@ function SignUp() {
 
         <div className="formFieldsContainer">
           <div className="formFieldPair">
-            <Form.Group className="mb-3" controlId="staffPassword">
+            <Form.Group className="mb-3 with-margin" controlId="staffPassword">
               <Form.Label className="FormLabel">Kata Laluan</Form.Label>
               <Controller
                 name="staffPassword"
@@ -115,10 +115,10 @@ function SignUp() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="staffPassword">
+            <Form.Group className="mb-3" controlId="staffConfirmPassword">
               <Form.Label className="FormLabel">Ulang Kata Laluan</Form.Label>
               <Controller
-                name="staffEmail"
+                name="staffConfirmPassword"
                 control={control}
                 defaultValue=""
                 rules={{ required: "Kata laluan diperlukan" }}
