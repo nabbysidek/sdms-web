@@ -3,8 +3,8 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
-import { FaUserCircle } from "react-icons/fa";
-import MediaQuery from "react-responsive";
+
+import UserIconMenu from "../showmenu/UserIconMenu";
 
 import "./Navbar.css";
 import aimLogo from "../../assets/aim-logo.svg";
@@ -12,7 +12,7 @@ import aimLogo from "../../assets/aim-logo.svg";
 function NavBar() {
   const navigate = useNavigate();
   const clickAimLogo = () => navigate("/dashboard");
-  const clickUserIcon = () => navigate("/profile");
+  // const clickUserIcon = () => navigate("/profile");
 
   return (
     <>
@@ -34,12 +34,8 @@ function NavBar() {
             className="justify-content-end custom-collapse"
           >
             <Nav>
-              <Navbar.Text onClick={clickUserIcon}>
-                <FaUserCircle className="user-icon" size={30} color="white" />
-
-                <MediaQuery maxWidth={767}>
-                  <span className="mainNavbar-user">Profil Pengguna</span>
-                </MediaQuery>
+              <Navbar.Text>
+                <UserIconMenu />
               </Navbar.Text>
             </Nav>
           </Navbar.Collapse>

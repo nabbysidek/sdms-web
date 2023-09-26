@@ -1,3 +1,14 @@
+/* *********************** */
+/* MOBILE VIEW */
+/* *********************** */
+/* For user icon display */
+@media (max-width: 768px) {
+    .hide-on-mobile {
+      display: none;
+    }
+  }
+  
+
 .mainNavbar {
     background-color: var(--darkblue);
 }
@@ -5,13 +16,13 @@
 .mainNavbar-user {
     font-family: "Open Sans", sans-serif;
     color: var(--white);
-    margin-left: 10px;
 }
 
 .titleAim {
     float: right;
-    margin: 14px auto auto 10px;
+    margin: 14px 0 auto 10px;
     font-weight: bold;
+    font-size: 16px;
     color: var(--white);
 }
 
@@ -23,6 +34,15 @@
   }
 
   .custom-collapse {
-    /* margin: 10px auto; */
     color: var(--white);
   }
+
+.navbar-text a {
+    color: var(--black);
+}
+
+.navbar-text a:hover {
+    background-color: transparent;
+    color: var(--black);
+    text-decoration: underline;
+}
