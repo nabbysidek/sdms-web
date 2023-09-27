@@ -7,7 +7,7 @@ import SubSideBar from "./SubSideBar";
 import "./SideBar.css";
 
 function SideBar() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   return (
     <div className="sidebar">
@@ -18,12 +18,13 @@ function SideBar() {
             className={`list-group-item ${
               item.path === "/tambahkriteria" ? "tetapan-kriteria" : ""
             }`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => setHoveredItem(item.path)}
+            onMouseLeave={() => setHoveredItem(null)}
           >
             <NavLink to={item.path} className="nav-link">
               {item.icon} {item.title}
-              {item.path === "/tambahkriteria" && isHovered && <SubSideBar />}
+              {item.path === "/tambahkriteria" &&
+                hoveredItem === "/tambahkriteria" && <SubSideBar />}
             </NavLink>
           </ListGroup.Item>
         ))}
