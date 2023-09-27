@@ -1,7 +1,7 @@
 import React from "react";
 
 function IndexKriteriaKetidakpatuhan() {
-  return <div></div>;
+  return <div>This is the Index Kriteria Ketidakpatuhan</div>;
 }
 
 export default IndexKriteriaKetidakpatuhan;

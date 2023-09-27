@@ -1,7 +1,7 @@
 import React from "react";
 
 function IndexUnit() {
-  return <div></div>;
+  return <div>This is the Index Unit</div>;
 }
 
 export default IndexUnit;

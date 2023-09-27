@@ -1,7 +1,7 @@
 import React from "react";
 
 function IndexJabatan() {
-  return <div></div>;
+  return <div>This is the Index Jabatan</div>;
 }
 
 export default IndexJabatan;
