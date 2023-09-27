@@ -1,0 +1,18 @@
+/* *********************** */
+/* MAIN SIDEBAR */
+/* *********************** */
+
+.sidebar {
+    width: 200px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
+
+.list-group-item {
+    margin: 7px 0;
+}
+
+.list-group-item:hover {
+    color: var(--black);
+    text-decoration: underline;
+}

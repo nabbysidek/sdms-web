@@ -1,0 +1,31 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+
+.sub-sidebar {
+    position: absolute;
+    top: -14px;
+    left: 100%;
+    width: 200px;
+    background-color: #fff; 
+    border-left: 1px solid #ccc; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+.sub-nav-link {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.sub-nav-link:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+
+  
