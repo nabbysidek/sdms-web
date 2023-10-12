@@ -1,0 +1,13 @@
+.user-icon-container {
+  color: var(--white);
+}
+
+.user-icon-container:hover {
+  color: var(--black);
+  text-decoration: underline;
+}
+
+.mainNavbar-user:hover {
+  color: var(--black);
+}
+  

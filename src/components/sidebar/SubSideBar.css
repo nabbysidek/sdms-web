@@ -4,14 +4,12 @@ ul {
     padding: 0;
   }
 
-
-.sub-sidebar {
+  .sub-sidebar {
     position: absolute;
-    top: -14px;
+    top: -8px;
     left: 100%;
     width: 200px;
     background-color: #fff; 
-    border-left: 1px solid #ccc; 
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   }
 
@@ -27,5 +25,13 @@ ul {
     color: #000;
 }
 
-
+/* *********************** */
+/* ON MOBILE */
+/* *********************** */
+@media (max-width: 767px) {
+  .sub-sidebar {
+    background-color: var(--darkblue);
+    border-left: 1px solid var(--darkblue); 
+  }
+}
   

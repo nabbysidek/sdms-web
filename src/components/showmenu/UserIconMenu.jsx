@@ -3,6 +3,8 @@ import { Dropdown } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
+import "./UserIconMenu.css";
+
 const UserIconMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
@@ -53,17 +55,25 @@ const UserIconMenu = () => {
   }, []);
 
   return (
-    <div className="icon-container">
-      <div className="user-icon-container">
+    <div>
+      <div>
         <div
-          style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            cursor: "pointer",
+            // spacing between "profil pengguna" and the other nav-items in the navbar on mobile
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
           onClick={handleUserIconClick}
+          className="user-icon-container"
         >
           <FaUserCircle
             className="user-icon"
             alt="user-icon"
-            size={30}
-            color="white"
+            size={25}
+            style={{ marginLeft: "7px" }}
           />
           {isMobileView && (
             <span className="mainNavbar-user" style={{ marginLeft: "10px" }}>

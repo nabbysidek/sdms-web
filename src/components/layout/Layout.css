@@ -4,5 +4,20 @@
 }
 
 .content {
-  background-color: whitesmoke;
+  background-color: #ebe4e4;
+  /* width of the content */
+  width: 100%;
+  max-width: 2560px;
+}
+
+
+/* *********************** */
+/* ON MOBILE */
+/* *********************** */
+@media (max-width: 767px) {
+  .content {
+    /* width of the content */
+    width: 100%;
+    max-width: 767px;
+  }
 }
