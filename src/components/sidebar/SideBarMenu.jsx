@@ -9,7 +9,7 @@ const SideBarMenu = [
     title: "Pelaporan",
     path: "/pelaporan",
     icon: (
-      <FaSearch size={19} style={{ marginRight: "10px", marginLeft: "6px" }} />
+      <FaSearch size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),
   },
 
@@ -18,8 +18,8 @@ const SideBarMenu = [
     path: "/laporan",
     icon: (
       <FaChartLine
-        size={19}
-        style={{ marginRight: "10px", marginLeft: "6px" }}
+        size={15}
+        style={{ marginRight: "10px", marginLeft: "3px" }}
       />
     ),
   },
@@ -27,14 +27,14 @@ const SideBarMenu = [
     title: "Tetapan Pengguna",
     path: "/tetapanpengguna",
     icon: (
-      <FaUsers size={19} style={{ marginRight: "10px", marginLeft: "6px" }} />
+      <FaUsers size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),
   },
   {
     title: "Tetapan Kriteria",
     path: "/kriteriaketidakpatuhan",
     icon: (
-      <FaTools size={19} style={{ marginRight: "10px", marginLeft: "6px" }} />
+      <FaTools size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),
   },
   {
@@ -42,8 +42,8 @@ const SideBarMenu = [
     path: "/",
     icon: (
       <FaSignOutAlt
-        size={19}
-        style={{ marginRight: "10px", marginLeft: "6px" }}
+        size={15}
+        style={{ marginRight: "10px", marginLeft: "3px" }}
       />
     ),
   },
