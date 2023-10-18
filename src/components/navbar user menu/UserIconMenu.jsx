@@ -7,7 +7,7 @@ import "./UserIconMenu.css";
 
 const UserIconMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -26,25 +26,13 @@ const UserIconMenu = () => {
 
   const ProfilePageButton = React.forwardRef(({ children, onClick }, ref) => (
     <Link to="/profile">
-      <button
-        className="btn btn-outline-dark"
-        style={{
-          marginLeft: "10px",
-          marginTop: "0",
-        }}
-      >
-        {children}
-      </button>
+      <button className="btnUpdateProfile">{children}</button>
     </Link>
   ));
 
-  const handleLogoutClick = () => {
-    window.location.href = "/";
-  };
-
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth <= 768);
+      setIsMobileView(window.innerWidth <= 767);
     };
 
     window.addEventListener("resize", handleResize);
@@ -62,17 +50,14 @@ const UserIconMenu = () => {
             display: "flex",
             alignItems: "center",
             cursor: "pointer",
-            // spacing between "profil pengguna" and the other nav-items in the navbar on mobile
-            marginTop: "10px",
-            marginBottom: "10px",
           }}
           onClick={handleUserIconClick}
           className="user-icon-container"
         >
           <FaUserCircle
-            className="user-icon"
+            className="userIcon"
             alt="user-icon"
-            size={25}
+            size={30}
             style={{ marginLeft: "7px" }}
           />
           {isMobileView && (
@@ -92,27 +77,23 @@ const UserIconMenu = () => {
             display: showMenu ? "block" : "none",
             position: "absolute",
             top: "80%",
-            left: "87%",
-            maxWidth: "150px",
+            left: "83%",
           }}
         >
-          <Dropdown.ItemText>
+          <Dropdown.ItemText className="userMenu">
             <h6>Aina Binti Abdul</h6>
           </Dropdown.ItemText>
-          <Dropdown.ItemText
-            style={{
-              color: "darkgray",
-              paddingTop: "0",
-              paddingBottom: "0",
-            }}
-          >
+          <Dropdown.ItemText className="userMenu userMenuContent">
             <p>ainaabdul@aim.gov.my</p>
           </Dropdown.ItemText>
-          <Dropdown.Toggle as={ProfilePageButton} eventKey="updateProfile">
+          <Dropdown.Divider />
+          <Dropdown.Toggle
+            as={ProfilePageButton}
+            className="userMenuLink"
+            eventKey="updateProfile"
+          >
             Kemaskini Profil
           </Dropdown.Toggle>
-          <Dropdown.Divider />
-          <Dropdown.Item onClick={handleLogoutClick}>Log Keluar</Dropdown.Item>
         </Dropdown.Menu>
       )}
     </div>
