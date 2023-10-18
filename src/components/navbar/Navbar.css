@@ -26,8 +26,13 @@
     color: var(--white);
   }
 
+.navbar-text a {
+    background-color: transparent;
+    color: var(--white);
+}
+
 .navbar-text a:hover {
     background-color: transparent;
-    color: var(--black);
+    color: var(--white);
     text-decoration: underline;
 }
