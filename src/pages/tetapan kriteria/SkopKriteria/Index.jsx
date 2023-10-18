@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Table from "react-bootstrap/Table";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
@@ -6,34 +6,37 @@ import EditSkopKriteria from "./Edit";
 function IndexSkopKriteria() {
   return (
     <>
-      {/* Page header */}
-      <h1>SkopKriteria</h1>
+      {/* Page title section */}
+      <h2>Skop Kriteria</h2>
       <hr />
-      <h2>Tambah SkopKriteria</h2>
+      <h3 className="pageTitle">Tambah Skop Kriteria</h3>
 
-      <h3>Senarai SkopKriteria</h3>
-      <CreateSkopKriteria />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Skop Kriteria</h4>
+        <CreateSkopKriteria />
+        <hr />
 
-      {/* Table Senarai Skop Kriteria */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Skop Kriteria</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{/* Bilangan */}</td>
-            <td>{/* Nama Jenis Skop Kriteria */}</td>
-            <td>
-              <EditSkopKriteria />
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+        {/* Table Senarai Skop Kriteria */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Skop Kriteria</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{/* Bilangan */}</td>
+              <td>{/* Nama Jenis Skop Kriteria */}</td>
+              <td>
+                <EditSkopKriteria />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 }

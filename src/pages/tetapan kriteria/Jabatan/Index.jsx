@@ -6,36 +6,39 @@ import EditJabatan from "./Edit";
 function IndexJabatan() {
   return (
     <>
-      {/* Page header */}
-      <h1>Jabatan</h1>
+      {/* Page title section */}
+      <h2>Jabatan</h2>
       <hr />
-      <h2>Tambah Jabatan</h2>
+      <h3 className="pageTitle">Tambah Jabatan</h3>
 
-      <h3>Senarai Jabatan</h3>
-      <CreateJabatan />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Jabatan</h4>
+        <CreateJabatan />
+        <hr />
 
-      {/* Table Senarai Jabatan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Bahagian</th>
-            <th>Jabatan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{/* Bilangan */}</td>
-            <td>{/* Pull from table Bahagian */}</td>
-            <td>{/* Jabatan */}</td>
-            <td>
-              <EditJabatan />
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+        {/* Table Senarai Jabatan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Bahagian</th>
+              <th>Jabatan</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{/* Bilangan */}</td>
+              <td>{/* Pull from table Bahagian */}</td>
+              <td>{/* Jabatan */}</td>
+              <td>
+                <EditJabatan />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 }

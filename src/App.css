@@ -37,3 +37,11 @@ a {
   -webkit-text-size-adjust: 100%;
 }
 
+/* *********************** */
+/* VARIABLES */
+/* *********************** */
+.pageTitle {
+  color: var(--black);
+  text-align: left;
+  margin: 10px auto auto 10px;
+}

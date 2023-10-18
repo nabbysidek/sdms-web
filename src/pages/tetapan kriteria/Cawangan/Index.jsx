@@ -6,36 +6,41 @@ import EditCawangan from "./Edit";
 function IndexCawangan() {
   return (
     <>
-      {/* Page header */}
-      <h1>Cawangan</h1>
-      <hr />
-      <h2>Tambah Cawangan</h2>
+      {/* Page title section */}
+      <div className="pageTitle">
+        <h2>Cawangan</h2>
+        <hr />
+        <h3>Tambah Cawangan</h3>
+      </div>
 
-      <h3>Senarai Cawangan</h3>
-      <CreateCawangan />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Cawangan</h4>
+        <CreateCawangan />
+        <hr />
 
-      {/* Table Senarai Cawangan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Wilayah</th>
-            <th>Cawangan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{/* Bilangan */}</td>
-            <td>{/* Pull from table Wilayah */}</td>
-            <td>{/* Cawangan */}</td>
-            <td>
-              <EditCawangan />
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+        {/* Table Senarai Cawangan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Wilayah</th>
+              <th>Cawangan</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{/* Bilangan */}</td>
+              <td>{/* Pull from table Wilayah */}</td>
+              <td>{/* Cawangan */}</td>
+              <td>
+                <EditCawangan />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 }

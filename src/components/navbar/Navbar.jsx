@@ -7,7 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
 
 import SideBar from "../sidebar/SideBar";
-import UserIconMenu from "../showmenu/UserIconMenu";
+import UserIconMenu from "../navbar user menu/UserIconMenu";
 
 import "./Navbar.css";
 import aimLogo from "../../assets/aim-logo.svg";

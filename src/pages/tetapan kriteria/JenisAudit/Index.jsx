@@ -6,34 +6,37 @@ import EditJenisAudit from "./Edit";
 function IndexJenisAudit() {
   return (
     <>
-      {/* Page header */}
-      <h1>Jenis Audit</h1>
+      {/* Page title section */}
+      <h2>Jenis Audit</h2>
       <hr />
-      <h2>Tambah Jenis Audit</h2>
+      <h3 className="pageTitle">Tambah Jenis Audit</h3>
 
-      <h3>Senarai Jenis Audit</h3>
-      <CreateJenisAudit />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Jenis Audit</h4>
+        <CreateJenisAudit />
+        <hr />
 
-      {/* Table Senarai Jenis Audit */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Jenis Audit</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{/* Bilangan */}</td>
-            <td>{/* Nama Jenis Audit */}</td>
-            <td>
-              <EditJenisAudit />
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+        {/* Table Senarai Jenis Audit */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Jenis Audit</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{/* Bilangan */}</td>
+              <td>{/* Nama Jenis Audit */}</td>
+              <td>
+                <EditJenisAudit />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 }
