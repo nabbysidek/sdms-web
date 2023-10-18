@@ -8,9 +8,9 @@ import "./SideBar.css";
 
 function SideBar({ isMobile }) {
   const [isSideBarOpen, setSideBarOpen] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
   const [isTetapanKriteriaHovered, setIsTetapanKriteriaHovered] =
     useState(false);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
 
   // To minimize and expand sidebar
   const toggleSideBar = () => {
@@ -47,12 +47,20 @@ function SideBar({ isMobile }) {
               item.path === "/kriteriaketidakpatuhan" ? "tetapan-kriteria" : ""
             }`}
             onMouseEnter={() => {
-              if (!isMobileView) {
+              if (
+                !isMobileView &&
+                item.path === "/kriteriaketidakpatuhan" &&
+                isSideBarOpen
+              ) {
                 setIsTetapanKriteriaHovered(true);
               }
             }}
             onMouseLeave={() => {
-              if (!isMobileView) {
+              if (
+                !isMobileView &&
+                item.path === "/kriteriaketidakpatuhan" &&
+                isSideBarOpen
+              ) {
                 setIsTetapanKriteriaHovered(false);
               }
             }}
@@ -69,15 +77,18 @@ function SideBar({ isMobile }) {
                     item.icon
                   )}
                 </NavLink>
-                {item.path === "/kriteriaketidakpatuhan" && isMobileView && (
-                  <span className="dropdown-arrow">
-                    <FaSortDown size={15} style={{ marginTop: "-5px" }} />
-                  </span>
-                )}
+                {item.path === "/kriteriaketidakpatuhan" &&
+                  isMobileView &&
+                  isSideBarOpen && (
+                    <span className="dropdown-arrow">
+                      <FaSortDown size={15} style={{ marginTop: "-5px" }} />
+                    </span>
+                  )}
               </div>
               {isTetapanKriteriaHovered &&
                 item.path === "/kriteriaketidakpatuhan" &&
-                !isMobileView && <SubSideBar />}
+                !isMobileView &&
+                isSideBarOpen && <SubSideBar />}
             </div>
           </ListGroup.Item>
         ))}
