@@ -1,9 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import CreateSkopSemakan from "./Create";
 import EditSkopSemakan from "./Edit";
+import axios from "axios";
 
 function IndexSkopSemakan() {
+  // ----------FE----------
+  const [skopSemakans, setSkopSemakans] = useState([]);
+
+  // ----------BE----------
+  // List kriteria ketidakpatuhan
+  const fetchskopSemakans = async() => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan`);
+      setSkopSemakans(response.data);
+    } catch(error) {
+      console.error('Ralat dalam mengambil maklumat skop semakan:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchskopSemakans();
+
+    const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
+      fetchskopSemakans();
+    }, 5000);
+
+    // Cleanup the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <>
       {/* Page header */}
@@ -25,13 +53,13 @@ function IndexSkopSemakan() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{/* Bilangan */}</td>
-            <td>{/* Nama Jenis Skop Semakan */}</td>
-            <td>
-              <EditSkopSemakan />
-            </td>
-          </tr>
+          {skopSemakans.length > 0 && skopSemakans.map((skopSemakansData, key) => (
+            <tr key={key}>
+              <td>{key + 1}</td>
+              <td>{skopSemakansData.namaSkopSemakan}</td>
+              <td><EditSkopSemakan /></td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </>

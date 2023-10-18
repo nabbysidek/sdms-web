@@ -1,9 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import CreateBahagian from "./Create";
 import EditBahagian from "./Edit";
+import axios from "axios";
 
 function IndexBahagian() {
+  // ----------FE----------
+  const [bahagians, setBahagians] = useState([]);
+
+  // ----------BE----------
+  // List bahagian
+  const fetchBahagians = async() => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/bahagian`);
+      setBahagians(response.data);
+    } catch(error) {
+      console.error('Ralat dalam mengambil maklumat bahagian:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBahagians();
+
+    const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
+      fetchBahagians();
+    }, 5000);
+
+    // Cleanup the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <>
       {/* Page header */}
@@ -25,13 +53,13 @@ function IndexBahagian() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{/* Bilangan */}</td>
-            <td>{/* Bahagian */}</td>
-            <td>
-              <EditBahagian />
-            </td>
-          </tr>
+          {bahagians.length > 0 && bahagians.map((bahagiansData, key) => (
+            <tr key={key}>
+              <td>{key + 1}</td>
+              <td>{bahagiansData.namaBahagian}</td>
+              <td><EditBahagian /></td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </>
