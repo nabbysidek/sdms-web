@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import SearchLaporan from "./Search";
-import SearchResultLaporan from "./SearchResult";
 import Table from "react-bootstrap/Table";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
+import SearchLaporan from "./Search";
+import SearchResultLaporan from "./SearchResult";
 
 function Pelaporan() {
   return (

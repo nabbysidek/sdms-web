@@ -18,6 +18,7 @@ function IndexTetapanPengguna() {
             <tr>
               <th>Bil</th>
               <th>ID Kakitangan</th>
+              <th>Nama Kakitangan</th>
               <th>Emel Kakitangan</th>
               <th>Tindakan</th>
             </tr>
@@ -26,6 +27,7 @@ function IndexTetapanPengguna() {
             <tr>
               <td>{/* Bilangan */}</td>
               <td>{/* ID kakitangan */}</td>
+              <td>{/* Nama kakitangan */}</td>
               <td>{/* Emel kakitangan */}</td>
               <td>
                 {/* Fungsi: Allow access */}
@@ -43,6 +45,7 @@ function IndexTetapanPengguna() {
             <tr>
               <th>Bil</th>
               <th>ID Kakitangan</th>
+              <th>Nama Kakitangan</th>
               <th>Emel Kakitangan</th>
               <th>Peranan</th>
               <th>Tindakan</th>
@@ -52,6 +55,7 @@ function IndexTetapanPengguna() {
             <tr>
               <td>{/* Bilangan */}</td>
               <td>{/* ID kakitangan */}</td>
+              <td>{/* Nama kakitangan */}</td>
               <td>{/* Emel kakitangan */}</td>
               <td>{/* Fungsi: User level */}</td>
               <td>{/* Fungsi: Remove */}</td>
