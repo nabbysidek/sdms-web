@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import "react-datepicker/dist/react-datepicker.css";
 
 function TambahKetidakpatuhan() {
+  // To manage the state for the datepicker
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <>
       {/* Page title section */}
@@ -25,7 +34,12 @@ function TambahKetidakpatuhan() {
               <Form>
                 <Form.Group>
                   <Form.Label>Wilayah</Form.Label>
-                  <Form.Control type="text" placeholder="Masukkan wilayah" />
+                  <Form.Select aria-label="wilayahSelect">
+                    <option>Pilih wilayah</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Form>
             </Col>
@@ -33,7 +47,12 @@ function TambahKetidakpatuhan() {
               <Form>
                 <Form.Group>
                   <Form.Label>Cawangan</Form.Label>
-                  <Form.Control type="text" placeholder="Masukkan cawangan" />
+                  <Form.Select aria-label="cawanganSelect">
+                    <option>Pilih cawangan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Form>
             </Col>
@@ -49,7 +68,12 @@ function TambahKetidakpatuhan() {
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Jabatan</Form.Label>
-                  <Form.Control type="text" placeholder="Masukkan jabatan" />
+                  <Form.Select aria-label="jabatanSelect">
+                    <option>Pilih jabatan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Form>
             </Col>
@@ -57,11 +81,21 @@ function TambahKetidakpatuhan() {
               <Form>
                 <Form.Group>
                   <Form.Label>Bahagian</Form.Label>
-                  <Form.Control type="text" placeholder="Masukkan bahagian" />
+                  <Form.Select aria-label="bahagianSelect">
+                    <option>Pilih bahagian</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Unit</Form.Label>
-                  <Form.Control type="text" placeholder="Masukkan unit" />
+                  <Form.Select aria-label="unitSelect">
+                    <option>Pilih unit</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Form>
             </Col>
@@ -73,7 +107,12 @@ function TambahKetidakpatuhan() {
               <Form>
                 <Form.Group>
                   <Form.Label>Tahun Diaudit</Form.Label>
-                  <Form.Control type="text" placeholder="Tahun" />
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    dateFormat="dd/MM/yyyy"
+                    showYearDropdown
+                  />
                 </Form.Group>
               </Form>
             </Col>
@@ -81,7 +120,12 @@ function TambahKetidakpatuhan() {
               <Form>
                 <Form.Group>
                   <Form.Label>Jenis Audit</Form.Label>
-                  <Form.Control type="text" placeholder="Jenis Audit" />
+                  <Form.Select aria-label="jenisAuditSelect">
+                    <option>Pilih jenis audit</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Form>
             </Col>
@@ -89,10 +133,12 @@ function TambahKetidakpatuhan() {
               <Form>
                 <Form.Group>
                   <Form.Label>Skop Kriteria Ketidakpatuhan</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Skop kriteria ketidakpatuhan"
-                  />
+                  <Form.Select aria-label="skopKriteriaKetidakpatuhanSelect">
+                    <option>Pilih skop kriteria</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Form>
             </Col>
@@ -109,7 +155,26 @@ function TambahKetidakpatuhan() {
             <Form>
               <Form.Group>
                 <Form.Label>Tahap Risiko</Form.Label>
-                <Form.Control type="text" placeholder="Tajuk audit" />
+                <div>
+                  <Form.Check
+                    type="radio"
+                    label="Penipuan"
+                    name="tahapRisikoRadio"
+                    id="radioFraud"
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="Serah Dokumen"
+                    name="tahapRisikoRadio"
+                    id="radioSerahDoc"
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="Biasa"
+                    name="tahapRisikoRadio"
+                    id="radioBiasa"
+                  />
+                </div>
               </Form.Group>
             </Form>
           </Row>
@@ -117,7 +182,12 @@ function TambahKetidakpatuhan() {
             <Form>
               <Form.Group>
                 <Form.Label>Skop Semakan</Form.Label>
-                <Form.Control type="text" placeholder="Tajuk audit" />
+                <Form.Select aria-label="skopSemakanSelect">
+                  <option>Pilih skop semakan</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </Form.Select>
               </Form.Group>
             </Form>
           </Row>
@@ -125,7 +195,12 @@ function TambahKetidakpatuhan() {
             <Form>
               <Form.Group>
                 <Form.Label>Senarai Kesalahan</Form.Label>
-                <Form.Control type="text" placeholder="Tajuk audit" />
+                <Form.Select aria-label="senaraiKetidakpatuhanSelect">
+                  <option>Pilih kriteria ketidakpatuhan</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </Form.Select>
               </Form.Group>
             </Form>
           </Row>
@@ -139,8 +214,8 @@ function TambahKetidakpatuhan() {
           </Row>
         </Container>
       </div>
-      <Button variant="primary">Primary</Button>{" "}
-      <Button variant="secondary">Secondary</Button>{" "}
+      <Button variant="primary">Simpan</Button>{" "}
+      <Button variant="secondary">Batal</Button>{" "}
     </>
   );
 }

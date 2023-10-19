@@ -29,9 +29,12 @@ function Pelaporan() {
       {/* Page content section */}
       <div className="container-fluid">
         <h4 className="pageTitle">Senarai Ketidakpatuhan Kakitangan</h4>
-        <Link to="/tambahketidakpatuhan">
-          <button>Tambah Ketidakpatuhan Kakitangan</button>
-        </Link>
+        <span>
+          <Link to="/tambahketidakpatuhan">
+            <button>Tambah Ketidakpatuhan Kakitangan</button>
+          </Link>
+        </span>
+
         <hr />
         {/* Table Senarai Pelaporan Ketidakpatuhan Kakitangan */}
         <Table responsive>
