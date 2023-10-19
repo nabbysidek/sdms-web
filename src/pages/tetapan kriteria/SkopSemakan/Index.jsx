@@ -42,39 +42,42 @@ function IndexSkopSemakan() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>SkopSemakan</h1>
+      {/* Page title section */}
+      <h2>Skop Semakan</h2>
       <hr />
-      <h2>Tambah SkopSemakan</h2>
+      <h3 className="pageTitle">Tambah Skop Semakan</h3>
 
-      <h3>Senarai SkopSemakan</h3>
-      <CreateSkopSemakan />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Skop Semakan</h4>
+        <CreateSkopSemakan />
+        <hr />
 
-      {/* Table Senarai Skop Semakan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Skop Semakan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {skopSemakans.length > 0 && skopSemakans.map((skopSemakansData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{skopSemakansData.namaSkopSemakan}</td>
-              <td>
-                <EditSkopSemakan />
-                <Button variant="danger">Padam</Button>
-              </td>
+        {/* Table Senarai Skop Semakan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Skop Semakan</th>
+              <th>Tindakan</th>
             </tr>
+          </thead>
+          <tbody>
+          {skopSemakans.length > 0 && skopSemakans.map((skopSemakansData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{skopSemakansData.namaSkopSemakan}</td>
+                <td>
+                  <EditSkopSemakan />
+                <Button variant="danger">Padam</Button>
+                </td>
+              </tr>
           ))}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
     </>
   );
 }

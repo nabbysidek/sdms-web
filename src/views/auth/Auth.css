@@ -9,7 +9,8 @@
   margin: 0 auto;
 }
 
-.formHeader h1, h3 {
+.formHeader {
+    align-items: center;
     text-align: center;
     color: var(--white);
 }
@@ -38,7 +39,7 @@
 /* *********************** */
 .PageContainer {
   max-width: 1280px;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .FormContainer {
@@ -66,7 +67,10 @@
 
 .SignUpFormContainer {
   padding: 30px 40px 10px; 
+  max-width: 400px;
+  margin: 0 auto; 
 }
+
 
 .formFieldsContainer {
   display: flex;
@@ -85,20 +89,15 @@
   width: 100%;
 }
 
-.with-margin {
-  margin-right: 10px;
-}
-
 .Logo {
   width: 70%;
-  margin-left: 50px;
   padding-bottom: 10px;
 }
 
 .forgotPasswordCta {
   font-style: italic;
   text-align: right;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .FormLabel {
@@ -107,6 +106,21 @@
 
 .createAccountCta, .signInCta {
   margin-top: 12px;
+}
+
+/* Sign up form resizing */
+.with-margin {
+  margin-right: 10px;
+}
+
+.inputField {
+  height: 30px;
+  margin: 0 auto;
+}
+
+.formLabel {
+  color: var(--white);
+  margin: 2px auto;
 }
 
 body {

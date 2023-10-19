@@ -42,39 +42,42 @@ function IndexJenisAudit() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>Jenis Audit</h1>
+      {/* Page title section */}
+      <h2>Jenis Audit</h2>
       <hr />
-      <h2>Tambah Jenis Audit</h2>
+      <h3 className="pageTitle">Tambah Jenis Audit</h3>
 
-      <h3>Senarai Jenis Audit</h3>
-      <CreateJenisAudit />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Jenis Audit</h4>
+        <CreateJenisAudit />
+        <hr />
 
-      {/* Table Senarai Jenis Audit */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Jenis Audit</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
+        {/* Table Senarai Jenis Audit */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Jenis Audit</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
           {jenisAudits.length > 0 && jenisAudits.map((jenisAuditsData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{jenisAuditsData.namaJenisAudit}</td>
-              <td>
-                <EditJenisAudit />
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{jenisAuditsData.namaJenisAudit}</td>
+                <td>
+                  <EditJenisAudit />
                 <Button variant="danger">Padam</Button>
-              </td>
-          </tr>
+                </td>
+            </tr>
           ))}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
     </>
   );
 }

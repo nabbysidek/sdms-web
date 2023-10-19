@@ -42,37 +42,42 @@ function IndexBahagian() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>Bahagian</h1>
-      <hr />
-      <h2>Tambah Bahagian</h2>
+      {/* Page title section */}
+      <div className="pageTitle">
+        <h2>Bahagian</h2>
+        <hr />
+        <h3>Tambah Bahagian</h3>
+      </div>
 
-      <h3>Senarai Bahagian</h3>
-      <CreateBahagian />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Bahagian</h4>
+        <CreateBahagian />
+        <hr />
 
-      {/* Table Senarai Bahagian */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Bahagian</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bahagians.length > 0 && bahagians.map((bahagiansData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{bahagiansData.namaBahagian}</td>
-              <td>
-                <EditBahagian />
-                <Button variant="danger">Kemaskini</Button>
-              </td>
+        {/* Table Senarai Bahagian */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Bahagian</th>
+              <th>Tindakan</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {bahagians.length > 0 && bahagians.map((bahagiansData, key) => (
+            <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{bahagiansData.namaBahagian}</td>
+                <td>
+                  <EditBahagian />
+                  <Button variant="danger">Kemaskini</Button>
+              </td>
+              </tr>
+            ))}
         </tbody>
-      </Table>
+        </Table>
+      </div>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
     </>

@@ -42,41 +42,44 @@ function IndexKakitangan() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>Kakitangan</h1>
+      {/* Page title section */}
+      <h2>Kakitangan</h2>
       <hr />
-      <h2>Tambah Kakitangan</h2>
+      <h3 className="pageTitle">Tambah Kakitangan</h3>
 
-      <h3>Senarai Kakitangan</h3>
-      <CreateKakitangan />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Kakitangan</h4>
+        <CreateKakitangan />
+        <hr />
 
-      {/* Table Senarai Kakitangan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>ID Kakitangan</th>
-            <th>Nama Kakitangan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {kakitangans.length > 0 && kakitangans.map((kakitangansData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{kakitangansData.idKakitangan}</td>
-              <td>{kakitangansData.namaKakitangan}</td>
-              <td>
-                <EditKakitangan />
-                <Button variant="danger">Padam</Button>
-              </td>
+        {/* Table Senarai Kakitangan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>ID Kakitangan</th>
+              <th>Nama Kakitangan</th>
+              <th>Tindakan</th>
             </tr>
+          </thead>
+          <tbody>
+          {kakitangans.length > 0 && kakitangans.map((kakitangansData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{kakitangansData.idKakitangan}</td>
+                <td>{kakitangansData.namaKakitangan}</td>
+                <td>
+                  <EditKakitangan />
+                <Button variant="danger">Padam</Button>
+                </td>
+              </tr>
           ))}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
     </>
   );
 }

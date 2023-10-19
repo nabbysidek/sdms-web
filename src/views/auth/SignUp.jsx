@@ -36,7 +36,7 @@ function SignUp() {
   };
 
   return (
-    <PageContainer>
+    <PageContainer className="signUpResize">
       <Form
         className="SignUpFormContainer FormContainer"
         onSubmit={handleSubmit(onSubmit)}
@@ -50,7 +50,7 @@ function SignUp() {
 
         {/* SIGN IN FORM CONTENT */}
         <Form.Group className="mb-3" controlId="staffName">
-          <Form.Label className="FormLabel">Nama Kakitangan</Form.Label>
+          <Form.Label className="formLabel">Nama Kakitangan</Form.Label>
           <Controller
             name="staffName"
             control={control}
@@ -58,6 +58,7 @@ function SignUp() {
             rules={{ required: "Nama kakitangan diperlukan" }}
             render={({ field }) => (
               <Form.Control
+                className="inputField"
                 type="text"
                 placeholder="Aina binti Abdul"
                 {...field}
@@ -67,20 +68,25 @@ function SignUp() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffId">
-          <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
+          <Form.Label className="formLabel">Id Kakitangan</Form.Label>
           <Controller
             name="staffId"
             control={control}
             defaultValue=""
             rules={{ required: "ID kakitangan diperlukan" }}
             render={({ field }) => (
-              <Form.Control type="text" placeholder="123456" {...field} />
+              <Form.Control
+                className="inputField"
+                type="text"
+                placeholder="123456"
+                {...field}
+              />
             )}
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffEmail">
-          <Form.Label className="FormLabel">Emel Kakitangan</Form.Label>
+          <Form.Label className="formLabel">Emel Kakitangan</Form.Label>
           <Controller
             name="staffEmail"
             control={control}
@@ -88,6 +94,7 @@ function SignUp() {
             rules={{ required: "Kata laluan diperlukan" }}
             render={({ field }) => (
               <Form.Control
+                className="inputField"
                 type="email"
                 placeholder="nama@aim.gov.my"
                 {...field}
@@ -99,7 +106,7 @@ function SignUp() {
         <div className="formFieldsContainer">
           <div className="formFieldPair">
             <Form.Group className="mb-3 with-margin" controlId="staffPassword">
-              <Form.Label className="FormLabel">Kata Laluan</Form.Label>
+              <Form.Label className="formLabel">Kata Laluan</Form.Label>
               <Controller
                 name="staffPassword"
                 control={control}
@@ -107,6 +114,7 @@ function SignUp() {
                 rules={{ required: "Kata laluan diperlukan" }}
                 render={({ field }) => (
                   <Form.Control
+                    className="inputField"
                     type="password"
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
                     {...field}
@@ -116,7 +124,7 @@ function SignUp() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="staffConfirmPassword">
-              <Form.Label className="FormLabel">Ulang Kata Laluan</Form.Label>
+              <Form.Label className="formLabel">Ulang Kata Laluan</Form.Label>
               <Controller
                 name="staffConfirmPassword"
                 control={control}
@@ -124,6 +132,7 @@ function SignUp() {
                 rules={{ required: "Kata laluan diperlukan" }}
                 render={({ field }) => (
                   <Form.Control
+                    className="inputField"
                     type="password"
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
                     {...field}

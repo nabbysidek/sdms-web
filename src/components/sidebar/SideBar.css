@@ -8,17 +8,16 @@
 }
 
 .list-group-item {
+    margin: 7px 0 0 -2px;
     margin-top:7px;
     padding-bottom: 10px;
 }
 
-.list-group-item.desktop-hover:hover {
-    color: var(--black);
+.nav-link:hover {
     text-decoration: underline;
 }
 
 .sidebar-icon {
-    margin-left: 5px;
     margin-right: 5px;
 }
 

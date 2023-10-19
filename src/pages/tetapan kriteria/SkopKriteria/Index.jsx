@@ -42,39 +42,42 @@ function IndexSkopKriteria() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>SkopKriteria</h1>
+      {/* Page title section */}
+      <h2>Skop Kriteria</h2>
       <hr />
-      <h2>Tambah SkopKriteria</h2>
+      <h3 className="pageTitle">Tambah Skop Kriteria</h3>
 
-      <h3>Senarai SkopKriteria</h3>
-      <CreateSkopKriteria />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Skop Kriteria</h4>
+        <CreateSkopKriteria />
+        <hr />
 
-      {/* Table Senarai Skop Kriteria */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Skop Kriteria</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {skopKriterias.length > 0 && skopKriterias.map((skopKriteriasData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{skopKriteriasData.namaSkopKriteria}</td>
-              <td>
-                <EditSkopKriteria />
-                <Button variant="danger">Padam</Button>
-              </td>
+        {/* Table Senarai Skop Kriteria */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Skop Kriteria</th>
+              <th>Tindakan</th>
             </tr>
+          </thead>
+          <tbody>
+          {skopKriterias.length > 0 && skopKriterias.map((skopKriteriasData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{skopKriteriasData.namaSkopKriteria}</td>
+                <td>
+                  <EditSkopKriteria />
+                <Button variant="danger">Padam</Button>
+                </td>
+              </tr>
           ))}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
     </>
   );
 }

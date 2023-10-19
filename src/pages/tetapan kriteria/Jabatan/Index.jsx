@@ -51,41 +51,44 @@ function IndexJabatan() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>Jabatan</h1>
+      {/* Page title section */}
+      <h2>Jabatan</h2>
       <hr />
-      <h2>Tambah Jabatan</h2>
+      <h3 className="pageTitle">Tambah Jabatan</h3>
 
-      <h3>Senarai Jabatan</h3>
-      <CreateJabatan />
-      <hr />
+      {/* Page content section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Jabatan</h4>
+        <CreateJabatan />
+        <hr />
 
-      {/* Table Senarai Jabatan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Bahagian</th>
-            <th>Jabatan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {jabatans.length > 0 && jabatans.map((jabatansData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{jabatansData.bahagian ? jabatansData.bahagian.namaBahagian: "N/A"}</td>
-              <td>{jabatansData.namaJabatan}</td>
-              <td>
-                <EditJabatan />
-                <Button variant="danger">Padam</Button>
-              </td>
+        {/* Table Senarai Jabatan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Bahagian</th>
+              <th>Jabatan</th>
+              <th>Tindakan</th>
             </tr>
+          </thead>
+          <tbody>
+          {jabatans.length > 0 && jabatans.map((jabatansData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{jabatansData.bahagian ? jabatansData.bahagian.namaBahagian: "N/A"}</td>
+                <td>{jabatansData.namaJabatan}</td>
+                <td>
+                  <EditJabatan />
+                <Button variant="danger">Padam</Button>
+                </td>
+              </tr>
           ))}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
     </>
   );
 }

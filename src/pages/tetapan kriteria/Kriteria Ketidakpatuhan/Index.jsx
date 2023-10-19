@@ -42,14 +42,16 @@ function IndexKriteriaKetidakpatuhan() {
 
   return (
     <>
-      {/* Page header */}
-      <h1>Tetapan Kriteria</h1>
+      {/* Page title section */}
+      <h2>Kriteria Ketidakpatuhan</h2>
       <hr />
-      <h2>Tambah Kriteria Ketidakpatuhan</h2>
+      <h3 className="pageTitle">Tambah Kriteria Ketidakpatuhan</h3>
 
-      <h3>Senarai Kriteria Ketidakpatuhan</h3>
-      <CreateKriteriaKetidakpatuhan />
-      <hr />
+      {/* Page title section */}
+      <div className="container-fluid">
+        <h4 className="pageTitle">Senarai Kriteria Ketidakpatuhan</h4>
+        <CreateKriteriaKetidakpatuhan />
+        <hr />
 
       {/* Table Senarai Kriteria Ketidakpatuhan */}
       <Table responsive>
