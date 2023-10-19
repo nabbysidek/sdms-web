@@ -209,7 +209,7 @@ function TambahKetidakpatuhan() {
             <Form>
               <Form.Group>
                 <Form.Label>Catatan</Form.Label>
-                <Form.Control type="text" placeholder="Tajuk audit" />
+                <Form.Control as="textarea" rows={3} />
               </Form.Group>
             </Form>
           </Row>

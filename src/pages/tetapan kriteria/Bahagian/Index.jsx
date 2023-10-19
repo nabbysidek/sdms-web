@@ -13,6 +13,11 @@ function IndexBahagian() {
         <h3>Tambah Bahagian</h3>
       </div>
 
+      {/* Search function section */}
+      <Container>
+        <div className="searchBahagian"></div>
+      </Container>
+
       {/* Page content section */}
       <div className="container-fluid">
         <h4 className="pageTitle">Senarai Bahagian</h4>
