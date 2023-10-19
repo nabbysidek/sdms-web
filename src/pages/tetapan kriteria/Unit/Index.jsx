@@ -41,7 +41,7 @@ function IndexUnit() {
    }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Unit</h2>
       <hr />
@@ -65,7 +65,7 @@ function IndexUnit() {
             </tr>
           </thead>
           <tbody>
-          {units.length > 0 && units.map((unitsData, key) => (
+            {units.length > 0 && units.map((unitsData, key) => (
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{unitsData.bahagian ? unitsData.bahagian.namaBahagian: "N/A"}</td>
@@ -73,16 +73,16 @@ function IndexUnit() {
                 <td>{unitsData.namaUnit}</td>
                 <td>
                   <EditUnit />
-                <Button variant="danger">Padam</Button>
+                  <Button variant="danger">Padam</Button>
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 

@@ -50,7 +50,7 @@ function IndexJabatan() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Jabatan</h2>
       <hr />
@@ -73,23 +73,23 @@ function IndexJabatan() {
             </tr>
           </thead>
           <tbody>
-          {jabatans.length > 0 && jabatans.map((jabatansData, key) => (
+            {jabatans.length > 0 && jabatans.map((jabatansData, key) => (
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{jabatansData.bahagian ? jabatansData.bahagian.namaBahagian: "N/A"}</td>
                 <td>{jabatansData.namaJabatan}</td>
                 <td>
                   <EditJabatan />
-                <Button variant="danger">Padam</Button>
+                  <Button variant="danger">Padam</Button>
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 

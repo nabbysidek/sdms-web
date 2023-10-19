@@ -41,7 +41,7 @@ function IndexCawangan() {
   }, [currentPage, totalPage]);
   
   return (
-    <>
+    <div>
       {/* Page title section */}
       <div className="pageTitle">
         <h2>Cawangan</h2>
@@ -55,33 +55,34 @@ function IndexCawangan() {
         <CreateCawangan />
         <hr />
 
-      {/* Table Senarai Cawangan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Wilayah</th>
-            <th>Cawangan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cawangans.length > 0 && cawangans.map((cawangansData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{cawangansData.wilayah ? cawangansData.wilayah.namaWilayah: "N/A"}</td>
-              <td>{cawangansData.namaCawangan}</td>
-              <td>
-                <EditCawangan />
-                <Button variant="danger">Padam</Button>
-              </td>
+        {/* Table Senarai Cawangan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Wilayah</th>
+              <th>Cawangan</th>
+              <th>Tindakan</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {cawangans.length > 0 && cawangans.map((cawangansData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{cawangansData.wilayah ? cawangansData.wilayah.namaWilayah: "N/A"}</td>
+                <td>{cawangansData.namaCawangan}</td>
+                <td>
+                  <EditCawangan />
+                  <Button variant="danger">Padam</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
-    </>
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
+    </div>
   );
 }
 

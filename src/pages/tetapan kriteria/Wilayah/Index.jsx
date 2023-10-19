@@ -43,7 +43,7 @@ function IndexWilayah() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Wilayah</h2>
       <hr />
@@ -71,16 +71,16 @@ function IndexWilayah() {
                 <td>{wilayahsData.namaWilayah}</td>
                 <td>
                   <EditWilayah />
-                <Button variant="danger">Padam</Button>
+                  <Button variant="danger">Padam</Button>
                 </td>
               </tr>
           ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 

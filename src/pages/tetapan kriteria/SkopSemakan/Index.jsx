@@ -41,7 +41,7 @@ function IndexSkopSemakan() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Skop Semakan</h2>
       <hr />
@@ -63,22 +63,22 @@ function IndexSkopSemakan() {
             </tr>
           </thead>
           <tbody>
-          {skopSemakans.length > 0 && skopSemakans.map((skopSemakansData, key) => (
+            {skopSemakans.length > 0 && skopSemakans.map((skopSemakansData, key) => (
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{skopSemakansData.namaSkopSemakan}</td>
                 <td>
                   <EditSkopSemakan />
-                <Button variant="danger">Padam</Button>
+                  <Button variant="danger">Padam</Button>
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 

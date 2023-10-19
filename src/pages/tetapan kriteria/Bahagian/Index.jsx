@@ -41,7 +41,7 @@ function IndexBahagian() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <div className="pageTitle">
         <h2>Bahagian</h2>
@@ -75,12 +75,12 @@ function IndexBahagian() {
               </td>
               </tr>
             ))}
-        </tbody>
+          </tbody>
         </Table>
       </div>
 
       <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
-    </>
+    </div>
   );
 }
 

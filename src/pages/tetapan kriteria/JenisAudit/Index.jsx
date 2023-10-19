@@ -41,7 +41,7 @@ function IndexJenisAudit() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Jenis Audit</h2>
       <hr />
@@ -63,22 +63,22 @@ function IndexJenisAudit() {
             </tr>
           </thead>
           <tbody>
-          {jenisAudits.length > 0 && jenisAudits.map((jenisAuditsData, key) => (
+            {jenisAudits.length > 0 && jenisAudits.map((jenisAuditsData, key) => (
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{jenisAuditsData.namaJenisAudit}</td>
                 <td>
                   <EditJenisAudit />
-                <Button variant="danger">Padam</Button>
+                  <Button variant="danger">Padam</Button>
                 </td>
-            </tr>
-          ))}
+              </tr>
+            ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 

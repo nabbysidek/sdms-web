@@ -41,7 +41,7 @@ function IndexKakitangan() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Kakitangan</h2>
       <hr />
@@ -64,7 +64,7 @@ function IndexKakitangan() {
             </tr>
           </thead>
           <tbody>
-          {kakitangans.length > 0 && kakitangans.map((kakitangansData, key) => (
+            {kakitangans.length > 0 && kakitangans.map((kakitangansData, key) => (
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{kakitangansData.idKakitangan}</td>
@@ -74,13 +74,13 @@ function IndexKakitangan() {
                 <Button variant="danger">Padam</Button>
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 

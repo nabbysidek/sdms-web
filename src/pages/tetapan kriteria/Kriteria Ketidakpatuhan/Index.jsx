@@ -41,7 +41,7 @@ function IndexKriteriaKetidakpatuhan() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Kriteria Ketidakpatuhan</h2>
       <hr />
@@ -53,35 +53,36 @@ function IndexKriteriaKetidakpatuhan() {
         <CreateKriteriaKetidakpatuhan />
         <hr />
 
-      {/* Table Senarai Kriteria Ketidakpatuhan */}
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Skop Kriteria</th>
-            <th>Kod Kriteria</th>
-            <th>Nama Kriteria Ketidakpatuhan</th>
-            <th>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {kriteriaKetidakpatuhans.length > 0 && kriteriaKetidakpatuhans.map((kriteriaKetidakpatuhansData, key) => (
-            <tr key={key}>
-              <td>{key + 1}</td>
-              <td>{kriteriaKetidakpatuhansData.skop_kriteria ? kriteriaKetidakpatuhansData.skop_kriteria.namaSkopKriteria : "N/A"}</td>
-              <td>{kriteriaKetidakpatuhansData.kodKriteria}</td>
-              <td>{kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}</td>
-              <td>
-                <EditKriteriaKetidakpatuhan />
-                <Button variant="danger">Padam</Button>
-              </td>
+        {/* Table Senarai Kriteria Ketidakpatuhan */}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Skop Kriteria</th>
+              <th>Kod Kriteria</th>
+              <th>Nama Kriteria Ketidakpatuhan</th>
+              <th>Tindakan</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {kriteriaKetidakpatuhans.length > 0 && kriteriaKetidakpatuhans.map((kriteriaKetidakpatuhansData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{kriteriaKetidakpatuhansData.skop_kriteria ? kriteriaKetidakpatuhansData.skop_kriteria.namaSkopKriteria : "N/A"}</td>
+                <td>{kriteriaKetidakpatuhansData.kodKriteria}</td>
+                <td>{kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}</td>
+                <td>
+                  <EditKriteriaKetidakpatuhan />
+                  <Button variant="danger">Padam</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
-    </>
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+      </div>
+    </div>
   );
 }
 

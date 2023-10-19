@@ -41,7 +41,7 @@ function IndexSkopKriteria() {
   }, [currentPage, totalPage]);
 
   return (
-    <>
+    <div>
       {/* Page title section */}
       <h2>Skop Kriteria</h2>
       <hr />
@@ -63,7 +63,7 @@ function IndexSkopKriteria() {
             </tr>
           </thead>
           <tbody>
-          {skopKriterias.length > 0 && skopKriterias.map((skopKriteriasData, key) => (
+            {skopKriterias.length > 0 && skopKriterias.map((skopKriteriasData, key) => (
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{skopKriteriasData.namaSkopKriteria}</td>
@@ -72,13 +72,13 @@ function IndexSkopKriteria() {
                 <Button variant="danger">Padam</Button>
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </Table>
 
-      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }
 
