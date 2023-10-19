@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import SearchLaporan from "./Search";
 import SearchResultLaporan from "./SearchResult";
 import Table from "react-bootstrap/Table";
+import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
 
 function Pelaporan() {
   return (
@@ -8,6 +10,12 @@ function Pelaporan() {
       {/* Page title section */}
       <h2 className="pageTitle">Pelaporan</h2>
       <hr />
+
+      {/* Page search section */}
+      <div className="container-fluid searchSection">
+        <h4>Cari Kakitangan</h4>
+        <CreateKakitangan />
+      </div>
 
       <div className="pageTitle">
         <h4>Maklumat Kakitangan</h4>
@@ -21,6 +29,9 @@ function Pelaporan() {
       {/* Page content section */}
       <div className="container-fluid">
         <h4 className="pageTitle">Senarai Ketidakpatuhan Kakitangan</h4>
+        <Link to="/tambahketidakpatuhan">
+          <button>Tambah Ketidakpatuhan Kakitangan</button>
+        </Link>
         <hr />
         {/* Table Senarai Pelaporan Ketidakpatuhan Kakitangan */}
         <Table responsive>

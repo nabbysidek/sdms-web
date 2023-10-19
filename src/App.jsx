@@ -10,6 +10,7 @@ import NoPage from "./pages/NoPage";
 import Profile from "./pages/profil/Profil";
 import Dashboard from "./pages/dashboard/Index";
 import Pelaporan from "./pages/pelaporan/Pelaporan";
+import TambahKetidakpatuhan from "./pages/pelaporan/TambahKetidakpatuhan";
 import Laporan from "./pages/laporan/Laporan";
 import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/Index";
 import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/Index";
@@ -39,6 +40,10 @@ function App() {
 
             {/* ROUTE PELAPORAN */}
             <Route path="/pelaporan" element={<Pelaporan />} />
+            <Route
+              path="/tambahketidakpatuhan"
+              element={<TambahKetidakpatuhan />}
+            />
 
             {/* ROUTE LAPORAN */}
             <Route path="/laporan" element={<Laporan />} />

@@ -10,6 +10,11 @@ function Laporan() {
       <h2 className="pageTitle">Laporan</h2>
       <hr />
 
+      {/* Page search section */}
+      <div className="container-fluid searchSection">
+        <h4>Cari Laporan Ketidakpatuhan</h4>
+      </div>
+
       {/* Page content section */}
       <div className="container-fluid">
         <h4 className="pageTitle">Senarai Laporan Ketidakpatuhan Kakitangan</h4>
