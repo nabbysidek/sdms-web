@@ -17,7 +17,12 @@ function EditCawangan() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditCawangan} onHide={handleCloseEditCawangan}>
+      <Modal
+        show={showEditCawangan}
+        onHide={handleCloseEditCawangan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Cawangan</Modal.Title>
         </Modal.Header>

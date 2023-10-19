@@ -17,7 +17,12 @@ function EditJabatan() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditJabatan} onHide={handleCloseEditJabatan}>
+      <Modal
+        show={showEditJabatan}
+        onHide={handleCloseEditJabatan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Jabatan</Modal.Title>
         </Modal.Header>

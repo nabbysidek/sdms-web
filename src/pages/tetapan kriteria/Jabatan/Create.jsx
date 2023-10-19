@@ -17,7 +17,12 @@ function CreateJabatan() {
         Tambah Jabatan
       </Button>
 
-      <Modal show={showCreateJabatan} onHide={handleCloseCreateJabatan}>
+      <Modal
+        show={showCreateJabatan}
+        onHide={handleCloseCreateJabatan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Jabatan</Modal.Title>
         </Modal.Header>

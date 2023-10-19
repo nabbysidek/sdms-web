@@ -17,7 +17,12 @@ function EditBahagian() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditBahagian} onHide={handleCloseEditBahagian}>
+      <Modal
+        show={showEditBahagian}
+        onHide={handleCloseEditBahagian}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Bahagian</Modal.Title>
         </Modal.Header>

@@ -17,7 +17,12 @@ function CreateKriteriaKetidakpatuhan() {
         Tambah Kriteria Ketidakpatuhan
       </Button>
 
-      <Modal show={showCreateKriteria} onHide={handleCloseCreateKriteria}>
+      <Modal
+        show={showCreateKriteria}
+        onHide={handleCloseCreateKriteria}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Kriteria Ketidakpatuhan</Modal.Title>
         </Modal.Header>

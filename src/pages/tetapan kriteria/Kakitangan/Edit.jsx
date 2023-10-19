@@ -17,7 +17,12 @@ function EditKakitangan() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditKakitangan} onHide={handleCloseEditKakitangan}>
+      <Modal
+        show={showEditKakitangan}
+        onHide={handleCloseEditKakitangan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Kakitangan</Modal.Title>
         </Modal.Header>

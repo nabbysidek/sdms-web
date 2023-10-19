@@ -17,7 +17,12 @@ function CreateBahagian() {
         Tambah Bahagian
       </Button>
 
-      <Modal show={showCreateBahagian} onHide={handleCloseCreateBahagian}>
+      <Modal
+        show={showCreateBahagian}
+        onHide={handleCloseCreateBahagian}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Bahagian</Modal.Title>
         </Modal.Header>

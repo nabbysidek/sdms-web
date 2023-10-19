@@ -17,7 +17,12 @@ function CreateKakitangan() {
         Tambah Kakitangan
       </Button>
 
-      <Modal show={showCreateKakitangan} onHide={handleCloseCreateKakitangan}>
+      <Modal
+        show={showCreateKakitangan}
+        onHide={handleCloseCreateKakitangan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Kakitangan</Modal.Title>
         </Modal.Header>

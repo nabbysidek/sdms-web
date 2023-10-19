@@ -17,7 +17,12 @@ function CreateWilayah() {
         Tambah Wilayah
       </Button>
 
-      <Modal show={showCreateWilayah} onHide={handleCloseCreateWilayah}>
+      <Modal
+        show={showCreateWilayah}
+        onHide={handleCloseCreateWilayah}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Wilayah</Modal.Title>
         </Modal.Header>

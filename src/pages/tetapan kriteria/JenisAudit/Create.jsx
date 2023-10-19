@@ -17,7 +17,12 @@ function CreateJenisAudit() {
         Tambah Jenis Audit
       </Button>
 
-      <Modal show={showCreateJenisAudit} onHide={handleCloseCreateJenisAudit}>
+      <Modal
+        show={showCreateJenisAudit}
+        onHide={handleCloseCreateJenisAudit}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Jenis Audit</Modal.Title>
         </Modal.Header>

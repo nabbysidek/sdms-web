@@ -20,6 +20,8 @@ function CreateSkopKriteria() {
       <Modal
         show={showCreateSkopKriteria}
         onHide={handleCloseCreateSkopKriteria}
+        backdrop="static"
+        keyboard={false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Skop Kriteria</Modal.Title>

@@ -17,7 +17,12 @@ function CreateUnit() {
         Tambah Unit
       </Button>
 
-      <Modal show={showCreateUnit} onHide={handleCloseCreateUnit}>
+      <Modal
+        show={showCreateUnit}
+        onHide={handleCloseCreateUnit}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Unit</Modal.Title>
         </Modal.Header>

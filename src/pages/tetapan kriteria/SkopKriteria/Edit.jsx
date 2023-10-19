@@ -17,7 +17,12 @@ function EditSkopKriteria() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditSkopKriteria} onHide={handleCloseEditSkopKriteria}>
+      <Modal
+        show={showEditSkopKriteria}
+        onHide={handleCloseEditSkopKriteria}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Skop Kriteria</Modal.Title>
         </Modal.Header>

@@ -17,7 +17,12 @@ function EditKriteriaKetidakpatuhan() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditKriteria} onHide={handleCloseEditKriteria}>
+      <Modal
+        show={showEditKriteria}
+        onHide={handleCloseEditKriteria}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Kriteria Ketidakpatuhan</Modal.Title>
         </Modal.Header>

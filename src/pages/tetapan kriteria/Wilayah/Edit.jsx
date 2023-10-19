@@ -17,7 +17,12 @@ function EditWilayah() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditWilayah} onHide={handleCloseEditWilayah}>
+      <Modal
+        show={showEditWilayah}
+        onHide={handleCloseEditWilayah}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Wilayah</Modal.Title>
         </Modal.Header>

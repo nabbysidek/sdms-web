@@ -17,7 +17,12 @@ function CreateCawangan() {
         Tambah Cawangan
       </Button>
 
-      <Modal show={showCreateCawangan} onHide={handleCloseCreateCawangan}>
+      <Modal
+        show={showCreateCawangan}
+        onHide={handleCloseCreateCawangan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Cawangan</Modal.Title>
         </Modal.Header>

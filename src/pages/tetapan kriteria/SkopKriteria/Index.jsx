@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { Form, Button } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
 
@@ -10,6 +11,19 @@ function IndexSkopKriteria() {
       <h2>Skop Kriteria</h2>
       <hr />
       <h3 className="pageTitle">Tambah Skop Kriteria</h3>
+
+      {/* Search function section */}
+      <div className="container-fluid">
+        <Form>
+          <Form.Group>
+            <Form.Control
+              type="text"
+              placeholder="Nama bahagian"
+            ></Form.Control>
+          </Form.Group>
+        </Form>
+        <Button variant="primary">Cari</Button>{" "}
+      </div>
 
       {/* Page content section */}
       <div className="container-fluid">

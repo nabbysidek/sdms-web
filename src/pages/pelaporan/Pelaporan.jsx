@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import { Form, Button } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
 import SearchLaporan from "./Search";
 import SearchResultLaporan from "./SearchResult";
@@ -14,6 +15,19 @@ function Pelaporan() {
       {/* Page search section */}
       <div className="container-fluid searchSection">
         <h4>Cari Kakitangan</h4>
+
+        {/* Search function section */}
+        <div className="container-fluid">
+          <Form>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                placeholder="ID atau nama kakitangan"
+              ></Form.Control>
+            </Form.Group>
+          </Form>
+          <Button variant="primary">Cari</Button>{" "}
+        </div>
         <CreateKakitangan />
       </div>
 

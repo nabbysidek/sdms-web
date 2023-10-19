@@ -17,7 +17,12 @@ function CreateSkopSemakan() {
         Tambah Skop Semakan
       </Button>
 
-      <Modal show={showCreateSkopSemakan} onHide={handleCloseCreateSkopSemakan}>
+      <Modal
+        show={showCreateSkopSemakan}
+        onHide={handleCloseCreateSkopSemakan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Skop Semakan</Modal.Title>
         </Modal.Header>

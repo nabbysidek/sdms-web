@@ -17,7 +17,12 @@ function EditUnit() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditUnit} onHide={handleCloseEditUnit}>
+      <Modal
+        show={showEditUnit}
+        onHide={handleCloseEditUnit}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Unit</Modal.Title>
         </Modal.Header>

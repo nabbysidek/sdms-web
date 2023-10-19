@@ -17,7 +17,12 @@ function EditSkopSemakan() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditSkopSemakan} onHide={handleCloseEditSkopSemakan}>
+      <Modal
+        show={showEditSkopSemakan}
+        onHide={handleCloseEditSkopSemakan}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Kemaskini Skop Semakan</Modal.Title>
         </Modal.Header>

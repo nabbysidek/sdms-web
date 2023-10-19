@@ -17,7 +17,12 @@ function EditJenisAudit() {
         Kemaskini
       </Button>
 
-      <Modal show={showEditJenisAudit} onHide={handleCloseEditJenisAudit}>
+      <Modal
+        show={showEditJenisAudit}
+        onHide={handleCloseEditJenisAudit}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tambah Jenis Audit</Modal.Title>
         </Modal.Header>
