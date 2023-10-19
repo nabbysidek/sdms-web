@@ -28,6 +28,7 @@ function TambahKetidakpatuhan() {
             </div>
           </div>
 
+          {/* Form Tambah ketidakpatuhan */}
           <Row>
             <h6>Lokasi</h6>
             <Col>
