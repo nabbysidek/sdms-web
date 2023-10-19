@@ -2,31 +2,39 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import CreateJabatan from "./Create";
 import EditJabatan from "./Edit";
+import PaginationTable from "../../../components/pagination/PaginationTable";
+import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 function IndexJabatan() {
   // ----------FE----------
   const [jabatans, setJabatans] = useState([]);
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
+  const [totalPage, setTotalPage] = useState(1);
+
   // ----------BE----------
   // List jabatan
-  const fetchJabatans = async() => {
+  const fetchJabatans = async(page) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/jabatan`);
-      setJabatans([response.data]); // Update the state with the array of objects
+      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/jabatan?page=${page}`);
+      setJabatans(response.data.data); // Update the state with the array of objects
+      setTotalPage(response.data.last_page);
     } catch(error) {
       console.error('Ralat dalam mengambil maklumat jabatan:', error);
     }
   };
 
   useEffect(() => {
-    fetchJabatans();
+    fetchJabatans(currentPage);
 
     const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
-      fetchJabatans();
+      fetchJabatans(currentPage);
 
       const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
-        fetchJabatans();
+        const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
+        fetchJabatans(nextPage);
       }, 5000);
   
       // Cleanup the interval when the component unmounts
@@ -39,7 +47,7 @@ function IndexJabatan() {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [currentPage, totalPage]);
 
   return (
     <>
@@ -63,16 +71,21 @@ function IndexJabatan() {
           </tr>
         </thead>
         <tbody>
-          {jabatans.length > 0 && jabatans[0].map((jabatansData, key) => (
+          {jabatans.length > 0 && jabatans.map((jabatansData, key) => (
             <tr key={key}>
               <td>{key + 1}</td>
               <td>{jabatansData.bahagian ? jabatansData.bahagian.namaBahagian: "N/A"}</td>
               <td>{jabatansData.namaJabatan}</td>
-              <td><EditJabatan /></td>
+              <td>
+                <EditJabatan />
+                <Button variant="danger">Padam</Button>
+              </td>
             </tr>
           ))}
         </tbody>
       </Table>
+
+      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
     </>
   );
 }

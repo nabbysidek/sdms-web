@@ -2,35 +2,43 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import CreateKakitangan from "./Create";
 import EditKakitangan from "./Edit";
+import PaginationTable from "../../../components/pagination/PaginationTable";
+import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 function IndexKakitangan() {
   // ----------FE----------
   const [kakitangans, setKakitangans] = useState([]);
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
+  const [totalPage, setTotalPage] = useState(1);
+
   // ----------BE----------
   // List kakitangn
-  const fetchKakitangans = async() => {
+  const fetchKakitangans = async(page) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan`);
-      setKakitangans(response.data);
+      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan?page=${page}`);
+      setKakitangans(response.data.data);
+      setTotalPage(response.data.last_page);
     } catch(error) {
       console.error('Ralat dalam mengambil maklumat kakitangan:', error);
     }
   };
 
   useEffect(() => {
-    fetchKakitangans();
+    fetchKakitangans(currentPage);
 
     const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
-      fetchKakitangans();
+      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
+      fetchKakitangans(nextPage);
     }, 5000);
 
     // Cleanup the interval when the component unmounts
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [currentPage, totalPage]);
 
   return (
     <>
@@ -59,11 +67,16 @@ function IndexKakitangan() {
               <td>{key + 1}</td>
               <td>{kakitangansData.idKakitangan}</td>
               <td>{kakitangansData.namaKakitangan}</td>
-              <td><EditKakitangan /></td>
+              <td>
+                <EditKakitangan />
+                <Button variant="danger">Padam</Button>
+              </td>
             </tr>
           ))}
         </tbody>
       </Table>
+
+      <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
     </>
   );
 }
