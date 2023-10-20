@@ -69,7 +69,7 @@ function IndexKriteriaKetidakpatuhan() {
               <tr key={key}>
                 <td>{key + 1}</td>
                 <td>{kriteriaKetidakpatuhansData.skop_kriteria ? kriteriaKetidakpatuhansData.skop_kriteria.namaSkopKriteria : "N/A"}</td>
-                <td>{kriteriaKetidakpatuhansData.kodKriteria}</td>
+                <td>{kriteriaKetidakpatuhansData.kodKriteriaKetidakpatuhan}</td>
                 <td>{kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}</td>
                 <td>
                   <EditKriteriaKetidakpatuhan />
