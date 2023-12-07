@@ -1,11 +1,10 @@
 import React from "react";
 import { useState } from "react";
-// import { render } from "react-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "./ForgotPasswordModal.css";
 
-function ForgotPasswordModal({ onClose }) {
+function ModalForgotPassword({ onClose }) {
   const [step, setStep] = useState(1); // initialize to one as step begins at 1
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
@@ -141,4 +140,4 @@ function ForgotPasswordModal({ onClose }) {
   );
 }
 
-export default ForgotPasswordModal;
+export default ModalForgotPassword;

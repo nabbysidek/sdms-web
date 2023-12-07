@@ -1,14 +1,11 @@
-import React from "react";
-import "./Auth.css";
-import backgroundImage from "../../assets/background-img.png";
-import aimLogo from "../../assets/aim-logo.svg";
-
-import styled from "styled-components";
-import { useForm } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Form, Col, Row, Button } from "react-bootstrap";
+import styled from "styled-components";
+import backgroundImage from "../../assets/aim-background-img.png";
+import aimLogo from "../../assets/aim-logo.svg";
+import "./Auth.css";
 
 const PageContainer = styled.div`
   background-image: url(${backgroundImage});
@@ -23,8 +20,8 @@ const PageContainer = styled.div`
 `;
 
 function SignUp() {
-  // FORM VERIFICATION
-  // Ensure that the input fields are filled
+  // ---------- FE ----------
+  // Form validation
   const {
     control,
     handleSubmit,
@@ -36,7 +33,7 @@ function SignUp() {
   };
 
   return (
-    <PageContainer className="signUpResize">
+    <PageContainer className="signUpContainer">
       <Form
         className="SignUpFormContainer FormContainer"
         onSubmit={handleSubmit(onSubmit)}
@@ -49,104 +46,179 @@ function SignUp() {
         </div>
 
         {/* SIGN IN FORM CONTENT */}
-        <Form.Group className="mb-3" controlId="staffName">
-          <Form.Label className="formLabel">Nama Kakitangan</Form.Label>
-          <Controller
-            name="staffName"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Nama kakitangan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control
-                className="inputField"
-                type="text"
-                placeholder="Aina binti Abdul"
-                {...field}
-              />
-            )}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="staffId">
-          <Form.Label className="formLabel">Id Kakitangan</Form.Label>
-          <Controller
-            name="staffId"
-            control={control}
-            defaultValue=""
-            rules={{ required: "ID kakitangan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control
-                className="inputField"
-                type="text"
-                placeholder="123456"
-                {...field}
-              />
-            )}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="staffEmail">
-          <Form.Label className="formLabel">Emel Kakitangan</Form.Label>
-          <Controller
-            name="staffEmail"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Kata laluan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control
-                className="inputField"
-                type="email"
-                placeholder="nama@aim.gov.my"
-                {...field}
-              />
-            )}
-          />
-        </Form.Group>
-
-        <div className="formFieldsContainer">
-          <div className="formFieldPair">
-            <Form.Group className="mb-3 with-margin" controlId="staffPassword">
-              <Form.Label className="formLabel">Kata Laluan</Form.Label>
-              <Controller
-                name="staffPassword"
-                control={control}
-                defaultValue=""
-                rules={{ required: "Kata laluan diperlukan" }}
-                render={({ field }) => (
+        <div className="signUpFields">
+          <Form.Group className="mb-3" controlId="staffName">
+            <Form.Label className="formLabel">Nama Kakitangan</Form.Label>
+            <Controller
+              name="staffName"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Nama penuh kakitangan diperlukan" }}
+              render={({ field, fieldState }) => (
+                <>
                   <Form.Control
                     className="inputField"
-                    type="password"
-                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                    type="text"
+                    placeholder="Aina binti Abdul"
                     {...field}
                   />
-                )}
-              />
-            </Form.Group>
+                  {fieldState.error && (
+                    <Form.Text className="text-danger">
+                      {fieldState.error.message}
+                    </Form.Text>
+                  )}
+                </>
+              )}
+            />
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="staffConfirmPassword">
-              <Form.Label className="formLabel">Ulang Kata Laluan</Form.Label>
-              <Controller
-                name="staffConfirmPassword"
-                control={control}
-                defaultValue=""
-                rules={{ required: "Kata laluan diperlukan" }}
-                render={({ field }) => (
-                  <Form.Control
-                    className="inputField"
-                    type="password"
-                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                    {...field}
+          <div>
+            <Row>
+              <Col xs={6}>
+                <Form.Group className="mb-3 reduce-height" controlId="staffId">
+                  <Form.Label className="formLabel">Id Kakitangan</Form.Label>
+                  <Controller
+                    name="staffId"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: "ID kakitangan diperlukan",
+                      pattern: {
+                        value: /^[A-Za-z0-9]{5,}$/i,
+                        message:
+                          "ID kakitangan harus terdiri dari minimal 5 karakter alfanumerik.",
+                      },
+                    }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Form.Control
+                          type="text"
+                          placeholder="123456"
+                          {...field}
+                        />
+                        {fieldState.error && (
+                          <Form.Text className="text-danger">
+                            {fieldState.error.message}
+                          </Form.Text>
+                        )}
+                      </>
+                    )}
                   />
-                )}
-              />
-            </Form.Group>
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                <Form.Group className="reduce-height" controlId="staffEmail">
+                  <Form.Label className="formLabel">Emel Kakitangan</Form.Label>
+                  <Controller
+                    name="staffEmail"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: "Emel kakitangan diperlukan",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Emel harus dalam format yang sah.",
+                      },
+                    }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Form.Control
+                          type="email"
+                          placeholder="ainaabdul@aim.gov.my"
+                          {...field}
+                        />
+                        {fieldState.error && (
+                          <Form.Text className="text-danger">
+                            {fieldState.error.message}
+                          </Form.Text>
+                        )}
+                      </>
+                    )}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
           </div>
-        </div>
 
-        <Button variant="primary" className="authButton" type="submit">
-          {" "}
-          Mohon Akses{" "}
-        </Button>
+          <div>
+            <Row>
+              <Col xs={6}>
+                <Form.Group className="reduce-height" controlId="staffPassword">
+                  <Form.Label className="formLabel">Kata Laluan</Form.Label>
+                  <Controller
+                    name="staffPassword"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: "Kata laluan diperlukan",
+                      minLength: {
+                        value: 8,
+                        message:
+                          "Kata laluan harus terdiri dari minimal 8 karakter.",
+                      },
+                    }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Form.Control
+                          type="password"
+                          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                          {...field}
+                        />
+                        {fieldState.error && (
+                          <Form.Text className="text-danger">
+                            {fieldState.error.message}
+                          </Form.Text>
+                        )}
+                      </>
+                    )}
+                  />
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                <Form.Group
+                  className="reduce-height"
+                  controlId="staffConfirmPassword"
+                >
+                  <Form.Label className="formLabel">
+                    Ulang Kata Laluan
+                  </Form.Label>
+                  <Controller
+                    name="staffConfirmPassword"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: "Kata laluan diperlukan",
+                      minLength: {
+                        value: 8,
+                        message:
+                          "Kata laluan harus terdiri dari minimal 8 karakter.",
+                      },
+                    }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Form.Control
+                          type="password"
+                          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                          {...field}
+                        />
+                        {fieldState.error && (
+                          <Form.Text className="text-danger">
+                            {fieldState.error.message}
+                          </Form.Text>
+                        )}
+                      </>
+                    )}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </div>
+
+          <Button className="authButton" type="submit">
+            {" "}
+            Mohon Akses{" "}
+          </Button>
+        </div>
 
         {/* CREATE ACCOUNT CTA */}
         <div className="createAccountCta">

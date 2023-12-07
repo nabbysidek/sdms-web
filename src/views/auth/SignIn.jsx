@@ -1,16 +1,12 @@
-import React from "react";
-import "./Auth.css";
-import backgroundImage from "../../assets/background-img.png";
-import aimLogo from "../../assets/aim-logo.svg";
-
-import styled from "styled-components";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-
-import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
+import styled from "styled-components";
+import { Form, Button } from "react-bootstrap";
+import ModalForgotPassword from "./ForgotPassword/ModalForgotPassword";
+import backgroundImage from "../../assets/aim-background-img.png";
+import aimLogo from "../../assets/aim-logo.svg";
+import "./Auth.css";
 
 const PageContainer = styled.div`
   background-image: url(${backgroundImage});
@@ -26,7 +22,11 @@ const PageContainer = styled.div`
 
 function SignIn() {
   const [showModal, setShowModal] = useState(false);
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const openModal = () => {
     setShowModal(true);
@@ -62,9 +62,23 @@ function SignIn() {
             name="staffId"
             control={control}
             defaultValue=""
-            rules={{ required: "ID kakitangan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control type="text" placeholder="123456" {...field} />
+            rules={{
+              required: "ID kakitangan diperlukan",
+              pattern: {
+                value: /^[A-Za-z0-9]{5,}$/i,
+                message:
+                  "ID kakitangan harus terdiri dari minimal 5 karakter alfanumerik.",
+              },
+            }}
+            render={({ field, fieldState }) => (
+              <>
+                <Form.Control type="text" placeholder="123456" {...field} />
+                {fieldState.error && (
+                  <Form.Text className="text-danger">
+                    {fieldState.error.message}
+                  </Form.Text>
+                )}
+              </>
             )}
           />
         </Form.Group>
@@ -75,22 +89,37 @@ function SignIn() {
             name="staffPassword"
             control={control}
             defaultValue=""
-            rules={{ required: "Kata laluan diperlukan" }}
-            render={({ field }) => (
-              <Form.Control
-                type="password"
-                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                {...field}
-              />
+            rules={{
+              required: "Kata laluan diperlukan",
+              minLength: {
+                value: 8,
+                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
+              },
+            }}
+            render={({ field, fieldState }) => (
+              <>
+                <Form.Control
+                  type="password"
+                  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                  {...field}
+                />
+                {fieldState.error && (
+                  <Form.Text className="text-danger">
+                    {fieldState.error.message}
+                  </Form.Text>
+                )}
+              </>
             )}
           />
         </Form.Group>
+
+        {/* ... (other form elements) */}
 
         <div className="forgotPasswordCta">
           <Link to="#" className="allAuthLink" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
-          {showModal && <ForgotPasswordModal onClose={closeModal} />}
+          {showModal && <ModalForgotPassword onClose={closeModal} />}
         </div>
 
         <Button variant="primary" className="authButton" type="submit">
