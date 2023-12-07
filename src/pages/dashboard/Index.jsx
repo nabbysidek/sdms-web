@@ -1,6 +1,12 @@
+import Clock from "./clock";
+import "./clock.css";
+
 function Dashboard() {
-  return <h1>This is the Dashboard page</h1>;
-  // Add a clock
+  return (
+    <div>
+      <Clock />
+    </div>
+  );
 }
 
 export default Dashboard;

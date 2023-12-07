@@ -1,0 +1,12 @@
+.clockSection {
+    width: 50%;
+    margin: 5% auto;
+    border: 5px solid var(--darkgray);
+    background-color: var(--white);
+    text-align: center;
+}
+
+.clockSection h3 {
+    margin-top: 5px;
+    font-weight: bold;
+}
