@@ -1,0 +1,117 @@
+.pageTitle {
+    color: var(--black);
+    text-align: left;
+    margin: 10px auto auto 10px;
+  }
+
+  .pageContent {
+    margin: 10px 10px auto 10px;
+  }
+
+  .pageContent col {
+    padding: 0;
+  }
+
+  /* Search section */
+  .laporanSearchSection {
+    border-radius: 10px;
+    padding-top: 10px;
+    background-color: var(--darkgray);
+  }
+
+  .laporanSearchResultSection {
+    margin-top: 40px;
+  }
+
+  .searchBtn {
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+    margin-bottom: 5px;
+  }
+
+  .filterBtn {
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    border-color: var(--lightgray);
+    background-color: var(--lightgray);
+  }
+
+  .alert-display {
+    margin-top: 5px;
+  }
+
+  @media (min-width: 767px) {
+    .noPadding {
+      padding-left: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .filterBtn {
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .searchBtn {
+      margin-bottom: 10px;
+    }
+
+    .wilayahBtn, .cawanganBtn {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    .mobileMargin {
+      margin-bottom: 5px;
+    }
+
+    .mobileReduceMargin {
+      margin-bottom: 5px;
+    }
+  }
+
+  /* Carian Terperinci section */
+  .detailedSearchFunction {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 2px solid var(--darkgray);
+    width: 98%;
+  }
+
+  .wilayahBtn, .cawanganBtn {
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+  }
+
+  @media (min-width: 767px) {
+    .stateSelectionContainer, .branchSelectionContainer {
+      position: absolute;
+      width: 180px;
+      z-index: 1000; 
+      background-color: var(--white); 
+      padding: 10px; 
+    }
+
+    .branchSelectionContainer {
+      position: absolute;
+      width: 150px;
+      z-index: 1000; 
+      background-color: var(--white); 
+      padding: 10px; 
+      margin-left: -40px;
+    }
+  }
+
+  /* Search results section */
+  .functionalBtnsSection {
+    float: right;
+    margin-bottom: 10px;
+    
+  }
+  
