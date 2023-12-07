@@ -36,3 +36,17 @@
     color: var(--white);
     text-decoration: underline;
 }
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+    .titleAim {
+        /* display: none; */
+        margin-top: 23px;
+        font-size: 12px;
+    }
+
+    .aimLogo {
+        height: 60px;
+        width: 90px;
+    }
+}

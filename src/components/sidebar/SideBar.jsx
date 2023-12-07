@@ -1,43 +1,55 @@
+// SideBar.js
 import React, { useState, useEffect } from "react";
+import { NavDropdown } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { FaSortDown } from "react-icons/fa";
 import SideBarMenu from "./SideBarMenu";
 import ListGroup from "react-bootstrap/ListGroup";
 import SubSideBar from "./SubSideBar";
-import { FaSortDown } from "react-icons/fa";
+
 import "./SideBar.css";
 
-function SideBar({ isMobile }) {
-  const [isSideBarOpen, setSideBarOpen] = useState(false);
+function SideBar({ onNavLinkClick }) {
+  const [isSideBarOpen, setSideBarOpen] = useState(true);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
   const [isTetapanKriteriaHovered, setIsTetapanKriteriaHovered] =
     useState(false);
+  const [isNavDropdownOpen, setNavDropdownOpen] = useState(false);
 
-  // To minimize and expand sidebar
+  const tetapanKriteriaItem = SideBarMenu.find(
+    (item) => item.path === "/kriteriaketidakpatuhan"
+  );
+
   const toggleSideBar = () => {
     setSideBarOpen(!isSideBarOpen);
   };
 
-  // Function to check for mobile viewport
   const checkMobileView = () => {
     setIsMobileView(window.innerWidth <= 767);
   };
 
   useEffect(() => {
-    // Add event listener to check for viewport changes
     window.addEventListener("resize", checkMobileView);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", checkMobileView);
     };
-  }, []); // Empty dependency array to run this effect only once
+  }, []);
+
+  const toggleNavDropdown = () => {
+    setNavDropdownOpen(!isNavDropdownOpen);
+  };
+
+  const handleNavLinkClick = () => {
+    onNavLinkClick(); // Close mobile navbar
+  };
 
   return (
     <div
       className={`sidebar ${isMobileView ? "mobile-hidden" : ""} ${
         isSideBarOpen ? "open" : "closed"
       } ${isMobileView ? "" : "desktop-hover"}`}
-      onClick={toggleSideBar} // Toggle sidebar when clicked
+      onClick={toggleSideBar}
     >
       <ListGroup variant="flush">
         {SideBarMenu.map((item, index) => (
@@ -67,23 +79,49 @@ function SideBar({ isMobile }) {
           >
             <div className="list-item-content">
               <div className="tetapan-kriteria-group">
-                <NavLink to={item.path} className="nav-link">
-                  {isSideBarOpen || isMobile ? (
-                    <>
-                      <span className="icon">{item.icon}</span>
-                      <span className="title">{item.title}</span>
-                    </>
-                  ) : (
-                    item.icon
-                  )}
-                </NavLink>
+                {item.path === "/kriteriaketidakpatuhan" && isMobileView ? (
+                  <NavDropdown
+                    title={
+                      isSideBarOpen || isMobileView ? (
+                        <>
+                          <span className="icon">
+                            {tetapanKriteriaItem.icon}
+                          </span>
+                          <span className="title">
+                            {tetapanKriteriaItem.title}
+                          </span>
+                        </>
+                      ) : (
+                        tetapanKriteriaItem.icon
+                      )
+                    }
+                    id="basic-nav-dropdown"
+                    show={isNavDropdownOpen}
+                    onClick={toggleNavDropdown}
+                  >
+                    <NavDropdown.Item onClick={handleNavLinkClick}>
+                      <SubSideBar />
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                ) : (
+                  <NavLink
+                    to={item.path}
+                    className="nav-link"
+                    onClick={handleNavLinkClick}
+                  >
+                    {isSideBarOpen || isMobileView ? (
+                      <>
+                        <span className="icon">{item.icon}</span>
+                        <span className="title">{item.title}</span>
+                      </>
+                    ) : (
+                      item.icon
+                    )}
+                  </NavLink>
+                )}
                 {item.path === "/kriteriaketidakpatuhan" &&
                   isMobileView &&
-                  isSideBarOpen && (
-                    <span className="dropdown-arrow">
-                      <FaSortDown size={15} style={{ marginTop: "-5px" }} />
-                    </span>
-                  )}
+                  isSideBarOpen}
               </div>
               {isTetapanKriteriaHovered &&
                 item.path === "/kriteriaketidakpatuhan" &&

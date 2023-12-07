@@ -5,6 +5,7 @@
     width: 200px;
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
+    transition: width 0.4s ease; /* Add a transition for a smoother effect */
 }
 
 .list-group-item {
@@ -73,7 +74,6 @@
 
     .nav-link {
         margin: 15px 15px 15px 5px;
-        padding: 0;
         font-size: 12px;
     }
 }

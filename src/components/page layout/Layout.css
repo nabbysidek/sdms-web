@@ -1,6 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .main {
   display: flex;
   flex-direction: row;
+  grid-template-columns: auto 1fr;
 }
 
 .content {
@@ -8,6 +15,8 @@
   /* width of the content */
   width: 100%;
   max-width: 2560px;
+  min-height: 100vh; /* to fix the issue with stuttering page */
+  overflow: hidden;
 }
 
 

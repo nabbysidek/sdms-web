@@ -33,4 +33,20 @@ h6 {
   background-color: var(--darkblue);
   color: var(--white);
 }
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .userIcon {
+    width: 20px;
+    margin-right: 3px;
+  }
+
+  .user-icon-container {
+    margin-left: 6px;
+  }
+
+  .mainNavbar-user:hover {
+    text-decoration: underline;
+  }
+}
   

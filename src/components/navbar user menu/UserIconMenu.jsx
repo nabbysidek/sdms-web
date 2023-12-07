@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 import "./UserIconMenu.css";
 
-const UserIconMenu = () => {
+const UserIconMenu = ({ closeMobileNav }) => {
+  // ----------- FE ------------
+  // For the visibility of the profile menu
   const [showMenu, setShowMenu] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
-  const navigate = useNavigate();
 
   const toggleMenu = () => {
     if (!isMobileView) {
@@ -16,17 +16,32 @@ const UserIconMenu = () => {
     }
   };
 
+  // For mobile viewing
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
+  
+  // For path navigations
+  const navigate = useNavigate();
+
   const handleUserIconClick = () => {
     if (isMobileView) {
       navigate("/profile");
+      closeMobileNav(); 
     } else {
-      toggleMenu(); // Toggle the menu in desktop view
+      toggleMenu();
     }
   };
 
   const ProfilePageButton = React.forwardRef(({ children, onClick }, ref) => (
     <Link to="/profile">
-      <button className="btnUpdateProfile">{children}</button>
+      <button
+        className="btnUpdateProfile"
+        onClick={(e) => {
+          onClick(e);
+          setShowMenu(false);
+        }}
+      >
+        {children}
+      </button>
     </Link>
   ));
 
@@ -58,10 +73,13 @@ const UserIconMenu = () => {
             className="userIcon"
             alt="user-icon"
             size={30}
-            style={{ marginLeft: "7px" }}
+            style={{ marginBottom: "10px" }}
           />
           {isMobileView && (
-            <span className="mainNavbar-user" style={{ marginLeft: "10px" }}>
+            <span
+              className="mainNavbar-user"
+              style={{ marginLeft: "5px", marginBottom: "10px" }}
+            >
               Profil Pengguna
             </span>
           )}
