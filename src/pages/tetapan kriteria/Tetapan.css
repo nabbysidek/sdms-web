@@ -1,0 +1,147 @@
+/* *********************** */
+/* CONTENT CSS */
+/* *********************** */
+
+
+/* Page Title section */
+hr {
+    margin-top: 0;
+  }
+  
+  .pageTitle {
+      color: var(--black);
+      text-align: left;
+      margin: 10px auto auto 10px;
+    }
+    
+    .pageContent {
+      margin: 10px 10px auto 10px;
+    }
+    
+  
+  
+  
+    /* Search bar section */
+    .searchSection {
+      background-color: var(--darkgray);
+      width: 100%;
+      border-radius: 10px;
+    }
+    
+    .searchBar {
+      padding: 15px 0 5px;
+      width:100%;
+    }
+  
+    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6 {
+      padding-left: 0%;
+    }
+  
+    .with-padding-left {
+      padding-left: 1%;
+    }
+  
+    .searchBarBtn {
+      width: 100%;
+      font-family: "Open Sans", sans-serif;
+      font-size: 1.15em;
+      font-weight: 700;
+      border-color: var(--darkblue);
+      background-color: var(--darkblue);
+      margin-bottom: 10px;
+    }
+  
+    @media (max-width: 767px) {
+      .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6 {
+        padding-left: 2%;
+        padding-top: 2%;
+      }
+  
+      .with-padding-left {
+        padding-top: 0%;
+      }
+    }
+  
+    .alert-display {
+      margin-top: 5px;
+    }
+  
+  
+  
+  
+    /* Table section */
+    .tableSection {
+      width: 100%;
+      margin-top: 4%;
+    }
+  
+    .tableTitle {
+      text-align: left;
+    }
+  
+    .tambahBtn {
+      width: 100%;
+      font-family: "Open Sans", sans-serif;
+      font-size: 1.15em;
+      font-weight: 700;
+      border-color: var(--darkblue);
+      background-color: var(--darkblue);
+      margin-bottom: 10px;
+    }
+  
+    /* Search results section */
+    .functionalBtnsSection {
+      float: right;
+      margin-bottom: 10px;
+      
+    }
+  
+    /* Tetapan Kriteria Action Buttons */
+    .actionBtns {
+      display: flex;
+    }
+  
+    .editBtn {
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.75em;
+      font-weight: 700;
+      border-color: #FFAE42;
+      background-color: #FFAE42;
+      margin-bottom: 10px;
+      margin-right: 5px;
+    }
+  
+    .delBtn {
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.75em;
+      font-weight: 700;
+      border-color: #FF0000;
+      background-color: #FF0000;
+      margin-bottom: 10px;
+    }
+  
+    .allowBtn {
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.75em;
+      font-weight: 700;
+      border-color: #5cdb5c;
+      background-color: #5cdb5c;
+      margin-right: 5px;
+      margin-bottom: 10px;
+    }
+  
+    .userLevelBtn {
+      font-size: 14px;
+    }
+  
+  
+    /* Modal CSS */
+    .modalBtn {
+      border-color: #204198;
+      background-color: #204198;
+    }
+  
+    .error-message {
+      color: red;
+      font-size: 10px;
+    }

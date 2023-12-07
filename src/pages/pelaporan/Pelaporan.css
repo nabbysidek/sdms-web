@@ -1,0 +1,111 @@
+.pageTitle {
+    color: var(--black);
+    text-align: left;
+    margin: 10px auto auto 10px;
+  }
+
+  .pageContent {
+    margin: 10px 10px auto 10px;
+  }
+
+/* Search section */
+.pelaporanSearchSection {
+    border-radius: 10px;
+    padding-top: 10px;
+    background-color: var(--darkgray);
+  }
+
+  .pelaporanSearchBtn {
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 1.2em;
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+    margin-bottom: 5px;
+  }
+
+  .alert-display {
+    margin-top: 5px;
+  }
+
+  @media (min-width: 767px) {
+    .noPadding {
+      padding-left: 0;
+    }
+  }
+
+  /* Kakitangan info section */
+  .kakitanganInfoSection {
+    margin-top: 30px;
+  }
+
+  .kakitanganInfo {
+    margin: 0 auto;
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 5px 10px;
+  }
+
+  /* Table ketidakpatuhan section */
+  .redirectTambahKetidakpatuhanBtn {
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.25em;
+    font-weight: 700;
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+    margin-bottom: 10px;
+  }
+
+  /* Tambah Ketidakpatuhan Page */
+  .tambahKetidakpatuhanPageSection {
+    background-color: var(--white);
+    width: 98%;
+    margin: 20px auto 0 auto;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .locationSection, .detailedSection, .detailedAuditSection {
+    margin-top: 30px;
+  }
+
+  .radioBtnSection {
+    margin: 10px auto;
+    font-size: 14px;
+  }
+
+  .detailedAuditSection .row {
+    margin-top: 10px;
+  }
+
+  .tambahKetidakpatuhanPageActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .addKetidakpatuhanBtn {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+  }
+
+  .cancelBtn {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    border-color: var(--lightgray);
+    background-color: var(--lightgray);
+    margin-left: 4px;
+  }
+
+  .functionalBtnsSection {
+    float: right;
+    margin-bottom: 10px;
+
+  }
+
+
+      

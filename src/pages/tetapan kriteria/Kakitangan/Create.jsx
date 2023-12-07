@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import "../Tetapan.css";
 
 function CreateKakitangan() {
   // ----------FE----------
@@ -50,7 +51,7 @@ function CreateKakitangan() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowCreateKakitangan}>Tambah Kakitangan</Button>
+      <Button className="tambahBtn" onClick={handleShowCreateKakitangan}>Tambah Kakitangan</Button>
 
       <Modal
         show={showCreateKakitangan}
