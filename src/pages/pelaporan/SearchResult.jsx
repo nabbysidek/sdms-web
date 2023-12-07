@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Table, Row, Col, Form, Button } from "react-bootstrap";
-import DownloadButton from "../../components/functional buttons/DownloadButton";
 import ExportButton from "../../components/functional buttons/ExportButton";
 import ImportButton from "../../components/functional buttons/ImportButton";
 import "./Pelaporan.css";
@@ -91,7 +90,6 @@ function SearchResultPelaporan() {
         <div className="functionalBtnsSection">
           <ExportButton />
           <ImportButton />
-          <DownloadButton />
         </div>
       </div>
     </>

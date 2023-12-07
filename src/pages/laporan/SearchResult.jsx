@@ -1,5 +1,4 @@
 import React from "react";
-import DownloadButton from "../../components/functional buttons/DownloadButton";
 import ExportButton from "../../components/functional buttons/ExportButton";
 import ImportButton from "../../components/functional buttons/ImportButton";
 import Table from "react-bootstrap/Table";
@@ -53,7 +52,6 @@ function SearchResultLaporan() {
         <div className="functionalBtnsSection">
           <ExportButton />
           <ImportButton />
-          <DownloadButton />
         </div>
       </div>
     </>
