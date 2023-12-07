@@ -1,0 +1,31 @@
+.delBtn {
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-color: #FF0000;
+    background-color: #FF0000;
+    margin-bottom: 10px;
+  }
+
+  .allowBtn {
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-color: var(--allowgreen);
+    background-color: var(--allowgreen);
+    margin-right: 5px;
+    margin-bottom: 10px;
+  }
+
+  .userLevelBtn {
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.75em;
+    font-weight: 700;
+  }
+
+  .userLevelItem {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1em;
+  }

@@ -1,16 +1,22 @@
 import React from "react";
-import Table from "react-bootstrap/Table";
+import { Table, Dropdown } from "react-bootstrap";
+import ModalRejectAccess from "./ModalRejectAccess";
+import ModalAllowAccess from "./ModalAllowAccess";
+import ModalTerminateAccess from "./ModalTerminateAccess";
+import "./TetapanPengguna.css";
 
 function IndexTetapanPengguna() {
   return (
     <>
       {/* Page title section */}
-      <h2>Tetapan Akses Pengguna</h2>
-      <hr />
+      <div className="pageTitle">
+        <h2>Tetapan Akses Pengguna</h2>
+        <hr />
+        <h3>Permohonan Akses</h3>
+      </div>
 
       {/* Page content section */}
       <div className="container-fluid">
-        <h4 className="pageTitle">Permohonan Akses</h4>
         <hr />
         {/* Table Senarai Permohonan Akses */}
         <Table responsive>
@@ -30,8 +36,8 @@ function IndexTetapanPengguna() {
               <td>{/* Nama kakitangan */}</td>
               <td>{/* Emel kakitangan */}</td>
               <td>
-                {/* Fungsi: Allow access */}
-                {/* Fungsi: Reject access */}
+                <ModalAllowAccess />
+                <ModalRejectAccess />
               </td>
             </tr>
           </tbody>
@@ -57,8 +63,44 @@ function IndexTetapanPengguna() {
               <td>{/* ID kakitangan */}</td>
               <td>{/* Nama kakitangan */}</td>
               <td>{/* Emel kakitangan */}</td>
-              <td>{/* Fungsi: User level */}</td>
-              <td>{/* Fungsi: Remove */}</td>
+              <td>
+                <Dropdown>
+                  <Dropdown.Toggle className="userLevelBtn">
+                    Tahap Pengguna
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className="userLevelItem">
+                    <Dropdown.Item>Super Admin</Dropdown.Item>
+                    <Dropdown.Item>Admin</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </td>
+              <td>
+                <ModalAllowAccess />
+                <ModalTerminateAccess />
+              </td>
+            </tr>
+            <tr>
+              <td>{/* Bilangan */}</td>
+              <td>{/* ID kakitangan */}</td>
+              <td>{/* Nama kakitangan */}</td>
+              <td>{/* Emel kakitangan */}</td>
+              <td>
+                <Dropdown>
+                  <Dropdown.Toggle className="userLevelBtn">
+                    Tahap Pengguna
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className="userLevelItem">
+                    <Dropdown.Item>Super Admin</Dropdown.Item>
+                    <Dropdown.Item>Admin</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </td>
+              <td>
+                <ModalAllowAccess />
+                <ModalTerminateAccess />
+              </td>
             </tr>
           </tbody>
         </Table>

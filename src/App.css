@@ -30,18 +30,10 @@ a {
   --darkgray: #D9D9D9;
   --lightgray: #858181;
   --backgroundwhite: #F1F3F4;
+  --allowgreen: #008000;
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-/* *********************** */
-/* VARIABLES */
-/* *********************** */
-.pageTitle {
-  color: var(--black);
-  text-align: left;
-  margin: 10px auto auto 10px;
 }
