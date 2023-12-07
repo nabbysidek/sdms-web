@@ -1,0 +1,58 @@
+/* *********************** */
+/* CONTENT CSS */
+/* *********************** */
+/* Page Title section */
+hr {
+    margin-top: 0;
+  }
+
+.pageTitle {
+    color: var(--black);
+    text-align: left;
+    margin: 10px auto auto 10px;
+}
+  
+.profilePageContent {
+    width: 80%;
+    margin: 40px auto;
+}
+
+
+
+/* Basic user details section */
+.userBasicDetails {
+    text-align: center;
+}
+
+#staffEmail {
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Tabs section */
+.tabsContent {
+    font-size: 14px;
+    font-family: "Bitter", serif;
+    margin-top: 20px;
+}
+
+.setPasswordBtn {
+    font-family: "Open Sans", sans-serif;
+    float: right;
+    background-color: var(--darkblue);
+    margin: 10px 0;
+}
+
+/* Form validation CSS */
+.error-message {
+    color: red;
+    font-size: 10px;
+}
+
+/* Mobile viewport */
+@media (max-width: 767px) {
+    .setPasswordBtn {
+        width: 100%;
+    }
+}

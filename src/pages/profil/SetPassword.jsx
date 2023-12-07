@@ -1,54 +1,114 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 
 function SetPassword() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-  const handleSetPassword = (e) => {
-    e.preventDefault();
-
-    if (newPassword !== confirmPassword) {
-      alert("New passwords do not match.");
+  const handleSetPassword = (data) => {
+    // Your custom logic for setting the password
+    if (data.newPassword !== data.confirmPassword) {
+      alert("Kata laluan baharu tidak sepadan.");
       return;
     }
 
-    // Implement password Set logic here
+    alert("Kata laluan baharu telah berjaya diset semula.");
+  };
+
+  const onSubmit = (data) => {
+    handleSetPassword(data);
+    // for data handling
   };
 
   return (
-    <div>
-      <h2>Set Password</h2>
-      <Form onSubmit={handleSetPassword}>
+    <div className="container tabsContent">
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="currentPassword">
-          <Form.Label>Current Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={currentPassword}
-            onSet={(e) => setCurrentPassword(e.target.value)}
-            required
+          <Form.Label>Kata Laluan Terkini</Form.Label>
+          <Controller
+            name="currentPassword"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Kata laluan terkini diperlukan",
+              minLength: {
+                value: 8,
+                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
+              },
+            }}
+            render={({ field }) => (
+              <>
+                <Form.Control type="password" {...field} />
+                {errors.currentPassword && (
+                  <span className="error-message">
+                    {errors.currentPassword.message}
+                  </span>
+                )}
+              </>
+            )}
           />
         </Form.Group>
+
         <Form.Group controlId="newPassword">
-          <Form.Label>New Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={newPassword}
-            onSet={(e) => setNewPassword(e.target.value)}
-            required
+          <Form.Label>Kata Laluan Baharu</Form.Label>
+          <Controller
+            name="newPassword"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Kata laluan baharu diperlukan",
+              minLength: {
+                value: 8,
+                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
+              },
+            }}
+            render={({ field }) => (
+              <>
+                <Form.Control type="password" {...field} />
+                {errors.newPassword && (
+                  <span className="error-message">
+                    {errors.newPassword.message}
+                  </span>
+                )}
+              </>
+            )}
           />
         </Form.Group>
+
         <Form.Group controlId="confirmPassword">
-          <Form.Label>Confirm New Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={confirmPassword}
-            onSet={(e) => setConfirmPassword(e.target.value)}
-            required
+          <Form.Label>Sahkan Kata Laluan Baharu</Form.Label>
+          <Controller
+            name="confirmPassword"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Sahkan kata laluan baharu diperlukan",
+              minLength: {
+                value: 8,
+                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
+              },
+            }}
+            render={({ field }) => (
+              <>
+                <Form.Control type="password" {...field} />
+                {errors.confirmPassword && (
+                  <span className="error-message">
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
+              </>
+            )}
           />
         </Form.Group>
-        <Button type="submit">Set Password</Button>
+
+        <Button className="setPasswordBtn" type="submit">
+          Set Kata Laluan
+        </Button>
       </Form>
     </div>
   );
