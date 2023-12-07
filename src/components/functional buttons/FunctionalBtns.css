@@ -1,0 +1,7 @@
+.functionalBtns {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    border-color: var(--lightgray);
+    background-color: var(--lightgray);
+    margin-left: 4px;
+}

@@ -4,7 +4,6 @@ import { Form, Button } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
 import PaginationTable from "../../../components/pagination/PaginationTable";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 function IndexSkopKriteria() {
