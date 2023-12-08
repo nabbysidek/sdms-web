@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
-import Swal from 'sweetalert2';
-import "../Tetapan.css";
+import Swal from "sweetalert2";
 
 function CreateKakitangan() {
   // ----------FE----------
@@ -14,14 +11,18 @@ function CreateKakitangan() {
   const handleCloseCreateKakitangan = () => setShowCreateKakitangan(false);
   const handleShowCreateKakitangan = () => setShowCreateKakitangan(true);
 
+  // Form validation
+  const { control, handleSubmit, formState } = useForm();
+  const { errors } = formState;
+
   // Form input
   const [kakitanganInput, setKakitanganInput] = useState({
-    namaKakitangan: '',
-    idKakitangan: '',
+    namaKakitangan: "",
+    idKakitangan: "",
   });
 
   const handleInputChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setKakitanganInput({
       ...kakitanganInput,
       [name]: value,
@@ -30,28 +31,38 @@ function CreateKakitangan() {
 
   // ----------BE----------
   // Create kakitangan
-  const createKakitangan = async() => {
-    try{
-      const response = await axios.post(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan`, kakitanganInput);
+  const createKakitangan = async () => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan`,
+        kakitanganInput
+      );
 
-      if(response.status === 200) {
+      if (response.status === 200) {
         Swal.fire({
-          icon: 'success',
-          title: 'Berjaya',
+          icon: "success",
+          title: "Berjaya",
           text: response.data.message, // Access the message from the backend response
         });
-        console.log('Kakitangan berjaya ditambah');
+        console.log("Kakitangan berjaya ditambah");
         handleCloseCreateKakitangan();
       }
+    } catch (error) {
+      console.log("Api respond is not as expected");
     }
-    catch(error) {
-      console.log('Api respond is not as expected');
-    }
+  };
+
+  const onSubmit = (data) => {
+    handleCloseCreateKakitangan();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
   };
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateKakitangan}>Tambah Kakitangan</Button>
+      <Button className="tambahBtn" onClick={handleShowCreateKakitangan}>
+        Tambah Kakitangan
+      </Button>
 
       <Modal
         show={showCreateKakitangan}
@@ -66,30 +77,65 @@ function CreateKakitangan() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Kakitangan</Form.Label>
-              <FormControl 
-                type="text"
-                id="namaKakitangan"
+              <Controller
                 name="namaKakitangan"
-                onChange={(e) => handleInputChange(e)}
-                placeholder="Nama Kakitangan Baharu"
+                control={control}
+                rules={{ required: "Nama Kakitangan diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <FormControl
+                      type="text"
+                      id="namaKakitangan"
+                      name="namaKakitangan"
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        field.onChange(e);
+                      }}
+                      placeholder="Nama Kakitangan Baharu"
+                    />
+                    {errors?.namaKakitangan && (
+                      <span className="error-message">
+                        {errors.namaKakitangan.message}
+                      </span>
+                    )}
+                  </>
+                )}
               />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>ID Kakitangan</Form.Label>
-              <FormControl 
-                type="text"
-                id="idKakitangan"
+              <Controller
                 name="idKakitangan"
-                onChange={(e) => handleInputChange(e)}
-                placeholder="Id Kakitangan"
+                control={control}
+                rules={{ required: "ID Kakitangan diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <FormControl
+                      type="text"
+                      id="idKakitangan"
+                      name="idKakitangan"
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        field.onChange(e);
+                      }}
+                      placeholder="ID Kakitangan"
+                    />
+                    {errors?.idKakitangan && (
+                      <span className="error-message">
+                        {errors.idKakitangan.message}
+                      </span>
+                    )}
+                  </>
+                )}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseCreateKakitangan}>Tutup</Button>
-          <Button variant="primary" onClick={createKakitangan}>Tambah Kakitangan</Button>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+            Tambah Kakitangan
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
