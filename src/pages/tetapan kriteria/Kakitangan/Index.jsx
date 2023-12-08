@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
+import { Table, Button } from "react-bootstrap";
 import CreateKakitangan from "./Create";
 import EditKakitangan from "./Edit";
 import PaginationTable from "../../../components/pagination/PaginationTable";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
+import "../Tetapan.css";
 
 function IndexKakitangan() {
   // ----------FE----------
@@ -16,20 +16,23 @@ function IndexKakitangan() {
 
   // ----------BE----------
   // List kakitangn
-  const fetchKakitangans = async(page) => {
+  const fetchKakitangans = async (page) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan?page=${page}`);
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan?page=${page}`
+      );
       setKakitangans(response.data.data);
       setTotalPage(response.data.last_page);
-    } catch(error) {
-      console.error('Ralat dalam mengambil maklumat kakitangan:', error);
+    } catch (error) {
+      console.error("Ralat dalam mengambil maklumat kakitangan:", error);
     }
   };
 
   useEffect(() => {
     fetchKakitangans(currentPage);
 
-    const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
+    const interval = setInterval(() => {
+      // Set up recurring fetch every 5 seconds)
       const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
       fetchKakitangans(nextPage);
     }, 5000);
@@ -64,21 +67,26 @@ function IndexKakitangan() {
             </tr>
           </thead>
           <tbody>
-            {kakitangans.length > 0 && kakitangans.map((kakitangansData, key) => (
-              <tr key={key}>
-                <td>{key + 1}</td>
-                <td>{kakitangansData.idKakitangan}</td>
-                <td>{kakitangansData.namaKakitangan}</td>
-                <td>
-                  <EditKakitangan />
-                <Button variant="danger">Padam</Button>
-                </td>
-              </tr>
-            ))}
+            {kakitangans.length > 0 &&
+              kakitangans.map((kakitangansData, key) => (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>{kakitangansData.idKakitangan}</td>
+                  <td>{kakitangansData.namaKakitangan}</td>
+                  <td>
+                    <EditKakitangan />
+                    <Button variant="danger">Padam</Button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
 
-        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <PaginationTable
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import SearchBahagian from "./Search";
 import ShowBahagianList from "./Show";
+import "../Tetapan.css";
 
 function IndexBahagian() {
   // ----------FE----------
