@@ -1,22 +1,27 @@
-import React from 'react';
-import Pagination from 'react-bootstrap/Pagination';
+import React from "react";
+import Pagination from "react-bootstrap/Pagination";
+import "./PaginationTable.css";
 
-function PaginationTable({currentPage, totalPage, onPageChange}) {
+function PaginationTable({ currentPage, totalPage, onPageChange }) {
   const renderPaginationItems = () => {
     const items = [];
 
     for (let page = 1; page <= totalPage; page++) {
       items.push(
-        <Pagination.Item key={page} active={page === currentPage} onClick={() => onPageChange(page)}>
+        <Pagination.Item
+          key={page}
+          active={page === currentPage}
+          onClick={() => onPageChange(page)}
+        >
           {page}
         </Pagination.Item>
       );
     }
-    
+
     return items;
   };
-  
-  return(
+
+  return (
     <Pagination>
       <Pagination.First onClick={() => onPageChange(1)} />
       <Pagination.Prev onClick={() => onPageChange(currentPage - 1)} />
@@ -24,7 +29,7 @@ function PaginationTable({currentPage, totalPage, onPageChange}) {
       <Pagination.Next onClick={() => onPageChange(currentPage + 1)} />
       <Pagination.Last onClick={() => onPageChange(totalPage)} />
     </Pagination>
-  )
+  );
 }
 
 export default PaginationTable;
