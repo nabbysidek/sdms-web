@@ -94,7 +94,7 @@ function ShowKriteriaKetidakpatuhanList() {
                       </td>
                       <td>
                         <EditKriteriaKetidakpatuhan />
-                        <Button variant="danger">Padam</Button>
+                        <Button className="delBtn">Padam</Button>
                       </td>
                     </tr>
                   )

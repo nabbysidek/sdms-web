@@ -52,7 +52,7 @@ function IndexKriteriaKetidakpatuhan() {
         <h3>Cari Kriteria Ketidakpatuhan</h3>
       </div>
 
-      {/* Page title section */}
+      {/* Page content section */}
       <div className="pageContent">
         {/* Search function section */}
         <SearchKriteriaKetidakpatuhan />
