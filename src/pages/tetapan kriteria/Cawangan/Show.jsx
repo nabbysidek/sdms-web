@@ -82,7 +82,7 @@ function ShowCawanganList() {
                   <td>{cawangansData.namaCawangan}</td>
                   <td>
                     <EditCawangan />
-                    <Button variant="danger">Padam</Button>
+                    <Button className="delBtn">Padam</Button>
                   </td>
                 </tr>
               ))}
