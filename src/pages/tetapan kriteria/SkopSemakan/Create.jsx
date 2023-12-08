@@ -1,11 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 function CreateSkopSemakan() {
   // ----------FE----------
@@ -14,13 +11,17 @@ function CreateSkopSemakan() {
   const handleCloseCreateSkopSemakan = () => setShowCreateSkopSemakan(false);
   const handleShowCreateSkopSemakan = () => setShowCreateSkopSemakan(true);
 
+  // Form validation
+  const { control, handleSubmit, formState } = useForm();
+  const { errors } = formState;
+
   // Form input
   const [skopSemakanInput, setSkopSemakanInput] = useState({
-    namaSkopSemakan: '',
+    namaSkopSemakan: "",
   });
 
   const handleInputChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setSkopSemakanInput({
       ...skopSemakanInput,
       [name]: value,
@@ -29,28 +30,38 @@ function CreateSkopSemakan() {
 
   // ----------BE----------
   // Create skop semakan
-  const createSkopSemakan = async() => {
-    try{
-      const response = await axios.post(`http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan`, skopSemakanInput);
+  const createSkopSemakan = async () => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan`,
+        skopSemakanInput
+      );
 
-      if(response.status === 200) {
+      if (response.status === 200) {
         Swal.fire({
-          icon: 'success',
-          title: 'Berjaya',
+          icon: "success",
+          title: "Berjaya",
           text: response.data.message, // Access the message from the backend response
         });
-        console.log('Skop Semakan Berjaya ditambah');
+        console.log("Skop Semakan Berjaya ditambah");
         handleCloseCreateSkopSemakan();
       }
+    } catch (error) {
+      console.log("Api respond is not as expected");
     }
-    catch(error) {
-      console.log('Api respond is not as expected');
-    }
+  };
+
+  const onSubmit = (data) => {
+    handleCloseCreateSkopSemakan();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
   };
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowCreateSkopSemakan}>Tambah Skop Semakan</Button>
+      <Button className="tambahBtn" onClick={handleShowCreateSkopSemakan}>
+        Tambah Skop Semakan
+      </Button>
 
       <Modal
         show={showCreateSkopSemakan}
@@ -65,19 +76,37 @@ function CreateSkopSemakan() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Skop Semakan</Form.Label>
-              <FormControl 
-                type="text"
-                id="namaSkopSemakan"
-                name="namaSkopSemakan"
-                onChange={(e) => handleInputChange(e)}
-                placeholder="Nama Skop Semakan Baharu"
+              <Controller
+                name="skopSemakan"
+                control={control}
+                rules={{ required: "Skop semakan baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <FormControl
+                      type="text"
+                      id="namaSkopSemakan"
+                      name="namaSkopSemakan"
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        field.onChange(e);
+                      }}
+                      placeholder="Skop semakan"
+                    />
+                    {errors?.skopSemakan && (
+                      <span className="error-message">
+                        {errors.skopSemakan.message}
+                      </span>
+                    )}
+                  </>
+                )}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseCreateSkopSemakan}>Tutup</Button>
-          <Button variant="primary" onClick={createSkopSemakan}>Tambah Skop Semakan</Button>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+            Tambah Skop Semakan
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
