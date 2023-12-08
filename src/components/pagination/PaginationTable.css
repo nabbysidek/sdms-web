@@ -6,3 +6,7 @@
 .page-link {
     color: var(--darkblue);
 }
+
+.pagination {
+    margin: 10px auto;
+}
