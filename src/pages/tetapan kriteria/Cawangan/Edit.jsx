@@ -1,9 +1,5 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
 function EditCawangan() {
   const [showEditCawangan, setShowEditCawangan] = useState(false);
