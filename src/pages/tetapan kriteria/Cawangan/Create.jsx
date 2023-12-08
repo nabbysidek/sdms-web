@@ -147,9 +147,6 @@ function CreateCawangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseCreateCawangan}>
-            Tutup
-          </Button>
           <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Tambah Cawangan
           </Button>
