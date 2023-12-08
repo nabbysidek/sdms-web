@@ -1,86 +1,64 @@
-import React, { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
-import CreateKriteriaKetidakpatuhan from "./Create";
-import EditKriteriaKetidakpatuhan from "./Edit";
-import PaginationTable from "../../../components/pagination/PaginationTable";
-import Button from "react-bootstrap/Button";
-import axios from "axios";
+import React from "react";
+import SearchKriteriaKetidakpatuhan from "./Search";
+import ShowKriteriaKetidakpatuhanList from "./Show";
+import "../Tetapan.css";
 
 function IndexKriteriaKetidakpatuhan() {
   // ----------FE----------
-  const [kriteriaKetidakpatuhans, setKriteriaKetidakpatuhans] = useState([]);
+  // const [kriteriaKetidakpatuhans, setKriteriaKetidakpatuhans] = useState([]);
 
   // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
- 
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [totalPage, setTotalPage] = useState(1);
+
   // ----------BE----------
   // List kriteria ketidakpatuhan
-  const fetchKriteriaKetidakpatuhans = async (page) => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`);
-      setKriteriaKetidakpatuhans(response.data.data); // Update the state with the array of objects
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat kriteria ketidakpatuhan:", error);
-    }
-  };
+  // const fetchKriteriaKetidakpatuhans = async (page) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
+  //     );
+  //     setKriteriaKetidakpatuhans(response.data.data); // Update the state with the array of objects
+  //     setTotalPage(response.data.last_page);
+  //   } catch (error) {
+  //     console.error(
+  //       "Ralat dalam mengambil maklumat kriteria ketidakpatuhan:",
+  //       error
+  //     );
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchKriteriaKetidakpatuhans(currentPage);
-    
-    const interval = setInterval(() => { // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchKriteriaKetidakpatuhans(nextPage);
-    }, 5000);
+  // useEffect(() => {
+  //   fetchKriteriaKetidakpatuhans(currentPage);
 
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
+  //   const interval = setInterval(() => {
+  //     // Set up recurring fetch every 5 seconds)
+  //     const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
+  //     fetchKriteriaKetidakpatuhans(nextPage);
+  //   }, 5000);
+
+  //   // Cleanup the interval when the component unmounts
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [currentPage, totalPage]);
 
   return (
     <div>
       {/* Page title section */}
-      <h2>Kriteria Ketidakpatuhan</h2>
-      <hr />
-      <h3 className="pageTitle">Tambah Kriteria Ketidakpatuhan</h3>
+      <div className="pageTitle">
+        <h2>Tetapan Kriteria Ketidakpatuhan</h2>
+        <hr />
+        <h3>Cari Kriteria Ketidakpatuhan</h3>
+      </div>
 
       {/* Page title section */}
-      <div className="container-fluid">
-        <h4 className="pageTitle">Senarai Kriteria Ketidakpatuhan</h4>
-        <CreateKriteriaKetidakpatuhan />
-        <hr />
+      <div className="pageContent">
+        {/* Search function section */}
+        <SearchKriteriaKetidakpatuhan />
 
-        {/* Table Senarai Kriteria Ketidakpatuhan */}
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Skop Kriteria</th>
-              <th>Kod Kriteria</th>
-              <th>Nama Kriteria Ketidakpatuhan</th>
-              <th>Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {kriteriaKetidakpatuhans.length > 0 && kriteriaKetidakpatuhans.map((kriteriaKetidakpatuhansData, key) => (
-              <tr key={key}>
-                <td>{key + 1}</td>
-                <td>{kriteriaKetidakpatuhansData.skop_kriteria ? kriteriaKetidakpatuhansData.skop_kriteria.namaSkopKriteria : "N/A"}</td>
-                <td>{kriteriaKetidakpatuhansData.kodKriteriaKetidakpatuhan}</td>
-                <td>{kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}</td>
-                <td>
-                  <EditKriteriaKetidakpatuhan />
-                  <Button variant="danger">Padam</Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-
-        <PaginationTable currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        {/* Page title section */}
+        <ShowKriteriaKetidakpatuhanList />
       </div>
     </div>
   );
