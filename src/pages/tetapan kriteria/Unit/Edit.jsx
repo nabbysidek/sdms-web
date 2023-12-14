@@ -13,7 +13,7 @@ function EditUnit() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditUnit}>
+      <Button className="editBtn" onClick={handleShowEditUnit}>
         Kemaskini
       </Button>
 

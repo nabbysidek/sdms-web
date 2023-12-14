@@ -13,7 +13,7 @@ function EditJenisAudit() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditJenisAudit}>
+      <Button className="editBtn" onClick={handleShowEditJenisAudit}>
         Kemaskini
       </Button>
 

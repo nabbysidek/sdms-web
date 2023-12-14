@@ -12,7 +12,7 @@ function EditKakitangan() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditKakitangan}>
+      <Button className="editBtn" onClick={handleShowEditKakitangan}>
         Kemaskini
       </Button>
 

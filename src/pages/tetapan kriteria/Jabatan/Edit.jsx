@@ -13,7 +13,7 @@ function EditJabatan() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditJabatan}>
+      <Button className="editBtn" onClick={handleShowEditJabatan}>
         Kemaskini
       </Button>
 

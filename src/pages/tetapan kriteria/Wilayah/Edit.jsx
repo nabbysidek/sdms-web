@@ -13,7 +13,7 @@ function EditWilayah() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditWilayah}>
+      <Button className="editBtn" onClick={handleShowEditWilayah}>
         Kemaskini
       </Button>
 

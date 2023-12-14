@@ -13,7 +13,7 @@ function EditBahagian() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditBahagian}>
+      <Button className="editBtn" onClick={handleShowEditBahagian}>
         Kemaskini
       </Button>
 

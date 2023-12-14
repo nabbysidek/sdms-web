@@ -92,7 +92,7 @@ function Show() {
                   <td>{jabatansData.namaJabatan}</td>
                   <td>
                     <EditJabatan />
-                    <Button variant="danger">Padam</Button>
+                    <Button className="delBtn">Padam</Button>
                   </td>
                 </tr>
               ))}

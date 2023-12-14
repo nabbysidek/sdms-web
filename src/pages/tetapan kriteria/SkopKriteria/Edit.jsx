@@ -13,7 +13,7 @@ function EditSkopKriteria() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditSkopKriteria}>
+      <Button className="editBtn" onClick={handleShowEditSkopKriteria}>
         Kemaskini
       </Button>
 

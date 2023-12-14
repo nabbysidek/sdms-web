@@ -13,7 +13,7 @@ function EditKriteriaKetidakpatuhan() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditKriteria}>
+      <Button className="editBtn" onClick={handleShowEditKriteria}>
         Kemaskini
       </Button>
 

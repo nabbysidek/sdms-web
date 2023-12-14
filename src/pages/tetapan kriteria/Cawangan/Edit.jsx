@@ -9,7 +9,7 @@ function EditCawangan() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditCawangan}>
+      <Button className="editBtn" onClick={handleShowEditCawangan}>
         Kemaskini
       </Button>
 

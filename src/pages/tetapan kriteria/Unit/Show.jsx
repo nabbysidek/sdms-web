@@ -86,7 +86,7 @@ function ShowUnitList() {
                   <td>{unitsData.namaUnit}</td>
                   <td>
                     <EditUnit />
-                    <Button variant="danger">Padam</Button>
+                    <Button className="delBtn">Padam</Button>
                   </td>
                 </tr>
               ))}

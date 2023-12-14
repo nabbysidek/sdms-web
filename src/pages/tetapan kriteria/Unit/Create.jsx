@@ -103,7 +103,7 @@ function CreateUnit() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowCreateUnit}>
+      <Button className="tambahBtn" onClick={handleShowCreateUnit}>
         Tambah Unit
       </Button>
 

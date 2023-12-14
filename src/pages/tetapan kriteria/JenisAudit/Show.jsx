@@ -76,7 +76,7 @@ function ShowJenisAuditList() {
                   <td>{jenisAuditsData.namaJenisAudit}</td>
                   <td>
                     <EditJenisAudit />
-                    <Button variant="danger">Padam</Button>
+                    <Button className="delBtn">Padam</Button>
                   </td>
                 </tr>
               ))}

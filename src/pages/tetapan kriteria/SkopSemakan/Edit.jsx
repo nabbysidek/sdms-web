@@ -13,7 +13,7 @@ function EditSkopSemakan() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShowEditSkopSemakan}>
+      <Button className="editBtn" onClick={handleShowEditSkopSemakan}>
         Kemaskini
       </Button>
 

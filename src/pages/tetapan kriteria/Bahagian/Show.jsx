@@ -78,7 +78,7 @@ function ShowBahagianList() {
                   <td>{bahagiansData.namaBahagian}</td>
                   <td>
                     <EditBahagian />
-                    <Button className="delBtn">Kemaskini</Button>
+                    <Button className="delBtn">Padam</Button>
                   </td>
                 </tr>
               ))}
