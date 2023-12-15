@@ -35,7 +35,7 @@ function CreateSkopKriteria() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.message, // Access the message from the backend response
+          text: response.data.success, // Access the message from the backend response
         });
         console.log("Skop kriteria berjaya ditambah");
         handleCloseCreateSkopKriteria();
