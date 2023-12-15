@@ -23,19 +23,6 @@ function CreateBahagian() {
     formState: { errors },
   } = useForm();
 
-  // Form input
-  // const [bahagianInput, setBahagianInput] = useState({
-  //   namaBahagian: "",
-  // });
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setBahagianInput({
-  //     ...bahagianInput,
-  //     [name]: value,
-  //   });
-  // };
-
   // ----------BE----------
   // Create bahagian
   const createBahagian = async (bahagianInput) => {
@@ -46,11 +33,11 @@ function CreateBahagian() {
       );
 
       if (response.status === 200) {
-        // Swal.fire({
-        //   icon: "success",
-        //   title: "Berjaya",
-        //   text: response.data.message, // Access the message from the backend response
-        // });
+        Swal.fire({
+          icon: "success",
+          title: "Berjaya",
+          text: response.data.message, // Access the message from the backend response
+        });
         console.log("Bahagian berjaya ditambah");
         handleCloseCreateBahagian();
       }
