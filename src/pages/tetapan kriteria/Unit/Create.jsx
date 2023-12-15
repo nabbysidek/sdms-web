@@ -22,23 +22,6 @@ function CreateUnit() {
     formState: { errors },
   } = useForm();
 
-  // Form input
-  // const [bahagianData, setBahagianData] = useState([]);
-  // const [jabatanData, setJabatanData] = useState([]);
-  // const [unitInput, setUnitInput] = useState({
-  //   bahagianId: "",
-  //   jabatanId: "",
-  //   namaUnit: "",
-  // });
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setUnitInput({
-  //     ...unitInput,
-  //     [name]: value,
-  //   });
-  // };
-
   // ----------BE----------
   // Fetch bahagian data
   const [bahagianData, setBahagianData] = useState([]);
@@ -84,7 +67,6 @@ function CreateUnit() {
 
   // Create unit
   const createUnit = async (unitInput) => {
-    console.log(unitInput);
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/unit`,
