@@ -8,30 +8,23 @@ function CreateJabatan() {
   // ----------FE----------
   const [showCreateJabatan, setShowCreateJabatan] = useState(false);
 
-  const handleCloseCreateJabatan = () => setShowCreateJabatan(false);
   const handleShowCreateJabatan = () => setShowCreateJabatan(true);
+  const handleCloseCreateJabatan = () => {
+    setShowCreateJabatan(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
-
-  // Form input
-  const [bahagianData, setBahagianData] = useState([]);
-  const [jabatanInput, setJabatanInput] = useState({
-    bahagianId: "",
-    namaJabatan: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setJabatanInput({
-      ...jabatanInput,
-      [name]: value,
-    });
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // ----------BE----------
   // Fetch bahagian data
+  const [bahagianData, setBahagianData] = useState([]);
   useEffect(() => {
     const fetchBahagianData = async () => {
       try {
@@ -52,7 +45,7 @@ function CreateJabatan() {
   }, []);
 
   // Create jabatan
-  const createJabatan = async () => {
+  const createJabatan = async (jabatanInput) => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan`,
@@ -63,19 +56,13 @@ function CreateJabatan() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.message, // Access the message from the backend response
+          text: response.data.success, // Access the message from the backend response
         });
         console.log("Jabatan berjaya ditambah");
         handleCloseCreateJabatan();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
-    }
-  };
-
-  const onSubmit = (data) => {
-    if (data.bahagian && data.jabatan) {
-      createJabatan();
+      console.log("Jabatan tidak berjaya ditambah");
     }
   };
 
@@ -95,32 +82,29 @@ function CreateJabatan() {
           <Modal.Title>Tambah Jabatan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(createJabatan)} onReset={reset}>
             <Form.Group>
               <Form.Label>Bahagian</Form.Label>
               <Controller
-                name="bahagian"
+                id="bahagianId"
+                name="bahagianId"
                 control={control}
                 rules={{ required: "Sila pilih bahagian" }}
-                render={({ field }) => (
+                render={({ field: { onChange } }) => (
                   <>
-                    <Form.Select
-                      aria-label="bahagianSelect"
-                      onChange={(e) => {
-                        setValue("bahagian", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      <option value="">Pilih Bahagian</option>
+                    <Form.Select onChange={onChange} defaultValue="">
+                      <option value="" disabled>
+                        Pilih Bahagian
+                      </option>
                       {bahagianData.map((bahagian) => (
                         <option key={bahagian.id} value={bahagian.id}>
                           {bahagian.namaBahagian}
                         </option>
                       ))}
                     </Form.Select>
-                    {errors?.bahagian && (
+                    {errors?.bahagianId && (
                       <span className="error-message">
-                        {errors.bahagian.message}
+                        {errors.bahagianId.message}
                       </span>
                     )}
                   </>
@@ -131,19 +115,25 @@ function CreateJabatan() {
             <Form.Group>
               <Form.Label>Nama Jabatan</Form.Label>
               <Controller
-                name="jabatan"
+                id="namaJabatan"
+                name="namaJabatan"
                 control={control}
-                rules={{ required: "Nama jabatan baru diperlukan" }}
-                render={({ field }) => (
+                defaultValue=""
+                rules={{
+                  required: "Nama jabatan baru diperlukan",
+                }}
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
-                      placeholder="Nama jabatan"
-                      {...field}
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Masukkan jabatan"
+                      autoFocus
                     />
-                    {errors?.jabatan && (
+                    {errors.namaJabatan && (
                       <span className="error-message">
-                        {errors.jabatan.message}
+                        {errors.namaJabatan.message}
                       </span>
                     )}
                   </>
@@ -153,7 +143,7 @@ function CreateJabatan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="modalBtn" onClick={handleSubmit(createJabatan)}>
             Tambah Jabatan
           </Button>
         </Modal.Footer>
