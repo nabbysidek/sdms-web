@@ -15,7 +15,6 @@ function CreateWilayah() {
   };
 
   // Form validation
-  // Form validation
   const {
     handleSubmit,
     control,
@@ -96,8 +95,10 @@ function CreateWilayah() {
                   />
                 )}
               />
-              {errors?.wilayah && (
-                <span className="error-message">{errors.wilayah.message}</span>
+              {errors.namaWilayah && (
+                <span className="error-message">
+                  {errors.namaWilayah.message}
+                </span>
               )}
             </Form.Group>
           </Form>
