@@ -8,32 +8,40 @@ function CreateUnit() {
   // ----------FE----------
   const [showCreateUnit, setShowCreateUnit] = useState(false);
 
-  const handleCloseCreateUnit = () => setShowCreateUnit(false);
   const handleShowCreateUnit = () => setShowCreateUnit(true);
+  const handleCloseCreateUnit = () => {
+    setShowCreateUnit(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // Form input
-  const [bahagianData, setBahagianData] = useState([]);
-  const [jabatanData, setJabatanData] = useState([]);
-  const [unitInput, setUnitInput] = useState({
-    bahagianId: "",
-    jabatanId: "",
-    namaUnit: "",
-  });
+  // const [bahagianData, setBahagianData] = useState([]);
+  // const [jabatanData, setJabatanData] = useState([]);
+  // const [unitInput, setUnitInput] = useState({
+  //   bahagianId: "",
+  //   jabatanId: "",
+  //   namaUnit: "",
+  // });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUnitInput({
-      ...unitInput,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setUnitInput({
+  //     ...unitInput,
+  //     [name]: value,
+  //   });
+  // };
 
   // ----------BE----------
   // Fetch bahagian data
+  const [bahagianData, setBahagianData] = useState([]);
   useEffect(() => {
     const fetchBahagianData = async () => {
       try {
@@ -54,6 +62,7 @@ function CreateUnit() {
   }, []);
 
   // Fetch jabatan data
+  const [jabatanData, setJabatanData] = useState([]);
   useEffect(() => {
     const fetchJabatanData = async () => {
       try {
@@ -74,7 +83,8 @@ function CreateUnit() {
   }, []);
 
   // Create unit
-  const createUnit = async () => {
+  const createUnit = async (unitInput) => {
+    console.log(unitInput);
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/unit`,
@@ -85,20 +95,13 @@ function CreateUnit() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.message, // Access the message from the backend response
+          text: response.data.success, // Access the message from the backend response
         });
-        console.log("Unit berjaya ditambah");
         handleCloseCreateUnit();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
+      console.log("Unit tidak berjaya ditambah");
     }
-  };
-
-  const onSubmit = (data) => {
-    handleCloseCreateUnit();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
   };
 
   return (
@@ -117,23 +120,18 @@ function CreateUnit() {
           <Modal.Title>Tambah Unit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(createUnit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Bahagian</Form.Label>
               <Controller
-                name="bahagian"
+                id="bahagianId"
+                name="bahagianId"
+                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih bahagian" }}
-                render={({ field }) => (
+                render={({ field: { onChange } }) => (
                   <>
-                    <Form.Select
-                      aria-label="bahagianSelect"
-                      onChange={(e) => {
-                        setValue("bahagian", e.target.value);
-                        handleInputChange(e);
-                      }}
-                      {...field}
-                    >
+                    <Form.Select onChange={onChange} defaultValue="">
                       <option value="" disabled>
                         Pilih Bahagian
                       </option>
@@ -143,9 +141,9 @@ function CreateUnit() {
                         </option>
                       ))}
                     </Form.Select>
-                    {errors?.bahagian && (
+                    {errors.bahagianId && (
                       <span className="error-message">
-                        {errors.bahagian.message}
+                        {errors.bahagianId.message}
                       </span>
                     )}
                   </>
@@ -156,19 +154,14 @@ function CreateUnit() {
             <Form.Group>
               <Form.Label>Jabatan</Form.Label>
               <Controller
-                name="jabatan"
+                id="jabatanId"
+                name="jabatanId"
+                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih jabatan" }}
-                render={({ field }) => (
+                render={({ field: { onChange } }) => (
                   <>
-                    <Form.Select
-                      aria-label="jabatanSelect"
-                      onChange={(e) => {
-                        setValue("jabatan", e.target.value);
-                        handleInputChange(e);
-                      }}
-                      {...field}
-                    >
+                    <Form.Select onChange={onChange} defaultValue="">
                       <option value="" disabled>
                         Pilih Jabatan
                       </option>
@@ -178,9 +171,9 @@ function CreateUnit() {
                         </option>
                       ))}
                     </Form.Select>
-                    {errors?.jabatan && (
+                    {errors.jabatanId && (
                       <span className="error-message">
-                        {errors.jabatan.message}
+                        {errors.jabatanId.message}
                       </span>
                     )}
                   </>
@@ -191,24 +184,23 @@ function CreateUnit() {
             <Form.Group>
               <Form.Label>Nama Unit</Form.Label>
               <Controller
-                name="unit"
+                id="namaUnit"
+                name="namaUnit"
                 control={control}
+                defaultValue=""
                 rules={{ required: "Nama unit baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <FormControl
                       type="text"
-                      id="namaUnit"
-                      name="namaUnit"
-                      onChange={(e) => {
-                        setValue("unit", e.target.value);
-                        handleInputChange(e);
-                      }}
-                      placeholder="Nama unit"
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Masukkan unit"
+                      autoFocus
                     />
-                    {errors?.unit && (
+                    {errors.namaUnit && (
                       <span className="error-message">
-                        {errors.unit.message}
+                        {errors.namaUnit.message}
                       </span>
                     )}
                   </>
@@ -218,7 +210,7 @@ function CreateUnit() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="modalBtn" onClick={handleSubmit(createUnit)}>
             Tambah Unit
           </Button>
         </Modal.Footer>

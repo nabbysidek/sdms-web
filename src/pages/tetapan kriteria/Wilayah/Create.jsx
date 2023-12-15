@@ -22,23 +22,9 @@ function CreateWilayah() {
     formState: { errors },
   } = useForm();
 
-  // Form input
-  // const [wilayahInput, setWilayahInput] = useState({
-  //   namaWilayah: "",
-  // });
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setWilayahInput({
-  //     ...wilayahInput,
-  //     [name]: value,
-  //   });
-  // };
-
   // ----------BE----------
   // Create wilayah
   const createWilayah = async (wilayahInput) => {
-    // console.log(wilayahInput);
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/wilayah`,
@@ -46,17 +32,16 @@ function CreateWilayah() {
       );
 
       if (response.status === 200) {
-        // Swal.fire({
-        //   icon: "success",
-        //   title: "Berjaya",
-        //   text: response.data.message, // Access the message from the backend response
-        // });
+        Swal.fire({
+          icon: "success",
+          title: "Berjaya",
+          text: response.data.message, // Access the message from the backend response
+        });
         console.log("Wilayah berjaya ditambah");
         handleCloseCreateWilayah();
       }
     } catch (error) {
       console.log("Wilayah tidak berjaya ditambah");
-      // console.log(error);
     }
   };
 
