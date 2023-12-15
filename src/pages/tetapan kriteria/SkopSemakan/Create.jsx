@@ -41,7 +41,7 @@ function CreateSkopSemakan() {
         handleCloseCreateSkopSemakan();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
+      console.log("Skop semakan tidak berjaya ditambah");
     }
   };
 

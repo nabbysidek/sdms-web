@@ -8,29 +8,23 @@ function CreateSkopKriteria() {
   // ----------FE----------
   const [showCreateSkopKriteria, setShowCreateSkopKriteria] = useState(false);
 
-  const handleCloseCreateSkopKriteria = () => setShowCreateSkopKriteria(false);
   const handleShowCreateSkopKriteria = () => setShowCreateSkopKriteria(true);
+  const handleCloseCreateSkopKriteria = () => {
+    setShowCreateSkopKriteria(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
-
-  // Form input
-  const [skopKriteriaInput, setSkopKriteriaInput] = useState({
-    namaSkopKriteria: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSkopKriteriaInput({
-      ...skopKriteriaInput,
-      [name]: value,
-    });
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // ----------BE----------
   // Create skop kriteria
-  const createSkopKriteria = async () => {
+  const createSkopKriteria = async (skopKriteriaInput) => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria`,
@@ -47,14 +41,8 @@ function CreateSkopKriteria() {
         handleCloseCreateSkopKriteria();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
+      console.log("Skop kriteria tidak berjaya ditambah");
     }
-  };
-
-  const onSubmit = (data) => {
-    handleCloseCreateSkopKriteria();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
   };
 
   return (
@@ -71,33 +59,38 @@ function CreateSkopKriteria() {
           <Modal.Title>Tambah Skop Kriteria</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(createSkopKriteria)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Skop Kriteria</Form.Label>
               <Controller
-                name="skopKriteria"
+                name="namaSkopKriteria"
+                id="namaSkopKriteria"
                 control={control}
+                defaultValue=""
                 rules={{ required: "Skop kriteria baru diperlukan" }}
-                render={({ field }) => (
-                  <>
-                    <Form.Control
-                      type="text"
-                      placeholder="Skop kriteria"
-                      {...field}
-                    />
-                    {errors?.skopKriteria && (
-                      <span className="error-message">
-                        {errors.skopKriteria.message}
-                      </span>
-                    )}
-                  </>
+                render={({ field: { onChange, value } }) => (
+                  <Form.Control
+                    type="text"
+                    onChange={onChange}
+                    value={value}
+                    placeholder="Masukkan skop kriteria"
+                    autoFocus
+                  />
                 )}
               />
+              {errors.namaSkopKriteria && (
+                <span className="error-message">
+                  {errors.namaSkopKriteria.message}
+                </span>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button
+            className="modalBtn"
+            onClick={handleSubmit(createSkopKriteria)}
+          >
             Tambah Skop Kriteria
           </Button>
         </Modal.Footer>
