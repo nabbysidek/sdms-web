@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form } from "react-bootstrap";
 
 function EditSkopSemakan() {
+  // ----- FE ---------
+  // Handle modal
   const [showEditSkopSemakan, setShowEditSkopSemakan] = useState(false);
 
   const handleCloseEditSkopSemakan = () => setShowEditSkopSemakan(false);
   const handleShowEditSkopSemakan = () => setShowEditSkopSemakan(true);
+
+  // Form validation
+  const { control, handleSubmit, formState } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditSkopSemakan();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,12 +39,30 @@ function EditSkopSemakan() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Skop Semakan</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="skopSemakan"
+                control={control}
+                rules={{ required: "Skop semakan baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Skop semakan"
+                      {...field}
+                    />
+                    {errors?.skopSemakan && (
+                      <span className="error-message">
+                        {errors.skopSemakan.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditSkopSemakan}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Skop Semakan
           </Button>
         </Modal.Footer>

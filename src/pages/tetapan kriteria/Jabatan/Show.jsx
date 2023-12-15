@@ -74,8 +74,8 @@ function Show() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Bahagian</th>
-              <th>Jabatan</th>
+              <th>Nama Bahagian</th>
+              <th>Nama Jabatan</th>
               <th>Tindakan</th>
             </tr>
           </thead>

@@ -63,8 +63,14 @@ function ShowKakitanganList() {
           <thead>
             <tr>
               <th>Bil</th>
+              <th>Wilayah</th>
+              <th>Cawangan</th>
+              <th>Bahagian</th>
+              <th>Jabatan</th>
+              <th>Unit</th>
               <th>ID Kakitangan</th>
               <th>Nama Kakitangan</th>
+              <th>Jawatan Kakitangan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -73,8 +79,14 @@ function ShowKakitanganList() {
               kakitangans.map((kakitangansData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
+                  <td>Wilayah</td>
+                  <td>Cawangan</td>
+                  <td>Bahagian</td>
+                  <td>Jabatan</td>
+                  <td>Unit</td>
                   <td>{kakitangansData.idKakitangan}</td>
                   <td>{kakitangansData.namaKakitangan}</td>
+                  <td>Jawatan</td>
                   <td>
                     <EditKakitangan />
                     <Button className="delBtn">Padam</Button>

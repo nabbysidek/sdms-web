@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
 function EditKriteriaKetidakpatuhan() {
+  // ----------- FE --------
+  //  Handle modal
   const [showEditKriteria, setShowEditKriteria] = useState(false);
 
   const handleCloseEditKriteria = () => setShowEditKriteria(false);
   const handleShowEditKriteria = () => setShowEditKriteria(true);
+
+  // Form validation
+  const { control, handleSubmit, formState, setValue } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditKriteria();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,27 +39,83 @@ function EditKriteriaKetidakpatuhan() {
           <Form>
             <Form.Group>
               <Form.Label>Skop Kriteria</Form.Label>
-              <Form.Control as="select">
-                <option>Pilih Skop Kriteria</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </Form.Control>
+              <Controller
+                name="skopKriteria"
+                control={control}
+                rules={{ required: "Sila pilih skop kriteria" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Select
+                      aria-label="skopKriteriaSelect"
+                      onChange={(e) => {
+                        setValue("skopKriteria", e.target.value);
+                      }}
+                      {...field}
+                    >
+                      <option value="">Pilih Skop Kriteria</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </Form.Select>
+                    {errors?.skopKriteria && (
+                      <span className="error-message">
+                        {errors.skopKriteria.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>Kod Kriteria Ketidakpatuhan</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="kodKriteria"
+                control={control}
+                rules={{ required: "Kod kriteria baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Kod kriteria"
+                      {...field}
+                    />
+                    {errors?.kodKriteria && (
+                      <span className="error-message">
+                        {errors.kodKriteria.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>Nama Kriteria Ketidakpatuhan</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="namaKriteria"
+                control={control}
+                rules={{ required: "Nama kriteria baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nama kriteria"
+                      {...field}
+                    />
+                    {errors?.namaKriteria && (
+                      <span className="error-message">
+                        {errors.namaKriteria.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditKriteria}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Kriteria Ketidakpatuhan
           </Button>
         </Modal.Footer>

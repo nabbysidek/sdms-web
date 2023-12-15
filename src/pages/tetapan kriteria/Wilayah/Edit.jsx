@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form } from "react-bootstrap";
 
 function EditWilayah() {
+  // ----- FE ---------
+  // Handle modal
   const [showEditWilayah, setShowEditWilayah] = useState(false);
 
   const handleCloseEditWilayah = () => setShowEditWilayah(false);
   const handleShowEditWilayah = () => setShowEditWilayah(true);
+
+  // Form validation
+  const { control, handleSubmit, formState } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditWilayah();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,12 +39,30 @@ function EditWilayah() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Wilayah</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="wilayah"
+                control={control}
+                rules={{ required: "Wilayah baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Wilayah"
+                      {...field}
+                    />
+                    {errors?.wilayah && (
+                      <span className="error-message">
+                        {errors.wilayah.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditWilayah}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Wilayah
           </Button>
         </Modal.Footer>

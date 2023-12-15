@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
 function EditJabatan() {
+  // ----------- FE --------
+  //  Handle modal
   const [showEditJabatan, setShowEditJabatan] = useState(false);
 
   const handleCloseEditJabatan = () => setShowEditJabatan(false);
   const handleShowEditJabatan = () => setShowEditJabatan(true);
+
+  // Form validation
+  const { control, handleSubmit, formState, setValue } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditJabatan();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,22 +39,60 @@ function EditJabatan() {
           <Form>
             <Form.Group>
               <Form.Label>Bahagian</Form.Label>
-              <Form.Control as="select">
-                <option>Pilih Bahagian</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </Form.Control>
+              <Controller
+                name="bahagian"
+                control={control}
+                rules={{ required: "Sila pilih bahagian" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Select
+                      aria-label="bahagianSelect"
+                      onChange={(e) => {
+                        setValue("bahagian", e.target.value);
+                      }}
+                      {...field}
+                    >
+                      <option value="">Pilih Bahagian</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </Form.Select>
+                    {errors?.bahagian && (
+                      <span className="error-message">
+                        {errors.bahagian.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>Nama Jabatan</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="jabatan"
+                control={control}
+                rules={{ required: "Nama jabatan baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Jabatan"
+                      {...field}
+                    />
+                    {errors?.jabatan && (
+                      <span className="error-message">
+                        {errors.jabatan.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditJabatan}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Jabatan
           </Button>
         </Modal.Footer>

@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form } from "react-bootstrap";
 
 function EditSkopKriteria() {
+  // ----- FE ---------
+  // Handle modal
   const [showEditSkopKriteria, setShowEditSkopKriteria] = useState(false);
 
   const handleCloseEditSkopKriteria = () => setShowEditSkopKriteria(false);
   const handleShowEditSkopKriteria = () => setShowEditSkopKriteria(true);
+
+  // Form validation
+  const { control, handleSubmit, formState } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditSkopKriteria();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,12 +39,30 @@ function EditSkopKriteria() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Skop Kriteria</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="skopKriteria"
+                control={control}
+                rules={{ required: "Skop kriteria baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Skop kriteria"
+                      {...field}
+                    />
+                    {errors?.skopKriteria && (
+                      <span className="error-message">
+                        {errors.skopKriteria.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditSkopKriteria}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Skop Kriteria
           </Button>
         </Modal.Footer>

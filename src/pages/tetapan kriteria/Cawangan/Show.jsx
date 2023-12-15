@@ -64,8 +64,8 @@ function ShowCawanganList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Wilayah</th>
-              <th>Cawangan</th>
+              <th>Nama Wilayah</th>
+              <th>Nama Cawangan</th>
               <th>Tindakan</th>
             </tr>
           </thead>

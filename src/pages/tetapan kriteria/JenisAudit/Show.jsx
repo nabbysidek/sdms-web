@@ -64,7 +64,7 @@ function ShowJenisAuditList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Jenis Audit</th>
+              <th>Nama Jenis Audit</th>
               <th>Tindakan</th>
             </tr>
           </thead>

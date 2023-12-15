@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
 function EditBahagian() {
+  // ----------- FE --------
+  //  Handle modal
   const [showEditBahagian, setShowEditBahagian] = useState(false);
 
   const handleCloseEditBahagian = () => setShowEditBahagian(false);
   const handleShowEditBahagian = () => setShowEditBahagian(true);
+
+  // Form validation
+  const { control, handleSubmit, formState, setValue } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditBahagianm();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,12 +39,30 @@ function EditBahagian() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Bahagian</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="bahagian"
+                control={control}
+                rules={{ required: "Nama bahagian baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Bahagian"
+                      {...field}
+                    />
+                    {errors?.bahagian && (
+                      <span className="error-message">
+                        {errors.bahagian.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditBahagian}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Bahagian
           </Button>
         </Modal.Footer>

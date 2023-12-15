@@ -20,7 +20,7 @@ function ShowBahagianList() {
   const fetchBahagians = async (page) => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
+        `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian?page=${page}`
       );
       setBahagians(response.data.data); // Update the state with the array of objects
       setTotalPage(response.data.last_page);
@@ -66,7 +66,7 @@ function ShowBahagianList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Bahagian</th>
+              <th>Nama Bahagian</th>
               <th>Tindakan</th>
             </tr>
           </thead>

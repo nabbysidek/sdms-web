@@ -69,37 +69,35 @@ function ShowKriteriaKetidakpatuhanList() {
             <tr>
               <th>Bil</th>
               <th>Skop Kriteria</th>
+              <th>Kod Kriteria Ketidakpatuhan</th>
               <th>Nama Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {kriteriaKetidakpatuhans.length > 0 &&
-                kriteriaKetidakpatuhans.map(
-                  (kriteriaKetidakpatuhansData, key) => (
-                    <tr key={key}>
-                      <td>{key + 1}</td>
-                      <td>
-                        {kriteriaKetidakpatuhansData.skop_kriteria
-                          ? kriteriaKetidakpatuhansData.skop_kriteria
-                              .namaSkopKriteria
-                          : "N/A"}
-                      </td>
-                      <td>
-                        {kriteriaKetidakpatuhansData.kodKriteriaKetidakpatuhan}
-                      </td>
-                      <td>
-                        {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
-                      </td>
-                      <td>
-                        <EditKriteriaKetidakpatuhan />
-                        <Button className="delBtn">Padam</Button>
-                      </td>
-                    </tr>
-                  )
-                )}
-            </tr>
+            {kriteriaKetidakpatuhans.length > 0 &&
+              kriteriaKetidakpatuhans.map(
+                (kriteriaKetidakpatuhansData, key) => (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <td>
+                      {kriteriaKetidakpatuhansData.skop_kriteria
+                        ? kriteriaKetidakpatuhansData.skop_kriteria
+                            .namaSkopKriteria
+                        : "N/A"}
+                    </td>
+                    <td>Kod Kriteria</td>
+                    <td>
+                      {kriteriaKetidakpatuhansData.kodKriteriaKetidakpatuhan}
+                      {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
+                    </td>
+                    <td>
+                      <EditKriteriaKetidakpatuhan />
+                      <Button className="delBtn">Padam</Button>
+                    </td>
+                  </tr>
+                )
+              )}
           </tbody>
         </Table>
 

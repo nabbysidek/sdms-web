@@ -1,15 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
 function EditJenisAudit() {
+  // ----------- FE --------
+  //  Handle modal
   const [showEditJenisAudit, setShowEditJenisAudit] = useState(false);
 
   const handleCloseEditJenisAudit = () => setShowEditJenisAudit(false);
   const handleShowEditJenisAudit = () => setShowEditJenisAudit(true);
+
+  // Form validation
+  const { control, handleSubmit, formState, setValue } = useForm();
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    handleCloseEditJenisAudit();
+    // Perform your submit logic here
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div>
@@ -30,12 +39,30 @@ function EditJenisAudit() {
           <Form>
             <Form.Group>
               <Form.Label>Nama Jenis Audit</Form.Label>
-              <FormControl type="text" />
+              <Controller
+                name="jenisAudit"
+                control={control}
+                rules={{ required: "Nama jenis audit baru diperlukan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Jenis audit"
+                      {...field}
+                    />
+                    {errors?.jenisAudit && (
+                      <span className="error-message">
+                        {errors.jenisAudit.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseEditJenisAudit}>
+          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Jenis Audit
           </Button>
         </Modal.Footer>
