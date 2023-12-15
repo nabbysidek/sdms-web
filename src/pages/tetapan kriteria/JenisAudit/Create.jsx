@@ -8,29 +8,23 @@ function CreateJenisAudit() {
   // ----------FE----------
   const [showCreateJenisAudit, setShowCreateJenisAudit] = useState(false);
 
-  const handleCloseCreateJenisAudit = () => setShowCreateJenisAudit(false);
   const handleShowCreateJenisAudit = () => setShowCreateJenisAudit(true);
+  const handleCloseCreateJenisAudit = () => {
+    setShowCreateJenisAudit(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
-
-  // Form input
-  const [jenisAuditInput, setJenisAuditInput] = useState({
-    namaJenisAudit: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setJenisAuditInput({
-      ...jenisAuditInput,
-      [name]: value,
-    });
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // ----------BE----------
   // Create jenis audit
-  const createJenisAudit = async () => {
+  const createJenisAudit = async (jenisAuditInput) => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/jenis-audit`,
@@ -47,14 +41,8 @@ function CreateJenisAudit() {
         handleCloseCreateJenisAudit();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
+      console.log("Jenis audit tidak berjaya ditambah");
     }
-  };
-
-  const onSubmit = (data) => {
-    handleCloseCreateJenisAudit();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
   };
 
   return (
@@ -73,40 +61,35 @@ function CreateJenisAudit() {
           <Modal.Title>Tambah Jenis Audit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(createJenisAudit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Jenis Audit</Form.Label>
               <Controller
-                name="jenisAudit"
+                name="namaJenisAudit"
+                id="namaJenisAudit"
                 control={control}
-                rules={{
-                  required: "Nama jenis audit baru diperlukan",
-                }}
-                render={({ field }) => (
-                  <>
-                    <FormControl
-                      type="text"
-                      id="namaJenisAudit"
-                      name="namaJenisAudit"
-                      onChange={(e) => {
-                        handleInputChange(e);
-                        field.onChange(e);
-                      }}
-                      placeholder="Nama Jenis Audit Baharu"
-                    />
-                    {errors?.jenisAudit && (
-                      <span className="error-message">
-                        {errors.jenisAudit.message}
-                      </span>
-                    )}
-                  </>
+                defaultValue=""
+                rules={{ required: "Jenis audit baru diperlukan" }}
+                render={({ field: { onChange, value } }) => (
+                  <Form.Control
+                    type="text"
+                    onChange={onChange}
+                    value={value}
+                    placeholder="Masukkan jenis audit"
+                    autoFocus
+                  />
                 )}
               />
+              {errors.namaJenisAudit && (
+                <span className="error-message">
+                  {errors.namaJenisAudit.message}
+                </span>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={createJenisAudit}>
+          <Button className="modalBtn" onClick={handleSubmit(createJenisAudit)}>
             Tambah Jenis Audit
           </Button>
         </Modal.Footer>
