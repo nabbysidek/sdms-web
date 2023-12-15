@@ -9,29 +9,36 @@ function CreateBahagian() {
   // Manage the visibility of the modal
   const [showCreateBahagian, setShowCreateBahagian] = useState(false);
 
-  const handleCloseCreateBahagian = () => setShowCreateBahagian(false);
   const handleShowCreateBahagian = () => setShowCreateBahagian(true);
+  const handleCloseCreateBahagian = () => {
+    setShowCreateBahagian(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // Form input
-  const [bahagianInput, setBahagianInput] = useState({
-    namaBahagian: "",
-  });
+  // const [bahagianInput, setBahagianInput] = useState({
+  //   namaBahagian: "",
+  // });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBahagianInput({
-      ...bahagianInput,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setBahagianInput({
+  //     ...bahagianInput,
+  //     [name]: value,
+  //   });
+  // };
 
   // ----------BE----------
   // Create bahagian
-  const createBahagian = async () => {
+  const createBahagian = async (bahagianInput) => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian`,
@@ -39,22 +46,16 @@ function CreateBahagian() {
       );
 
       if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.message, // Access the message from the backend response
-        });
+        // Swal.fire({
+        //   icon: "success",
+        //   title: "Berjaya",
+        //   text: response.data.message, // Access the message from the backend response
+        // });
         console.log("Bahagian berjaya ditambah");
         handleCloseCreateBahagian();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
-    }
-  };
-
-  const onSubmit = (data) => {
-    if (data.bahagian) {
-      createBahagian();
+      console.log("Bahagian tidak berjaya ditambah");
     }
   };
 
@@ -74,38 +75,35 @@ function CreateBahagian() {
           <Modal.Title>Tambah Bahagian</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(createBahagian)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Bahagian</Form.Label>
               <Controller
-                name="bahagian"
+                name="namaBahagian"
+                id="namaBahagian"
                 control={control}
-                rules={{ required: "Nama bahagian baru diperlukan" }}
-                render={({ field }) => (
-                  <>
-                    <FormControl
-                      type="text"
-                      id="namaBahagian"
-                      name="namaBahagian"
-                      onChange={(e) => {
-                        field.onChange(e);
-                        handleInputChange(e);
-                      }}
-                      placeholder="Nama Bahagian Baharu"
-                    />
-                    {errors?.bahagian && (
-                      <span className="error-message">
-                        {errors.bahagian.message}
-                      </span>
-                    )}
-                  </>
+                defaultValue=""
+                rules={{ required: "Bahagian baru diperlukan" }}
+                render={({ field: { onChange, value } }) => (
+                  <Form.Control
+                    type="text"
+                    onChange={onChange}
+                    value={value}
+                    placeholder="Masukkan bahagian"
+                    autoFocus
+                  />
                 )}
               />
+              {errors.namaBahagian && (
+                <span className="error-message">
+                  {errors.namaBahagian.message}
+                </span>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="modalBtn" onClick={handleSubmit(createBahagian)}>
             Tambah Bahagian
           </Button>
         </Modal.Footer>
