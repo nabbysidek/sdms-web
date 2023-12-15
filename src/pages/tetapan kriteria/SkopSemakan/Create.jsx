@@ -8,29 +8,23 @@ function CreateSkopSemakan() {
   // ----------FE----------
   const [showCreateSkopSemakan, setShowCreateSkopSemakan] = useState(false);
 
-  const handleCloseCreateSkopSemakan = () => setShowCreateSkopSemakan(false);
   const handleShowCreateSkopSemakan = () => setShowCreateSkopSemakan(true);
+  const handleCloseCreateSkopSemakan = () => {
+    setShowCreateSkopSemakan(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
-
-  // Form input
-  const [skopSemakanInput, setSkopSemakanInput] = useState({
-    namaSkopSemakan: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSkopSemakanInput({
-      ...skopSemakanInput,
-      [name]: value,
-    });
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // ----------BE----------
   // Create skop semakan
-  const createSkopSemakan = async () => {
+  const createSkopSemakan = async (skopSemakanInput) => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan`,
@@ -49,12 +43,6 @@ function CreateSkopSemakan() {
     } catch (error) {
       console.log("Api respond is not as expected");
     }
-  };
-
-  const onSubmit = (data) => {
-    handleCloseCreateSkopSemakan();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
   };
 
   return (
@@ -77,34 +65,34 @@ function CreateSkopSemakan() {
             <Form.Group>
               <Form.Label>Nama Skop Semakan</Form.Label>
               <Controller
-                name="skopSemakan"
+                name="namaSkopSemakan"
+                id="namaSkopSemakan"
                 control={control}
+                defaultValue=""
                 rules={{ required: "Skop semakan baru diperlukan" }}
-                render={({ field }) => (
-                  <>
-                    <FormControl
-                      type="text"
-                      id="namaSkopSemakan"
-                      name="namaSkopSemakan"
-                      onChange={(e) => {
-                        handleInputChange(e);
-                        field.onChange(e);
-                      }}
-                      placeholder="Skop semakan"
-                    />
-                    {errors?.skopSemakan && (
-                      <span className="error-message">
-                        {errors.skopSemakan.message}
-                      </span>
-                    )}
-                  </>
+                render={({ field: { onChange, value } }) => (
+                  <Form.Control
+                    type="text"
+                    onChange={onChange}
+                    value={value}
+                    placeholder="Masukkan skop semakan"
+                    autoFocus
+                  />
                 )}
               />
+              {errors.namaSkopSemakan && (
+                <span className="error-message">
+                  {errors.namaSkopSemakan.message}
+                </span>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button
+            className="modalBtn"
+            onClick={handleSubmit(createSkopSemakan)}
+          >
             Tambah Skop Semakan
           </Button>
         </Modal.Footer>
