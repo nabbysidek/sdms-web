@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -8,30 +8,23 @@ function CreateCawangan() {
   // ----------FE----------
   const [showCreateCawangan, setShowCreateCawangan] = useState(false);
 
-  const handleCloseCreateCawangan = () => setShowCreateCawangan(false);
   const handleShowCreateCawangan = () => setShowCreateCawangan(true);
+  const handleCloseCreateCawangan = () => {
+    setShowCreateCawangan(false);
+    reset();
+  };
 
   // Form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
-
-  // Form input
-  const [wilayahData, setWilayahData] = useState([]);
-  const [cawanganInput, setCawanganInput] = useState({
-    wilayahId: "",
-    namaCawangan: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCawanganInput({
-      ...cawanganInput,
-      [name]: value,
-    });
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // ----------BE----------
   // Fetch wilayah data
+  const [wilayahData, setWilayahData] = useState([]);
   useEffect(() => {
     const fetchWilayahData = async () => {
       try {
@@ -52,7 +45,7 @@ function CreateCawangan() {
   }, []);
 
   // Create cawangan
-  const createCawangan = async () => {
+  const createCawangan = async (cawanganInput) => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan`,
@@ -69,13 +62,7 @@ function CreateCawangan() {
         handleCloseCreateCawangan();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
-    }
-  };
-
-  const onSubmit = (data) => {
-    if (data.wilayah && data.cawangan) {
-      createCawangan();
+      console.log("Kriteria ketidakpatuhan tidak berjaya ditambah");
     }
   };
 
@@ -95,32 +82,30 @@ function CreateCawangan() {
           <Modal.Title>Tambah Cawangan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(createCawangan)} onReset={reset}>
             <Form.Group>
               <Form.Label>Wilayah</Form.Label>
               <Controller
-                name="wilayah"
+                id="wilayahId"
+                name="wilayahId"
+                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih wilayah" }}
-                render={({ field }) => (
+                render={({ field: { onChange } }) => (
                   <>
-                    <Form.Select
-                      aria-label="wilayahSelect"
-                      onChange={(e) => {
-                        setValue("wilayah", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      <option value="">Pilih Wilayah</option>
+                    <Form.Select onChange={onChange} defaultValue="">
+                      <option value="" disabled>
+                        Pilih Wilayah
+                      </option>
                       {wilayahData.map((wilayah) => (
                         <option key={wilayah.id} value={wilayah.id}>
                           {wilayah.namaWilayah}
                         </option>
                       ))}
                     </Form.Select>
-                    {errors?.wilayah && (
+                    {errors.wilayahId && (
                       <span className="error-message">
-                        {errors.wilayah.message}
+                        {errors.wilayahId.message}
                       </span>
                     )}
                   </>
@@ -130,24 +115,36 @@ function CreateCawangan() {
 
             <Form.Group>
               <Form.Label>Nama Cawangan</Form.Label>
-              <FormControl
-                type="text"
+              <Controller
                 id="namaCawangan"
                 name="namaCawangan"
-                onChange={(e) => {
-                  handleInputChange(e);
-                  setValue("cawangan", e.target.value);
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: "Nama cawangan baru diperlukan",
                 }}
-                placeholder="Nama Cawangan Baharu"
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Masukkan cawangan"
+                      autoFocus
+                    />
+                    {errors.namaCawangan && (
+                      <span className="error-message">
+                        {errors.namaCawangan.message}
+                      </span>
+                    )}
+                  </>
+                )}
               />
-              {errors?.cawangan && (
-                <span className="error-message">{errors.cawangan.message}</span>
-              )}
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="modalBtn" onClick={handleSubmit(createCawangan)}>
             Tambah Cawangan
           </Button>
         </Modal.Footer>
