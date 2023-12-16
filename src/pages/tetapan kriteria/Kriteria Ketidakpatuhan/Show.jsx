@@ -86,9 +86,10 @@ function ShowKriteriaKetidakpatuhanList() {
                             .namaSkopKriteria
                         : "N/A"}
                     </td>
-                    <td>Kod Kriteria</td>
                     <td>
                       {kriteriaKetidakpatuhansData.kodKriteriaKetidakpatuhan}
+                    </td>
+                    <td>
                       {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
                     </td>
                     <td>
