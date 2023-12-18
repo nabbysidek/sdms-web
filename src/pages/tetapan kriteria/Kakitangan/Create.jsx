@@ -125,6 +125,7 @@ function CreateKakitangan() {
 
   // Create kakitangan
   const createKakitangan = async (kakitanganInput) => {
+    console.log(kakitanganInput);
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan`,
@@ -135,13 +136,14 @@ function CreateKakitangan() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.message, // Access the message from the backend response
+          text: response.data.success, // Access the message from the backend response
         });
         console.log("Kakitangan berjaya ditambah");
         handleCloseCreateKakitangan();
       }
     } catch (error) {
       console.log("Api respond is not as expected");
+      console.log(error);
     }
   };
 
