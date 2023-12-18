@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Row } from "react-bootstrap";
 import CreateUnit from "./Create";
 import EditUnit from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowUnitList() {
   // ----------FE----------
@@ -43,6 +45,34 @@ function ShowUnitList() {
       clearInterval(interval);
     };
   }, [currentPage, totalPage]);
+
+  // Handle delete
+  const handleDeleteUnit = async (unitId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/unit/${unitId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setUnits((prevUnits) =>
+            prevUnits.filter((unit) => unit.id !== unitId)
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting unit", error);
+      }
+    }
+  };
 
   return (
     <>
@@ -86,7 +116,12 @@ function ShowUnitList() {
                   <td>{unitsData.namaUnit}</td>
                   <td>
                     <EditUnit />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() => handleDeleteUnit(unitsData.id)}
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

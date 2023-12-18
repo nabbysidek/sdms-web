@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Button, Row, Table } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowSkopKriteriaList() {
   // ----------FE----------
@@ -44,6 +46,36 @@ function ShowSkopKriteriaList() {
     };
   }, [currentPage, totalPage]);
 
+  // Handle delete
+  const handleDeleteSkopKriteria = async (skopKriteriaId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/${skopKriteriaId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setSkopKriterias((prevSkopKriterias) =>
+            prevSkopKriterias.filter(
+              (skopKriteria) => skopKriteria.id !== skopKriteriaId
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting skop kriteria", error);
+      }
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -76,7 +108,14 @@ function ShowSkopKriteriaList() {
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
                     <EditSkopKriteria />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() =>
+                        handleDeleteSkopKriteria(skopKriteriasData.id)
+                      }
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

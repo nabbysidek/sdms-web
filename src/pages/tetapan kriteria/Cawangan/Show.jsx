@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Row, Button } from "react-bootstrap";
 import CreateCawangan from "./Create";
 import EditCawangan from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowCawanganList() {
   // ----------FE----------
@@ -43,6 +45,34 @@ function ShowCawanganList() {
       clearInterval(interval);
     };
   }, [currentPage, totalPage]);
+
+  // Handle delete
+  const handleDeleteCawangan = async (cawanganId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan/${cawanganId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setWilayahs((prevCawangans) =>
+            prevCawangans.filter((cawangan) => cawangan.id !== cawanganId)
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting cawangan", error);
+      }
+    }
+  };
 
   return (
     <>
@@ -82,7 +112,12 @@ function ShowCawanganList() {
                   <td>{cawangansData.namaCawangan}</td>
                   <td>
                     <EditCawangan />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() => handleDeleteCawangan(cawangansData.id)}
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

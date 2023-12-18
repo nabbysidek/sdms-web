@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Row, Button } from "react-bootstrap";
 import CreateBahagian from "./Create";
 import EditBahagian from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowBahagianList() {
   // ----------FE----------
@@ -47,6 +49,34 @@ function ShowBahagianList() {
     };
   }, [currentPage, totalPage]);
 
+  // Handle delete
+  const handleDeleteBahagian = async (bahagianId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/${bahagianId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setBahagians((prevBahagians) =>
+            prevBahagians.filter((bahagian) => bahagian.id !== bahagianId)
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting bahagian", error);
+      }
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -78,7 +108,12 @@ function ShowBahagianList() {
                   <td>{bahagiansData.namaBahagian}</td>
                   <td>
                     <EditBahagian />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() => handleDeleteBahagian(bahagiansData.id)}
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Row } from "react-bootstrap";
 import CreateSkopSemakan from "./Create";
 import EditSkopSemakan from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowSkopSemakanList() {
   // ----------FE----------
@@ -44,6 +46,36 @@ function ShowSkopSemakanList() {
     };
   }, [currentPage, totalPage]);
 
+  // Handle delete
+  const handleDeleteSkopSemakan = async (skopSemakanId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/${skopSemakanId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setSkopSemakans((prevSkopSemakans) =>
+            prevSkopSemakans.filter(
+              (skopSemakan) => skopSemakan.id !== skopSemakanId
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting skop semakan", error);
+      }
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -76,7 +108,14 @@ function ShowSkopSemakanList() {
                   <td>{skopSemakansData.namaSkopSemakan}</td>
                   <td>
                     <EditSkopSemakan />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() =>
+                        handleDeleteSkopSemakan(skopSemakansData.id)
+                      }
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

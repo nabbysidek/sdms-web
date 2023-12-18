@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Row } from "react-bootstrap";
 import CreateWilayah from "./Create";
 import EditWilayah from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowWilayahList() {
   // ----------FE----------
@@ -44,6 +46,34 @@ function ShowWilayahList() {
     };
   }, [currentPage, totalPage]);
 
+  // Handle delete
+  const handleDeleteWilayah = async (wilayahId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/wilayah/${wilayahId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setWilayahs((prevWilayahs) =>
+            prevWilayahs.filter((wilayah) => wilayah.id !== wilayahId)
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting wilayah", error);
+      }
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -77,7 +107,12 @@ function ShowWilayahList() {
                   <td>{wilayahsData.namaWilayah}</td>
                   <td>
                     <EditWilayah />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() => handleDeleteWilayah(wilayahsData.id)}
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

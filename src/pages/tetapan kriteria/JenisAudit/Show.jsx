@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Button, Row, Table } from "react-bootstrap";
 import CreateJenisAudit from "./Create";
 import EditJenisAudit from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowJenisAuditList() {
   // ----------FE----------
@@ -44,6 +46,36 @@ function ShowJenisAuditList() {
     };
   }, [currentPage, totalPage]);
 
+  // Handle delete
+  const handleDeleteJenisAudit = async (jenisAuditId) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/jenis-audit/${jenisAuditId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setJenisAudits((prevJenisAudits) =>
+            prevJenisAudits.filter(
+              (jenisAudit) => jenisAudit.id !== jenisAuditId
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting jenis audit", error);
+      }
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -76,7 +108,12 @@ function ShowJenisAuditList() {
                   <td>{jenisAuditsData.namaJenisAudit}</td>
                   <td>
                     <EditJenisAudit />
-                    <Button className="delBtn">Padam</Button>
+                    <Button
+                      onClick={() => handleDeleteJenisAudit(jenisAuditsData.id)}
+                      className="delBtn"
+                    >
+                      Padam
+                    </Button>
                   </td>
                 </tr>
               ))}

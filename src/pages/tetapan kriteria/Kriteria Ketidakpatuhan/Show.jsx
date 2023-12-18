@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import PaginationTable from "../../../components/pagination/PaginationTable";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShowKriteriaKetidakpatuhanList() {
   // ----------FE----------
@@ -46,6 +48,39 @@ function ShowKriteriaKetidakpatuhanList() {
       clearInterval(interval);
     };
   }, [currentPage, totalPage]);
+
+  // Handle delete
+  const handleDeleteKriteriaKetidakpatuhan = async (
+    kriteriaKetidakpatuhanId
+  ) => {
+    // Display a confirmation dialog
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhanId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, // Access the message from the backend response
+          });
+
+          setKriteriaKetidakpatuhans((prevKriteriaKetidakpatuhans) =>
+            prevKriteriaKetidakpatuhans.filter(
+              (kriteriaKetidakpatuhan) =>
+                kriteriaKetidakpatuhan.id !== kriteriaKetidakpatuhanId
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting kriteria ketidakpatuhan", error);
+      }
+    }
+  };
 
   return (
     <>
@@ -94,7 +129,16 @@ function ShowKriteriaKetidakpatuhanList() {
                     </td>
                     <td>
                       <EditKriteriaKetidakpatuhan />
-                      <Button className="delBtn">Padam</Button>
+                      <Button
+                        onClick={() =>
+                          handleDeleteKriteriaKetidakpatuhan(
+                            kriteriaKetidakpatuhansData.id
+                          )
+                        }
+                        className="delBtn"
+                      >
+                        Padam
+                      </Button>
                     </td>
                   </tr>
                 )
