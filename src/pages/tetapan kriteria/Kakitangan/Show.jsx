@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Row } from "react-bootstrap";
 import CreateKakitangan from "./Create";
 import EditKakitangan from "./Edit";
+import PaginationTable from "../../../components/pagination/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import axios from "axios";
@@ -79,14 +80,32 @@ function ShowKakitanganList() {
               kakitangans.map((kakitangansData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>Wilayah</td>
-                  <td>Cawangan</td>
-                  <td>Bahagian</td>
-                  <td>Jabatan</td>
-                  <td>Unit</td>
+                  <td>
+                    {kakitangansData.wilayah
+                      ? kakitangansData.wilayah.namaWilayah
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {kakitangansData.cawangan
+                      ? kakitangansData.cawangan.namaCawangan
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {kakitangansData.bahagian
+                      ? kakitangansData.bahagian.namaBahagian
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {kakitangansData.jabatan
+                      ? kakitangansData.jabatan.namaJabatan
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {kakitangansData.unit ? kakitangansData.unit.idUnit : "N/A"}
+                  </td>
                   <td>{kakitangansData.idKakitangan}</td>
                   <td>{kakitangansData.namaKakitangan}</td>
-                  <td>Jawatan</td>
+                  <td>{kakitangansData.jawatanKakitangan}</td>
                   <td>
                     <EditKakitangan />
                     <Button className="delBtn">Padam</Button>
@@ -95,6 +114,12 @@ function ShowKakitanganList() {
               ))}
           </tbody>
         </Table>
+
+        <PaginationTable
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onPageChange={setCurrentPage}
+        />
 
         {/* Functional buttons */}
         <div className="functionalBtnsSection">
