@@ -54,6 +54,7 @@ function SearchResultPelaporan() {
             <thead>
               <tr>
                 <th>Bil</th>
+                <th>Risiko</th>
                 <th>Wilayah</th>
                 <th>Cawangan</th>
                 <th>Jawatan</th>
@@ -61,26 +62,31 @@ function SearchResultPelaporan() {
                 <th>Jabatan</th>
                 <th>Unit</th>
                 <th>Jenis Audit</th>
-                <th>Tahun</th>
+                <th>Skop Kriteria</th>
                 <th>Skop Semakan</th>
-                <th>Skop Kesalahan</th>
-                <th>Kesalahan</th>
+                <th>Kriteria Ketidakpatuhan</th>
+                <th>Tahun Audit</th>
+                <th>Tajuk Audit</th>
+                <th>Catatan</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{/* Bilangan */}</td>
-                <td>{/* Wilayah */}</td>
-                <td>{/* Cawangan */}</td>
-                <td>{/* Jawatan */}</td>
-                <td>{/* Bahagian */}</td>
-                <td>{/* Jabatan */}</td>
-                <td>{/* Unit */}</td>
-                <td>{/* Jenis Audit */}</td>
-                <td>{/* Tahun */}</td>
-                <td>{/* Skop Semakan */}</td>
-                <td>{/* Skop Kesalahan */}</td>
-                <td>{/* Kesalahan */}</td>
+                <td>Bil</td>
+                <td>Risiko</td>
+                <td>Wilayah</td>
+                <td>Cawangan</td>
+                <td>Jawatan</td>
+                <td>Bahagian</td>
+                <td>Jabatan</td>
+                <td>Unit</td>
+                <td>Jenis Audit</td>
+                <td>Skop Kriteria</td>
+                <td>Skop Semakan</td>
+                <td>Kriteria Ketidakpatuhan</td>
+                <td>Tahun Audit</td>
+                <td>Tajuk Audit</td>
+                <td>Catatan</td>
               </tr>
             </tbody>
           </Table>
