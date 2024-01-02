@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+// SearchPelaporan.jsx
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
 import SearchResultPelaporan from "./SearchResult";
+import SearchKakitanganModal from "./SearchKakitanganModal";
 import "./Pelaporan.css";
 
 function SearchPelaporan() {
-  // ----------- FE ----------
-  // Manage the visibility of the search result section
-  const [isSearchResultPelaporanVisible, setIsSearchResultPelaporanVisible] =
-    useState(false);
+  // Manage visibility of the search result
+  const [linkClicked, setLinkClicked] = useState(false);
 
-  // State for storing form validation errors
+  // Check validation errors
   const [validationErrors, setValidationErrors] = useState(null);
 
-  const toggleVisibilitySearchResultPelaporan = () => {
-    setIsSearchResultPelaporanVisible(!isSearchResultPelaporanVisible);
-  };
+  // Manage the visibility of the modal
+  const [showModal, setShowModal] = useState(false);
 
   // Form validation
   const {
@@ -25,33 +24,33 @@ function SearchPelaporan() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data, toggleVisibility) => {
-    // Check if the input field is filled
+  const validateThenShowModal = (data) => {
     if (!data.searchStaff) {
       setValidationErrors({
-        searchStaff: { message: "ID atau nama kakitangan diperlukan" },
+        searchStaff: { message: "ID atau nama kakitangan diperlukan " },
       });
     } else {
-      // Reset validation errors
       setValidationErrors(null);
-
-      // Check if the form is valid before toggling visibility
       if (Object.keys(errors).length === 0) {
-        toggleVisibility();
+        // Display modal if the input field is filled
+        setShowModal(true);
+        // setIsSearchResultPelaporanVisible(true);
       } else {
-        // Set validation errors to be displayed
         setValidationErrors(errors);
       }
     }
   };
 
+  const handleLinkClick = () => {
+    setLinkClicked(true);
+  };
+
   return (
     <>
-      {/* Search bar section */}
       <div className="container-fluid pelaporanSearchSection">
         <Row>
           <Col xs={12} xl={7}>
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form>
               <Form.Group>
                 <Controller
                   name="searchStaff"
@@ -70,12 +69,10 @@ function SearchPelaporan() {
           </Col>
           <Col xs={12} xl={2} className="noPadding">
             <Button
-              onClick={() => {
-                handleSubmit((data) =>
-                  onSubmit(data, toggleVisibilitySearchResultPelaporan)
-                )();
-              }}
               className="pelaporanSearchBtn"
+              onClick={() => {
+                handleSubmit((data) => validateThenShowModal(data))();
+              }}
             >
               Cari
             </Button>
@@ -86,16 +83,21 @@ function SearchPelaporan() {
         </Row>
       </div>
 
-      {/* Error message */}
       {validationErrors?.searchStaff && (
         <Alert className="alert-display" variant="danger">
           {validationErrors.searchStaff.message}
         </Alert>
       )}
 
-      {/* Search result section */}
+      {/* Pass necessary props to the SearchKakitanganModal component */}
+      <SearchKakitanganModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onLinkClick={handleLinkClick}
+      />
+
       <div className="pelaporanSearchResultSection">
-        {isSearchResultPelaporanVisible && <SearchResultPelaporan />}
+        {linkClicked && <SearchResultPelaporan />}
       </div>
     </>
   );

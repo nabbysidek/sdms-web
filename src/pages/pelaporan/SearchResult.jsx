@@ -72,20 +72,20 @@ function SearchResultPelaporan() {
             </thead>
             <tbody>
               <tr>
-                <td>Bil</td>
-                <td>Risiko</td>
-                <td>Wilayah</td>
-                <td>Cawangan</td>
-                <td>Jawatan</td>
-                <td>Bahagian</td>
-                <td>Jabatan</td>
-                <td>Unit</td>
-                <td>Jenis Audit</td>
-                <td>Skop Kriteria</td>
-                <td>Skop Semakan</td>
-                <td>Kriteria Ketidakpatuhan</td>
-                <td>Tahun Audit</td>
-                <td>Tajuk Audit</td>
+                <td>1</td>
+                <td>Fraud</td>
+                <td>Kelantan</td>
+                <td>Kota Bharu</td>
+                <td>PA</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>A</td>
+                <td>Skop 1</td>
+                <td>Skop 2</td>
+                <td>Kriteria Ketidakpatuhan A</td>
+                <td>2015</td>
+                <td>Testing</td>
                 <td>Catatan</td>
               </tr>
             </tbody>
