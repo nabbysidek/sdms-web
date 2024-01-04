@@ -24,7 +24,7 @@ hr {
     text-align: center;
 }
 
-#staffEmail {
+.staffEmail {
     margin-top: 30px;
     font-size: 14px;
     font-weight: 500;

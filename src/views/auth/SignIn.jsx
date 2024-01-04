@@ -42,14 +42,14 @@ function SignIn() {
   };
 
   return (
-    <PageContainer>
+    <PageContainer className="pg-container">
       <Form
-        className="SignInFormContainer FormContainer"
+        className="signin-container form-container"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* SIGN IN FORM TEXT HEADER */}
-        <div className="formHeader">
-          <img className="Logo" src={aimLogo} alt="aim-logo" />
+        <div className="form-header">
+          <img className="aim-logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <h3>Selamat Datang</h3>
           <p>Masukkan maklumat log masuk anda</p>
@@ -57,7 +57,7 @@ function SignIn() {
 
         {/* SIGN IN FORM CONTENT */}
         <Form.Group className="mb-3" controlId="staffId">
-          <Form.Label className="FormLabel">Id Kakitangan</Form.Label>
+          <Form.Label className="form-label">Id Kakitangan</Form.Label>
           <Controller
             name="staffId"
             control={control}
@@ -84,7 +84,7 @@ function SignIn() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
-          <Form.Label className="FormLabel">Kata Laluan</Form.Label>
+          <Form.Label className="form-label">Kata Laluan</Form.Label>
           <Controller
             name="staffPassword"
             control={control}
@@ -113,26 +113,24 @@ function SignIn() {
           />
         </Form.Group>
 
-        {/* ... (other form elements) */}
-
-        <div className="forgotPasswordCta">
-          <Link to="#" className="allAuthLink" onClick={openModal}>
+        <div className="forgot-password">
+          <Link to="#" className="auth-link" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
           {showModal && <ModalForgotPassword onClose={closeModal} />}
         </div>
 
-        <Button variant="primary" className="authButton" type="submit">
+        <Button className="auth-btn" type="submit">
           {" "}
           Log Masuk{" "}
         </Button>
 
         {/* CREATE ACCOUNT CTA */}
-        <div className="createAccountCta">
+        <div className="create-acc">
           <p>
             Bagi pengguna baru, sila{" "}
             {
-              <Link to="/signup" className="allAuthLink">
+              <Link to="/signup" className="auth-link">
                 tekan di sini
               </Link>
             }

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import styled from "styled-components";
 import backgroundImage from "../../assets/aim-background-img.png";
@@ -33,22 +32,22 @@ function SignUp() {
   };
 
   return (
-    <PageContainer className="signUpContainer">
+    <PageContainer className="pg-container">
       <Form
-        className="SignUpFormContainer FormContainer"
+        className="signup-form-container form-container"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* SIGN IN FORM TEXT HEADER */}
-        <div className="formHeader">
-          <img className="Logo" src={aimLogo} alt="aim-logo" />
+        <div className="form-header">
+          <img className="aim-logo" src={aimLogo} alt="aim-logo" />
           <h1>Jabatan Audit Dalaman</h1>
           <p>Sila isi ruangan kosong untuk bina akaun baharu</p>
         </div>
 
         {/* SIGN IN FORM CONTENT */}
-        <div className="signUpFields">
+        <div>
           <Form.Group className="mb-3" controlId="staffName">
-            <Form.Label className="formLabel">Nama Kakitangan</Form.Label>
+            <Form.Label className="form-label">Nama Kakitangan</Form.Label>
             <Controller
               name="staffName"
               control={control}
@@ -57,7 +56,7 @@ function SignUp() {
               render={({ field, fieldState }) => (
                 <>
                   <Form.Control
-                    className="inputField"
+                    className="input-field"
                     type="text"
                     placeholder="Aina binti Abdul"
                     {...field}
@@ -75,8 +74,8 @@ function SignUp() {
           <div>
             <Row>
               <Col xs={6}>
-                <Form.Group className="mb-3 reduce-height" controlId="staffId">
-                  <Form.Label className="formLabel">Id Kakitangan</Form.Label>
+                <Form.Group className="mb-3" controlId="staffId">
+                  <Form.Label className="form-label">Id Kakitangan</Form.Label>
                   <Controller
                     name="staffId"
                     control={control}
@@ -107,8 +106,10 @@ function SignUp() {
                 </Form.Group>
               </Col>
               <Col xs={6}>
-                <Form.Group className="reduce-height" controlId="staffEmail">
-                  <Form.Label className="formLabel">Emel Kakitangan</Form.Label>
+                <Form.Group className="mb-3" controlId="staffEmail">
+                  <Form.Label className="form-label">
+                    Emel Kakitangan
+                  </Form.Label>
                   <Controller
                     name="staffEmail"
                     control={control}
@@ -143,8 +144,8 @@ function SignUp() {
           <div>
             <Row>
               <Col xs={6}>
-                <Form.Group className="reduce-height" controlId="staffPassword">
-                  <Form.Label className="formLabel">Kata Laluan</Form.Label>
+                <Form.Group controlId="staffPassword">
+                  <Form.Label className="form-label">Kata Laluan</Form.Label>
                   <Controller
                     name="staffPassword"
                     control={control}
@@ -175,11 +176,8 @@ function SignUp() {
                 </Form.Group>
               </Col>
               <Col xs={6}>
-                <Form.Group
-                  className="reduce-height"
-                  controlId="staffConfirmPassword"
-                >
-                  <Form.Label className="formLabel">
+                <Form.Group controlId="staffConfirmPassword">
+                  <Form.Label className="form-label">
                     Ulang Kata Laluan
                   </Form.Label>
                   <Controller
@@ -214,18 +212,18 @@ function SignUp() {
             </Row>
           </div>
 
-          <Button className="authButton" type="submit">
+          <Button className="auth-btn" type="submit">
             {" "}
             Mohon Akses{" "}
           </Button>
         </div>
 
         {/* CREATE ACCOUNT CTA */}
-        <div className="createAccountCta">
+        <div className="create-acc">
           <p>
             Jika ingin log masuk semula{" "}
             {
-              <Link to="/" className="allAuthLink">
+              <Link to="/" className="auth-link">
                 tekan di sini
               </Link>
             }

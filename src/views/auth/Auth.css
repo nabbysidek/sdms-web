@@ -1,34 +1,31 @@
-/* *********************** */
-/* VARIABLES */
-/* *********************** */
-
 #root {
+  /* ********************************** */
   /* BG IMAGE FILL THE ENTIRE VIEWPORT */
+  /* ********************************** */
   width: 100%;
   height: 100%;
   margin: 0 auto;
 }
 
-.formHeader {
+.form-header {
     align-items: center;
     text-align: center;
     color: var(--white);
 }
 
-.allAuthLink {
+.auth-link {
   color: var(--white);
 }
 
-.authButton {
+.auth-btn {
   width: 100%;
-  font-family: "Open Sans", sans-serif;
   font-size: 1.15em;
   font-weight: 700;
   border-color: var(--darkblue);
   background-color: var(--darkblue);
 }
 
-.authButton:hover {
+.auth-btn:hover {
   color: var(--darkblue);
   background-color: var(--white);
 }
@@ -37,74 +34,55 @@
 /* *********************** */
 /* CLASSES */
 /* *********************** */
-.PageContainer {
+.pg-container {
   max-width: 1280px;
   padding: 1rem;
 }
 
-.FormContainer {
+.form-container {
   background-color: rgba(255, 255, 255, 0.35);
 }
 
-.FormContainer h1 {
-  font-weight: 700;
+.form-container h1 {
   font-size: 1.75em;
 }
 
-.FormContainer h3 {
+.form-container h3 {
   font-weight: 500;
 }
 
-.FormContainer p {
+.form-container p {
   text-align: center;
   color: var(--white)
 }
 
-.SignInFormContainer {
+.signin-container {
   width: 350px;
   padding: 30px 40px 10px; 
 }
 
-.SignUpFormContainer {
+.signup-form-container {
   padding: 30px 40px 10px; 
   max-width: 400px;
   margin: 0 auto; 
 }
 
-
-.formFieldsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items:start;
-}
-
-.formFieldPair {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
-/* Add some spacing between the Form.Group elements within a pair */
-.formFieldPair .mb-3 {
-  width: 100%;
-}
-
-.Logo {
+.aim-logo {
   width: 70%;
   padding-bottom: 10px;
 }
 
-.forgotPasswordCta {
+.forgot-password {
   font-style: italic;
   text-align: right;
   padding-bottom: 5px;
 }
 
-.FormLabel {
+.form-label {
   color: var(--white);
 }
 
-.createAccountCta, .signInCta {
+.create-acc {
   margin-top: 12px;
 }
 
@@ -113,12 +91,12 @@
   margin-right: 10px;
 }
 
-.inputField {
+.input-field {
   height: 30px;
   margin: 0 auto;
 }
 
-.formLabel {
+.form-label {
   color: var(--white);
   margin: 2px auto;
 }
