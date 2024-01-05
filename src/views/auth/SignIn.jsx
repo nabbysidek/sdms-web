@@ -25,6 +25,11 @@ function SignIn() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  const validation = {
+    required: true,
+  };
+
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -43,7 +48,7 @@ function SignIn() {
           <Form.Label className="form-label">Id Kakitangan</Form.Label>
           <Form.Control
             type="text"
-            {...register("staffId", { required: true })}
+            {...register("staffId", { validation })}
             aria-invalid={errors.staffId ? "true" : "false"}
             placeholder="ID kakitangan anda"
           />
@@ -58,7 +63,7 @@ function SignIn() {
           <Form.Label className="form-label">Kata Laluan</Form.Label>
           <Form.Control
             type="password"
-            {...register("staffPassword", { required: true, minLength: 8 })}
+            {...register("staffPassword", { validation, minLength: 8 })}
             aria-invalid={errors.staffPassword ? "true" : "false"}
             placeholder="Kata laluan anda"
           />
