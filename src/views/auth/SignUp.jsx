@@ -14,11 +14,6 @@ function SignUp() {
     watch,
   } = useForm();
 
-  // Validate to require an input for each field
-  const validation = {
-    required: true,
-  };
-
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -37,7 +32,7 @@ function SignUp() {
             <Form.Label className="form-label">Nama Kakitangan</Form.Label>
             <Form.Control
               type="text"
-              {...register("staffName", { validation })}
+              {...register("staffName", { required: true })}
               aria-invalid={errors.staffName ? "true" : "false"}
               placeholder="Nama anda"
             />
@@ -56,7 +51,7 @@ function SignUp() {
                   <Form.Control
                     type="text"
                     {...register("staffId", {
-                      validation,
+                      required: true,
                     })}
                     aria-invalid={errors.staffId ? "true" : "false"}
                     placeholder="ID kakitangan anda"
@@ -76,7 +71,7 @@ function SignUp() {
                   <Form.Control
                     type="email"
                     {...register("staffEmail", {
-                      validation,
+                      required: true,
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Emel tidak sah.",
@@ -108,7 +103,7 @@ function SignUp() {
                   <Form.Control
                     type="password"
                     {...register("staffPassword", {
-                      validation,
+                      required: true,
                       minLength: 8,
                     })}
                     aria-invalid={errors.staffPassword ? "true" : "false"}
@@ -134,7 +129,7 @@ function SignUp() {
                   <Form.Control
                     type="password"
                     {...register("staffConfirmPassword", {
-                      validation,
+                      required: true,
                       validate: (value) =>
                         value === watch("staffPassword") ||
                         "Kata laluan tidak padan",
