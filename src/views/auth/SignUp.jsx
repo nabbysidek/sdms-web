@@ -1,74 +1,45 @@
 import { Link } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Form, Col, Row, Button } from "react-bootstrap";
-import styled from "styled-components";
-import backgroundImage from "../../assets/aim-background-img.png";
-import aimLogo from "../../assets/aim-logo.svg";
-import "./Auth.css";
-
-const PageContainer = styled.div`
-  background-image: url(${backgroundImage});
-  background-size: cover;
-  background-position: center center;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+import aimLogo from "../../assets/images/aim-logo.svg";
+import "../../assets/styles/styles_auth.css";
 
 function SignUp() {
-  // ---------- FE ----------
-  // Form validation
+  // ------------------- FE ---------------------
+  // Form validation and submission
   const {
-    control,
-    handleSubmit,
+    register,
     formState: { errors },
+    handleSubmit,
+    watch,
   } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = (data) => console.log(data);
 
   return (
-    <PageContainer className="pg-container">
+    <div className="pg-container">
       <Form
         className="signup-form-container form-container"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {/* SIGN IN FORM TEXT HEADER */}
         <div className="form-header">
           <img className="aim-logo" src={aimLogo} alt="aim-logo" />
-          <h1>Jabatan Audit Dalaman</h1>
-          <p>Sila isi ruangan kosong untuk bina akaun baharu</p>
+          <p>Isi ruangan di bawah untuk bina akaun baharu</p>
         </div>
 
-        {/* SIGN IN FORM CONTENT */}
         <div>
           <Form.Group className="mb-3" controlId="staffName">
             <Form.Label className="form-label">Nama Kakitangan</Form.Label>
-            <Controller
-              name="staffName"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Nama penuh kakitangan diperlukan" }}
-              render={({ field, fieldState }) => (
-                <>
-                  <Form.Control
-                    className="input-field"
-                    type="text"
-                    placeholder="Aina binti Abdul"
-                    {...field}
-                  />
-                  {fieldState.error && (
-                    <Form.Text className="text-danger">
-                      {fieldState.error.message}
-                    </Form.Text>
-                  )}
-                </>
-              )}
+            <Form.Control
+              type="text"
+              {...register("staffName", { required: true })}
+              aria-invalid={errors.staffName ? "true" : "false"}
+              placeholder="Nama anda"
             />
+            {errors.staffName?.type === "required" && (
+              <p role="alert" className="error-message">
+                Nama anda diperlukan
+              </p>
+            )}
           </Form.Group>
 
           <div>
@@ -76,33 +47,19 @@ function SignUp() {
               <Col xs={6}>
                 <Form.Group className="mb-3" controlId="staffId">
                   <Form.Label className="form-label">Id Kakitangan</Form.Label>
-                  <Controller
-                    name="staffId"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: "ID kakitangan diperlukan",
-                      pattern: {
-                        value: /^[A-Za-z0-9]{5,}$/i,
-                        message:
-                          "ID kakitangan harus terdiri dari minimal 5 karakter alfanumerik.",
-                      },
-                    }}
-                    render={({ field, fieldState }) => (
-                      <>
-                        <Form.Control
-                          type="text"
-                          placeholder="123456"
-                          {...field}
-                        />
-                        {fieldState.error && (
-                          <Form.Text className="text-danger">
-                            {fieldState.error.message}
-                          </Form.Text>
-                        )}
-                      </>
-                    )}
+                  <Form.Control
+                    type="text"
+                    {...register("staffId", {
+                      required: true,
+                    })}
+                    aria-invalid={errors.staffId ? "true" : "false"}
+                    placeholder="ID kakitangan anda"
                   />
+                  {errors.staffId?.type === "required" && (
+                    <p role="alert" className="error-message">
+                      ID kakitangan diperlukan
+                    </p>
+                  )}
                 </Form.Group>
               </Col>
               <Col xs={6}>
@@ -110,32 +67,28 @@ function SignUp() {
                   <Form.Label className="form-label">
                     Emel Kakitangan
                   </Form.Label>
-                  <Controller
-                    name="staffEmail"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: "Emel kakitangan diperlukan",
+                  <Form.Control
+                    type="email"
+                    {...register("staffEmail", {
+                      required: true,
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Emel harus dalam format yang sah.",
+                        message: "Emel tidak sah.",
                       },
-                    }}
-                    render={({ field, fieldState }) => (
-                      <>
-                        <Form.Control
-                          type="email"
-                          placeholder="ainaabdul@aim.gov.my"
-                          {...field}
-                        />
-                        {fieldState.error && (
-                          <Form.Text className="text-danger">
-                            {fieldState.error.message}
-                          </Form.Text>
-                        )}
-                      </>
-                    )}
+                    })}
+                    aria-invalid={errors.staffEmail ? "true" : "false"}
+                    placeholder="Emel kakitangan anda"
                   />
+                  {errors.staffEmail && (
+                    <p role="alert" className="error-message">
+                      {errors.staffEmail.message}
+                    </p>
+                  )}
+                  {errors.staffEmail?.type === "required" && (
+                    <p role="alert" className="error-message">
+                      Emel kakitangan diperlukan
+                    </p>
+                  )}
                 </Form.Group>
               </Col>
             </Row>
@@ -146,33 +99,25 @@ function SignUp() {
               <Col xs={6}>
                 <Form.Group controlId="staffPassword">
                   <Form.Label className="form-label">Kata Laluan</Form.Label>
-                  <Controller
-                    name="staffPassword"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: "Kata laluan diperlukan",
-                      minLength: {
-                        value: 8,
-                        message:
-                          "Kata laluan harus terdiri dari minimal 8 karakter.",
-                      },
-                    }}
-                    render={({ field, fieldState }) => (
-                      <>
-                        <Form.Control
-                          type="password"
-                          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                          {...field}
-                        />
-                        {fieldState.error && (
-                          <Form.Text className="text-danger">
-                            {fieldState.error.message}
-                          </Form.Text>
-                        )}
-                      </>
-                    )}
+                  <Form.Control
+                    type="password"
+                    {...register("staffPassword", {
+                      required: true,
+                      minLength: 8,
+                    })}
+                    aria-invalid={errors.staffPassword ? "true" : "false"}
+                    placeholder="Kata laluan anda"
                   />
+                  {errors.staffPassword?.type === "required" && (
+                    <p role="alert" className="error-message">
+                      Kata laluan diperlukan
+                    </p>
+                  )}
+                  {errors.staffPassword?.type === "minLength" && (
+                    <p role="alert" className="error-message">
+                      Minima 8 karakter
+                    </p>
+                  )}
                 </Form.Group>
               </Col>
               <Col xs={6}>
@@ -180,33 +125,30 @@ function SignUp() {
                   <Form.Label className="form-label">
                     Ulang Kata Laluan
                   </Form.Label>
-                  <Controller
-                    name="staffConfirmPassword"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: "Kata laluan diperlukan",
-                      minLength: {
-                        value: 8,
-                        message:
-                          "Kata laluan harus terdiri dari minimal 8 karakter.",
-                      },
-                    }}
-                    render={({ field, fieldState }) => (
-                      <>
-                        <Form.Control
-                          type="password"
-                          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                          {...field}
-                        />
-                        {fieldState.error && (
-                          <Form.Text className="text-danger">
-                            {fieldState.error.message}
-                          </Form.Text>
-                        )}
-                      </>
-                    )}
+                  <Form.Control
+                    type="password"
+                    type="password"
+                    {...register("staffConfirmPassword", {
+                      required: true,
+                      validate: (value) =>
+                        value === watch("staffPassword") ||
+                        "Kata laluan tidak padan",
+                    })}
+                    aria-invalid={
+                      errors.staffConfirmPassword ? "true" : "false"
+                    }
+                    placeholder="Kata laluan anda"
                   />
+                  {errors.staffConfirmPassword?.type === "required" && (
+                    <p role="alert" className="error-message">
+                      Kata laluan diperlukan
+                    </p>
+                  )}
+                  {errors.staffConfirmPassword && (
+                    <p role="alert" className="error-message">
+                      {errors.staffConfirmPassword.message}
+                    </p>
+                  )}
                 </Form.Group>
               </Col>
             </Row>
@@ -218,7 +160,6 @@ function SignUp() {
           </Button>
         </div>
 
-        {/* CREATE ACCOUNT CTA */}
         <div className="create-acc">
           <p>
             Jika ingin log masuk semula{" "}
@@ -230,7 +171,7 @@ function SignUp() {
           </p>
         </div>
       </Form>
-    </PageContainer>
+    </div>
   );
 }
 

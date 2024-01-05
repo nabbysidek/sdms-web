@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { Container, Nav, Navbar, Image } from "react-bootstrap";
 import SideBar from "../sidebar/SideBar";
 import UserIconMenu from "../navbar user menu/UserIconMenu";
-import aimLogo from "../../assets/aim-logo.svg";
+import aimLogo from "../../assets/images/aim-logo.svg";
 import "./Navbar.css";
 
 function NavBar() {

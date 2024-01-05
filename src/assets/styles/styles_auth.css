@@ -1,0 +1,101 @@
+  /* ********************************** */
+  /* *******FOR PAGE'S BACKGROUND****** */
+  /* ********************************** */
+
+.pg-container {
+  background-image: url("../../assets/images/aim-background-img.png");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ********************************** */
+/* ********** FORMS BODY ************ */
+/* ********************************** */
+
+.form-header {
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+}
+
+.form-container {
+  background-color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  color: var(--white);
+}
+
+.form-container h1 {
+  font-size: 1.75em;
+}
+
+.form-label {
+  margin-top:2px;
+}
+
+/* ********************************** */
+/* ********** FORMS BODY ********** */
+/* ********************************** */
+
+.signin-container {
+  width: 350px;
+  padding: 30px 40px 10px; 
+}
+
+.signup-form-container {
+  padding: 30px 40px 10px; 
+  max-width: 400px;
+  margin: 0 auto; 
+}
+
+.aim-logo {
+  height: 70px;
+  padding-bottom: 10px;
+}
+
+/* ********************************** */
+/* ********** FORMS FOOTER ********** */
+/* ********************************** */
+
+.auth-link {
+  color: var(--white);
+}
+
+.auth-btn {
+  width: 100%;
+  font-size: 1.15em;
+  font-weight: 700;
+  margin-top: 5px;
+  border-color: var(--darkblue);
+  background-color: var(--darkblue);
+}
+
+.auth-btn:hover {
+  color: var(--darkblue);
+  background-color: var(--white);
+}
+
+.create-acc {
+  margin-top: 12px;
+  text-align: center;
+  color: var(--white);
+}
+
+.forgot-password {
+  font-style: italic;
+  text-align: right;
+  padding-bottom: 5px;
+}
+
+/***************************************/
+/* ***** ERROR HANDLING ***** */
+/***************************************/
+.error-message {
+  font-size: .75rem;
+  color: #ff9494;
+  margin-bottom: 0;
+}

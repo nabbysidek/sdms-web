@@ -1,32 +1,15 @@
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { Form, Button } from "react-bootstrap";
 import ModalForgotPassword from "./ForgotPassword/ModalForgotPassword";
-import backgroundImage from "../../assets/aim-background-img.png";
-import aimLogo from "../../assets/aim-logo.svg";
-import "./Auth.css";
-
-const PageContainer = styled.div`
-  background-image: url(${backgroundImage});
-  background-size: cover;
-  background-position: center center;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+import aimLogo from "../../assets/images/aim-logo.svg";
+import "../../assets/styles/styles_auth.css";
 
 function SignIn() {
+  // -------------------- FE ---------------------------
+  // Forgot Password Modal
   const [showModal, setShowModal] = useState(false);
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   const openModal = () => {
     setShowModal(true);
@@ -36,85 +19,63 @@ function SignIn() {
     setShowModal(false);
   };
 
-  const onSubmit = (data) => {
-    // handle form submission here
-    console.log(data);
-  };
+  // Form validation and submission
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
 
   return (
-    <PageContainer className="pg-container">
+    <div className="pg-container">
       <Form
         className="signin-container form-container"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {/* SIGN IN FORM TEXT HEADER */}
         <div className="form-header">
           <img className="aim-logo" src={aimLogo} alt="aim-logo" />
-          <h1>Jabatan Audit Dalaman</h1>
-          <h3>Selamat Datang</h3>
+          <h1>Sistem Jabatan Audit Dalaman</h1>
           <p>Masukkan maklumat log masuk anda</p>
         </div>
 
-        {/* SIGN IN FORM CONTENT */}
-        <Form.Group className="mb-3" controlId="staffId">
+        <Form.Group controlId="staffId" className="mb-3">
           <Form.Label className="form-label">Id Kakitangan</Form.Label>
-          <Controller
-            name="staffId"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "ID kakitangan diperlukan",
-              pattern: {
-                value: /^[A-Za-z0-9]{5,}$/i,
-                message:
-                  "ID kakitangan harus terdiri dari minimal 5 karakter alfanumerik.",
-              },
-            }}
-            render={({ field, fieldState }) => (
-              <>
-                <Form.Control type="text" placeholder="123456" {...field} />
-                {fieldState.error && (
-                  <Form.Text className="text-danger">
-                    {fieldState.error.message}
-                  </Form.Text>
-                )}
-              </>
-            )}
+          <Form.Control
+            type="text"
+            {...register("staffId", { required: true })}
+            aria-invalid={errors.staffId ? "true" : "false"}
+            placeholder="ID kakitangan anda"
           />
+          {errors.staffId?.type === "required" && (
+            <p role="alert" className="error-message">
+              ID kakitangan diperlukan
+            </p>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="staffPassword">
           <Form.Label className="form-label">Kata Laluan</Form.Label>
-          <Controller
-            name="staffPassword"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "Kata laluan diperlukan",
-              minLength: {
-                value: 8,
-                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
-              },
-            }}
-            render={({ field, fieldState }) => (
-              <>
-                <Form.Control
-                  type="password"
-                  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                  {...field}
-                />
-                {fieldState.error && (
-                  <Form.Text className="text-danger">
-                    {fieldState.error.message}
-                  </Form.Text>
-                )}
-              </>
-            )}
+          <Form.Control
+            type="password"
+            {...register("staffPassword", { required: true, minLength: 8 })}
+            aria-invalid={errors.staffPassword ? "true" : "false"}
+            placeholder="Kata laluan anda"
           />
+          {errors.staffPassword?.type === "required" && (
+            <p role="alert" className="error-message">
+              Kata laluan diperlukan
+            </p>
+          )}
+          {errors.staffPassword?.type === "minLength" && (
+            <p role="alert" className="error-message">
+              Minima 8 karakter
+            </p>
+          )}
         </Form.Group>
 
         <div className="forgot-password">
-          <Link to="#" className="auth-link" onClick={openModal}>
+          <Link to="" className="auth-link" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
           {showModal && <ModalForgotPassword onClose={closeModal} />}
@@ -125,7 +86,6 @@ function SignIn() {
           Log Masuk{" "}
         </Button>
 
-        {/* CREATE ACCOUNT CTA */}
         <div className="create-acc">
           <p>
             Bagi pengguna baru, sila{" "}
@@ -137,7 +97,7 @@ function SignIn() {
           </p>
         </div>
       </Form>
-    </PageContainer>
+    </div>
   );
 }
 
