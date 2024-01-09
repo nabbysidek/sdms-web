@@ -1,0 +1,159 @@
+/* ********************************** */
+/* *********** PAGE LAYOUT ********* */
+/* ********************************* */
+
+.main {
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: auto 1fr;
+}
+  
+.content {
+  background-color: var(--backgroundwhite);
+  width: 100%;
+  min-height: 100vh; /* to fix the issue with stuttering page */
+  overflow: hidden;
+}
+
+/* ********************************** */
+/* *********** NAVBAR ************** */
+/* ********************************* */
+
+.main-navbar {
+    background-color: var(--darkblue);
+}
+
+.navbar-user-icon {
+    color: var(--white);
+    margin-left: 5px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.navbar-title {
+    float: right;
+    margin: 10px 0 auto 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--white);
+}
+
+/* ************************************* */
+/* *********** NAVBAR ****************** */
+/* *********** FOR MOBILE ************** */
+/* ************************************* */
+
+  /* for mobile navbar collapse */
+.custom-collapse {
+  color: var(--white);
+}
+
+.navbar-user-icon:hover {
+    text-decoration: underline;
+}
+
+.navbar-text a {
+    background-color: transparent;
+    color: var(--white);
+}
+
+.navbar-text a:hover {
+    background-color: transparent;
+    color: var(--white);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .navbar-title {
+        margin-top: 12px;
+        font-size: 12px;
+    }
+}
+
+/* ******************************************* */
+/* *********** NAVBAR USER ICON ************** */
+/* ******************************************* */
+
+.user-icon-container {
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.mini-menu h6 {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+  
+.mini-menu {
+  width: 200px;
+  font-size: 12px;
+}
+  
+.mini-menu-content {
+  color: var(--lightgray);
+  padding: 0 auto;
+  margin-bottom: 0;
+  height: 20px;
+}
+  
+.btn-update-profile {
+  width:175px;
+  height:30px;
+  margin-left: 15px;
+  color: var(--white);
+  background-color: var(--darkblue);
+  border: 1px solid var(--darkblue);
+  border-radius: 5px;
+}
+
+.btn-update-profile:hover {
+  color: var(--black);
+  background-color: var(--white);
+  border: 1px solid var(--black);
+}
+
+
+/* ******************************************* */
+/* *********** NAVBAR USER ICON ************** */
+/* *********** MINI MENU DISPLAY ************** */
+/* ******************************************* */
+
+@media (min-width: 1280px) {
+.dropdown-menu[data-bs-popper] {
+    top: 75%;
+    left: 83%;
+    }
+}
+
+@media (min-width: 1920px) {
+  .dropdown-menu[data-bs-popper] {
+      top: 75%;
+      left: 89%;
+  }
+}
+
+/* ******************************************* */
+/* *********** NAVBAR USER ICON ************** */
+/* ******* MOBILE RESPONSIVE BEHAVIOUR ******* */
+/* ******************************************* */
+
+@media (max-width: 768px) {
+  .navbar-user {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-bottom: 7px;
+    font-weight: 400;
+  }
+
+  .navbar-user:hover {
+    text-decoration: underline;
+  }
+
+  .navbar-user-icon {
+    width: 20px;
+    margin-right: 3px;
+    margin-bottom: 10px;
+  }
+}

@@ -1,15 +1,14 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-import "./Layout.css";
-
 import NavBar from "../navbar/Navbar";
 import SideBar from "../sidebar/SideBar";
+import "../../assets/styles/styles_layout.css";
 
 function Layout() {
+  // --------- FE ------------------
+  // Set the page layout for mobile view
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  // To check when the viewport is in mobile view
   const checkMobileView = () => {
     setIsMobile(window.innerWidth <= 768);
   };
@@ -29,9 +28,7 @@ function Layout() {
       <NavBar />
 
       <div className="main">
-        {/* Render the SideBar component conditionally */}
         {!isMobile && <SideBar />}
-
         <div className="content">
           <Outlet />
         </div>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Container, Nav, Navbar, Image } from "react-bootstrap";
-import SideBar from "../sidebar/SideBar";
-import UserIconMenu from "../navbar user menu/UserIconMenu";
+import SideBar from "../../sidebar/SideBar";
+import UserIconMenu from "./UserIconMenu";
 import aimLogo from "../../assets/images/aim-logo.svg";
-import "./Navbar.css";
+import "../../assets/styles/styles_layout.css";
 
 function NavBar() {
   // ---------- FE -----------
@@ -19,7 +19,7 @@ function NavBar() {
   };
 
   // For mobile viewing
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileNavExpanded, setMobileNavExpanded] = useState(false);
 
   const handleMobileNavToggle = () => {
@@ -33,7 +33,7 @@ function NavBar() {
   };
 
   const checkMobileView = () => {
-    setIsMobile(window.innerWidth <= 767);
+    setIsMobile(window.innerWidth <= 768);
   };
 
   useEffect(() => {
@@ -49,19 +49,19 @@ function NavBar() {
       <Navbar
         variant="dark"
         expand="lg"
-        className="mainNavbar"
+        className="main-navbar"
         expanded={mobileNavExpanded}
       >
-        <Container className="mainNavbarContainer">
+        <Container fluid>
           <Navbar.Brand onClick={clickAimLogo}>
             <Image
               src={aimLogo}
               alt="logo-aim"
-              height="50"
-              className="d-inline-block align-top aimLogo"
+              height={40}
+              className="d-inline-block align-top"
             />
             {""}
-            <h5 className="titleAim">Jabatan Audit Dalaman</h5>
+            <h5 className="navbar-title">Jabatan Audit Dalaman</h5>
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
