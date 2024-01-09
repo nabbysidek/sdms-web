@@ -157,3 +157,120 @@
     margin-bottom: 10px;
   }
 }
+
+/* ******************************************* */
+/* **************** SIDE BAR ***************** */
+/* ******************************************* */
+
+.sidebar {
+    width: 200px;
+    font-size: 14px;
+    transition: width 0.4s ease;
+}
+
+.list-group-item {
+    margin: 7px 0 0 -2px;
+    margin-top:7px;
+    padding-bottom: 10px;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* ******************************************* */
+/* **************** SIDEBAR ****************** */
+/* **************TOGGLE SIDEBAR ************** */
+/* ******************************************* */
+
+.sidebar.closed {
+    width: 50px;
+}
+
+.sidebar.open {
+    width: 250px;
+}
+
+/* ******************************************* */
+/* **************** SIDE BAR ***************** */
+/* **************HAMBURGER NAVBAR************* */
+/* ******************************************* */
+
+@media (max-width: 767px) {
+    .list-group-item {
+        background-color: var(--darkblue);
+        padding: 0;
+        margin: 0;
+        width: 250px;
+        border: none;
+        color: var(--white);
+    }
+
+    .tetapan-kriteria-group:hover {
+        color: var(--black);
+        text-decoration: underline;
+    }
+
+    .dropdown-arrow {
+        float: right;
+        margin-top: -34px;
+        margin-right: 90px;
+    }
+
+    .nav-link {
+        margin: 15px 15px 15px 5px;
+        font-size: 12px;
+    }
+}
+
+/* ****************************************** */
+/* *************** SUB-SIDEBAR ************* */
+/* ***************************************** */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sub-sidebar {
+  position: absolute;
+  top: -8px;
+  left: 100%;
+  width: 200px;
+  background-color: #fff; 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.sub-nav-link {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.sub-nav-link:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+/* *********************** */
+/* ON MOBILE */
+/* *********************** */
+@media (max-width: 767px) {
+.sub-sidebar {
+  background-color: var(--darkblue);
+  border-left: 1px solid var(--darkblue); 
+}
+}
+
+.mobileNavLinks .sub-nav-link {
+background-color: none;
+color: #000;
+font-size: 13px;
+}
+
+.mobileNavLinks .sub-nav-link:hover {
+color: #000;
+}

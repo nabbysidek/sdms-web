@@ -1,31 +1,32 @@
-// SideBar.js
 import React, { useState, useEffect } from "react";
-import { NavDropdown } from "react-bootstrap";
+import { NavDropdown, ListGroup } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { FaSortDown } from "react-icons/fa";
 import SideBarMenu from "./SideBarMenu";
-import ListGroup from "react-bootstrap/ListGroup";
 import SubSideBar from "./SubSideBar";
-
-import "./SideBar.css";
+import "../../../assets/styles/styles_layout.css";
 
 function SideBar({ onNavLinkClick }) {
+  // ----------- FE ------------
+  // To handle the toggle of the opening and closing of the sidebar
   const [isSideBarOpen, setSideBarOpen] = useState(true);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
-  const [isTetapanKriteriaHovered, setIsTetapanKriteriaHovered] =
-    useState(false);
-  const [isNavDropdownOpen, setNavDropdownOpen] = useState(false);
-
-  const tetapanKriteriaItem = SideBarMenu.find(
-    (item) => item.path === "/kriteriaketidakpatuhan"
-  );
 
   const toggleSideBar = () => {
     setSideBarOpen(!isSideBarOpen);
   };
 
+  // To handle the display of the sub-sidebar
+  const [isTetapanKriteriaHovered, setIsTetapanKriteriaHovered] =
+    useState(false);
+
+  const tetapanKriteriaItem = SideBarMenu.find(
+    (item) => item.path === "/kriteriaketidakpatuhan"
+  );
+
+  // To check when the screen is equal to or less than 768px
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+
   const checkMobileView = () => {
-    setIsMobileView(window.innerWidth <= 767);
+    setIsMobileView(window.innerWidth <= 768);
   };
 
   useEffect(() => {
@@ -36,12 +37,16 @@ function SideBar({ onNavLinkClick }) {
     };
   }, []);
 
+  // To handle the dropdown of the sub-sidebar when on mobile
+  const [isNavDropdownOpen, setNavDropdownOpen] = useState(false);
+
   const toggleNavDropdown = () => {
     setNavDropdownOpen(!isNavDropdownOpen);
   };
 
+  // To handle the closing and collapse of the hamburger navbar
   const handleNavLinkClick = () => {
-    onNavLinkClick(); // Close mobile navbar
+    onNavLinkClick();
   };
 
   return (
@@ -77,19 +82,15 @@ function SideBar({ onNavLinkClick }) {
               }
             }}
           >
-            <div className="list-item-content">
+            <div>
               <div className="tetapan-kriteria-group">
                 {item.path === "/kriteriaketidakpatuhan" && isMobileView ? (
                   <NavDropdown
                     title={
                       isSideBarOpen || isMobileView ? (
                         <>
-                          <span className="icon">
-                            {tetapanKriteriaItem.icon}
-                          </span>
-                          <span className="title">
-                            {tetapanKriteriaItem.title}
-                          </span>
+                          <span>{tetapanKriteriaItem.icon}</span>
+                          <span>{tetapanKriteriaItem.title}</span>
                         </>
                       ) : (
                         tetapanKriteriaItem.icon

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import NavBar from "../navbar/Navbar";
-import SideBar from "../sidebar/SideBar";
+import NavBar from "./navbar/Navbar";
+import SideBar from "./sidebar/SideBar";
 import "../../assets/styles/styles_layout.css";
 
 function Layout() {

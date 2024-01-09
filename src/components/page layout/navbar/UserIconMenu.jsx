@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import "../../assets/styles/styles_layout.css";
+import "../../../assets/styles/styles_layout.css";
 
 const UserIconMenu = ({ closeMobileNav }) => {
   // ----------- FE ------------

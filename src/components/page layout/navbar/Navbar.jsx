@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Container, Nav, Navbar, Image } from "react-bootstrap";
-import SideBar from "../../sidebar/SideBar";
+import SideBar from "../sidebar/SideBar";
 import UserIconMenu from "./UserIconMenu";
-import aimLogo from "../../assets/images/aim-logo.svg";
-import "../../assets/styles/styles_layout.css";
+import aimLogo from "../../../assets/images/aim-logo.svg";
+import "../../../assets/styles/styles_layout.css";
 
 function NavBar() {
   // ---------- FE -----------
