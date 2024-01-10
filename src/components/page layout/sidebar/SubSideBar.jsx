@@ -3,12 +3,13 @@ import { NavLink } from "react-router-dom";
 import "../../../assets/styles/styles_layout.css";
 
 function SubSideBar() {
+  // ------------- FE -----------------
+  //  Handle sub-sidebar behaviour when on mobile screen
   const isMobile = window.innerWidth <= 768; // Set your mobile breakpoint
 
   if (isMobile) {
     return (
-      <ul className="mobileNavLinks">
-        {/* Render NavLink components for mobile screens */}
+      <ul className="mobile-nav-links">
         <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
             Kriteria Ketidakpatuhan

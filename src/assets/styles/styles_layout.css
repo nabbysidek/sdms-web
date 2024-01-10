@@ -255,9 +255,6 @@ ul {
   color: #000;
 }
 
-/* *********************** */
-/* ON MOBILE */
-/* *********************** */
 @media (max-width: 767px) {
 .sub-sidebar {
   background-color: var(--darkblue);
@@ -265,12 +262,31 @@ ul {
 }
 }
 
-.mobileNavLinks .sub-nav-link {
+.mobile-nav-links .sub-nav-link {
 background-color: none;
 color: #000;
-font-size: 13px;
+font-size: 12px;
 }
 
-.mobileNavLinks .sub-nav-link:hover {
+.mobile-nav-links .sub-nav-link:hover {
 color: #000;
+}
+
+
+/* ****************************************** */
+/* *************** PAGINATION  ************* */
+/* **************************************** */
+
+.active>.page-link, .page-link.active {
+  background-color: var(--darkblue);
+  border-color: var(--darkblue);
+  z-index: 0;
+}
+
+.page-link {
+  color: var(--darkblue);
+}
+
+.pagination {
+  margin: 10px auto;
 }

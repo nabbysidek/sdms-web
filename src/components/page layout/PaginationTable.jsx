@@ -1,6 +1,6 @@
 import React from "react";
 import Pagination from "react-bootstrap/Pagination";
-import "./PaginationTable.css";
+import "../../assets/styles/styles_layout.css";
 
 function PaginationTable({ currentPage, totalPage, onPageChange }) {
   const renderPaginationItems = () => {

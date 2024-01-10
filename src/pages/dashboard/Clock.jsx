@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./clock.css";
+import "../../assets/styles/styles_dashboard.css";
 
 const Clock = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -26,7 +26,7 @@ const Clock = () => {
   const formattedDateTime = currentDateTime.toLocaleString("en-MY", options);
 
   return (
-    <div className="clockSection">
+    <div className="clock-container">
       <h3>{formattedDateTime}</h3>
     </div>
   );
