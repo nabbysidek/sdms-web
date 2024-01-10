@@ -5,7 +5,7 @@ import EditKriteriaKetidakpatuhan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
-import PaginationTable from "../../../components/pagination/PaginationTable";
+import PaginationTable from "../../../components/page layout/PaginationTable";
 import axios from "axios";
 import Swal from "sweetalert2";
 

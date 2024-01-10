@@ -3,7 +3,7 @@ import { Button, Row, Table } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/pagination/PaginationTable";
+import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportButton";
 import ImportButton from "../../../components/functional buttons/ImportButton";
 import axios from "axios";
