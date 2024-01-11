@@ -9,7 +9,7 @@ function ModalRejectAccess() {
 
   return (
     <>
-      <Button className="delBtn" onClick={handleShowModalRejectAccess}>
+      <Button className="delete-btn" onClick={handleShowModalRejectAccess}>
         Tolak Akses
       </Button>
 
@@ -27,15 +27,12 @@ function ModalRejectAccess() {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            className="buttonSecondary"
-            variant="secondary"
+            className="btn-secondary"
             onClick={handleCloseModalRejectAccess}
           >
             Tutup
           </Button>
-          <Button className="buttonPrimary" variant="primary">
-            Tolak Akses
-          </Button>
+          <Button className="btn-primary">Tolak Akses</Button>
         </Modal.Footer>
       </Modal>
     </>

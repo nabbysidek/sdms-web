@@ -1,22 +1,22 @@
 import React from "react";
-import { Table, Dropdown } from "react-bootstrap";
+import { Table, Dropdown, Container } from "react-bootstrap";
 import ModalRejectAccess from "./ModalRejectAccess";
 import ModalAllowAccess from "./ModalAllowAccess";
 import ModalTerminateAccess from "./ModalTerminateAccess";
-import "./TetapanPengguna.css";
+import "../../assets/styles/styles_tetapan_pengguna.css";
 
 function IndexTetapanPengguna() {
   return (
     <>
       {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Tetapan Akses Pengguna</h2>
         <hr />
         <h3>Permohonan Akses</h3>
       </div>
 
       {/* Page content section */}
-      <div className="container-fluid">
+      <Container fluid>
         <hr />
         {/* Table Senarai Permohonan Akses */}
         <Table responsive>
@@ -43,7 +43,7 @@ function IndexTetapanPengguna() {
           </tbody>
         </Table>
 
-        <h4 className="pageTitle">Senarai Pengguna</h4>
+        <h4 className="page-title">Senarai Pengguna</h4>
         <hr />
         {/* Table Senarai Permohonan Akses */}
         <Table responsive>
@@ -65,11 +65,11 @@ function IndexTetapanPengguna() {
               <td>{/* Emel kakitangan */}</td>
               <td>
                 <Dropdown>
-                  <Dropdown.Toggle className="userLevelBtn">
+                  <Dropdown.Toggle className="user-level-btn">
                     Tahap Pengguna
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu className="userLevelItem">
+                  <Dropdown.Menu className="user-level-item">
                     <Dropdown.Item>Super Admin</Dropdown.Item>
                     <Dropdown.Item>Admin</Dropdown.Item>
                   </Dropdown.Menu>
@@ -87,11 +87,11 @@ function IndexTetapanPengguna() {
               <td>{/* Emel kakitangan */}</td>
               <td>
                 <Dropdown>
-                  <Dropdown.Toggle className="userLevelBtn">
+                  <Dropdown.Toggle className="user-level-btn">
                     Tahap Pengguna
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu className="userLevelItem">
+                  <Dropdown.Menu className="user-level-item">
                     <Dropdown.Item>Super Admin</Dropdown.Item>
                     <Dropdown.Item>Admin</Dropdown.Item>
                   </Dropdown.Menu>
@@ -104,7 +104,7 @@ function IndexTetapanPengguna() {
             </tr>
           </tbody>
         </Table>
-      </div>
+      </Container>
     </>
   );
 }

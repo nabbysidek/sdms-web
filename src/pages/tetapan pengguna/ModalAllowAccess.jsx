@@ -9,7 +9,7 @@ function ModalAllowAccess() {
 
   return (
     <>
-      <Button className="allowBtn" onClick={handleShowModalAllowAccess}>
+      <Button className="allow-btn" onClick={handleShowModalAllowAccess}>
         Benar Akses
       </Button>
 
@@ -27,15 +27,12 @@ function ModalAllowAccess() {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            className="buttonSecondary"
-            variant="secondary"
+            className="btn-secondary"
             onClick={handleCloseModalAllowAccess}
           >
             Tutup
           </Button>
-          <Button className="buttonPrimary" variant="primary">
-            Benar Akses
-          </Button>
+          <Button className="btn-primary">Benar Akses</Button>
         </Modal.Footer>
       </Modal>
     </>

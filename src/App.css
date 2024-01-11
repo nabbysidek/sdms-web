@@ -18,6 +18,7 @@
   --backgroundwhite: #F1F3F4;
   --allowgreen: #008000;
   --rederror: #ff9494;
+  --delete_red: #FF0000;
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,3 +30,27 @@ a {
   cursor: pointer;
 }
 
+/* *********************** */
+/* ****** BUTTONS ****** */
+/* *********************** */
+
+.button {
+  font-size: 1.15em;
+  font-weight: 700;
+  margin: 1px auto;
+}
+
+.btn-primary {
+  border-color: #204198;
+  background-color: #204198;
+}
+
+.btn-secondary {
+  background-color: #858181;
+  border-color: #858181;
+}
+
+.btn:hover {
+  color: #204198;
+  background-color: #FFFFFF;
+}

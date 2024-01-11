@@ -3,6 +3,7 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "./ForgotPasswordModal.css";
+import "../../../assets/styles/styles_modal.css";
 
 function ModalForgotPassword({ onClose }) {
   const [step, setStep] = useState(1); // initialize to one as step begins at 1
@@ -63,7 +64,7 @@ function ModalForgotPassword({ onClose }) {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button
-              className="forgotPasswordBtn buttonPrimary"
+              className="forgotPasswordBtn btn-primary"
               variant="primary"
               onClick={handleSubmitEmail}
             >
@@ -85,14 +86,14 @@ function ModalForgotPassword({ onClose }) {
               onChange={(e) => setVerificationCode(e.target.value)}
             />
             <Button
-              className="forgotPasswordBtn buttonPrimary"
+              className="forgotPasswordBtn btn-primary"
               variant="primary"
               onClick={handleSubmitVerificationCode}
             >
               Seterusnya
             </Button>
             <Button
-              className="forgotPasswordBtn buttonSecondary"
+              className="forgotPasswordBtn btn-secondary"
               variant="secondary"
               onClick={handlePreviousStep}
             >
@@ -111,14 +112,14 @@ function ModalForgotPassword({ onClose }) {
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <Button
-              className="forgotPasswordBtn buttonPrimary"
+              className="forgotPasswordBtn btn-primary"
               variant="primary"
               onClick={handleSubmitNewPassword}
             >
               Seterusnya
             </Button>
             <Button
-              className="forgotPasswordBtn buttonSecondary"
+              className="forgotPasswordBtn btn-secondary"
               variant="secondary"
               onClick={handlePreviousStep}
             >

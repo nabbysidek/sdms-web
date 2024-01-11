@@ -1,0 +1,27 @@
+.delete-btn {
+    font-size: 0.75em;
+    font-weight: 700;
+    border-color: var(--delete_red);
+    background-color: var(--delete_red);
+    margin-bottom: 10px;
+  }
+
+.allow-btn {
+  font-size: 0.75em;
+  font-weight: 700;
+  border-color: var(--allowgreen);
+  background-color: var(--allowgreen);
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+
+.user-level-btn {
+  border-color: var(--darkblue);
+  background-color: var(--darkblue);
+  font-size: 0.75em;
+  font-weight: 700;
+}
+
+.user-level-item {
+  font-size: 1em;
+}
