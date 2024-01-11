@@ -1,11 +1,11 @@
 // SearchPelaporan.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
 import SearchResultPelaporan from "./SearchResult";
 import SearchKakitanganModal from "./SearchKakitanganModal";
-import "./Pelaporan.css";
+import "../../assets/styles/styles_pelaporan.css";
 
 function SearchPelaporan() {
   // Manage visibility of the search result
@@ -47,7 +47,7 @@ function SearchPelaporan() {
 
   return (
     <>
-      <div className="container-fluid pelaporanSearchSection">
+      <Container fluid className="pelaporan-search-container">
         <Row>
           <Col xs={12} xl={7}>
             <Form>
@@ -69,7 +69,7 @@ function SearchPelaporan() {
           </Col>
           <Col xs={12} xl={2} className="remove-padding">
             <Button
-              className="pelaporanSearchBtn"
+              className="pelaporan-search-btn"
               onClick={() => {
                 handleSubmit((data) => validateThenShowModal(data))();
               }}
@@ -81,7 +81,7 @@ function SearchPelaporan() {
             <CreateKakitangan />
           </Col>
         </Row>
-      </div>
+      </Container>
 
       {validationErrors?.searchStaff && (
         <Alert className="alert-display" variant="danger">
@@ -96,7 +96,7 @@ function SearchPelaporan() {
         onLinkClick={handleLinkClick}
       />
 
-      <div className="pelaporanSearchResultSection">
+      <div className="pelaporan-search-result">
         {linkClicked && <SearchResultPelaporan />}
       </div>
     </>

@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
-import { Table, Row, Col, Form, Button } from "react-bootstrap";
+import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
-import "./Pelaporan.css";
+import "../../assets/styles/styles_pelaporan.css";
 
 function SearchResultPelaporan() {
   return (
     <>
-      <div className="kakitanganInfoSection">
-        <div className="pageTitle">
+      <div className="kakitangan-info-container">
+        <div className="page-title">
           <h4>Maklumat Kakitangan</h4>
           <hr />
         </div>
-        <div className="kakitanganInfo">
+        <div className="kakitangan-info">
           <Row>
             <Col xs={12}>
               <Form.Group>
@@ -32,15 +32,17 @@ function SearchResultPelaporan() {
         </div>
       </div>
 
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="pelaporan-table">
           <Row>
-            <Col md={8}>
-              <h4 className="tableTitle">Senarai Ketidakpatuhan Kakitangan</h4>
+            <Col md={7}>
+              <h4 className="pelaporan-table-title">
+                Senarai Ketidakpatuhan Kakitangan
+              </h4>
             </Col>
-            <Col md={4}>
+            <Col md={5}>
               <Link to="/tambahketidakpatuhan">
-                <Button className="redirectTambahKetidakpatuhanBtn">
+                <Button className="to-page-tambah-ketidakpatuhan-btn">
                   Tambah Ketidakpatuhan Kakitangan
                 </Button>
               </Link>
@@ -49,7 +51,8 @@ function SearchResultPelaporan() {
         </div>
 
         <hr />
-        <div className="tableSearchResult">
+
+        <div>
           <Table responsive>
             <thead>
               <tr>
@@ -92,12 +95,11 @@ function SearchResultPelaporan() {
           </Table>
         </div>
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

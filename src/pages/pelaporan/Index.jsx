@@ -1,20 +1,17 @@
 import React from "react";
 import SearchPelaporan from "./Search";
-import "./Pelaporan.css";
+import "../../assets/styles/styles_pelaporan.css";
 
 function Pelaporan() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Pelaporan</h2>
         <hr />
         <h3>Cari Kakitangan</h3>
       </div>
 
-      {/* Page search section */}
-      <div className="pageContent">
-        {/* Call for the search bar component */}
+      <div className="page-content">
         <SearchPelaporan />
       </div>
     </>

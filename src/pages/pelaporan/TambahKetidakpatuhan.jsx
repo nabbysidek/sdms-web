@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import "./Pelaporan.css";
+import "../../assets/styles/styles_pelaporan.css";
 
 function TambahKetidakpatuhan() {
   // ------- FE -------------
@@ -9,7 +9,6 @@ function TambahKetidakpatuhan() {
   const {
     handleSubmit,
     control,
-    setValue,
     formState: { errors },
   } = useForm();
 
@@ -20,18 +19,17 @@ function TambahKetidakpatuhan() {
 
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Pelaporan</h2>
         <hr />
         <h3>Tambah Ketidakpatuhan Kakitangan</h3>
       </div>
-      <div className="tambahKetidakpatuhanPageSection">
+      <div className="tambah-ketidakpatuhan-form-container">
         <Container>
           <div>
             <h4>Maklumat Kakitangan</h4>
             <hr />
-            <div className="kakitanganInfo">
+            <div className="kakitangan-info">
               <Row>
                 <Col xs={12}>
                   <Form.Group>
@@ -51,7 +49,7 @@ function TambahKetidakpatuhan() {
             </div>
           </div>
           {/* Form Tambah ketidakpatuhan */}
-          <div className="locationSection">
+          <div className="location-container">
             <h4>Lokasi</h4>
             <hr />
             <div>
@@ -119,7 +117,7 @@ function TambahKetidakpatuhan() {
               </Row>
             </div>
           </div>
-          <div className="detailedSection">
+          <div className="maklumat-terperinci-container">
             <h4>Maklumat Kakitangan Terperinci</h4>
             <hr />
             <div>
@@ -245,7 +243,7 @@ function TambahKetidakpatuhan() {
               </Row>
             </div>
           </div>
-          <div className="detailedAuditSection">
+          <div className="audit-terperinci-container">
             <h4>Perincian Audit</h4>
             <hr />
             <div>
@@ -380,7 +378,7 @@ function TambahKetidakpatuhan() {
                   <Form.Group>
                     <Form.Label>Tahap Risiko</Form.Label>
                     <div>
-                      <Row className="radioBtnSection">
+                      <Row className="radio-tambah-ketidakpatuhan">
                         <Col>
                           <Form.Check
                             type="radio"
@@ -480,14 +478,14 @@ function TambahKetidakpatuhan() {
                   </Form.Group>
                 </Form>
               </Row>
-              <div className="tambahKetidakpatuhanPageActions">
+              <div className="tambah-ketidakpatuhan-actions">
                 <Button
                   onClick={handleSubmit(onSubmit)}
-                  className="addKetidakpatuhanBtn"
+                  className="tambah-ketidakpatuhan-btn"
                 >
                   Simpan
                 </Button>{" "}
-                <Button className="cancelBtn">Batal</Button>{" "}
+                <Button className="cancel-btn">Batal</Button>{" "}
               </div>
             </div>
           </div>

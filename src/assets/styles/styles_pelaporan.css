@@ -1,0 +1,165 @@
+/********************************************************/
+/********************** INDEX **************************/
+/*******************************************************/
+
+.page-title {
+    color: var(--black);
+    text-align: left;
+    margin: 10px auto auto 10px;
+  }
+
+.page-content {
+  margin: 10px 10px auto 10px;
+}
+
+/*****************************************************/
+/********************** INDEX ************************/
+/*******************SEARCH BAR ***********************/
+/*****************************************************/
+
+.pelaporan-search-container {
+    border-radius: 10px;
+    padding-top: 10px;
+    background-color: var(--darkgray);
+  }
+
+.pelaporan-search-btn {
+  width: 100%;
+  font-weight: 700;
+  font-size: 1.2em;
+  border-color: var(--darkblue);
+  background-color: var(--darkblue);
+  margin-bottom: 5px;
+}
+
+.alert-display {
+  margin-top: 5px;
+}
+
+@media (min-width: 767px) {
+  .remove-padding {
+    padding-left: 0;
+  }
+}
+
+/********************************************************/
+/********************** INDEX ***************************/
+/*******************SEARCH BAR **************************/
+/************ SEARCH MODAL USING KEY NAMES **************/
+/********************************************************/
+
+.modal-staff-container {
+  border: 1px solid #cccccc;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.2s ease-out;
+}
+
+.modal-staff-container:hover {
+  background-color: #D9D9D9;
+  transform: translateY(2px);
+}
+
+.modal-staff-container h6 {
+  padding: 10px 10px 10px;
+}
+
+.modal-staff-link {
+  color: #000;
+  text-decoration: none;
+}
+
+/********************************************************/
+/********************** INDEX ***************************/
+/*******************SEARCH RESULT ***********************/
+/********************************************************/
+.kakitangan-info-container {
+  margin-top: 30px;
+}
+
+.kakitangan-info {
+  margin: 0 auto;
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+/********************************************************/
+/********************** INDEX ***************************/
+/*******************SEARCH RESULT ***********************/
+/***************TABLE KETIDAKPATUHAN ********************/
+/********************************************************/
+
+.pelaporan-table {
+  width: 100%;
+  margin-top: 4%;
+}
+
+.pelaporan-table-title {
+  text-align: left;
+}
+
+.to-page-tambah-ketidakpatuhan-btn {
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.25em;
+    font-weight: 700;
+    border-color: var(--darkblue);
+    background-color: var(--darkblue);
+    margin-bottom: 10px;
+}
+
+.functional-btns-container {
+    float: right;
+    margin-bottom: 10px;
+}
+
+/***********************************************************/
+/************** TAMBAH KETIDAKPATUHAN PAGE ****************/
+/**********************************************************/
+
+.tambah-ketidakpatuhan-form-container {
+  background-color: var(--white);
+  width: 98%;
+  margin: 20px auto 0 auto;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.location-container, 
+.maklumat-terperinci-container, 
+.audit-terperinci-container {
+  margin-top: 30px;
+}
+
+.radio-tambah-ketidakpatuhan {
+  margin: 10px auto;
+  font-size: 14px;
+}
+
+.audit-terperinci-container .row {
+  margin-top: 10px;
+}
+
+.tambah-ketidakpatuhan-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.tambah-ketidakpatuhan-btn{
+  font-weight: 700;
+  border-color: var(--darkblue);
+  background-color: var(--darkblue);
+}
+
+.cancel-btn {
+  font-weight: 700;
+  border-color: var(--lightgray);
+  background-color: var(--lightgray);
+  margin-left: 4px;
+}
+
+
+      
