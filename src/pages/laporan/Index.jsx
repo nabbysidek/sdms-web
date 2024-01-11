@@ -1,20 +1,17 @@
 import React from "react";
 import SearchLaporan from "./Search";
-import "./Laporan.css";
+import "../../assets/styles/styles_laporan.css";
 
 function Laporan() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Laporan</h2>
         <hr />
-        <h3>Cari Laporan Ketidakpatuhan</h3>
+        <h3>Cari Laporan</h3>
       </div>
 
-      {/* Page search section */}
-      <div className="pageContent">
-        {/* Search section */}
+      <div className="page-content">
         <SearchLaporan />
       </div>
     </>

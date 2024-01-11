@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import Table from "react-bootstrap/Table";
@@ -6,11 +7,11 @@ import Table from "react-bootstrap/Table";
 function SearchResultLaporan() {
   return (
     <>
-      <div className="container-fluid">
-        <h4 className="pageTitle">Senarai Laporan Ketidakpatuhan Kakitangan</h4>
+      <Container fluid>
+        <h4 className="page-title">
+          Senarai Laporan Ketidakpatuhan Kakitangan
+        </h4>
         <hr />
-        {/* Table Senarai Laporan Ketidakpatuhan Kakitangan */}
-        {/* Table Senarai Bahagian */}
         <Table responsive>
           <thead>
             <tr>
@@ -49,11 +50,11 @@ function SearchResultLaporan() {
         </Table>
 
         {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

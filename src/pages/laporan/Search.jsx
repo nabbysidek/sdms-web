@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import SearchResultLaporan from "./SearchResult";
 
 function SearchLaporan() {
@@ -19,13 +19,7 @@ function SearchLaporan() {
   // Form validation
   const [errorMessage, setErrorMessage] = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, control } = useForm();
 
   const watchInputFields = useWatch({
     control,
@@ -59,7 +53,7 @@ function SearchLaporan() {
   return (
     <>
       <div>
-        <div className="container-fluid laporanSearchSection">
+        <Container fluid className="laporan-search-container">
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col xs={12} xl={2}>
@@ -71,7 +65,7 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={3} className="noPadding">
+              <Col xs={12} xl={3} className="remove-padding">
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -80,7 +74,7 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={2} className="noPadding">
+              <Col xs={12} xl={2} className="remove-padding">
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -89,18 +83,18 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={3} className="noPadding">
+              <Col xs={12} xl={3} className="remove-padding">
                 <Button
-                  className="filterBtn"
+                  className="detailed-search-btn"
                   onClick={() => setShowDetailedSearch(!showDetailedSearch)}
                 >
                   Carian Terperinci
                 </Button>{" "}
               </Col>
-              <Col xs={12} xl={2} className="noPadding">
+              <Col xs={12} xl={2} className="remove-padding">
                 <Button
                   type="submit"
-                  className="searchBtn"
+                  className="laporan-search-btn"
                   onClick={handleSearchClick}
                 >
                   Cari
@@ -108,7 +102,7 @@ function SearchLaporan() {
               </Col>
             </Row>
           </Form>
-        </div>
+        </Container>
 
         {errorMessage && (
           <Alert variant="danger" className="alert-display">
@@ -118,9 +112,9 @@ function SearchLaporan() {
 
         {/* Display detailed search section if showDetailedSearch is true */}
         {showDetailedSearch && (
-          <div className="container-fluid detailedSearchFunction">
+          <Container fluid className="detailed-search-container">
             <Row>
-              <Col xs={12} xl={4} className="mobileMargin">
+              <Col xs={12} xl={4} className="margin-for-mobile">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="skopKriteriaSelect">
@@ -132,7 +126,7 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={4} className="noPadding mobileMargin">
+              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="skopSemakanSelect">
@@ -144,20 +138,20 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={4} className="noPadding">
+              <Col xs={12} xl={4} className="remove-padding">
                 <Form>
                   <Form.Group>
                     <Form.Control
                       type="text"
                       placeholder="Kod Kriteria"
-                      className="mobileReduceMargin"
+                      className="reduce-margin-mobile"
                     ></Form.Control>
                   </Form.Group>
                 </Form>
               </Col>
             </Row>
             <Row>
-              <Col xs={12} xl={3} className="mobileMargin">
+              <Col xs={12} xl={3} className="margin-for-mobile">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="bahagianSelect">
@@ -169,7 +163,7 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={2} className="noPadding mobileMargin">
+              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="jabatanSelect">
@@ -181,7 +175,7 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={2} className="noPadding mobileMargin">
+              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="unitSelect">
@@ -193,7 +187,7 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={3} className="noPadding">
+              <Col xs={12} xl={3} className="remove-padding">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="wilayahSelect">
@@ -205,7 +199,7 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={2} className="noPadding">
+              <Col xs={12} xl={2} className="remove-padding">
                 <Form>
                   <Form.Group>
                     <Form.Select aria-label="cawanganSelect">
@@ -218,11 +212,11 @@ function SearchLaporan() {
                 </Form>
               </Col>
             </Row>
-          </div>
+          </Container>
         )}
       </div>
 
-      <div className="laporanSearchResultSection">
+      <div className="laporan-search-result">
         {isSearchResultLaporanVisible && <SearchResultLaporan />}
       </div>
     </>

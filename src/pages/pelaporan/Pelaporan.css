@@ -30,7 +30,7 @@
   }
 
   @media (min-width: 767px) {
-    .noPadding {
+    .remove-padding {
       padding-left: 0;
     }
   }

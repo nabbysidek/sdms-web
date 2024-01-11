@@ -1,0 +1,108 @@
+/********************************************************/
+/********************** INDEX **************************/
+/*******************************************************/
+
+.page-title {
+    color: var(--black);
+    text-align: left;
+    margin: 10px auto auto 10px;
+  }
+
+.page-content {
+  margin: 10px 10px auto 10px;
+}
+
+.page-content col {
+  padding: 0;
+}
+
+/*****************************************************/
+/********************** INDEX ************************/
+/*******************SEARCH BAR ***********************/
+/*****************************************************/
+
+.laporan-search-container {
+  border-radius: 10px;
+  padding-top: 10px;
+  background-color: var(--darkgray);
+}
+
+.laporan-search-btn {
+  width: 100%;
+  font-weight: 700;
+  border-color: var(--darkblue);
+  background-color: var(--darkblue);
+  margin-bottom: 5px;
+}
+
+.laporan-search-result {
+    margin-top: 40px;
+  }
+
+.detailed-search-btn {
+  width: 100%;
+  font-weight: 700;
+  border-color: var(--lightgray);
+  background-color: var(--lightgray);
+}
+
+.alert-display {
+  margin-top: 5px;
+}
+
+ /* to remove unnecessary left padding on each input field */
+@media (min-width: 767px) {
+  .remove-padding {
+    padding-left: 0;
+  }
+}
+
+/************************************************************/
+/********************** INDEX *******************************/
+/*******************SEARCH BAR MOBILE ***********************/
+/************************************************************/
+
+@media (max-width: 767px) {
+  .detailed-search-btn {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .laporan-search-btn {
+    margin-bottom: 10px;
+  }
+
+  .margin-for-mobile {
+    margin-bottom: 5px;
+  }
+
+  .reduce-margin-mobile {
+    margin-bottom: 5px;
+  }
+}
+
+/*****************************************************/
+/********************** INDEX ************************/
+/*****************DETAILED SEARCH*********************/
+/*****************************************************/
+
+.detailed-search-container {
+  background-color: var(--white);
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 2px solid var(--darkgray);
+  width: 98%;
+}
+
+/*****************************************************/
+/********************** INDEX ************************/
+/*******************SEARCH RESULT ********************/
+/*****************************************************/
+
+.functional-btns-container {
+  float: right;
+  margin-bottom: 10px;
+  
+}
+  

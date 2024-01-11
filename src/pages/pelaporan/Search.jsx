@@ -67,7 +67,7 @@ function SearchPelaporan() {
               </Form.Group>
             </Form>
           </Col>
-          <Col xs={12} xl={2} className="noPadding">
+          <Col xs={12} xl={2} className="remove-padding">
             <Button
               className="pelaporanSearchBtn"
               onClick={() => {
@@ -77,7 +77,7 @@ function SearchPelaporan() {
               Cari
             </Button>
           </Col>
-          <Col xs={12} xl={3} className="noPadding">
+          <Col xs={12} xl={3} className="remove-padding">
             <CreateKakitangan />
           </Col>
         </Row>
