@@ -1,11 +1,9 @@
 import React from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Container } from "react-bootstrap";
 
 function UserDetails() {
-  // Fetch user details and display them here
-
   return (
-    <div className="container tabsContent">
+    <Container fluid className="tabs-container">
       <Row>
         <Col xs={12}>
           <Form.Group>
@@ -22,7 +20,7 @@ function UserDetails() {
           </Form.Group>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 }
 

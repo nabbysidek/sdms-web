@@ -1,12 +1,11 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 
 function SetPassword() {
   const {
     handleSubmit,
     control,
-    setValue,
     formState: { errors },
   } = useForm();
 
@@ -26,7 +25,7 @@ function SetPassword() {
   };
 
   return (
-    <div className="container tabsContent">
+    <Container fluid className="tabs-container">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="currentPassword">
           <Form.Label>Kata Laluan Terkini</Form.Label>
@@ -106,11 +105,11 @@ function SetPassword() {
           />
         </Form.Group>
 
-        <Button className="setPasswordBtn" type="submit">
+        <Button className="set-password-btn" type="submit">
           Set Kata Laluan
         </Button>
       </Form>
-    </div>
+    </Container>
   );
 }
 

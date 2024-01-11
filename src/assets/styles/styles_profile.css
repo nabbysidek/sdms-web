@@ -1,0 +1,53 @@
+/********************************************************/
+/********************** INDEX **************************/
+/*******************************************************/
+hr {
+    margin-top: 0;
+  }
+
+.page-title {
+    color: var(--black);
+    text-align: left;
+    margin: 10px auto auto 10px;
+}
+  
+.profile-content {
+    width: 80%;
+    margin: 40px auto;
+}
+
+.user-details-container {
+    text-align: center;
+}
+
+.profile-user-email {
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/****************************************************/
+/********************** INDEX **********************/
+/********************* TABS ***********************/
+/**************************************************/
+.tabs-container {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.set-password-btn {
+    float: right;
+    background-color: var(--darkblue);
+    margin: 10px 0;
+}
+
+.error-message {
+    color: var(--rederror);
+    font-size: 10px;
+}
+
+@media (max-width: 767px) {
+    .set-password-btn {
+        width: 100%;
+    }
+}
