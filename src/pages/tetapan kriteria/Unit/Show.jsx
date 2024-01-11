@@ -4,8 +4,8 @@ import CreateUnit from "./Create";
 import EditUnit from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
-import ExportButton from "../../../components/functional buttons/ExportButton";
-import ImportButton from "../../../components/functional buttons/ImportButton";
+import ExportButton from "../../../components/functional buttons/ExportBtn";
+import ImportButton from "../../../components/functional buttons/ImportBtn";
 import axios from "axios";
 import Swal from "sweetalert2";
 

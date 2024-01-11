@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import "./FunctionalBtns.css";
+import "../../assets/styles/styles_functionalbtns.css";
 
 const ExportButton = ({ onClick }) => {
   return (
-    <Button className="functionalBtns" onClick={onClick}>
+    <Button className="functional-btn" onClick={onClick}>
       Eksport
     </Button>
   );

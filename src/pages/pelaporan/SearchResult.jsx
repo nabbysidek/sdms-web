@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Table, Row, Col, Form, Button } from "react-bootstrap";
-import ExportButton from "../../components/functional buttons/ExportButton";
-import ImportButton from "../../components/functional buttons/ImportButton";
+import ExportButton from "../../components/functional buttons/ExportBtn";
+import ImportButton from "../../components/functional buttons/ImportBtn";
 import "./Pelaporan.css";
 
 function SearchResultPelaporan() {

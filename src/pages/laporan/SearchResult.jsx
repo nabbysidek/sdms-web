@@ -1,6 +1,6 @@
 import React from "react";
-import ExportButton from "../../components/functional buttons/ExportButton";
-import ImportButton from "../../components/functional buttons/ImportButton";
+import ExportButton from "../../components/functional buttons/ExportBtn";
+import ImportButton from "../../components/functional buttons/ImportBtn";
 import Table from "react-bootstrap/Table";
 
 function SearchResultLaporan() {
