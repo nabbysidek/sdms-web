@@ -75,8 +75,8 @@ function ForgotPasswordModal({ onClose }) {
         {step === 2 && (
           <div>
             <p>
-              E-mel dengan kod pengesahan baru sahaja dihantar ke e-mel
-              kakitangan yang anda berikan. Sila masukkan kod di sini.
+              Kod pengesahan baru sahaja dihantar ke e-mel kakitangan anda. Sila
+              masukkan kod di sini.
             </p>
             <input
               type="text"
