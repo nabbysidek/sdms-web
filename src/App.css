@@ -49,6 +49,16 @@ hr {
 margin: 10px 10px auto 10px;
 }
 
+/* ***************************** */
+/* ****** IMPORT & EXPORT ****** */
+/* ***************************** */
+
+.functional-btns-container {
+  float: right;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 /* *********************** */
 /* ****** BUTTONS ****** */
 /* *********************** */
