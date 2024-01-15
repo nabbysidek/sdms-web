@@ -99,7 +99,7 @@ hr {
     
 .error-message {
   font-size: .75rem;
-  color: #ff9494;
+  color: var(--rederror);
 }
   
 /********************************/
