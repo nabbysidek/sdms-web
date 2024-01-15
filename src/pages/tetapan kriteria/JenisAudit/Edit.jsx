@@ -22,7 +22,7 @@ function EditJenisAudit() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditJenisAudit}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditJenisAudit}>
         Kemaskini
       </Button>
 
@@ -62,7 +62,7 @@ function EditJenisAudit() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Jenis Audit
           </Button>
         </Modal.Footer>

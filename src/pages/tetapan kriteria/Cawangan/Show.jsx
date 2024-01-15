@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Row, Button } from "react-bootstrap";
+import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateCawangan from "./Create";
 import EditCawangan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -76,11 +76,11 @@ function ShowCawanganList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Cawangan</h4>
+              <h4 className="table-title">Senarai Cawangan</h4>
             </div>
             <div className="col-md-2">
               <CreateCawangan />
@@ -88,8 +88,6 @@ function ShowCawanganList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Cawangan */}
         <Table responsive>
           <thead>
             <tr>
@@ -114,7 +112,7 @@ function ShowCawanganList() {
                     <EditCawangan />
                     <Button
                       onClick={() => handleDeleteCawangan(cawangansData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -131,11 +129,11 @@ function ShowCawanganList() {
         />
 
         {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

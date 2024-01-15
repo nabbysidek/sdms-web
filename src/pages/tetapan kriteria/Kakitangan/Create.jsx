@@ -149,7 +149,7 @@ function CreateKakitangan() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateKakitangan}>
+      <Button className="create-new-btn" onClick={handleShowCreateKakitangan}>
         Tambah Kakitangan
       </Button>
 
@@ -398,7 +398,10 @@ function CreateKakitangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createKakitangan)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createKakitangan)}
+          >
             Tambah Kakitangan
           </Button>
         </Modal.Footer>

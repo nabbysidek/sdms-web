@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -84,11 +84,11 @@ function ShowKriteriaKetidakpatuhanList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <Col xl={9}>
-              <h4 className="tableTitle">Senarai Kriteria Ketidakpatuhan</h4>
+              <h4 className="table-title">Senarai Kriteria Ketidakpatuhan</h4>
             </Col>
 
             <Col xl={3}>
@@ -97,8 +97,6 @@ function ShowKriteriaKetidakpatuhanList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Kriteria Ketidakpatuhan */}
         <Table responsive>
           <thead>
             <tr>
@@ -135,7 +133,7 @@ function ShowKriteriaKetidakpatuhanList() {
                             kriteriaKetidakpatuhansData.id
                           )
                         }
-                        className="delBtn"
+                        className="delete-btn"
                       >
                         Padam
                       </Button>
@@ -153,11 +151,11 @@ function ShowKriteriaKetidakpatuhanList() {
         />
 
         {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

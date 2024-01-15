@@ -19,6 +19,7 @@
   --allowgreen: #008000;
   --rederror: #ff9494;
   --delete_red: #FF0000;
+  --edit_yellow: #FFAE42;
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

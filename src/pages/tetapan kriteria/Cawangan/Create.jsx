@@ -68,7 +68,7 @@ function CreateCawangan() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateCawangan}>
+      <Button className="create-new-btn" onClick={handleShowCreateCawangan}>
         Tambah Cawangan
       </Button>
 
@@ -144,7 +144,10 @@ function CreateCawangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createCawangan)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createCawangan)}
+          >
             Tambah Cawangan
           </Button>
         </Modal.Footer>

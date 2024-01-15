@@ -22,7 +22,7 @@ function EditKriteriaKetidakpatuhan() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditKriteria}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditKriteria}>
         Kemaskini
       </Button>
 
@@ -115,7 +115,7 @@ function EditKriteriaKetidakpatuhan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Kriteria Ketidakpatuhan
           </Button>
         </Modal.Footer>

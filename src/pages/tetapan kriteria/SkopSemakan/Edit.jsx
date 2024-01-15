@@ -22,7 +22,7 @@ function EditSkopSemakan() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditSkopSemakan}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditSkopSemakan}>
         Kemaskini
       </Button>
 
@@ -62,7 +62,7 @@ function EditSkopSemakan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Skop Semakan
           </Button>
         </Modal.Footer>

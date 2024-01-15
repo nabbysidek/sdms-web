@@ -1,23 +1,19 @@
 import React from "react";
 import SearchSkopKriteria from "./Search";
 import ShowSkopKriteriaList from "./Show";
-import "../Tetapan.css";
+import "../../../assets/styles/styles_tetapan_kriteria.css";
 
 function IndexSkopKriteria() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Tetapan Skop Kriteria</h2>
         <hr />
         <h3>Cari Skop Kriteria</h3>
       </div>
 
-      <div className="pageContent">
-        {/* Search function section */}
+      <div className="page-content">
         <SearchSkopKriteria />
-
-        {/* Page content section */}
         <ShowSkopKriteriaList />
       </div>
     </>

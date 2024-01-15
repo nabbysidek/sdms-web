@@ -1,23 +1,19 @@
 import React from "react";
 import SearchSkopSemakan from "./Search";
 import ShowSkopSemakanList from "./Show";
-import "../Tetapan.css";
+import "../../../assets/styles/styles_tetapan_kriteria.css";
 
 function IndexSkopSemakan() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Tetapan Skop Semakan</h2>
         <hr />
         <h3>Cari Skop Semakan</h3>
       </div>
 
-      <div className="pageContent">
-        {/* Search function section */}
+      <div className="page-content">
         <SearchSkopSemakan />
-
-        {/* Page content section */}
         <ShowSkopSemakanList />
       </div>
     </>

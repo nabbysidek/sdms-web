@@ -22,7 +22,7 @@ function EditKakitangan() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditKakitangan}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditKakitangan}>
         Kemaskini
       </Button>
 
@@ -258,7 +258,7 @@ function EditKakitangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Kakitangan
           </Button>
         </Modal.Footer>

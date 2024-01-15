@@ -9,7 +9,7 @@ function ForgotPasswordModal({ onClose }) {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [resetSuccess, setResetSuccess] = useState(false);
+  // const [resetSuccess, setResetSuccess] = useState(false);
 
   // handles progression of the forgot password process
   const handleNextStep = () => {
@@ -35,7 +35,7 @@ function ForgotPasswordModal({ onClose }) {
     // If the password reset is successful, set the resetSuccess state to true.
     // Otherwise, handle any error scenarios.
     // Assuming the reset password is successful
-    setResetSuccess(true);
+    // setResetSuccess(true);
 
     handleNextStep();
   };

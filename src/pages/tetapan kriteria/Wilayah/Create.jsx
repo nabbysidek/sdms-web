@@ -47,7 +47,7 @@ function CreateWilayah() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateWilayah}>
+      <Button className="create-new-btn" onClick={handleShowCreateWilayah}>
         Tambah Wilayah
       </Button>
 
@@ -89,7 +89,10 @@ function CreateWilayah() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createWilayah)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createWilayah)}
+          >
             Tambah Wilayah
           </Button>
         </Modal.Footer>

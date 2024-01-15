@@ -1,23 +1,19 @@
 import React from "react";
 import SearchUnit from "./Search";
 import ShowUnitList from "./Show";
-import "../Tetapan.css";
+import "../../../assets/styles/styles_tetapan_kriteria.css";
 
 function IndexUnit() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Tetapan Unit</h2>
         <hr />
         <h3>Cari Unit</h3>
       </div>
 
-      <div className="pageContent">
-        {/* Search function section */}
+      <div className="page-content">
         <SearchUnit />
-
-        {/* Page content section */}
         <ShowUnitList />
       </div>
     </>

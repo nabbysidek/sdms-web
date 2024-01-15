@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Row } from "react-bootstrap";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateSkopSemakan from "./Create";
 import EditSkopSemakan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -78,11 +78,11 @@ function ShowSkopSemakanList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Skop Semakan</h4>
+              <h4 className="table-title">Senarai Skop Semakan</h4>
             </div>
             <div className="col-md-2">
               <CreateSkopSemakan />
@@ -90,8 +90,6 @@ function ShowSkopSemakanList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Skop Semakan */}
         <Table responsive>
           <thead>
             <tr>
@@ -112,7 +110,7 @@ function ShowSkopSemakanList() {
                       onClick={() =>
                         handleDeleteSkopSemakan(skopSemakansData.id)
                       }
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -128,12 +126,11 @@ function ShowSkopSemakanList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

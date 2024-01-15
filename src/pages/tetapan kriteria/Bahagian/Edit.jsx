@@ -22,7 +22,7 @@ function EditBahagian() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditBahagian}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditBahagian}>
         Kemaskini
       </Button>
 
@@ -62,7 +62,7 @@ function EditBahagian() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Bahagian
           </Button>
         </Modal.Footer>

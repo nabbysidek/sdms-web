@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Row } from "react-bootstrap";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateKakitangan from "./Create";
 import EditKakitangan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -78,11 +78,11 @@ function ShowKakitanganList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Kakitangan</h4>
+              <h4 className="table-title">Senarai Kakitangan</h4>
             </div>
             <div className="col-md-2">
               <CreateKakitangan />
@@ -90,8 +90,6 @@ function ShowKakitanganList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Kakitangan */}
         <Table responsive>
           <thead>
             <tr>
@@ -142,7 +140,7 @@ function ShowKakitanganList() {
                     <EditKakitangan />
                     <Button
                       onClick={() => handleDeleteKakitangan(kakitangansData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -158,12 +156,11 @@ function ShowKakitanganList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

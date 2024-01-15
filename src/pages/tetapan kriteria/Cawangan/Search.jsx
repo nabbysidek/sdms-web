@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button, Row, Alert } from "react-bootstrap";
+import { Form, Button, Row, Alert, Container } from "react-bootstrap";
 
 function SearchCawangan() {
   // --------- FE ------------
@@ -24,8 +24,8 @@ function SearchCawangan() {
 
   return (
     <>
-      <div className="container-fluid searchSection">
-        <Form className="searchBar" onSubmit={handleSubmit(onSubmit)}>
+      <Container fluid className="search-bar-section">
+        <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Form.Group className="col-md-4 with-padding-left">
               <Form.Select
@@ -49,13 +49,13 @@ function SearchCawangan() {
               ></Form.Control>
             </Form.Group>
             <Form.Group className="col-md-2">
-              <Button className="searchBarBtn" type="submit">
+              <Button className="search-bar-btn" type="submit">
                 Cari
               </Button>
             </Form.Group>
           </Row>
         </Form>
-      </div>
+      </Container>
 
       {errorMessage && (
         <Alert variant="danger" className="alert-display">

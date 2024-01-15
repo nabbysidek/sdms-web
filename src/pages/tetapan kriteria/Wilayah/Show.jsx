@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Row } from "react-bootstrap";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateWilayah from "./Create";
 import EditWilayah from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -76,21 +76,18 @@ function ShowWilayahList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Wilayah</h4>
+              <h4 className="table-title">Senarai Wilayah</h4>
             </div>
             <div className="col-md-2">
               <CreateWilayah />
             </div>
           </Row>
         </div>
-
         <hr />
-
-        {/* Table Senarai Wilayah */}
         <Table responsive>
           <thead>
             <tr>
@@ -109,7 +106,7 @@ function ShowWilayahList() {
                     <EditWilayah />
                     <Button
                       onClick={() => handleDeleteWilayah(wilayahsData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -125,12 +122,11 @@ function ShowWilayahList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

@@ -47,7 +47,7 @@ function CreateJenisAudit() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateJenisAudit}>
+      <Button className="create-new-btn" onClick={handleShowCreateJenisAudit}>
         Tambah Jenis Audit
       </Button>
 
@@ -89,7 +89,10 @@ function CreateJenisAudit() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createJenisAudit)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createJenisAudit)}
+          >
             Tambah Jenis Audit
           </Button>
         </Modal.Footer>

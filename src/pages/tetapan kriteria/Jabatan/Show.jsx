@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Row } from "react-bootstrap";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateJabatan from "./Create";
 import EditJabatan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -86,11 +86,11 @@ function Show() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Jabatan</h4>
+              <h4 className="table-title">Senarai Jabatan</h4>
             </div>
             <div className="col-md-2">
               <CreateJabatan />
@@ -98,8 +98,6 @@ function Show() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Jabatan */}
         <Table responsive>
           <thead>
             <tr>
@@ -124,7 +122,7 @@ function Show() {
                     <EditJabatan />
                     <Button
                       onClick={() => handleDeleteJabatan(jabatansData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -140,12 +138,11 @@ function Show() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

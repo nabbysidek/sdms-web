@@ -47,7 +47,7 @@ function CreateSkopSemakan() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateSkopSemakan}>
+      <Button className="create-new-btn" onClick={handleShowCreateSkopSemakan}>
         Tambah Skop Semakan
       </Button>
 
@@ -90,7 +90,7 @@ function CreateSkopSemakan() {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            className="modalBtn"
+            className="create-new-modal-btn"
             onClick={handleSubmit(createSkopSemakan)}
           >
             Tambah Skop Semakan

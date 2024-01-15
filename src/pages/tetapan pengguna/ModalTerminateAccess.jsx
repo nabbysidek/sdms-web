@@ -12,7 +12,7 @@ function ModalTerminateAccess() {
 
   return (
     <>
-      <Button className="delBtn" onClick={handleShowModalTerminateAccess}>
+      <Button className="delete-btn" onClick={handleShowModalTerminateAccess}>
         Tamatkan Akses
       </Button>
 

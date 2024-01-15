@@ -22,7 +22,7 @@ function EditWilayah() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditWilayah}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditWilayah}>
         Kemaskini
       </Button>
 
@@ -62,7 +62,7 @@ function EditWilayah() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Wilayah
           </Button>
         </Modal.Footer>

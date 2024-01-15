@@ -68,7 +68,7 @@ function CreateJabatan() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateJabatan}>
+      <Button className="create-new-btn" onClick={handleShowCreateJabatan}>
         Tambah Jabatan
       </Button>
 
@@ -143,7 +143,10 @@ function CreateJabatan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createJabatan)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createJabatan)}
+          >
             Tambah Jabatan
           </Button>
         </Modal.Footer>

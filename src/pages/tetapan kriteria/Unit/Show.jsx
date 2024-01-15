@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Row } from "react-bootstrap";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateUnit from "./Create";
 import EditUnit from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -76,11 +76,11 @@ function ShowUnitList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Unit</h4>
+              <h4 className="table-title">Senarai Unit</h4>
             </div>
             <div className="col-md-2">
               <CreateUnit />
@@ -88,8 +88,6 @@ function ShowUnitList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Unit */}
         <Table responsive>
           <thead>
             <tr>
@@ -134,12 +132,11 @@ function ShowUnitList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

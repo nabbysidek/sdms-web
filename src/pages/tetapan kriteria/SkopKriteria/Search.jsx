@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Form, Button, Row, Alert } from "react-bootstrap";
+import { Form, Button, Row, Alert, Container } from "react-bootstrap";
 
 function SearchSkopKriteria() {
   // --------- FE ------------
@@ -21,8 +21,8 @@ function SearchSkopKriteria() {
 
   return (
     <>
-      <div className="container-fluid searchSection">
-        <Form className="searchBar" onSubmit={handleSubmit(onSubmit)}>
+      <Container fluid className="search-bar-section">
+        <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Form.Group className="col-md-10">
               <Controller
@@ -39,13 +39,13 @@ function SearchSkopKriteria() {
               />
             </Form.Group>
             <Form.Group className="col-md-2">
-              <Button type="submit" className="searchBarBtn">
+              <Button className="search-bar-btn" type="submit">
                 Cari
               </Button>
             </Form.Group>
           </Row>
         </Form>
-      </div>
+      </Container>
 
       {formState.errors.skopKriteria && (
         <Alert className="alert-display" variant="danger">

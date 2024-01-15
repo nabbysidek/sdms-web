@@ -48,7 +48,7 @@ function CreateBahagian() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateBahagian}>
+      <Button className="create-new-btn" onClick={handleShowCreateBahagian}>
         Tambah Bahagian
       </Button>
 
@@ -90,7 +90,10 @@ function CreateBahagian() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createBahagian)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createBahagian)}
+          >
             Tambah Bahagian
           </Button>
         </Modal.Footer>

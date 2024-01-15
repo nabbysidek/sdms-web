@@ -88,7 +88,7 @@ function CreateUnit() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateUnit}>
+      <Button className="create-new-btn" onClick={handleShowCreateUnit}>
         Tambah Unit
       </Button>
 
@@ -192,7 +192,10 @@ function CreateUnit() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(createUnit)}>
+          <Button
+            className="create-new-modal-btn"
+            onClick={handleSubmit(createUnit)}
+          >
             Tambah Unit
           </Button>
         </Modal.Footer>

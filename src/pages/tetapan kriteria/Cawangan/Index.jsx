@@ -1,23 +1,19 @@
 import React from "react";
 import SearchCawangan from "./Search";
 import ShowCawanganList from "./Show";
-import "../Tetapan.css";
+import "../../../assets/styles/styles_tetapan_kriteria.css";
 
 function IndexCawangan() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Tetapan Cawangan</h2>
         <hr />
         <h3>Cari Cawangan</h3>
       </div>
 
-      <div className="pageContent">
-        {/* Search function section */}
+      <div className="page-content">
         <SearchCawangan />
-
-        {/* Page content section */}
         <ShowCawanganList />
       </div>
     </>

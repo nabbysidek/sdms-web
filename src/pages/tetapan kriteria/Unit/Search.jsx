@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button, Row, Alert } from "react-bootstrap";
+import { Form, Button, Row, Alert, Container } from "react-bootstrap";
 
 function SearchUnit() {
   // --------- FE ------------
@@ -24,7 +24,7 @@ function SearchUnit() {
 
   return (
     <>
-      <div className="container-fluid searchSection">
+      <Container fluid className="search-bar-section">
         <Form className="searchBar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Form.Group className="col-md-3 with-padding-left">
@@ -63,13 +63,13 @@ function SearchUnit() {
               ></Form.Control>
             </Form.Group>
             <Form.Group className="col-md-2">
-              <Button className="searchBarBtn" type="submit">
+              <Button className="search-bar-btn" type="submit">
                 Cari
               </Button>
             </Form.Group>
           </Row>
         </Form>
-      </div>
+      </Container>
 
       {errorMessage && (
         <Alert variant="danger" className="alert-display">

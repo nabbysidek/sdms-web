@@ -22,7 +22,7 @@ function EditCawangan() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditCawangan}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditCawangan}>
         Kemaskini
       </Button>
 
@@ -92,7 +92,7 @@ function EditCawangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Cawangan
           </Button>
         </Modal.Footer>

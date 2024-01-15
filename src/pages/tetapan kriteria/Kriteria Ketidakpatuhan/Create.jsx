@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-// import FormControl from "react-bootstrap/FormControl";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -71,7 +70,7 @@ function CreateKriteriaKetidakpatuhan() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateKriteria}>
+      <Button className="create-new-btn" onClick={handleShowCreateKriteria}>
         Tambah Kriteria Ketidakpatuhan
       </Button>
 
@@ -179,7 +178,7 @@ function CreateKriteriaKetidakpatuhan() {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            className="modalBtn"
+            className="create-new-modal-btn"
             onClick={handleSubmit(createKriteriaKetidakpatuhan)}
           >
             Tambah Kriteria Ketidakpatuhan

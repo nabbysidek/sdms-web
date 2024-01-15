@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Row, Button } from "react-bootstrap";
+import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateBahagian from "./Create";
 import EditBahagian from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -79,11 +79,11 @@ function ShowBahagianList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Bahagian</h4>
+              <h4 className="table-title">Senarai Bahagian</h4>
             </div>
             <div className="col-md-2">
               <CreateBahagian />
@@ -91,7 +91,6 @@ function ShowBahagianList() {
           </Row>
         </div>
         <hr />
-        {/* Table Senarai Bahagian */}
         <Table responsive>
           <thead>
             <tr>
@@ -110,7 +109,7 @@ function ShowBahagianList() {
                     <EditBahagian />
                     <Button
                       onClick={() => handleDeleteBahagian(bahagiansData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -127,11 +126,11 @@ function ShowBahagianList() {
         />
 
         {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

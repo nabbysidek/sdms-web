@@ -47,7 +47,7 @@ function CreateSkopKriteria() {
 
   return (
     <div>
-      <Button className="tambahBtn" onClick={handleShowCreateSkopKriteria}>
+      <Button className="create-new-btn" onClick={handleShowCreateSkopKriteria}>
         Tambah Skop Kriteria
       </Button>
 
@@ -88,7 +88,7 @@ function CreateSkopKriteria() {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            className="modalBtn"
+            className="create-new-modal-btn"
             onClick={handleSubmit(createSkopKriteria)}
           >
             Tambah Skop Kriteria

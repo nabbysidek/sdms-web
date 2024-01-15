@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Row, Table } from "react-bootstrap";
+import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateJenisAudit from "./Create";
 import EditJenisAudit from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -78,11 +78,11 @@ function ShowJenisAuditList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Jenis Audit</h4>
+              <h4 className="table-title">Senarai Jenis Audit</h4>
             </div>
             <div className="col-md-2">
               <CreateJenisAudit />
@@ -90,8 +90,6 @@ function ShowJenisAuditList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Jenis Audit */}
         <Table responsive>
           <thead>
             <tr>
@@ -110,7 +108,7 @@ function ShowJenisAuditList() {
                     <EditJenisAudit />
                     <Button
                       onClick={() => handleDeleteJenisAudit(jenisAuditsData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -126,12 +124,11 @@ function ShowJenisAuditList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

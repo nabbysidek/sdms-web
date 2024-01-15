@@ -1,23 +1,18 @@
 import React from "react";
 import ShowJabatanList from "./Show";
 import SearchJabatan from "./Search";
-import "../Tetapan.css";
-
+import "../../../assets/styles/styles_tetapan_kriteria.css";
 function IndexJabatan() {
   return (
     <>
-      {/* Page title section */}
-      <div className="pageTitle">
+      <div className="page-title">
         <h2>Tetapan Jabatan</h2>
         <hr />
         <h3>Cari Jabatan</h3>
       </div>
 
-      <div className="pageContent">
-        {/* Search function section */}
+      <div className="page-content">
         <SearchJabatan />
-
-        {/* Page content section */}
         <ShowJabatanList />
       </div>
     </>

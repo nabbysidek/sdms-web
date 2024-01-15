@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Row, Table } from "react-bootstrap";
+import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -78,11 +78,11 @@ function ShowSkopKriteriaList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="tableSection">
+      <Container fluid>
+        <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="tableTitle">Senarai Skop Kriteria</h4>
+              <h4 className="table-title">Senarai Skop Kriteria</h4>
             </div>
             <div className="col-md-2">
               <CreateSkopKriteria />
@@ -90,8 +90,6 @@ function ShowSkopKriteriaList() {
           </Row>
         </div>
         <hr />
-
-        {/* Table Senarai Skop Kriteria */}
         <Table responsive>
           <thead>
             <tr>
@@ -112,7 +110,7 @@ function ShowSkopKriteriaList() {
                       onClick={() =>
                         handleDeleteSkopKriteria(skopKriteriasData.id)
                       }
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>
@@ -128,12 +126,11 @@ function ShowSkopKriteriaList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
-        <div className="functionalBtnsSection">
+        <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
         </div>
-      </div>
+      </Container>
     </>
   );
 }

@@ -22,7 +22,7 @@ function EditUnit() {
 
   return (
     <div>
-      <Button className="editBtn" onClick={handleShowEditUnit}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditUnit}>
         Kemaskini
       </Button>
 
@@ -118,7 +118,7 @@ function EditUnit() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modalBtn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Unit
           </Button>
         </Modal.Footer>
