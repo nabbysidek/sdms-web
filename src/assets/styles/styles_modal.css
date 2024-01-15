@@ -1,3 +1,7 @@
+/********************************************************/
+/*******************GENERAL MODAL***********************/
+/*******************************************************/
+
 .btn-primary {
     border-color: #204198;
     background-color: #204198;
@@ -11,4 +15,19 @@
 .btn:hover {
   color: #204198;
   background-color: #FFFFFF;
+}
+
+/*****************************************************/
+/************* FORGOT PASSWORD MODAL ****************/
+/****************************************************/
+
+.forgot-password-input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+    
+.forgot-password-btn {
+  float: right;
+  font-size: 1.15em;
+  font-weight: 700;
 }

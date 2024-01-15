@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import ModalForgotPassword from "./ForgotPassword/ModalForgotPassword";
+import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 
@@ -79,7 +79,7 @@ function SignIn() {
           <Link to="" className="auth-link" onClick={openModal}>
             Lupa Kata Laluan?
           </Link>
-          {showModal && <ModalForgotPassword onClose={closeModal} />}
+          {showModal && <ForgotPasswordModal onClose={closeModal} />}
         </div>
 
         <Button className="auth-btn" type="submit">

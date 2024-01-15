@@ -2,10 +2,9 @@ import React from "react";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import "./ForgotPasswordModal.css";
 import "../../../assets/styles/styles_modal.css";
 
-function ModalForgotPassword({ onClose }) {
+function ForgotPasswordModal({ onClose }) {
   const [step, setStep] = useState(1); // initialize to one as step begins at 1
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
@@ -44,7 +43,7 @@ function ModalForgotPassword({ onClose }) {
   return (
     <Modal show={true} onHide={onClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title className="modalHeader">
+        <Modal.Title>
           {step === 1 && "Sahkan Emel Kakitangan Anda"}
           {step === 2 && "Masukkan Kod Pengesahan"}
           {step === 3 && "Set Kata Laluan Baharu"}
@@ -59,13 +58,13 @@ function ModalForgotPassword({ onClose }) {
             </p>
             <input
               type="email"
+              className="forgot-password-input"
               placeholder="Emel kakitangan"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button
-              className="forgotPasswordBtn btn-primary"
-              variant="primary"
+              className="forgot-password-btn btn-primary"
               onClick={handleSubmitEmail}
             >
               Seterusnya
@@ -81,20 +80,19 @@ function ModalForgotPassword({ onClose }) {
             </p>
             <input
               type="text"
+              className="forgot-password-input"
               placeholder="Kod Pengesahan"
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value)}
             />
             <Button
-              className="forgotPasswordBtn btn-primary"
-              variant="primary"
+              className="forgot-password-btn btn-primary"
               onClick={handleSubmitVerificationCode}
             >
               Seterusnya
             </Button>
             <Button
-              className="forgotPasswordBtn btn-secondary"
-              variant="secondary"
+              className="forgot-password-btn btn-secondary"
               onClick={handlePreviousStep}
             >
               Kembali
@@ -107,20 +105,19 @@ function ModalForgotPassword({ onClose }) {
             <p>Sila tetapkan kata laluan baharu anda</p>
             <input
               type="password"
+              className="forgot-password-input"
               placeholder="Kata Laluan Baharu"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <Button
-              className="forgotPasswordBtn btn-primary"
-              variant="primary"
+              className="forgot-password-btn btn-primary"
               onClick={handleSubmitNewPassword}
             >
               Seterusnya
             </Button>
             <Button
-              className="forgotPasswordBtn btn-secondary"
-              variant="secondary"
+              className="forgot-password-btn btn-secondary"
               onClick={handlePreviousStep}
             >
               Kembali
@@ -131,8 +128,7 @@ function ModalForgotPassword({ onClose }) {
         {step === 4 && (
           <div>
             <p>
-              Kata laluan anda telah diset semula. Sila cuba log masuk ke sistem
-              sekali lagi
+              Kata laluan anda telah diset semula. Cuba log masuk sekali lagi
             </p>
           </div>
         )}
@@ -141,4 +137,4 @@ function ModalForgotPassword({ onClose }) {
   );
 }
 
-export default ModalForgotPassword;
+export default ForgotPasswordModal;
