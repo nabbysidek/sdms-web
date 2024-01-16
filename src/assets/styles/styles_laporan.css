@@ -41,6 +41,10 @@
   margin-top: 5px;
 }
 
+.margin-for-mobile {
+  margin-bottom: 8px;
+}
+
  /* to remove unnecessary left padding on each input field */
 @media (min-width: 767px) {
   .remove-padding {
