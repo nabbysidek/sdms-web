@@ -23,7 +23,19 @@ function SearchLaporan() {
 
   const watchInputFields = useWatch({
     control,
-    name: ["idKakitangan", "namaKakitangan", "tahun"],
+    name: [
+      "idKakitangan",
+      "namaKakitangan",
+      "tahun",
+      "skopKriteria",
+      "skopSemakan",
+      "kodKriteria",
+      "bahagianId",
+      "jabatanId",
+      "unitId",
+      "wilayahId",
+      "cawanganId",
+    ],
   });
 
   const atLeastOneFilled = () => {
@@ -56,7 +68,7 @@ function SearchLaporan() {
         <Container fluid className="laporan-search-container">
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
-              <Col xs={12} xl={2}>
+              <Col xs={12} xl={2} className="margin-for-mobile">
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -65,7 +77,7 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={3} className="remove-padding">
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -74,7 +86,7 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={2} className="remove-padding">
+              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -115,46 +127,50 @@ function SearchLaporan() {
           <Container fluid className="detailed-search-container">
             <Row>
               <Col xs={12} xl={4} className="margin-for-mobile">
-                <Form>
-                  <Form.Group>
-                    <Form.Select aria-label="skopKriteriaSelect">
-                      <option>Skop Kriteria</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Form>
+                <Form.Group>
+                  <Form.Select
+                    aria-label="skopKriteriaSelect"
+                    {...register("skopKriteria")}
+                  >
+                    <option>Skop Kriteria</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
               <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
-                <Form>
-                  <Form.Group>
-                    <Form.Select aria-label="skopSemakanSelect">
-                      <option>Skop Semakan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Form>
+                <Form.Group>
+                  <Form.Select
+                    aria-label="skopSemakanSelect"
+                    {...register("skopSemakan")}
+                  >
+                    <option>Skop Semakan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
               <Col xs={12} xl={4} className="remove-padding">
-                <Form>
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      placeholder="Kod Kriteria"
-                      className="reduce-margin-mobile"
-                    ></Form.Control>
-                  </Form.Group>
-                </Form>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    placeholder="Kod Kriteria"
+                    {...register("kodKriteria")}
+                    className="reduce-margin-mobile"
+                  ></Form.Control>
+                </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col xs={12} xl={3} className="margin-for-mobile">
                 <Form>
                   <Form.Group>
-                    <Form.Select aria-label="bahagianSelect">
+                    <Form.Select
+                      aria-label="bahagianSelect"
+                      {...register("bahagianId")}
+                    >
                       <option>Bahagian</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
@@ -166,7 +182,10 @@ function SearchLaporan() {
               <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
-                    <Form.Select aria-label="jabatanSelect">
+                    <Form.Select
+                      aria-label="jabatanSelect"
+                      {...register("jabatanId")}
+                    >
                       <option>Jabatan</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
@@ -178,7 +197,10 @@ function SearchLaporan() {
               <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
-                    <Form.Select aria-label="unitSelect">
+                    <Form.Select
+                      aria-label="unitSelect"
+                      {...register("unitId")}
+                    >
                       <option>Unit</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
@@ -187,10 +209,13 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={3} className="remove-padding">
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
-                    <Form.Select aria-label="wilayahSelect">
+                    <Form.Select
+                      aria-label="wilayahSelect"
+                      {...register("wilayahId")}
+                    >
                       <option>Wilayah</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
@@ -199,10 +224,13 @@ function SearchLaporan() {
                   </Form.Group>
                 </Form>
               </Col>
-              <Col xs={12} xl={2} className="remove-padding">
+              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
                 <Form>
                   <Form.Group>
-                    <Form.Select aria-label="cawanganSelect">
+                    <Form.Select
+                      aria-label="cawanganSelect"
+                      {...register("cawanganId")}
+                    >
                       <option>Cawangan</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
