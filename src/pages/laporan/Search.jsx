@@ -95,14 +95,6 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={3} className="remove-padding">
-                <Button
-                  className="detailed-search-btn"
-                  onClick={() => setShowDetailedSearch(!showDetailedSearch)}
-                >
-                  Carian Terperinci
-                </Button>{" "}
-              </Col>
               <Col xs={12} xl={2} className="remove-padding">
                 <Button
                   type="submit"
@@ -111,6 +103,14 @@ function SearchLaporan() {
                 >
                   Cari
                 </Button>
+              </Col>
+              <Col xs={12} xl={3} className="remove-padding">
+                <Button
+                  className="detailed-search-btn"
+                  onClick={() => setShowDetailedSearch(!showDetailedSearch)}
+                >
+                  Carian Terperinci
+                </Button>{" "}
               </Col>
             </Row>
           </Form>
