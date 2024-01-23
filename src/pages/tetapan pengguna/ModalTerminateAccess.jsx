@@ -13,7 +13,7 @@ function ModalTerminateAccess() {
   return (
     <>
       <Button className="delete-btn" onClick={handleShowModalTerminateAccess}>
-        Tamatkan Akses
+        Sekat Akses
       </Button>
 
       <Modal
