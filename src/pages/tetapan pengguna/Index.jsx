@@ -70,7 +70,7 @@ function IndexTetapanPengguna() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="user-level-item">
-                    <Dropdown.Item>Super Admin</Dropdown.Item>
+                    <Dropdown.Item>Admin</Dropdown.Item>
                     <Dropdown.Item>Pengguna</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -92,7 +92,7 @@ function IndexTetapanPengguna() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="user-level-item">
-                    <Dropdown.Item>Super Admin</Dropdown.Item>
+                    <Dropdown.Item>Admin</Dropdown.Item>
                     <Dropdown.Item>Pengguna</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

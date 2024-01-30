@@ -95,7 +95,7 @@ function SignUp() {
             </Row>
           </div>
 
-          <div>
+          <div className="mb-3">
             <Row>
               <Col xs={6}>
                 <Form.Group controlId="staffPassword">
