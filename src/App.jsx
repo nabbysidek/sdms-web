@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/page layout/Layout";
 import SignIn from "./views/auth/SignIn";
 import SignUp from "./views/auth/SignUp";
-import NotFound from "./pages/error/NotFound";
+import NotFound from "./pages/http request/NotFound";
 import Profile from "./pages/profil/Index";
 import Dashboard from "./pages/dashboard/Index";
 import Pelaporan from "./pages/pelaporan/Index";
