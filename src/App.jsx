@@ -23,6 +23,7 @@ import IndexUnit from "./pages/tetapan kriteria/Unit/Index";
 import IndexWilayah from "./pages/tetapan kriteria/Wilayah/Index";
 import IndexCawangan from "./pages/tetapan kriteria/Cawangan/Index";
 import IndexTetapanPengguna from "./pages/tetapan pengguna/Index";
+import ListStaff from "./pages/profil/UserDetails";
 
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
 
             {/*  TETAPAN PENGGUNA ROUTE */}
             <Route path="/tetapanpengguna" element={<IndexTetapanPengguna />} />
+            <Route path="/listStaff" element={<ListStaff />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
