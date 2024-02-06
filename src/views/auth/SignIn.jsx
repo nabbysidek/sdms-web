@@ -5,6 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
   // -------------------- FE ---------------------------
@@ -26,7 +27,34 @@ function SignIn() {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const navigate = useNavigate();
+  const [staffId,setstaffId]= useState("");
+  const [staffPassword,setstaffPassword]= useState("");
+
+  const onSubmit =async (data) =>{
+
+
+    console.log(staffId,staffPassword);
+    let item ={staffId,staffPassword};
+   let Result =await fetch('http://localhost:8000/api/signin',{
+    method:'POST',
+    headers:{
+      "Content-Type":"application/json",
+      "accept":"application/json"
+    },
+    body: JSON.stringify(item)
+
+   });
+
+   if (Result.ok) {
+    const result = await Result.json();
+      localStorage.setItem("user-info", JSON.stringify(result));
+    navigate("/dashboard");
+  } else {
+    console.log("API Error:", Result.status);
+  }
+
+}
 
   return (
     <div className="pg-container">
@@ -46,7 +74,7 @@ function SignIn() {
             type="text"
             {...register("staffId", { required: true })}
             aria-invalid={errors.staffId ? "true" : "false"}
-            placeholder="ID kakitangan anda"
+            placeholder="ID kakitangan anda" onChange={(e)=>setstaffId(e.target.value)}
           />
           {errors.staffId?.type === "required" && (
             <p role="alert" className="error-message">
@@ -61,7 +89,7 @@ function SignIn() {
             type="password"
             {...register("staffPassword", { required: true, minLength: 8 })}
             aria-invalid={errors.staffPassword ? "true" : "false"}
-            placeholder="Kata laluan anda"
+            placeholder="Kata laluan anda" onChange={(e)=>setstaffPassword(e.target.value)}
           />
           {errors.staffPassword?.type === "required" && (
             <p role="alert" className="error-message">
