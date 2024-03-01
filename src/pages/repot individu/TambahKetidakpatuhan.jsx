@@ -258,15 +258,11 @@ function TambahKetidakpatuhan() {
                         defaultValue=""
                         rules={{
                           required: "Sila sertakan tahun staff diaudit",
-                          pattern: {
-                            value: /^\d{4}$/,
-                            message: "Please enter a valid year (YYYY)",
-                          },
                         }}
                         render={({ field }) => (
                           <>
                             <Form.Control
-                              type="text"
+                              type="date"
                               placeholder="Tahun"
                               {...field}
                               isInvalid={!!errors.tahunDiaudit}
