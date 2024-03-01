@@ -79,10 +79,10 @@ const UserIconMenu = ({ closeMobileNav }) => {
         >
           <div className="mini-menu">
             <Dropdown.ItemText>
-              <h6>Nama Kakitangan JAD</h6>
+              <h6>Nama Auditor</h6>
             </Dropdown.ItemText>
             <Dropdown.ItemText className="mini-menu-content">
-              <p>emelkakitangan@aim.gov.my</p>
+              <p>emelauditor@aim.gov.my</p>
             </Dropdown.ItemText>
             <Dropdown.Divider />
             <Dropdown.Toggle

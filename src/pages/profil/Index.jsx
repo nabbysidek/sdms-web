@@ -14,7 +14,7 @@ function Profile() {
       <div className="profile-content">
         <div className="user-details-container">
           <BsPersonCircle size={100} />
-          <p class="profile-user-email">emelkakitangan@aim.gov.my</p>
+          <p class="profile-user-email">emelauditor@aim.gov.my</p>
         </div>
 
         {/* Tabs section */}
