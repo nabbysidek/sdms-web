@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
 import SearchResultUntukRepotIndividu from "./SearchResult";
-import SearchKakitanganModal from "./SearchKakitanganModal";
+// import SearchKakitanganModal from "./SearchKakitanganModal";
 import "../../assets/styles/styles_repot_individu.css";
 
 function SearchUntukRepotIndividu() {
@@ -14,9 +14,6 @@ function SearchUntukRepotIndividu() {
   // Check validation errors
   const [validationErrors, setValidationErrors] = useState(null);
 
-  // Manage the visibility of the modal
-  const [showModal, setShowModal] = useState(false);
-
   // Form validation
   const {
     control,
@@ -24,25 +21,20 @@ function SearchUntukRepotIndividu() {
     formState: { errors },
   } = useForm();
 
-  const validateThenShowModal = (data) => {
+  const validateThenShowTable = (data) => {
     if (!data.searchStaff) {
       setValidationErrors({
-        searchStaff: { message: "ID atau nama kakitangan diperlukan " },
+        searchStaff: { message: "ID kakitangan diperlukan " },
       });
     } else {
       setValidationErrors(null);
       if (Object.keys(errors).length === 0) {
         // Display modal if the input field is filled
-        setShowModal(true);
-        // setIsSearchResultPelaporanVisible(true);
+        setLinkClicked(true);
       } else {
         setValidationErrors(errors);
       }
     }
-  };
-
-  const handleLinkClick = () => {
-    setLinkClicked(true);
   };
 
   return (
@@ -71,7 +63,7 @@ function SearchUntukRepotIndividu() {
             <Button
               className="repot-search-btn"
               onClick={() => {
-                handleSubmit((data) => validateThenShowModal(data))();
+                handleSubmit((data) => validateThenShowTable(data))();
               }}
             >
               Cari
@@ -89,14 +81,7 @@ function SearchUntukRepotIndividu() {
         </Alert>
       )}
 
-      {/* Pass necessary props to the SearchKakitanganModal component */}
-      <SearchKakitanganModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        onLinkClick={handleLinkClick}
-      />
-
-      <div>
+      <div className="pelaporan-search-result">
         {linkClicked && <SearchResultUntukRepotIndividu />}
       </div>
     </>
