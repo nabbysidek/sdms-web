@@ -51,7 +51,7 @@ function SearchUntukRepotIndividu() {
                     <Form.Control
                       {...field}
                       type="text"
-                      placeholder="ID atau nama kakitangan"
+                      placeholder="ID kakitangan"
                       isInvalid={!!validationErrors?.searchStaff}
                     />
                   )}

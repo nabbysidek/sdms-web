@@ -25,7 +25,7 @@ function SearchUnit() {
   return (
     <>
       <Container fluid className="search-bar-section">
-        <Form className="searchBar" onSubmit={handleSubmit(onSubmit)}>
+        <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Form.Group className="col-md-3 with-padding-left">
               <Form.Select
