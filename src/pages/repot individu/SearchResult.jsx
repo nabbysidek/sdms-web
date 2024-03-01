@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
-import "../../assets/styles/styles_pelaporan.css";
+import "../../assets/styles/styles_repot_individu.css";
 
-function SearchResultPelaporan() {
+function SearchResultUntukRepotIndividu() {
   return (
     <>
       <div className="kakitangan-info-container">
@@ -33,10 +33,10 @@ function SearchResultPelaporan() {
       </div>
 
       <Container fluid>
-        <div className="pelaporan-table">
+        <div className="repot-table">
           <Row>
             <Col md={7}>
-              <h4 className="pelaporan-table-title">
+              <h4 className="repot-table-title">
                 Senarai Ketidakpatuhan Kakitangan
               </h4>
             </Col>
@@ -104,4 +104,4 @@ function SearchResultPelaporan() {
   );
 }
 
-export default SearchResultPelaporan;
+export default SearchResultUntukRepotIndividu;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import "../../assets/styles/styles_pelaporan.css";
+import "../../assets/styles/styles_repot_individu.css";
 
 function TambahKetidakpatuhan() {
   // ------- FE -------------

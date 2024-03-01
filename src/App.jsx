@@ -9,8 +9,8 @@ import SignUp from "./views/auth/SignUp";
 import NotFound from "./pages/http request/NotFound";
 import Profile from "./pages/profil/Index";
 import Dashboard from "./pages/dashboard/Index";
-import Pelaporan from "./pages/pelaporan/Index";
-import TambahKetidakpatuhan from "./pages/pelaporan/TambahKetidakpatuhan";
+import RepotIndividu from "./pages/repot individu/Index";
+import TambahKetidakpatuhan from "./pages/repot individu/TambahKetidakpatuhan";
 import Laporan from "./pages/laporan/Index";
 import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/Index";
 import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/Index";
@@ -40,7 +40,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
 
             {/* ROUTE PELAPORAN */}
-            <Route path="/pelaporan" element={<Pelaporan />} />
+            <Route path="/repot-individu" element={<RepotIndividu />} />
             <Route
               path="/tambahketidakpatuhan"
               element={<TambahKetidakpatuhan />}

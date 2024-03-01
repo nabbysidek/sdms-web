@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
-import SearchResultPelaporan from "./SearchResult";
+import SearchResultUntukRepotIndividu from "./SearchResult";
 import SearchKakitanganModal from "./SearchKakitanganModal";
-import "../../assets/styles/styles_pelaporan.css";
+import "../../assets/styles/styles_repot_individu.css";
 
-function SearchPelaporan() {
+function SearchUntukRepotIndividu() {
   // Manage visibility of the search result
   const [linkClicked, setLinkClicked] = useState(false);
 
@@ -47,7 +47,7 @@ function SearchPelaporan() {
 
   return (
     <>
-      <Container fluid className="pelaporan-search-container">
+      <Container fluid className="repot-search-container">
         <Row>
           <Col xs={12} xl={7}>
             <Form>
@@ -69,7 +69,7 @@ function SearchPelaporan() {
           </Col>
           <Col xs={12} xl={2} className="remove-padding">
             <Button
-              className="pelaporan-search-btn"
+              className="repot-search-btn"
               onClick={() => {
                 handleSubmit((data) => validateThenShowModal(data))();
               }}
@@ -96,11 +96,11 @@ function SearchPelaporan() {
         onLinkClick={handleLinkClick}
       />
 
-      <div className="pelaporan-search-result">
-        {linkClicked && <SearchResultPelaporan />}
+      <div>
+        {linkClicked && <SearchResultUntukRepotIndividu />}
       </div>
     </>
   );
 }
 
-export default SearchPelaporan;
+export default SearchUntukRepotIndividu;

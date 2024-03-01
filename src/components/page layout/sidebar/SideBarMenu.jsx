@@ -6,8 +6,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 const SideBarMenu = [
   {
-    title: "Pelaporan",
-    path: "/pelaporan",
+    title: "Repot Individu",
+    path: "/repot-individu",
     icon: (
       <FaSearch size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),

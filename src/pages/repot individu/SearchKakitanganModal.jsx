@@ -1,7 +1,7 @@
 // SearchKakitanganModal.jsx
 import React from "react";
 import { Modal } from "react-bootstrap";
-import "../../assets/styles/styles_pelaporan.css";
+import "../../assets/styles/styles_repot_individu.css";
 
 function SearchKakitanganModal({ showModal, setShowModal, onLinkClick }) {
   const handleLinkClick = () => {
