@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import SearchResultLaporan from "./SearchResult";
@@ -6,7 +6,7 @@ import SearchResultLaporan from "./SearchResult";
 function SearchLaporan() {
   // ----------- FE --------------
   // Manage the display for Carian Terperinci
-  const [showDetailedSearch, setShowDetailedSearch] = useState(false);
+  // const [showDetailedSearch, setShowDetailedSearch] = useState(false);
 
   // Manage the display of the search result when Cari button is clicked
   const [isSearchResultLaporanVisible, setIsSearchResultLaporanVisible] =
@@ -24,8 +24,7 @@ function SearchLaporan() {
   const watchInputFields = useWatch({
     control,
     name: [
-      "idKakitangan",
-      "namaKakitangan",
+      "kodKriteria",
       "tahun",
       "skopKriteria",
       "skopSemakan",
@@ -68,67 +67,25 @@ function SearchLaporan() {
         <Container fluid className="laporan-search-container">
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
-              <Col xs={12} xl={2} className="margin-for-mobile">
+              <Form.Label className="laporan-filter-header">
+                Mengikut Ketidakpatuhan
+              </Form.Label>
+              <Col xs={12} xl={3}>
                 <Form.Group>
-                  <Form.Control
-                    type="text"
-                    placeholder="ID Kakitangan"
-                    {...register("idKakitangan")}
-                  ></Form.Control>
+                  <Form.Select
+                    aria-label="kodKriteriaSelect"
+                    {...register("kodKriteria")}
+                  >
+                    <option>Kod Kriteria</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
                 </Form.Group>
               </Col>
               <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
                 <Form.Group>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nama Kakitangan"
-                    {...register("namaKakitangan")}
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    placeholder="Tahun"
-                    {...register("tahun")}
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-              <Col xs={12} xl={2} className="remove-padding">
-                <Button
-                  type="submit"
-                  className="laporan-search-btn"
-                  onClick={handleSearchClick}
-                >
-                  Cari
-                </Button>
-              </Col>
-              <Col xs={12} xl={3} className="remove-padding">
-                <Button
-                  className="detailed-search-btn"
-                  onClick={() => setShowDetailedSearch(!showDetailedSearch)}
-                >
-                  Carian Terperinci
-                </Button>{" "}
-              </Col>
-            </Row>
-          </Form>
-        </Container>
-
-        {errorMessage && (
-          <Alert variant="danger" className="alert-display">
-            {errorMessage}
-          </Alert>
-        )}
-
-        {/* Display detailed search section if showDetailedSearch is true */}
-        {showDetailedSearch && (
-          <Container fluid className="detailed-search-container">
-            <Row>
-              <Col xs={12} xl={4} className="margin-for-mobile">
-                <Form.Group>
-                  <Form.Select
+                <Form.Select
                     aria-label="skopKriteriaSelect"
                     {...register("skopKriteria")}
                   >
@@ -139,7 +96,7 @@ function SearchLaporan() {
                   </Form.Select>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
                 <Form.Group>
                   <Form.Select
                     aria-label="skopSemakanSelect"
@@ -152,21 +109,22 @@ function SearchLaporan() {
                   </Form.Select>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={4} className="remove-padding">
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    placeholder="Kod Kriteria"
-                    {...register("kodKriteria")}
-                    className="reduce-margin-mobile"
-                  ></Form.Control>
-                </Form.Group>
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
+               <Form.Group>
+                <Form.Control
+                  type="date"
+                  placeholder="Tahun"
+                  {...register("tahun")}
+                ></Form.Control>
+              </Form.Group>
               </Col>
             </Row>
-            <Row>
-              <Col xs={12} xl={3} className="margin-for-mobile">
-                <Form>
-                  <Form.Group>
+            <Row className="laporan-filter-row">
+              <Form.Label className="laporan-filter-header">
+                Mengikut Organisasi
+              </Form.Label>
+              <Col xs={12} xl={4} className="margin-for-mobile">
+              <Form.Group>
                     <Form.Select
                       aria-label="bahagianSelect"
                       {...register("bahagianId")}
@@ -177,11 +135,9 @@ function SearchLaporan() {
                       <option value="3">Three</option>
                     </Form.Select>
                   </Form.Group>
-                </Form>
               </Col>
-              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
-                <Form>
-                  <Form.Group>
+              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
+              <Form.Group>
                     <Form.Select
                       aria-label="jabatanSelect"
                       {...register("jabatanId")}
@@ -192,11 +148,9 @@ function SearchLaporan() {
                       <option value="3">Three</option>
                     </Form.Select>
                   </Form.Group>
-                </Form>
               </Col>
-              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
-                <Form>
-                  <Form.Group>
+              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
+              <Form.Group>
                     <Form.Select
                       aria-label="unitSelect"
                       {...register("unitId")}
@@ -207,11 +161,14 @@ function SearchLaporan() {
                       <option value="3">Three</option>
                     </Form.Select>
                   </Form.Group>
-                </Form>
               </Col>
-              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
-                <Form>
-                  <Form.Group>
+            </Row>
+            <Row className="sc-filter-row-end">
+              <Form.Label className="laporan-filter-header">
+                Mengikut Lokasi
+              </Form.Label>
+              <Col xs={12} xl={6} className="margin-for-mobile">
+              <Form.Group>
                     <Form.Select
                       aria-label="wilayahSelect"
                       {...register("wilayahId")}
@@ -222,11 +179,9 @@ function SearchLaporan() {
                       <option value="3">Three</option>
                     </Form.Select>
                   </Form.Group>
-                </Form>
               </Col>
-              <Col xs={12} xl={2} className="remove-padding margin-for-mobile">
-                <Form>
-                  <Form.Group>
+              <Col xs={12} xl={6} className="remove-padding margin-for-mobile">
+              <Form.Group>
                     <Form.Select
                       aria-label="cawanganSelect"
                       {...register("cawanganId")}
@@ -237,14 +192,30 @@ function SearchLaporan() {
                       <option value="3">Three</option>
                     </Form.Select>
                   </Form.Group>
-                </Form>
               </Col>
             </Row>
-          </Container>
+          </Form>
+        </Container>
+
+        {errorMessage && (
+          <Alert variant="danger" className="alert-display">
+            {errorMessage}
+          </Alert>
         )}
+
       </div>
 
-      <div className="laporan-search-result">
+      <div className="laporan-filter-btn-container">
+        <Button
+          type="submit"
+          className="laporan-filter-btn"
+          onClick={handleSearchClick}
+        >
+          Cari
+        </Button>
+      </div>
+
+      <div className="laporan-filter-result">
         {isSearchResultLaporanVisible && <SearchResultLaporan />}
       </div>
     </>

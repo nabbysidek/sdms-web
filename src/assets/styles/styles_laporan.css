@@ -18,31 +18,33 @@
   background-color: var(--darkgray);
 }
 
-.laporan-search-btn {
-  width: 100%;
+.laporan-filter-header {
+  font-weight: bold;
+  padding-bottom: 2px;
+}
+
+.sc-filter-row-end {
+  padding-bottom: 15px;
+}
+
+.laporan-filter-btn-container {
+  margin-top: 10px;
+  float: right;
+}
+
+.laporan-filter-btn {
   font-weight: 700;
   border-color: var(--darkblue);
   background-color: var(--darkblue);
   margin-bottom: 5px;
 }
 
-.laporan-search-result {
+.laporan-filter-result {
     margin-top: 40px;
   }
 
-.detailed-search-btn {
-  width: 100%;
-  font-weight: 700;
-  border-color: var(--lightgray);
-  background-color: var(--lightgray);
-}
-
 .alert-display {
   margin-top: 5px;
-}
-
-.margin-for-mobile {
-  margin-bottom: 8px;
 }
 
  /* to remove unnecessary left padding on each input field */
@@ -58,35 +60,12 @@
 /************************************************************/
 
 @media (max-width: 767px) {
-  .detailed-search-btn {
-    margin-top: 2px;
-    margin-bottom: 5px;
-  }
-
-  .laporan-search-btn {
+  .laporan-filter-btn {
     margin-bottom: 2px;
   }
 
   .margin-for-mobile {
-    margin-bottom: 5px;
+    margin-top: 5px;
   }
-
-  .reduce-margin-mobile {
-    margin-bottom: 5px;
-  }
-}
-
-/*****************************************************/
-/********************** INDEX ************************/
-/*****************DETAILED SEARCH*********************/
-/*****************************************************/
-
-.detailed-search-container {
-  background-color: var(--white);
-  border-radius: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-top: 2px solid var(--darkgray);
-  width: 98%;
 }
   
