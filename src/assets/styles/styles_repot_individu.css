@@ -33,13 +33,14 @@
 /********************************************************/
 .kakitangan-info-container {
   margin-top: 30px;
+  
 }
 
 .kakitangan-info {
   margin: 0 auto;
   background-color: var(--white);
   border-radius: 10px;
-  padding: 5px 10px;
+  padding: 10px 10px 20px 10px;
 }
 
 /********************************************************/
