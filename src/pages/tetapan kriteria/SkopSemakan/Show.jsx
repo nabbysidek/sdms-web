@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateSkopSemakan from "./Create";
 import EditSkopSemakan from "./Edit";
@@ -81,10 +81,10 @@ function ShowSkopSemakanList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
-              <h4 className="table-title">Senarai Skop Semakan</h4>
+            <div className="col-md-9">
+              <h3 className="table-title">Senarai Skop Semakan</h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateSkopSemakan />
             </div>
           </Row>

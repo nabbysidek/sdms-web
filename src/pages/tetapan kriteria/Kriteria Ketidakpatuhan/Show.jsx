@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
@@ -87,11 +87,11 @@ function ShowKriteriaKetidakpatuhanList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <Col xl={9}>
-              <h4 className="table-title">Senarai Kriteria Ketidakpatuhan</h4>
+            <Col xl={10}>
+              <h3 className="table-title">Senarai Kesalahan Kriteria Ketidakpatuhan</h3>
             </Col>
 
-            <Col xl={3}>
+            <Col xl={2}>
               <CreateKriteriaKetidakpatuhan />
             </Col>
           </Row>
@@ -101,7 +101,8 @@ function ShowKriteriaKetidakpatuhanList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Kriteria</th>
+              <th>Skop Semakan</th>
+              <th>Skop Kriteria Ketidakpatuhan</th>
               <th>Kod Kriteria Ketidakpatuhan</th>
               <th>Nama Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
@@ -113,6 +114,7 @@ function ShowKriteriaKetidakpatuhanList() {
                 (kriteriaKetidakpatuhansData, key) => (
                   <tr key={key}>
                     <td>{key + 1}</td>
+                    <td>Skop Semakan</td>
                     <td>
                       {kriteriaKetidakpatuhansData.skop_kriteria
                         ? kriteriaKetidakpatuhansData.skop_kriteria

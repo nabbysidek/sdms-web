@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
@@ -81,10 +81,10 @@ function ShowSkopKriteriaList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
-              <h4 className="table-title">Senarai Skop Kriteria</h4>
+            <div className="col-md-9">
+              <h3 className="table-title">Senarai Skop Kriteria</h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateSkopKriteria />
             </div>
           </Row>
@@ -94,7 +94,8 @@ function ShowSkopKriteriaList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Kriteria</th>
+              <th>Skop Semakan</th>
+              <th>Skop Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -103,6 +104,7 @@ function ShowSkopKriteriaList() {
               skopKriterias.map((skopKriteriasData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
+                  <td>Skop Semakan</td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
                     <EditSkopKriteria />

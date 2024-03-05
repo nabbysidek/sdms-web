@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../../assets/styles/styles_layout.css";
 
@@ -11,18 +10,18 @@ function SubSideBar() {
     return (
       <ul className="mobile-nav-links">
         <li>
-          <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Kriteria Ketidakpatuhan
+          <NavLink to="/skopsemakan" className="sub-nav-link">
+            Skop Semakan
           </NavLink>
         </li>
         <li>
           <NavLink to="/skopkriteria" className="sub-nav-link">
-            Skop Kriteria
+            Skop Kriteria Ketidakpatuhan
           </NavLink>
         </li>
         <li>
-          <NavLink to="/skopsemakan" className="sub-nav-link">
-            Skop Semakan
+          <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
+            Kesalahan Kriteria Ketidakpatuhan
           </NavLink>
         </li>
         <li>
@@ -69,18 +68,18 @@ function SubSideBar() {
     <div className="sub-sidebar">
       <ul>
         <li>
-          <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Kriteria Ketidakpatuhan
+          <NavLink to="/skopsemakan" className="sub-nav-link">
+            Skop Semakan
           </NavLink>
         </li>
         <li>
           <NavLink to="/skopkriteria" className="sub-nav-link">
-            Skop Kriteria
+            Skop Kriteria Ketidakpatuhan
           </NavLink>
         </li>
         <li>
-          <NavLink to="/skopsemakan" className="sub-nav-link">
-            Skop Semakan
+          <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
+            Kesalahan Kriteria Ketidakpatuhan
           </NavLink>
         </li>
         <li>

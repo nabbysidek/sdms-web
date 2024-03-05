@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateUnit from "./Create";
 import EditUnit from "./Edit";
@@ -80,7 +80,7 @@ function ShowUnitList() {
         <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="table-title">Senarai Unit</h4>
+              <h3 className="table-title">Senarai Unit</h3>
             </div>
             <div className="col-md-2">
               <CreateUnit />

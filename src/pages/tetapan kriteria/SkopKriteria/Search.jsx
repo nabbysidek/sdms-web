@@ -1,11 +1,10 @@
-import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
 
 function SearchSkopKriteria() {
   // --------- FE ------------
   // Form validation
-  const { handleSubmit, control, setError, formState } = useForm();
+  const { register, handleSubmit, control, setError, formState } = useForm();
 
   const onSubmit = (data) => {
     if (!data.skopKriteria) {
@@ -24,7 +23,21 @@ function SearchSkopKriteria() {
       <Container fluid className="search-bar-section">
         <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
-            <Form.Group className="col-md-10">
+          <Form.Group className="col-md-4 with-padding-left">
+              <Form.Select
+                {...register("skopSemakanSelect")}
+                aria-label="skopSemakanSelect"
+                onChange={(e) => {
+                  setValue("skopSemakan", e.target.value);
+                }}
+              >
+                <option value="">Skop Semakan</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="col-md-6">
               <Controller
                 name="skopKriteria"
                 control={control}
@@ -33,7 +46,7 @@ function SearchSkopKriteria() {
                   <Form.Control
                     {...field}
                     type="text"
-                    placeholder="Masukkan skop kriteria"
+                    placeholder="Masukkan skop kriteria ketidakpatuhan"
                   />
                 )}
               />

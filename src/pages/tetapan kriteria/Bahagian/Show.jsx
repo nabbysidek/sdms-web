@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateBahagian from "./Create";
 import EditBahagian from "./Edit";
@@ -83,7 +83,7 @@ function ShowBahagianList() {
         <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="table-title">Senarai Bahagian</h4>
+              <h3 className="table-title">Senarai Bahagian</h3>
             </div>
             <div className="col-md-2">
               <CreateBahagian />

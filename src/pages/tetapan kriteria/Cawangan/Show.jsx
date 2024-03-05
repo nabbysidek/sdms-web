@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateCawangan from "./Create";
 import EditCawangan from "./Edit";
@@ -64,7 +64,7 @@ function ShowCawanganList() {
             text: response.data.success, // Access the message from the backend response
           });
 
-          setWilayahs((prevCawangans) =>
+          setCawangans((prevCawangans) =>
             prevCawangans.filter((cawangan) => cawangan.id !== cawanganId)
           );
         }
@@ -80,7 +80,7 @@ function ShowCawanganList() {
         <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="table-title">Senarai Cawangan</h4>
+              <h3 className="table-title">Senarai Cawangan</h3>
             </div>
             <div className="col-md-2">
               <CreateCawangan />

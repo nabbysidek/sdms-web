@@ -9,7 +9,7 @@ function SearchResultUntukRepotIndividu() {
     <>
       <div className="kakitangan-info-container">
         <div className="page-title">
-          <h4>Maklumat Kakitangan</h4>
+          <h3>Maklumat Kakitangan</h3>
           <hr />
         </div>
         <div className="kakitangan-info">
@@ -36,9 +36,9 @@ function SearchResultUntukRepotIndividu() {
         <div className="repot-table">
           <Row>
             <Col md={7}>
-              <h4 className="repot-table-title">
+              <h3 className="repot-table-title">
                 Senarai Ketidakpatuhan Kakitangan
-              </h4>
+              </h3>
             </Col>
             <Col md={5}>
               <Link to="/tambahketidakpatuhan">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateJenisAudit from "./Create";
 import EditJenisAudit from "./Edit";
@@ -82,7 +82,7 @@ function ShowJenisAuditList() {
         <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h4 className="table-title">Senarai Jenis Audit</h4>
+              <h3 className="table-title">Senarai Jenis Audit</h3>
             </div>
             <div className="col-md-2">
               <CreateJenisAudit />
