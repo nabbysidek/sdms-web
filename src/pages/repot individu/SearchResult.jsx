@@ -71,6 +71,7 @@ function SearchResultUntukRepotIndividu() {
                 <th>Tahun Audit</th>
                 <th>Tajuk Audit</th>
                 <th>Catatan</th>
+                <th>Tindakan</th>
               </tr>
             </thead>
             <tbody>
@@ -90,6 +91,14 @@ function SearchResultUntukRepotIndividu() {
                 <td>2015</td>
                 <td>Testing</td>
                 <td>Catatan</td>
+                <td>
+                  <Link to="/editketidakpatuhan">
+                    <Button className="edit-ketidakpatuhan-btn">
+                      Edit
+                    </Button>
+                  </Link>
+                  <Button>Padam</Button>
+                </td>
               </tr>
             </tbody>
           </Table>

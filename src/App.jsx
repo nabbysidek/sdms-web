@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -11,6 +10,7 @@ import Profile from "./pages/profil/Index";
 import Dashboard from "./pages/dashboard/Index";
 import RepotIndividu from "./pages/repot individu/Index";
 import TambahKetidakpatuhan from "./pages/repot individu/TambahKetidakpatuhan";
+import EditKetidakpatuhan from "./pages/repot individu/EditKetidakpatuhan";
 import Laporan from "./pages/laporan/Index";
 import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/Index";
 import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/Index";
@@ -44,6 +44,10 @@ function App() {
             <Route
               path="/tambahketidakpatuhan"
               element={<TambahKetidakpatuhan />}
+            />
+            <Route
+              path="/editketidakpatuhan"
+              element={<EditKetidakpatuhan />}
             />
 
             {/* ROUTE LAPORAN */}

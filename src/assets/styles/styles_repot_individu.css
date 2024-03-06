@@ -68,11 +68,21 @@
     margin-bottom: 10px;
 }
 
+.edit-ketidakpatuhan-btn {
+  font-size: 0.75em;
+  font-weight: 700;
+  border-color: var(--edit_yellow);
+  background-color: var(--edit_yellow);
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+
 /***********************************************************/
 /************** TAMBAH KETIDAKPATUHAN PAGE ****************/
-/**********************************************************/
+/************** EDIT KETIDAKPATUHAN PAGE ****************/
+/*******************************************************/
 
-.tambah-ketidakpatuhan-form-container {
+.tambah-ketidakpatuhan-form-container, .edit-ketidakpatuhan-form-container {
   background-color: var(--white);
   width: 98%;
   margin: 20px auto 0 auto;
@@ -85,7 +95,7 @@
   margin-top: 30px;
 }
 
-.radio-tambah-ketidakpatuhan {
+.radio-tambah-ketidakpatuhan, .radio-edit-ketidakpatuhan {
   margin: 10px auto;
   font-size: 14px;
 }
@@ -94,13 +104,13 @@
   margin-top: 10px;
 }
 
-.tambah-ketidakpatuhan-actions {
+.tambah-ketidakpatuhan-actions, .edit-ketidakpatuhan-actions {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
 }
 
-.tambah-ketidakpatuhan-btn{
+.tambah-ketidakpatuhan-btn, .edit-ketidakpatuhan-btn {
   font-weight: 700;
   border-color: var(--darkblue);
   background-color: var(--darkblue);

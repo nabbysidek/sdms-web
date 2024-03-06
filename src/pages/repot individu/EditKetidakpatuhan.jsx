@@ -2,7 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
 
-function TambahKetidakpatuhan() {
+function EditKetidakpatuhan() {
   // ------- FE -------------
   // Form validation
   const {
@@ -21,9 +21,9 @@ function TambahKetidakpatuhan() {
       <div className="page-title">
         <h2>Repot Individu</h2>
         <hr />
-        <h3>Tambah Ketidakpatuhan Kakitangan</h3>
+        <h3>Edit Ketidakpatuhan Kakitangan</h3>
       </div>
-      <div className="tambah-ketidakpatuhan-form-container">
+      <div className="edit-ketidakpatuhan-form-container">
         <Container>
           <div>
             <h4>Maklumat Kakitangan</h4>
@@ -47,7 +47,6 @@ function TambahKetidakpatuhan() {
               </Row>
             </div>
           </div>
-          {/* Form Tambah ketidakpatuhan */}
           <div>
             <h4>Lokasi</h4>
             <hr />
@@ -450,10 +449,10 @@ function TambahKetidakpatuhan() {
                       <Form.Control as="textarea" rows={3} />
                     </Form.Group>
                   </Row>
-                  <div className="tambah-ketidakpatuhan-actions">
+                  <div className="edit-ketidakpatuhan-actions">
                     <Button
                       onClick={handleSubmit(onSubmit)}
-                      className="tambah-ketidakpatuhan-btn"
+                      className=".edit-ketidakpatuhan-btn"
                     >
                       Simpan
                     </Button>{" "}
@@ -469,4 +468,4 @@ function TambahKetidakpatuhan() {
   );
 }
 
-export default TambahKetidakpatuhan;
+export default EditKetidakpatuhan;
