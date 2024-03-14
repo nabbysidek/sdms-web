@@ -30,8 +30,8 @@ const UserIconMenu = ({ closeMobileNav }) => {
   // For path navigations
   const navigate = useNavigate();
 
-  const ProfilePageButton = ({ children, onClick }) => (
-    <Link to="/profile">
+  const ProfilePageButton = React.forwardRef(({ children, onClick }, ref) => (
+    <Link to="/profile" ref={ref}>
       <button
         className="btn-update-profile"
         onClick={(e) => {
@@ -42,7 +42,10 @@ const UserIconMenu = ({ closeMobileNav }) => {
         {children}
       </button>
     </Link>
-  );
+  ));
+
+  ProfilePageButton.displayName = 'ProfilePageButton';
+  
 
   useEffect(() => {
     const handleResize = () => {

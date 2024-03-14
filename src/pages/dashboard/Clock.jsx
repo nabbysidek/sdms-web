@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../../assets/styles/styles_dashboard.css";
 
 const Clock = () => {
