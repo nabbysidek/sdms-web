@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "../../../assets/styles/styles_layout.css";
+import axiosCustom from "../../../axios";
 
 const UserIconMenu = ({ closeMobileNav }) => {
   // ----------- FE ------------
@@ -45,7 +46,6 @@ const UserIconMenu = ({ closeMobileNav }) => {
   ));
 
   ProfilePageButton.displayName = 'ProfilePageButton';
-  
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,6 +58,30 @@ const UserIconMenu = ({ closeMobileNav }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // ----------- BE ------------
+  // Show current user info
+  const [userInfo, setUserInfo] = useState();
+
+  const showUserInfo = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get('user');
+
+      if (response.status >= 200 && response.status < 300) {
+        setUserInfo(response.data);
+      }
+      else {
+        console.log(response);
+      }
+    }
+    catch {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    showUserInfo();
+  }, [showUserInfo]);
 
   return (
     <div>
@@ -81,13 +105,17 @@ const UserIconMenu = ({ closeMobileNav }) => {
           }}
         >
           <div className="mini-menu">
-            <Dropdown.ItemText>
-              <h6>Nama Auditor</h6>
-            </Dropdown.ItemText>
-            <Dropdown.ItemText className="mini-menu-content">
-              <p>emelauditor@aim.gov.my</p>
-            </Dropdown.ItemText>
-            <Dropdown.Divider />
+            {userInfo && (
+              <>
+                <Dropdown.ItemText>
+                  <h6>{userInfo.namaAuditor}</h6>
+                </Dropdown.ItemText>
+                <Dropdown.ItemText className="mini-menu-content">
+                  <p>{userInfo.emelAuditor}</p>
+                </Dropdown.ItemText>
+                <Dropdown.Divider />
+              </>
+            )}
             <Dropdown.Toggle
               as={ProfilePageButton}
               className="btn-update-profile"
