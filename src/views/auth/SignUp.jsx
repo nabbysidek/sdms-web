@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Form, Col, Row, Button } from "react-bootstrap";
+import { Form, Col, Row, Button, Alert } from "react-bootstrap";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
+import axios from "axios";
 
 function SignUp() {
   // ------------------- FE ---------------------
@@ -14,13 +15,41 @@ function SignUp() {
     watch,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
-
+  // ------------------- BE ---------------------
+  // Sign up user
+  const handleSignUp = async (signUpInput) => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/auth/sign-up`,
+        signUpInput,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          }
+        }
+      );
+  
+      if (response.status >= 200 && response.status < 300) {
+        console.log('Berjaya register');
+      } else {
+        console.log('Unexpected response status:', response.status);
+        console.log('Response data:', response.data);
+      }
+    } catch (error) {
+      if (error.response) {
+        console.log('Server response status:', error.response.status);
+        console.log('Server response data:', error.response.data);
+      }
+      console.log('Error:', error);
+    }
+  };
+  
   return (
     <div className="pg-container">
       <Form
         className="signup-form-container form-container"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleSignUp)}
       >
         <div className="form-header">
           <img className="aim-logo" src={aimLogo} alt="aim-logo" />
@@ -28,15 +57,15 @@ function SignUp() {
         </div>
 
         <div>
-          <Form.Group className="mb-3" controlId="staffName">
+          <Form.Group className="mb-3" controlId="namaAuditor">
             <Form.Label className="form-label">Nama Kakitangan</Form.Label>
             <Form.Control
               type="text"
-              {...register("staffName", { required: true })}
-              aria-invalid={errors.staffName ? "true" : "false"}
+              {...register("namaAuditor", { required: true })}
+              aria-invalid={errors.namaAuditor ? "true" : "false"}
               placeholder="Nama anda"
             />
-            {errors.staffName?.type === "required" && (
+            {errors.namaAuditor?.type === "required" && (
               <p role="alert" className="error-message">
                 Nama anda diperlukan
               </p>
@@ -46,17 +75,17 @@ function SignUp() {
           <div>
             <Row>
               <Col xs={6}>
-                <Form.Group className="mb-3" controlId="staffId">
+                <Form.Group className="mb-3" controlId="idAuditor">
                   <Form.Label className="form-label">Id Kakitangan</Form.Label>
                   <Form.Control
                     type="text"
-                    {...register("staffId", {
+                    {...register("idAuditor", {
                       required: true,
                     })}
-                    aria-invalid={errors.staffId ? "true" : "false"}
+                    aria-invalid={errors.idAuditor ? "true" : "false"}
                     placeholder="ID kakitangan anda"
                   />
-                  {errors.staffId?.type === "required" && (
+                  {errors.idAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
                       ID kakitangan diperlukan
                     </p>
@@ -64,28 +93,28 @@ function SignUp() {
                 </Form.Group>
               </Col>
               <Col xs={6}>
-                <Form.Group className="mb-3" controlId="staffEmail">
+                <Form.Group className="mb-3" controlId="emelAuditor">
                   <Form.Label className="form-label">
                     Emel Kakitangan
                   </Form.Label>
                   <Form.Control
                     type="email"
-                    {...register("staffEmail", {
+                    {...register("emelAuditor", {
                       required: true,
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Emel tidak sah.",
                       },
                     })}
-                    aria-invalid={errors.staffEmail ? "true" : "false"}
+                    aria-invalid={errors.emelAuditor ? "true" : "false"}
                     placeholder="Emel kakitangan anda"
                   />
-                  {errors.staffEmail && (
+                  {errors.emelAuditor && (
                     <p role="alert" className="error-message">
-                      {errors.staffEmail.message}
+                      {errors.emelAuditor.message}
                     </p>
                   )}
-                  {errors.staffEmail?.type === "required" && (
+                  {errors.emelAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
                       Emel kakitangan diperlukan
                     </p>
@@ -98,23 +127,23 @@ function SignUp() {
           <div className="mb-3">
             <Row>
               <Col xs={6}>
-                <Form.Group controlId="staffPassword">
+                <Form.Group controlId="kataLaluanAuditor">
                   <Form.Label className="form-label">Kata Laluan</Form.Label>
                   <Form.Control
                     type="password"
-                    {...register("staffPassword", {
+                    {...register("kataLaluanAuditor", {
                       required: true,
                       minLength: 8,
                     })}
-                    aria-invalid={errors.staffPassword ? "true" : "false"}
+                    aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
                     placeholder="Kata laluan anda"
                   />
-                  {errors.staffPassword?.type === "required" && (
+                  {errors.kataLaluanAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
                       Kata laluan diperlukan
                     </p>
                   )}
-                  {errors.staffPassword?.type === "minLength" && (
+                  {errors.kataLaluanAuditor?.type === "minLength" && (
                     <p role="alert" className="error-message">
                       Minima 8 karakter
                     </p>
@@ -122,31 +151,31 @@ function SignUp() {
                 </Form.Group>
               </Col>
               <Col xs={6}>
-                <Form.Group controlId="staffConfirmPassword">
+                <Form.Group controlId="kataLaluanAuditor_confirmation">
                   <Form.Label className="form-label">
                     Ulang Kata Laluan
                   </Form.Label>
                   <Form.Control
                     type="password"
-                    {...register("staffConfirmPassword", {
+                    {...register("kataLaluanAuditor_confirmation", {
                       required: true,
                       validate: (value) =>
-                        value === watch("staffPassword") ||
+                        value === watch("kataLaluanAuditor") ||
                         "Kata laluan tidak padan",
                     })}
                     aria-invalid={
-                      errors.staffConfirmPassword ? "true" : "false"
+                      errors.kataLaluanAuditor_confirmation ? "true" : "false"
                     }
                     placeholder="Kata laluan anda"
                   />
-                  {errors.staffConfirmPassword?.type === "required" && (
+                  {errors.kataLaluanAuditor_confirmation?.type === "required" && (
                     <p role="alert" className="error-message">
                       Kata laluan diperlukan
                     </p>
                   )}
-                  {errors.staffConfirmPassword && (
+                  {errors.kataLaluanAuditor_confirmation && (
                     <p role="alert" className="error-message">
-                      {errors.staffConfirmPassword.message}
+                      {errors.kataLaluanAuditor_confirmation.message}
                     </p>
                   )}
                 </Form.Group>

@@ -6,6 +6,7 @@ import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import { useNavigate } from "react-router-dom";
+import axiosCustom from "../../axios";
 
 function SignIn() {
   // -------------------- FE ---------------------------
@@ -27,40 +28,34 @@ function SignIn() {
     handleSubmit,
   } = useForm();
 
-  const navigate = useNavigate();
   const [staffId,setstaffId]= useState("");
   const [staffPassword,setstaffPassword]= useState("");
 
-  const onSubmit =async (data) =>{
+  // -------------------- BE ---------------------------
+  const navigate = useNavigate();
 
+  // Sign in user
+  const handleSignIn = async (signInInput) => {
+    try {
+      const response = await axiosCustom.post(`/auth/sign-in`, signInInput);
 
-    console.log(staffId,staffPassword);
-    let item ={staffId,staffPassword};
-   let Result =await fetch('http://localhost:8000/api/signin',{
-    method:'POST',
-    headers:{
-      "Content-Type":"application/json",
-      "accept":"application/json"
-    },
-    body: JSON.stringify(item)
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
 
-   });
-
-   if (Result.ok) {
-    const result = await Result.json();
-      localStorage.setItem("user-info", JSON.stringify(result));
-    navigate("/dashboard");
-  } else {
-    console.log("API Error:", Result.status);
-  }
-
-}
+        navigate("/dashboard");
+      } else {
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log(error); // Error related to API response or client side
+    }
+  };
 
   return (
     <div className="pg-container">
       <Form
         className="signin-container form-container"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleSignIn)}
       >
         <div className="form-header">
           <img className="aim-logo" src={aimLogo} alt="aim-logo" />
@@ -68,35 +63,35 @@ function SignIn() {
           <p>Masukkan maklumat log masuk anda</p>
         </div>
 
-        <Form.Group controlId="staffId" className="mb-3">
+        <Form.Group controlId="idAuditor" className="mb-3">
           <Form.Label className="form-label">Id Kakitangan</Form.Label>
           <Form.Control
             type="text"
-            {...register("staffId", { required: true })}
-            aria-invalid={errors.staffId ? "true" : "false"}
+            {...register("idAuditor", { required: true })}
+            aria-invalid={errors.idAuditor ? "true" : "false"}
             placeholder="ID kakitangan anda" onChange={(e)=>setstaffId(e.target.value)}
           />
-          {errors.staffId?.type === "required" && (
+          {errors.idAuditor?.type === "required" && (
             <p role="alert" className="error-message">
               ID kakitangan diperlukan
             </p>
           )}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="staffPassword">
+        <Form.Group className="mb-3" controlId="kataLaluanAuditor">
           <Form.Label className="form-label">Kata Laluan</Form.Label>
           <Form.Control
             type="password"
-            {...register("staffPassword", { required: true, minLength: 8 })}
-            aria-invalid={errors.staffPassword ? "true" : "false"}
+            {...register("kataLaluanAuditor", { required: true, minLength: 8 })}
+            aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
             placeholder="Kata laluan anda" onChange={(e)=>setstaffPassword(e.target.value)}
           />
-          {errors.staffPassword?.type === "required" && (
+          {errors.kataLaluanAuditor?.type === "required" && (
             <p role="alert" className="error-message">
               Kata laluan diperlukan
             </p>
           )}
-          {errors.staffPassword?.type === "minLength" && (
+          {errors.kataLaluanAuditor?.type === "minLength" && (
             <p role="alert" className="error-message">
               Minima 8 karakter
             </p>
