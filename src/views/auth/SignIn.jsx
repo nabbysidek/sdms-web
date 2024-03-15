@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm, useController } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
@@ -7,6 +7,30 @@ import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import { useNavigate } from "react-router-dom";
 import axiosCustom from "../../axios";
+
+
+// NEW
+const ControlledInput = ({ name, label, control, rules, type, placeholder }) => {
+  const {
+    field,
+    fieldState: { error },
+  } = useController({ name, control, rules });
+  return (
+    <Form.Group controlId={name} className="mb-3">
+      <Form.Label>{label}</Form.Label>
+      <Form.Control
+        type={type}
+        {...field}
+        isInvalid={!!error}
+        placeholder={placeholder}
+      />
+      <Form.Control.Feedback type="invalid">
+        {error?.message}
+      </Form.Control.Feedback>
+    </Form.Group>
+  );
+};
+
 
 function SignIn() {
   // -------------------- FE ---------------------------
@@ -22,17 +46,19 @@ function SignIn() {
   };
 
   // Form validation and submission
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   handleSubmit,
+  // } = useForm();
 
-  const [staffId,setstaffId]= useState("");
-  const [staffPassword,setstaffPassword]= useState("");
+  // const [staffId,setstaffId]= useState("");
+  // const [staffPassword,setstaffPassword]= useState("");
 
   // -------------------- BE ---------------------------
   const navigate = useNavigate();
+
+  const { control, handleSubmit } = useForm();
 
   // Sign in user
   const handleSignIn = async (signInInput) => {
@@ -63,13 +89,39 @@ function SignIn() {
           <p>Masukkan maklumat log masuk anda</p>
         </div>
 
-        <Form.Group controlId="idAuditor" className="mb-3">
+        {/*  NEW */}
+        <ControlledInput
+          name="idAuditor"
+          label="Id Kakitangan"
+          control={control}
+          rules={{ required: "ID kakitangan diperlukan" }}
+          type="text"
+          placeholder="ID kakitangan anda"
+        />
+
+        <ControlledInput
+          name="kataLaluanAuditor"
+          label="Kata Laluan"
+          control={control}
+          rules={{
+            required: "Kata laluan diperlukan",
+            minLength: {
+              value: 8,
+              message: "Minima 8 karakter",
+            },
+          }}
+          type="password"
+          placeholder="Kata laluan anda"
+        />
+
+        {/* <Form.Group controlId="idAuditor" className="mb-3">
           <Form.Label className="form-label">Id Kakitangan</Form.Label>
           <Form.Control
             type="text"
             {...register("idAuditor", { required: true })}
             aria-invalid={errors.idAuditor ? "true" : "false"}
-            placeholder="ID kakitangan anda" onChange={(e)=>setstaffId(e.target.value)}
+            placeholder="ID kakitangan anda"
+            onChange={(e) => setstaffId(e.target.value)}
           />
           {errors.idAuditor?.type === "required" && (
             <p role="alert" className="error-message">
@@ -84,7 +136,8 @@ function SignIn() {
             type="password"
             {...register("kataLaluanAuditor", { required: true, minLength: 8 })}
             aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
-            placeholder="Kata laluan anda" onChange={(e)=>setstaffPassword(e.target.value)}
+            placeholder="Kata laluan anda"
+            onChange={(e) => setstaffPassword(e.target.value)}
           />
           {errors.kataLaluanAuditor?.type === "required" && (
             <p role="alert" className="error-message">
@@ -96,7 +149,7 @@ function SignIn() {
               Minima 8 karakter
             </p>
           )}
-        </Form.Group>
+        </Form.Group> */}
 
         <div className="forgot-password">
           <Link to="" className="auth-link" onClick={openModal}>
