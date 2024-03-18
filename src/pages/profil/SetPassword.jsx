@@ -1,110 +1,109 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Form, Button, Container } from "react-bootstrap";
+import axiosCustom from "../../axios";
 
 function SetPassword() {
+  // ------------------- FE ---------------------
   const {
-    handleSubmit,
-    control,
+    register,
     formState: { errors },
+    handleSubmit,
+    watch,
   } = useForm();
 
-  const handleSetPassword = (data) => {
-    // Your custom logic for setting the password
-    if (data.newPassword !== data.confirmPassword) {
-      alert("Kata laluan baharu tidak sepadan.");
-      return;
+  // ------------------- BE ---------------------
+  // Edit password
+  const handleUpdatePassword = async (setPasswordInput) => {
+    try {
+      const response = await axiosCustom.put(`set-kata-laluan`, setPasswordInput);
+
+      if (response.status >= 200 && response.status < 300) {
+        console.log("Berjaya set password");
+      } else {
+        console.log("Response data:", response.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    alert("Kata laluan baharu telah berjaya diset semula.");
-  };
-
-  const onSubmit = (data) => {
-    handleSetPassword(data);
-    // for data handling
   };
 
   return (
     <Container fluid className="tabs-container">
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group controlId="currentPassword">
-          <Form.Label>Kata Laluan Terkini</Form.Label>
-          <Controller
-            name="currentPassword"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "Kata laluan terkini diperlukan",
-              minLength: {
-                value: 8,
-                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <Form.Control type="password" {...field} />
-                {errors.currentPassword && (
-                  <span className="error-message">
-                    {errors.currentPassword.message}
-                  </span>
-                )}
-              </>
-            )}
+      <Form onSubmit={handleSubmit(handleUpdatePassword)}>
+        <Form.Group controlId="kataLaluanAuditor">
+          <Form.Label className="form-label">Kata Laluan</Form.Label>
+          <Form.Control
+            type="password"
+            {...register("kataLaluanAuditor", {
+              required: true,
+              minLength: 8,
+            })}
+            aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
+            placeholder="Kata laluan anda"
           />
+          {errors.kataLaluanAuditor?.type === "required" && (
+            <p role="alert" className="error-message">
+              Kata laluan diperlukan
+            </p>
+          )}
+          {errors.kataLaluanAuditor?.type === "minLength" && (
+            <p role="alert" className="error-message">
+              Minima 8 karakter
+            </p>
+          )}
         </Form.Group>
 
-        <Form.Group controlId="newPassword">
-          <Form.Label>Kata Laluan Baharu</Form.Label>
-          <Controller
-            name="newPassword"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "Kata laluan baharu diperlukan",
-              minLength: {
-                value: 8,
-                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <Form.Control type="password" {...field} />
-                {errors.newPassword && (
-                  <span className="error-message">
-                    {errors.newPassword.message}
-                  </span>
-                )}
-              </>
-            )}
+        <Form.Group controlId="kataLaluanAuditorBaharu">
+          <Form.Label className="form-label">Kata Laluan Baharu</Form.Label>
+          <Form.Control
+            type="password"
+            {...register("kataLaluanAuditorBaharu", {
+              required: true,
+              minLength: 8,
+            })}
+            aria-invalid={errors.kataLaluanAuditorBaharu ? "true" : "false"}
+            placeholder="Kata laluan baharu anda"
           />
+          {errors.kataLaluanAuditorBaharu?.type === "required" && (
+            <p role="alert" className="error-message">
+              Kata laluan baharu diperlukan
+            </p>
+          )}
+          {errors.kataLaluanAuditorBaharu?.type === "minLength" && (
+            <p role="alert" className="error-message">
+              Minima 8 karakter
+            </p>
+          )}
         </Form.Group>
-
-        <Form.Group controlId="confirmPassword">
+        
+        <Form.Group controlId="kataLaluanAuditorBaharu_confirmation">
           <Form.Label>Sahkan Kata Laluan Baharu</Form.Label>
-          <Controller
-            name="confirmPassword"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "Sahkan kata laluan baharu diperlukan",
-              minLength: {
-                value: 8,
-                message: "Kata laluan harus terdiri dari minimal 8 karakter.",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <Form.Control type="password" {...field} />
-                {errors.confirmPassword && (
-                  <span className="error-message">
-                    {errors.confirmPassword.message}
-                  </span>
-                )}
-              </>
-            )}
+          <Form.Control
+            type="password"
+            {...register("kataLaluanAuditorBaharu_confirmation", {
+              required: true,
+              validate: (value) =>
+                value === watch("kataLaluanAuditorBaharu") ||
+                "Kata laluan tidak padan",
+            })}
+            aria-invalid={
+              errors.kataLaluanAuditorBaharu_confirmation ? "true" : "false"
+            }
+            placeholder="Sahkan kata laluan baharu anda"
           />
+          {errors.kataLaluanAuditorBaharu_confirmation?.type === "required" && (
+            <p role="alert" className="error-message">
+              Kata laluan diperlukan
+            </p>
+          )}
+          {errors.kataLaluanAuditorBaharu_confirmation && (
+            <p role="alert" className="error-message">
+              {errors.kataLaluanAuditorBaharu_confirmation.message}
+            </p>
+          )}
         </Form.Group>
-
+        
         <Button className="set-password-btn" type="submit">
           Set Kata Laluan
         </Button>
