@@ -151,11 +151,17 @@ function SideBar({ onNavLinkClick }) {
             </div>
           </ListGroup.Item>
         ))}
-        
+
         {/* Independent Log Keluar link */}
         <ListGroup.Item className="list-group-item">
           <NavLink className="nav-link" onClick={handleSignOut}>
-            <FaSignOutAlt size={15} style={{ marginRight: "10px", marginLeft: "3px" }} /> Log Keluar
+            <FaSignOutAlt
+              size={15}
+              style={{ marginRight: "10px", marginLeft: "3px" }}
+            />
+            {isSideBarOpen && ( // Check if the sidebar is open
+              <span>Log Keluar</span>
+            )}
           </NavLink>
         </ListGroup.Item>
       </ListGroup>
