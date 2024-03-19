@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-function ModalAllowAccess() {
+function ModalAllowAccess({ disableButtonBenar }) {
   const [showModalAllowAccess, setShowModalAllowAccess] = useState(false);
 
   const handleCloseModalAllowAccess = () => setShowModalAllowAccess(false);
@@ -9,7 +9,7 @@ function ModalAllowAccess() {
 
   return (
     <>
-      <Button className="allow-btn" onClick={handleShowModalAllowAccess}>
+      <Button className="allow-btn" onClick={handleShowModalAllowAccess} disabled={disableButtonBenar}>
         Benar Akses
       </Button>
 

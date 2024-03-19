@@ -1,39 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Table, Dropdown, Container } from "react-bootstrap";
 import ModalRejectAccess from "./ModalRejectAccess";
 import ModalAllowAccess from "./ModalAllowAccess";
 import ModalTerminateAccess from "./ModalTerminateAccess";
 import "../../assets/styles/styles_tetapan_pengguna.css";
-import axios from "axios";
-import { useState } from "react";
+import axiosCustom from "../../axios";
 
 function IndexTetapanPengguna() {
-  const [records,setRecords] = useState([]);
-  useEffect(() => {
-    let isMounted = true;
-  
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/tetapan-pengguna/senarai-pengguna');
-  
-        if (isMounted) {
-          setRecords(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  // -------------------- BE ---------------------------
+  // Fetch peranan for the dropdown
+  const [perananOptions, setPerananOptions] = useState([]);
+
+  const fetchPeranans = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(`/get-peranan`);
+
+      if (Array.isArray(response.data)) {
+        setPerananOptions(
+          response.data.map((peranan) => ({
+            value: peranan.id,
+            label: peranan.namaPeranan,
+          }))
+        );
+      } else {
+        console.log(response.data);
       }
-    };
-  
-    fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setPerananOptions]);
 
-    console.log(records);
-  
-    return () => {
-      isMounted = false;
-    };
+  useEffect(() => {
+    fetchPeranans();
+  }, [fetchPeranans]);
+
+  // Fetch tetapan akses pengguna
+  const [tetapanAksesPengguna, setTetapanAksesPengguna] = useState({});
+
+  const fetchTetapanAksesPenggunas = async () => {
+    try {
+      const response = await axiosCustom.get(
+        `/tetapan-pengguna/tetapan-akses-pengguna`
+      );
+
+      if (response.status >= 200 && response.status < 300) {
+        setTetapanAksesPengguna(response.data);
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTetapanAksesPenggunas();
   }, []);
-
-
 
   return (
     <>
@@ -55,30 +77,33 @@ function IndexTetapanPengguna() {
               <th>ID Kakitangan</th>
               <th>Nama Kakitangan</th>
               <th>Emel Kakitangan</th>
-              <th>status id</th>
               <th>Tindakan</th>
             </tr>
           </thead>
           <tbody>
-          {Array.isArray(records) && records.length > 0 ? (
-        records.map((recordsdata, key) => (
-          <tr key={key}>
-            <td>{key}</td>
-            <td>{recordsdata.idAuditor}</td>
-            <td>{recordsdata.namaAuditor}</td>
-            <td>{recordsdata.emelAuditor}</td>
-            <td>{recordsdata.statusAuditor}</td>
-             <td><ModalAllowAccess />
-                <ModalRejectAccess />
-              </td>
-            
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="2">No records found</td>
-        </tr>
-      )}
+            {tetapanAksesPengguna.length === 0 ? (
+              <tr>
+                <td colSpan="5">
+                  <center>Tiada rekod.</center>
+                </td>
+              </tr>
+            ) : (
+              tetapanAksesPengguna.permohonanAkses &&
+              tetapanAksesPengguna.permohonanAkses.data.map(
+                (tetapanAksesPenggunaData, key) => (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <td>{tetapanAksesPenggunaData.idAuditor}</td>
+                    <td>{tetapanAksesPenggunaData.namaAuditor}</td>
+                    <td>{tetapanAksesPenggunaData.emelAuditor}</td>
+                    <td>
+                      <ModalAllowAccess />
+                      <ModalRejectAccess />
+                    </td>
+                  </tr>
+                )
+              )
+            )}
           </tbody>
         </Table>
 
@@ -92,45 +117,59 @@ function IndexTetapanPengguna() {
               <th>ID Kakitangan</th>
               <th>Nama Kakitangan</th>
               <th>Emel Kakitangan</th>
-              <th>status user</th>
+              <th>Status Auditor</th>
               <th>Peranan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
           <tbody>
-          {Array.isArray(records) && records.length > 0 ? (
-        records.map((recordsdata, key) => (
-          <tr key={key}>
-            <td>{key}</td>
-            <td>{recordsdata.idAuditor}</td>
-            <td>{recordsdata.namaAuditor}</td>
-            <td>{recordsdata.emelAuditor}</td>
-            <td>{recordsdata.statusAuditor}</td>
-             <td>
-                <Dropdown>
-                  <Dropdown.Toggle className="user-level-btn">
-                    Tahap Pengguna
-                  </Dropdown.Toggle>
+            {tetapanAksesPengguna.length < 0 ? (
+              <tr>
+                <td colSpan="7">
+                  <center>Tiada rekod.</center>
+                </td>
+              </tr>
+            ) : (
+              tetapanAksesPengguna.senaraiPengguna &&
+              tetapanAksesPengguna.senaraiPengguna.data.map(
+                (senaraiPenggunaData, key) => (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <td>{senaraiPenggunaData.idAuditor}</td>
+                    <td>{senaraiPenggunaData.namaAuditor}</td>
+                    <td>{senaraiPenggunaData.emelAuditor}</td>
+                    <td>{senaraiPenggunaData.statusAuditor}</td>
+                    <td>
+                      <Dropdown>
+                        <Dropdown.Toggle className="user-level-btn">
+                          Tahap Pengguna
+                        </Dropdown.Toggle>
 
-                  <Dropdown.Menu className="user-level-item">
-                    <Dropdown.Item>Admin</Dropdown.Item>
-                    <Dropdown.Item>Pengguna</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </td>
-              <td>
-                <ModalAllowAccess />
-                <ModalTerminateAccess />
-              </td>
-            
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="2">No records found</td>
-        </tr>
-      )}
-        
+                        <Dropdown.Menu className="user-level-item">
+                          {perananOptions.map((perananOptions) => (
+                            <Dropdown.Item key={perananOptions.value}>
+                              {perananOptions.label}
+                            </Dropdown.Item>
+                          ))}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                    <td>
+                      <ModalAllowAccess
+                        disableButtonBenar={
+                          senaraiPenggunaData.statusAuditor === "benar"
+                        }
+                      />
+                      <ModalTerminateAccess
+                        disableButtonSekat={
+                          senaraiPenggunaData.statusAuditor === "sekat"
+                        }
+                      />
+                    </td>
+                  </tr>
+                )
+              )
+            )}
           </tbody>
         </Table>
       </Container>

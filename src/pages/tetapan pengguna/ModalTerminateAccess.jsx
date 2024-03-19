@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-function ModalTerminateAccess() {
+function ModalTerminateAccess({ disableButtonSekat }) {
   const [showModalTerminateAccess, setShowModalTerminateAccess] =
     useState(false);
 
@@ -12,7 +12,7 @@ function ModalTerminateAccess() {
 
   return (
     <>
-      <Button className="delete-btn" onClick={handleShowModalTerminateAccess}>
+      <Button className="delete-btn" onClick={handleShowModalTerminateAccess} disabled={disableButtonSekat} >
         Sekat Akses
       </Button>
 
