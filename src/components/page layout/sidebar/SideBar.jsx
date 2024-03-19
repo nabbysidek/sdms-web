@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavDropdown, ListGroup } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import SideBarMenu from "./SideBarMenu";
 import SubSideBar from "./SubSideBar";
+import { FaSignOutAlt } from "react-icons/fa";
 import "../../../assets/styles/styles_layout.css";
 
 function SideBar({ onNavLinkClick }) {
@@ -120,9 +121,6 @@ function SideBar({ onNavLinkClick }) {
                     )}
                   </NavLink>
                 )}
-                {item.path === "/kriteriaketidakpatuhan" &&
-                  isMobileView &&
-                  isSideBarOpen}
               </div>
               {isTetapanKriteriaHovered &&
                 item.path === "/kriteriaketidakpatuhan" &&
@@ -131,6 +129,13 @@ function SideBar({ onNavLinkClick }) {
             </div>
           </ListGroup.Item>
         ))}
+        
+        {/* Independent Log Keluar link */}
+        <ListGroup.Item className="list-group-item">
+          <NavLink to="/logout" className="nav-link" onClick={handleNavLinkClick}>
+            <FaSignOutAlt size={15} style={{ marginRight: "10px", marginLeft: "3px" }} /> Log Keluar
+          </NavLink>
+        </ListGroup.Item>
       </ListGroup>
     </div>
   );
