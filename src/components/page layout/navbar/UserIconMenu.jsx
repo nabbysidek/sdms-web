@@ -74,7 +74,7 @@ const UserIconMenu = ({ closeMobileNav }) => {
         console.log(response);
       }
     }
-    catch {
+    catch(error) {
       console.log(error);
     }
   }, []);
