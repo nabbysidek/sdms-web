@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavDropdown, ListGroup } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import SideBarMenu from "./SideBarMenu";
 import SubSideBar from "./SubSideBar";
 import { FaSignOutAlt } from "react-icons/fa";
 import "../../../assets/styles/styles_layout.css";
+import axiosCustom from "../../../axios";
 
 function SideBar({ onNavLinkClick }) {
   // ----------- FE ------------
@@ -48,6 +50,26 @@ function SideBar({ onNavLinkClick }) {
   // To handle the closing and collapse of the hamburger navbar
   const handleNavLinkClick = () => {
     onNavLinkClick();
+  };
+
+  // ----------- BE ------------
+  const navigate = useNavigate();
+  
+  // Sign out user
+  const handleSignOut = async () => {
+    try {
+      const response = await axiosCustom.post(`/auth/sign-out`);
+
+      if (response.status === 200) {
+        localStorage.removeItem("token");
+        
+        navigate("/");
+      } else {
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -132,7 +154,7 @@ function SideBar({ onNavLinkClick }) {
         
         {/* Independent Log Keluar link */}
         <ListGroup.Item className="list-group-item">
-          <NavLink to="/logout" className="nav-link" onClick={handleNavLinkClick}>
+          <NavLink className="nav-link" onClick={handleSignOut}>
             <FaSignOutAlt size={15} style={{ marginRight: "10px", marginLeft: "3px" }} /> Log Keluar
           </NavLink>
         </ListGroup.Item>
