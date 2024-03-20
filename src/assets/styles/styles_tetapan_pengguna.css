@@ -19,6 +19,12 @@
   margin-bottom: 10px;
 }
 
+.btn:disabled {
+  background-color: var(--allowgreen);
+  border-color: var(--allowgreen);
+  opacity: 1;
+}
+
 .user-level-btn {
   border-color: var(--darkblue);
   background-color: var(--darkblue);
