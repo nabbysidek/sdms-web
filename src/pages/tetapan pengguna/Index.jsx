@@ -157,12 +157,12 @@ function IndexTetapanPengguna() {
                     <td>
                       <ModalAllowAccess
                         disableButtonBenar={
-                          senaraiPenggunaData.statusAuditor === "benar"
+                          senaraiPenggunaData.statusAuditor === "Benar"
                         }
                       />
                       <ModalTerminateAccess
                         disableButtonSekat={
-                          senaraiPenggunaData.statusAuditor === "sekat"
+                          senaraiPenggunaData.statusAuditor === "Sekat"
                         }
                       />
                     </td>
