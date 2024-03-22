@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axios from "axios";
+import { Button, Modal, Form } from "react-bootstrap";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function CreateBahagian() {
@@ -27,7 +27,7 @@ function CreateBahagian() {
   // Create bahagian
   const createBahagian = async (bahagianInput) => {
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian`,
         bahagianInput
       );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function CreateKakitangan() {
@@ -28,7 +28,7 @@ function CreateKakitangan() {
   useEffect(() => {
     const fetchwilayahData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/wilayah/display-wilayah"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -48,7 +48,7 @@ function CreateKakitangan() {
   useEffect(() => {
     const fetchCawanganData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/cawangan/display-cawangan"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {

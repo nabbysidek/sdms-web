@@ -6,7 +6,7 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function ShowSkopKriteriaList() {
@@ -21,7 +21,7 @@ function ShowSkopKriteriaList() {
   // List skop kriteria
   const fetchSkopKriterias = async (page) => {
     try {
-      const response = await axios.get(
+      const response = await axiosCustom.get(
         `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria?page=${page}`
       );
       setSkopKriterias(response.data.data);
@@ -53,7 +53,7 @@ function ShowSkopKriteriaList() {
 
     if (confirmResult.isConfirmed) {
       try {
-        const response = await axios.delete(
+        const response = await axiosCustom.delete(
           `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/${skopKriteriaId}`
         );
 

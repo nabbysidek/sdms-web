@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function CreateJenisAudit() {
@@ -26,7 +26,7 @@ function CreateJenisAudit() {
   // Create jenis audit
   const createJenisAudit = async (jenisAuditInput) => {
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/jenis-audit`,
         jenisAuditInput
       );

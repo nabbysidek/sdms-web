@@ -6,7 +6,7 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function ShowUnitList() {
@@ -21,7 +21,7 @@ function ShowUnitList() {
   // List unit
   const fetchUnits = async (page) => {
     try {
-      const response = await axios.get(
+      const response = await axiosCustom.get(
         `http://127.0.0.1:8000/api/tetapan-kriteria/unit?page=${page}`
       );
       setUnits(response.data.data); // Update the state with the array of objects
@@ -53,7 +53,7 @@ function ShowUnitList() {
 
     if (confirmResult.isConfirmed) {
       try {
-        const response = await axios.delete(
+        const response = await axiosCustom.delete(
           `http://127.0.0.1:8000/api/tetapan-kriteria/unit/${unitId}`
         );
 

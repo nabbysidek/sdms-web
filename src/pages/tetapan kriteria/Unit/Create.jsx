@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function CreateUnit() {
@@ -28,7 +28,7 @@ function CreateUnit() {
   useEffect(() => {
     const fetchBahagianData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -49,7 +49,7 @@ function CreateUnit() {
   useEffect(() => {
     const fetchJabatanData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/display-jabatan"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -68,7 +68,7 @@ function CreateUnit() {
   // Create unit
   const createUnit = async (unitInput) => {
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/unit`,
         unitInput
       );

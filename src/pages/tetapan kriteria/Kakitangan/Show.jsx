@@ -21,7 +21,7 @@ function ShowKakitanganList() {
   // List kakitangn
   const fetchKakitangans = async (page) => {
     try {
-      const response = await axios.get(
+      const response = await axiosCustom.get(
         `http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan?page=${page}`
       );
       setKakitangans(response.data.data);
@@ -53,7 +53,7 @@ function ShowKakitanganList() {
 
     if (confirmResult.isConfirmed) {
       try {
-        const response = await axios.delete(
+        const response = await axiosCustom.delete(
           `http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan/${kakitanganId}`
         );
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Form, Modal } from "react-bootstrap";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function CreateJabatan() {
@@ -28,7 +28,7 @@ function CreateJabatan() {
   useEffect(() => {
     const fetchBahagianData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -47,7 +47,7 @@ function CreateJabatan() {
   // Create jabatan
   const createJabatan = async (jabatanInput) => {
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan`,
         jabatanInput
       );
