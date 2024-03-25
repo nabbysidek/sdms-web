@@ -1,61 +1,55 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
 import { Table, Dropdown, Container } from "react-bootstrap";
 import ModalRejectAccess from "./ModalRejectAccess";
 import ModalAllowAccess from "./ModalAllowAccess";
 import ModalTerminateAccess from "./ModalTerminateAccess";
 import "../../assets/styles/styles_tetapan_pengguna.css";
-import axiosCustom from "../../axios";
+import {
+  useQueryClient,
+  useQuery,
+  keepPreviousData,
+} from "@tanstack/react-query";
+import { fetchPermohonanAkses } from "../../api";
+import { fetchSenaraiPengguna } from "../../api";
 
 function IndexTetapanPengguna() {
-  // -------------------- BE ---------------------------
-  // Fetch peranan for the dropdown
-  const [perananOptions, setPerananOptions] = useState([]);
+  const queryClient = useQueryClient();
 
-  const fetchPeranans = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(`/get-peranan`);
+  // Permohonan Akses Fetch Query
+  const [permohonanAksesPage, setPermohonanAksesPage] = useState(0);
+  const [permohonanAksesPageSize, setPermohonanAksesPageSize] = useState(0);
 
-      if (Array.isArray(response.data)) {
-        setPerananOptions(
-          response.data.map((peranan) => ({
-            value: peranan.id,
-            label: peranan.namaPeranan,
-          }))
-        );
-      } else {
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setPerananOptions]);
+  const {
+    isPending: isPendingPermohonanAkses,
+    isError: isErrorPermohonanAkses,
+    error: errorPermohonanAkses,
+    data: permohonanAksesQuery,
+    isFetching: isFetchingPermohonanAkses,
+    isPlaceholderData: isPlaceholderDataPermohonanAkses,
+  } = useQuery({
+    queryKey: ["permohonanAkses", permohonanAksesPage, permohonanAksesPageSize],
+    queryFn: () =>
+      fetchPermohonanAkses(permohonanAksesPage, permohonanAksesPageSize),
+    placeholderData: keepPreviousData,
+  });
 
-  useEffect(() => {
-    fetchPeranans();
-  }, [fetchPeranans]);
+  // Senarai Pengguna Fetch Query
+  const [senaraiPenggunaPage, setSenaraiPenggunaPage] = useState(0);
+  const [senaraiPenggunaPageSize, setSenaraiPenggunaPageSize] = useState(0);
 
-  // Fetch tetapan akses pengguna
-  const [tetapanAksesPengguna, setTetapanAksesPengguna] = useState({});
+  const {
+    isPending: isPendingSenaraiPengguna,
+    isError: isErrorSenaraiPengguna,
+    error:errorSenaraiPengguna,
+    data: senaraiPenggunaQuery,
+    isFetching: isFetchingSenaraiPengguna,
+    isPlaceholderData: isPlaceholderDataSenaraiPengguna
+  } = useQuery({
+    queryKey: ["senaraiPenggunas", senaraiPenggunaPage, senaraiPenggunaPageSize],
+    queryFn: () => fetchSenaraiPengguna(senaraiPenggunaPage, senaraiPenggunaPageSize),
+    placeholderData: keepPreviousData,
+  });
 
-  const fetchTetapanAksesPenggunas = async () => {
-    try {
-      const response = await axiosCustom.get(
-        `/tetapan-pengguna/tetapan-akses-pengguna`
-      );
-
-      if (response.status >= 200 && response.status < 300) {
-        setTetapanAksesPengguna(response.data);
-      } else {
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTetapanAksesPenggunas();
-  }, []);
 
   return (
     <>
@@ -81,31 +75,66 @@ function IndexTetapanPengguna() {
             </tr>
           </thead>
           <tbody>
-            {tetapanAksesPengguna.length === 0 ? (
+            {isPendingPermohonanAkses ? (
               <tr>
-                <td colSpan="5">
+                <td colSpan={5}>Loading...</td>
+              </tr>
+            ) : errorPermohonanAkses ? (
+              <tr>
+                <td colSpan={5}>Error: {errorPermohonanAkses.message}</td>
+              </tr>
+            ) : permohonanAksesQuery?.length === 0 ? (
+              <tr>
+                <td colSpan={5}>
                   <center>Tiada rekod.</center>
                 </td>
               </tr>
             ) : (
-              tetapanAksesPengguna.permohonanAkses &&
-              tetapanAksesPengguna.permohonanAkses.data.map(
-                (tetapanAksesPenggunaData, key) => (
-                  <tr key={key}>
-                    <td>{key + 1}</td>
-                    <td>{tetapanAksesPenggunaData.idAuditor}</td>
-                    <td>{tetapanAksesPenggunaData.namaAuditor}</td>
-                    <td>{tetapanAksesPenggunaData.emelAuditor}</td>
-                    <td>
-                      <ModalAllowAccess />
-                      <ModalRejectAccess />
-                    </td>
-                  </tr>
-                )
-              )
+              permohonanAksesQuery.map((permohonanAksesData, key) => (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>{permohonanAksesData?.idAuditor}</td>
+                  <td>{permohonanAksesData?.namaAuditor}</td>
+                  <td>{permohonanAksesData?.emelAuditor}</td>
+                  <td>
+                    <ModalAllowAccess />
+                    <ModalRejectAccess />
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </Table>
+        <div>
+          {/* Paginate Senarai Permohonan Akses Table */}
+          <span>Current Page: {permohonanAksesPage + 1}</span>
+
+          <button
+            onClick={() => setPermohonanAksesPage((old) => Math.max(old - 1, 0))}
+            disabled={permohonanAksesPage === 0}
+          >
+            Previous
+          </button>{" "}
+
+          <button
+            onClick={() => {
+              if (
+                !isPlaceholderDataPermohonanAkses &&
+                permohonanAksesQuery.hasMore
+              ) {
+                setPermohonanAksesPage((old) => old + 1);
+              }
+            }}
+            // Disable the Next Page button until we know a next page is available
+            disabled={
+              isPlaceholderDataPermohonanAkses || !permohonanAksesQuery?.hasMore
+            }
+          >
+            Next
+          </button>
+
+          {isFetchingPermohonanAkses ? <span> Loading...</span> : null}{" "}
+        </div>
 
         <h4 className="page-title">Senarai Pengguna</h4>
         <hr />
@@ -123,55 +152,46 @@ function IndexTetapanPengguna() {
             </tr>
           </thead>
           <tbody>
-            {tetapanAksesPengguna.length < 0 ? (
-              <tr>
-                <td colSpan="7">
-                  <center>Tiada rekod.</center>
+          
+          {senaraiPenggunaQuery?.length === 0 ? (
+            <tr>
+              <td colSpan={7}>
+                <center>Tiada rekod.</center>
+              </td>
+            </tr>
+          ) : (
+            senaraiPenggunaQuery?.map((senaraiPenggunaData, key) => (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{senaraiPenggunaData.idAuditor}</td>
+                <td>{senaraiPenggunaData.namaAuditor}</td>
+                <td>{senaraiPenggunaData.emelAuditor}</td>
+                <td>{senaraiPenggunaData.statusAuditor}</td>
+                <td>
+                  <Dropdown>
+                    <Dropdown.Toggle className="user-level-btn">
+                      Tahap Pengguna
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className="user-level-item">
+                      <Dropdown.Item></Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td>
+                <td>
+                  <ModalAllowAccess />
+                  <ModalTerminateAccess />
                 </td>
               </tr>
-            ) : (
-              tetapanAksesPengguna.senaraiPengguna &&
-              tetapanAksesPengguna.senaraiPengguna.data.map(
-                (senaraiPenggunaData, key) => (
-                  <tr key={key}>
-                    <td>{key + 1}</td>
-                    <td>{senaraiPenggunaData.idAuditor}</td>
-                    <td>{senaraiPenggunaData.namaAuditor}</td>
-                    <td>{senaraiPenggunaData.emelAuditor}</td>
-                    <td>{senaraiPenggunaData.statusAuditor}</td>
-                    <td>
-                      <Dropdown>
-                        <Dropdown.Toggle className="user-level-btn">
-                          Tahap Pengguna
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className="user-level-item">
-                          {perananOptions.map((perananOptions) => (
-                            <Dropdown.Item key={perananOptions.value}>
-                              {perananOptions.label}
-                            </Dropdown.Item>
-                          ))}
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </td>
-                    <td>
-                      <ModalAllowAccess
-                        disableButtonBenar={
-                          senaraiPenggunaData.statusAuditor === "Benar"
-                        }
-                      />
-                      <ModalTerminateAccess
-                        disableButtonSekat={
-                          senaraiPenggunaData.statusAuditor === "Sekat"
-                        }
-                      />
-                    </td>
-                  </tr>
-                )
-              )
-            )}
+            ))
+          )}
           </tbody>
         </Table>
+
+        {/* Paginate Senarai Pengguna Akses Table */}
+        <button>Previous</button>
+        
+        <button>Next</button>
       </Container>
     </>
   );
