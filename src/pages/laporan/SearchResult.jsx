@@ -16,35 +16,39 @@ function SearchResultLaporan() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Nama Kakitangan</th>
+              <th>Tahun</th>
               <th>Wilayah</th>
               <th>Cawangan</th>
-              <th>Jawatan</th>
+              <th>Kesalahan Berulang</th>
+              <th>Jenis Audit</th>
+              <th>Skop Semakan</th>
+              <th>Skop Kriteria</th>
+              <th>Aktiviti Semakan</th>
+              <th>Kriteria Ketidakpatuhan</th>
+              <th>Nama Kakitangan</th>
+              <th>Jawatan Kakitangan</th>
               <th>Bahagian</th>
               <th>Jabatan</th>
               <th>Unit</th>
-              <th>Jenis Audit</th>
-              <th>Tahun</th>
-              <th>Skop Semakan</th>
-              <th>Skop Kesalahan</th>
-              <th>Kesalahan</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>{/* Bilangan */}</td>
-              <td>{/* Nama Kakitangan */}</td>
+              <td>{/* Tahun */}</td>
               <td>{/* Wilayah */}</td>
               <td>{/* Cawangan */}</td>
-              <td>{/* Jawatan */}</td>
+              <td>{/* Sekalahan Berulang */}</td>
+              <td>{/* Jenis Audit */}</td>
+              <td>{/* Skop Semakan */}</td>
+              <td>{/* Skop Kriteria */}</td>
+              <td>{/* Aktiviti Semakan */}</td>
+              <td>{/* Kriteria Ketidakpatuhan */}</td>
+              <td>{/* Nama Kakitangan */}</td>
+              <td>{/* Jawatan Kakitangan */}</td>
               <td>{/* Bahagian */}</td>
               <td>{/* Jabatan */}</td>
               <td>{/* Unit */}</td>
-              <td>{/* Jenis Audit */}</td>
-              <td>{/* Tahun */}</td>
-              <td>{/* Skop Semakan */}</td>
-              <td>{/* Skop Kesalahan */}</td>
-              <td>{/* Kesalahan */}</td>
             </tr>
           </tbody>
         </Table>
