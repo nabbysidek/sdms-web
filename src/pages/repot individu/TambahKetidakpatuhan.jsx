@@ -356,54 +356,59 @@ function TambahKetidakpatuhan() {
                         />
                       </Form.Group>
                     </Col>
+                    <Row>
+                      <Form.Group>
+                        <Form.Label>Aktiviti Semakan</Form.Label>
+                        <Controller
+                          name="aktivitiSemakan"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: "Sila pilih aktiviti semakan" }}
+                          render={({ field }) => (
+                            <>
+                              <Form.Select
+                                aria-label="aktivitiSemakanSelect"
+                                {...field}
+                                isInvalid={!!errors.aktivitiSemakan}
+                              >
+                                <option value="">Pilih aktiviti semakan</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </Form.Select>
+                              <Form.Control.Feedback type="invalid">
+                                {errors.aktivitiSemakan &&
+                                  errors.aktivitiSemakan.message}
+                              </Form.Control.Feedback>
+                            </>
+                          )}
+                        />
+                      </Form.Group>
+                    </Row>
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Senarai Ketidakpatuhan</Form.Label>
+                      <Form.Label>Kriteria Ketidakpatuhan</Form.Label>
                       <Controller
-                        name="senaraiKetidakpatuhan"
+                        name="kriteriaKetidakpatuhan"
                         control={control}
                         defaultValue=""
-                        rules={{ required: "Sila pilih ketidakpatuhan" }}
+                        rules={{ required: "Sila pilih kriteria ketidakpatuhan" }}
                         render={({ field }) => (
                           <>
                             <Form.Select
-                              aria-label="senaraiKetidakpatuhanSelect"
+                              aria-label="kriteriaKetidakpatuhanSelect"
                               {...field}
-                              isInvalid={!!errors.senaraiKetidakpatuhan}
+                              isInvalid={!!errors.kriteriaKetidakpatuhan}
                             >
-                              <option value="">Pilih ketidakpatuhan</option>
+                              <option value="">Pilih kriteria ketidakpatuhan</option>
                               <option value="1">One</option>
                               <option value="2">Two</option>
                               <option value="3">Three</option>
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
-                              {errors.senaraiKetidakpatuhan &&
-                                errors.senaraiKetidakpatuhan.message}
-                            </Form.Control.Feedback>
-                          </>
-                        )}
-                      />
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group>
-                      <Form.Label>Tajuk Audit</Form.Label>
-                      <Controller
-                        name="tajukAudit"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: "Sila sertakan tajuk audit" }}
-                        render={({ field }) => (
-                          <>
-                            <Form.Control
-                              type="text"
-                              placeholder="Tajuk audit"
-                              {...field}
-                              isInvalid={!!errors.tajukAudit}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.tajukAudit && errors.tajukAudit.message}
+                              {errors.kriteriaKetidakpatuhan &&
+                                errors.kriteriaKetidakpatuhan.message}
                             </Form.Control.Feedback>
                           </>
                         )}

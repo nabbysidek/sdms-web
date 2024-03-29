@@ -58,6 +58,7 @@ function SearchResultUntukRepotIndividu() {
               <tr>
                 <th>Bil</th>
                 <th>Risiko</th>
+                <th>Tahun</th>
                 <th>Wilayah</th>
                 <th>Cawangan</th>
                 <th>Jawatan</th>
@@ -65,11 +66,10 @@ function SearchResultUntukRepotIndividu() {
                 <th>Jabatan</th>
                 <th>Unit</th>
                 <th>Jenis Audit</th>
-                <th>Skop Kriteria</th>
                 <th>Skop Semakan</th>
+                <th>Skop Kriteria</th>
+                <th>Aktiviti Semakan</th>
                 <th>Kriteria Ketidakpatuhan</th>
-                <th>Tahun Audit</th>
-                <th>Tajuk Audit</th>
                 <th>Catatan</th>
                 <th>Tindakan</th>
               </tr>
@@ -78,6 +78,7 @@ function SearchResultUntukRepotIndividu() {
               <tr>
                 <td>1</td>
                 <td>Fraud</td>
+                <td>2015</td>
                 <td>Kelantan</td>
                 <td>Kota Bharu</td>
                 <td>PA</td>
@@ -87,9 +88,8 @@ function SearchResultUntukRepotIndividu() {
                 <td>A</td>
                 <td>Skop 1</td>
                 <td>Skop 2</td>
+                <td>Aktiviti Semakan</td>
                 <td>Kriteria Ketidakpatuhan A</td>
-                <td>2015</td>
-                <td>Testing</td>
                 <td>Catatan</td>
                 <td>
                   <Link to="/editketidakpatuhan">
@@ -97,7 +97,7 @@ function SearchResultUntukRepotIndividu() {
                       Edit
                     </Button>
                   </Link>
-                  <Button>Padam</Button>
+                  <Button className="delete-btn">Padam</Button>
                 </td>
               </tr>
             </tbody>
