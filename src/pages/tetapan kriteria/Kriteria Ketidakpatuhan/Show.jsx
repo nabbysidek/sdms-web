@@ -103,7 +103,7 @@ function ShowKriteriaKetidakpatuhanList() {
               <th>Bil</th>
               <th>Skop Semakan</th>
               <th>Skop Kriteria Ketidakpatuhan</th>
-              <th>Kod Kriteria Ketidakpatuhan</th>
+              <th>Aktiviti Semakan</th>
               <th>Nama Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
             </tr>

@@ -54,13 +54,13 @@ function SearchKriteriaKetidakpatuhan() {
             </Form.Group>
             <Form.Group className="col-md-2">
               <Form.Select
-                {...register("kodKriteriaSelect")}
-                aria-label="kodKriteriaSelect"
+                {...register("aktivitiSemakanSelect")}
+                aria-label="kaktivitiSemakanSelect"
                 onChange={(e) => {
-                  setValue("kodKriteria", e.target.value);
+                  setValue("aktivitiSemakan", e.target.value);
                 }}
               >
-                <option value="">Kod Kriteria</option>
+                <option value="">Aktiviti Semakan</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
