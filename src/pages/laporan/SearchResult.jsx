@@ -12,6 +12,9 @@ function SearchResultLaporan() {
           Senarai Laporan Ketidakpatuhan Kakitangan
         </h4>
         <hr />
+        <div className="dates-container">
+          <p>Hasil Carian: DD/MM/YYYY - DD/MM/YYYY</p>
+        </div>
         <Table responsive>
           <thead>
             <tr>
