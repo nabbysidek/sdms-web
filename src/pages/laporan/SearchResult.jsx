@@ -28,6 +28,7 @@ function SearchResultLaporan() {
               <th>Skop Kriteria</th>
               <th>Aktiviti Semakan</th>
               <th>Kriteria Ketidakpatuhan</th>
+              <th>ID Kakitangan</th>
               <th>Nama Kakitangan</th>
               <th>Jawatan Kakitangan</th>
               <th>Bahagian</th>
@@ -47,6 +48,7 @@ function SearchResultLaporan() {
               <td>{/* Skop Kriteria */}</td>
               <td>{/* Aktiviti Semakan */}</td>
               <td>{/* Kriteria Ketidakpatuhan */}</td>
+              <td>{/* ID Kakitangan */}</td>
               <td>{/* Nama Kakitangan */}</td>
               <td>{/* Jawatan Kakitangan */}</td>
               <td>{/* Bahagian */}</td>

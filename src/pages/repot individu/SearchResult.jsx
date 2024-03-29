@@ -58,6 +58,7 @@ function SearchResultUntukRepotIndividu() {
               <tr>
                 <th>Bil</th>
                 <th>Risiko</th>
+                <th>Kesalahan Berulang</th>
                 <th>Tahun</th>
                 <th>Wilayah</th>
                 <th>Cawangan</th>
@@ -78,6 +79,7 @@ function SearchResultUntukRepotIndividu() {
               <tr>
                 <td>1</td>
                 <td>Fraud</td>
+                <td>Ya</td>
                 <td>2015</td>
                 <td>Kelantan</td>
                 <td>Kota Bharu</td>
