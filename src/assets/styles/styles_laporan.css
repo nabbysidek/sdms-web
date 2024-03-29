@@ -24,6 +24,11 @@
   padding-bottom: 2px;
 }
 
+.laporan-filter-sub-header {
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .sc-filter-row-end {
   padding-bottom: 15px;
 }

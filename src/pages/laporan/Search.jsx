@@ -34,6 +34,8 @@ function SearchLaporan() {
       "unitId",
       "wilayahId",
       "cawanganId",
+      "jenisAudit",
+      "kesalahanBerulang",
     ],
   });
 
@@ -68,10 +70,13 @@ function SearchLaporan() {
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Form.Label className="laporan-filter-header">
-                Mengikut Ketidakpatuhan
+                Mengikut Tempoh
               </Form.Label>
-              <Col xs={12} xl={3}>
+              <Col xs={12} xl={6}>
                 <Form.Group>
+                  <Form.Label className="laporan-filter-sub-header">
+                    Tarikh Mula
+                  </Form.Label>
                   <Form.Control
                     type="date"
                     placeholder="Tahun"
@@ -79,43 +84,16 @@ function SearchLaporan() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
+              <Col xs={12} xl={6}>
                 <Form.Group>
-                  <Form.Select
-                    aria-label="skopSemakanSelect"
-                    {...register("skopSemakan")}
-                  >
-                    <option>Skop Semakan</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col xs={12} xl={3} className="remove-padding">
-                <Form.Group>
-                  <Form.Select
-                    aria-label="skopKriteriaSelect"
-                    {...register("skopKriteria")}
-                  >
-                    <option>Skop Kriteria</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
-                <Form.Group>
-                  <Form.Select
-                    aria-label="aktivitiSemakanSelect"
-                    {...register("aktivitiSemakan")}
-                  >
-                    <option>Aktiviti Semakan</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
+                  <Form.Label className="laporan-filter-sub-header">
+                    Tarikh Tamat
+                  </Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="Tahun"
+                    {...register("tahun")}
+                  ></Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -150,7 +128,64 @@ function SearchLaporan() {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="sc-filter-row-end">
+            <Row>
+              <Form.Label className="laporan-filter-header">
+                Mengikut Ketidakpatuhan
+              </Form.Label>
+              <Col xs={12} xl={3} className="margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="skopSemakanSelect"
+                    {...register("skopSemakan")}
+                  >
+                    <option>Skop Semakan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="skopKriteriaSelect"
+                    {...register("skopKriteria")}
+                  >
+                    <option>Skop Kriteria</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="aktivitiSemakanSelect"
+                    {...register("aktivitiSemakan")}
+                  >
+                    <option>Aktiviti Semakan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="kriteriaKetidakpatuhanSelect"
+                    {...register("kriteriaKetidakpatuhan")}
+                  >
+                    <option>Kriteria Ketidakpatuhan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
               <Form.Label className="laporan-filter-header">
                 Mengikut Organisasi
               </Form.Label>
@@ -184,6 +219,37 @@ function SearchLaporan() {
                 <Form.Group>
                   <Form.Select aria-label="unitSelect" {...register("unitId")}>
                     <option>Unit</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="sc-filter-row-end">
+              <Form.Label className="laporan-filter-header">
+                Lain-lain
+              </Form.Label>
+              <Col xs={12} xl={6} className="margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="jenisAuditSelect"
+                    {...register("jenisAudit")}
+                  >
+                    <option>Jenis Audit</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xs={12} xl={6} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="kesalahanBerulangSelect"
+                    {...register("kesalahanBerulang")}
+                  >
+                    <option>Kesalahan Berulang</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
