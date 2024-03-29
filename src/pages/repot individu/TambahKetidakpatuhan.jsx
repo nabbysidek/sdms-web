@@ -451,6 +451,31 @@ function TambahKetidakpatuhan() {
                   </Row>
                   <Row>
                     <Form.Group>
+                      <Form.Label>Kesalahan Berulang</Form.Label>
+                      <div>
+                        <Row className="radio-kesalahan-berulang">
+                          <Col>
+                            <Form.Check
+                              type="radio"
+                              label="Ya"
+                              name="kesalahanBerulangRadio"
+                              id="radiokesalahanBerulangYes"
+                            />
+                          </Col>
+                          <Col>
+                            <Form.Check
+                              type="radio"
+                              label="Tidak"
+                              name="kesalahanBerulangRadio"
+                              id="radiokesalahanBerulangNo"
+                            />
+                          </Col>
+                        </Row>
+                      </div>
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Form.Group>
                       <Form.Label>Catatan</Form.Label>
                       <Form.Control as="textarea" rows={3} />
                     </Form.Group>
