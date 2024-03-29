@@ -48,6 +48,17 @@
   margin-top: 5px;
 }
 
+.dates-container {
+  background-color: var(--white);
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.dates-container p {
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
  /* to remove unnecessary left padding on each input field */
 @media (min-width: 767px) {
   .remove-padding {

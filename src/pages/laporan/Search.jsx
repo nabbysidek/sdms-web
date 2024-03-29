@@ -24,7 +24,7 @@ function SearchLaporan() {
   const watchInputFields = useWatch({
     control,
     name: [
-      "kodKriteria",
+      "aktivitiSemakan",
       "tahun",
       "skopKriteria",
       "skopSemakan",
@@ -72,28 +72,11 @@ function SearchLaporan() {
               </Form.Label>
               <Col xs={12} xl={3}>
                 <Form.Group>
-                  <Form.Select
-                    aria-label="kodKriteriaSelect"
-                    {...register("kodKriteria")}
-                  >
-                    <option>Kod Kriteria</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
-                <Form.Group>
-                <Form.Select
-                    aria-label="skopKriteriaSelect"
-                    {...register("skopKriteria")}
-                  >
-                    <option>Skop Kriteria</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
+                  <Form.Control
+                    type="date"
+                    placeholder="Tahun"
+                    {...register("tahun")}
+                  ></Form.Control>
                 </Form.Group>
               </Col>
               <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
@@ -109,89 +92,103 @@ function SearchLaporan() {
                   </Form.Select>
                 </Form.Group>
               </Col>
+              <Col xs={12} xl={3} className="remove-padding">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="skopKriteriaSelect"
+                    {...register("skopKriteria")}
+                  >
+                    <option>Skop Kriteria</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
               <Col xs={12} xl={3} className="remove-padding margin-for-mobile">
-               <Form.Group>
-                <Form.Control
-                  type="date"
-                  placeholder="Tahun"
-                  {...register("tahun")}
-                ></Form.Control>
-              </Form.Group>
+                <Form.Group>
+                  <Form.Select
+                    aria-label="aktivitiSemakanSelect"
+                    {...register("aktivitiSemakan")}
+                  >
+                    <option>Aktiviti Semakan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
             </Row>
             <Row className="laporan-filter-row">
               <Form.Label className="laporan-filter-header">
-                Mengikut Organisasi
+                Mengikut Lokasi
               </Form.Label>
-              <Col xs={12} xl={4} className="margin-for-mobile">
-              <Form.Group>
-                    <Form.Select
-                      aria-label="bahagianSelect"
-                      {...register("bahagianId")}
-                    >
-                      <option>Bahagian</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
+              <Col xs={12} xl={6} className="margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="wilayahSelect"
+                    {...register("wilayahId")}
+                  >
+                    <option>Wilayah</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
-              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
-              <Form.Group>
-                    <Form.Select
-                      aria-label="jabatanSelect"
-                      {...register("jabatanId")}
-                    >
-                      <option>Jabatan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
-              </Col>
-              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
-              <Form.Group>
-                    <Form.Select
-                      aria-label="unitSelect"
-                      {...register("unitId")}
-                    >
-                      <option>Unit</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
+              <Col xs={12} xl={6} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="cawanganSelect"
+                    {...register("cawanganId")}
+                  >
+                    <option>Cawangan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
             </Row>
             <Row className="sc-filter-row-end">
               <Form.Label className="laporan-filter-header">
-                Mengikut Lokasi
+                Mengikut Organisasi
               </Form.Label>
-              <Col xs={12} xl={6} className="margin-for-mobile">
-              <Form.Group>
-                    <Form.Select
-                      aria-label="wilayahSelect"
-                      {...register("wilayahId")}
-                    >
-                      <option>Wilayah</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
+              <Col xs={12} xl={4} className="margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="bahagianSelect"
+                    {...register("bahagianId")}
+                  >
+                    <option>Bahagian</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
-              <Col xs={12} xl={6} className="remove-padding margin-for-mobile">
-              <Form.Group>
-                    <Form.Select
-                      aria-label="cawanganSelect"
-                      {...register("cawanganId")}
-                    >
-                      <option>Cawangan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Form.Group>
+              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select
+                    aria-label="jabatanSelect"
+                    {...register("jabatanId")}
+                  >
+                    <option>Jabatan</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xs={12} xl={4} className="remove-padding margin-for-mobile">
+                <Form.Group>
+                  <Form.Select aria-label="unitSelect" {...register("unitId")}>
+                    <option>Unit</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
             </Row>
           </Form>
@@ -202,7 +199,6 @@ function SearchLaporan() {
             {errorMessage}
           </Alert>
         )}
-
       </div>
 
       <div className="laporan-filter-btn-container">
