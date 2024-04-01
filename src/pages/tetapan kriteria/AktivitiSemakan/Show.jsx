@@ -16,10 +16,10 @@ function ShowAktivitiSemakanList() {
       <Container fluid>
         <div className="table-section">
             <Row>
-                <div className="col-md-10">
+                <div className="col-md-8">
                     <h3 className="table-title">Senarai Aktiviti Semakan</h3>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-4">
                     <CreateAktivitiSemakan/>
                 </div>
             </Row>

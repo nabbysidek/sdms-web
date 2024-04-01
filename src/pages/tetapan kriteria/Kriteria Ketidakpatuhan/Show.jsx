@@ -87,11 +87,11 @@ function ShowKriteriaKetidakpatuhanList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <Col xl={10}>
+            <Col xl={8}>
               <h3 className="table-title">Senarai Kesalahan Kriteria Ketidakpatuhan</h3>
             </Col>
 
-            <Col xl={2}>
+            <Col xl={4}>
               <CreateKriteriaKetidakpatuhan />
             </Col>
           </Row>

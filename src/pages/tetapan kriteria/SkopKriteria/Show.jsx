@@ -81,10 +81,10 @@ function ShowSkopKriteriaList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-9">
-              <h3 className="table-title">Senarai Skop Kriteria</h3>
+            <div className="col-md-7">
+              <h3 className="table-title">Senarai Skop Kriteria Ketidakpatuhan</h3>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-5">
               <CreateSkopKriteria />
             </div>
           </Row>

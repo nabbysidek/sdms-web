@@ -81,10 +81,10 @@ function ShowJenisAuditList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Jenis Audit</h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateJenisAudit />
             </div>
           </Row>
