@@ -52,7 +52,7 @@ function CreateAktivitiSemakan() {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan bahagian"
+                    placeholder="Masukkan aktiviti semakan"
                     autoFocus
                   />
                 )}
