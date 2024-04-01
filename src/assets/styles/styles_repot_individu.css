@@ -110,10 +110,16 @@
   margin-top: 10px;
 }
 
-.tambah-ketidakpatuhan-btn, .edit-ketidakpatuhan-btn {
+.tambah-ketidakpatuhan-btn {
   font-weight: 700;
   border-color: var(--darkblue);
   background-color: var(--darkblue);
+}
+
+.edit-ketidakpatuhan-btn {
+  font-weight: 700;
+  border-color: var(--edit_yellow);
+  background-color: var(--edit_yellow);
 }
 
 .cancel-btn {
