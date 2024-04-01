@@ -18,13 +18,13 @@ function EditAktivitiSemakan() {
     } = useForm();
 
     const onSubmit = (data) => {
-        handleCloseEditBahagianm();
+        handleCloseEditAktivitiSemakan();
         console.log("Form submitted with data:", data);
       };
 
   return (
     <div>
-        <Button className='edit-tetapan-btn'>Kemaskini</Button>
+        <Button className='edit-tetapan-btn' onClick={handleShowEditAktivitiSemakan}>Kemaskini</Button>
 
         <Modal show={showEditAktivitiSemakan} onHide={handleCloseEditAktivitiSemakan} backdrop="static" keyboard={false}>
             <Modal.Header closeButton>

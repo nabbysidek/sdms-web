@@ -20,8 +20,13 @@ function SubSideBar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/aktivitisemakan" className="sub-nav-link">
+            Aktiviti Semakan
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Kesalahan Kriteria Ketidakpatuhan
+            Kriteria Ketidakpatuhan
           </NavLink>
         </li>
         <li>
@@ -78,8 +83,13 @@ function SubSideBar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/aktivitisemakan" className="sub-nav-link">
+            Aktiviti Semakan
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Kesalahan Kriteria Ketidakpatuhan
+            Kriteria Ketidakpatuhan
           </NavLink>
         </li>
         <li>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form"; 
+import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 
 function CreateAktivitiSemakan() {
@@ -21,7 +21,6 @@ function CreateAktivitiSemakan() {
     reset,
     formState: { errors },
   } = useForm();
-  
 
   return (
     <div>
@@ -35,16 +34,29 @@ function CreateAktivitiSemakan() {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>Tambah Aktiviti Semakan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit()} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Aktiviti Semakan</Form.Label>
-              <Controller name="namaAktivitiSemakan" id="namaAktivitiSemakan" control={control} defaultValue="" rules={{required: "Aktiviti semakan baru diperlukan"}} render={({ field: {onChange, value}}) => (
-                <Form.Control type="text" onChange={onChange} value={value} placeholder="Masukkan bahagian" autoFocus />
-              )} />
+              <Controller
+                name="namaAktivitiSemakan"
+                id="namaAktivitiSemakan"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Aktiviti semakan baru diperlukan" }}
+                render={({ field: { onChange, value } }) => (
+                  <Form.Control
+                    type="text"
+                    onChange={onChange}
+                    value={value}
+                    placeholder="Masukkan bahagian"
+                    autoFocus
+                  />
+                )}
+              />
               {errors.namaAktivitiSemakan && (
                 <span className="error-message">
                   {errors.namaAktivitiSemakan.message}
@@ -54,7 +66,9 @@ function CreateAktivitiSemakan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="create-new=modal-btn" onClick={handleSubmit()}>Tambah Aktiviti Semakan</Button>
+          <Button className="create-new=modal-btn" onClick={handleSubmit()}>
+            Tambah Aktiviti Semakan
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

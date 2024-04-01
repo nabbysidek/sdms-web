@@ -15,6 +15,7 @@ import Laporan from "./pages/laporan/Index";
 import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/Index";
 import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/Index";
 import IndexJenisAudit from "./pages/tetapan kriteria/JenisAudit/Index";
+import IndexAktivitSemakan from "./pages/tetapan kriteria/AktivitiSemakan/Index";
 import IndexSkopKriteria from "./pages/tetapan kriteria/SkopKriteria/Index";
 import IndexSkopSemakan from "./pages/tetapan kriteria/SkopSemakan/Index";
 import IndexBahagian from "./pages/tetapan kriteria/Bahagian/Index";
@@ -60,6 +61,7 @@ function App() {
             />
             <Route path="/kakitangan" element={<IndexKakitangan />} />
             <Route path="/jenisaudit" element={<IndexJenisAudit />} />
+            <Route path="/aktivitisemakan" element={<IndexAktivitSemakan />}/>
             <Route path="/skopkriteria" element={<IndexSkopKriteria />} />
             <Route path="/skopsemakan" element={<IndexSkopSemakan />} />
 

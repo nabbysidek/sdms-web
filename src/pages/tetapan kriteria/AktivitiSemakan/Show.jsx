@@ -1,23 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateAktivitiSemakan from "./Create";
 import EditAktivitiSemakan from "./Edit";
-import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
-import EditBahagian from "../Bahagian/Edit";
 
 function ShowAktivitiSemakanList() {
-    // ----------------- FE -----------------
-    const [ aktivitiSemakans, setAktivitiSemakans] = useState([]);
-
-    // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
-
   return (
     <>
       <Container fluid>
@@ -46,17 +34,11 @@ function ShowAktivitiSemakanList() {
                     <td>Semakan 1</td>
                     <td>
                         <EditAktivitiSemakan />
-                        <Button>Padam</Button>
+                        <Button className="delete-btn">Padam</Button>
                     </td>
                 </tr>
             </tbody>
         </Table>
-
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
 
         {/* Functional buttons */}
         <div className="functional-btns-container">

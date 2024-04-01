@@ -14,7 +14,7 @@ function SearchAktivitiSemakan() {
 
     const onSubmit = (data) => {
         if (!data.aktivitiSemakan) {
-          setError("aktivitiSemakann", {
+          setError("aktivitiSemakan", {
             type: "manual",
             message: "Sila masukkan nama aktiviti semakan",
           });
@@ -30,7 +30,7 @@ function SearchAktivitiSemakan() {
             <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
                 <Row>
                     <Form.Group className="col-md-10">
-                        <Controller nama="aktivitiSemakan" control={control} defaultValue="" render={({field}) => (
+                        <Controller name="aktivitiSemakan" control={control} defaultValue="" render={({field}) => (
                             <Form.Control {...field} type="text" placeholder="Masukkan aktiviti semakan"/>
                         )}/>
                     </Form.Group>
