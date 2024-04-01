@@ -116,7 +116,7 @@ function ShowUnitList() {
                     <EditUnit />
                     <Button
                       onClick={() => handleDeleteUnit(unitsData.id)}
-                      className="delBtn"
+                      className="delete-btn"
                     >
                       Padam
                     </Button>

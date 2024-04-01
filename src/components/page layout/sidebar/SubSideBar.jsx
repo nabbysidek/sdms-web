@@ -10,6 +10,16 @@ function SubSideBar() {
     return (
       <ul className="mobile-nav-links">
         <li>
+          <NavLink to="/kakitangan" className="sub-nav-link">
+            Kakitangan
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/jenisaudit" className="sub-nav-link">
+            Jenis Audit
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/skopsemakan" className="sub-nav-link">
             Skop Semakan
           </NavLink>
@@ -27,16 +37,6 @@ function SubSideBar() {
         <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
             Kriteria Ketidakpatuhan
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/jenisaudit" className="sub-nav-link">
-            Jenis Audit
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/kakitangan" className="sub-nav-link">
-            Kakitangan
           </NavLink>
         </li>
         <li>
@@ -72,6 +72,16 @@ function SubSideBar() {
   return (
     <div className="sub-sidebar">
       <ul>
+      <li>
+          <NavLink to="/kakitangan" className="sub-nav-link">
+            Kakitangan
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/jenisaudit" className="sub-nav-link">
+            Jenis Audit
+          </NavLink>
+        </li>
         <li>
           <NavLink to="/skopsemakan" className="sub-nav-link">
             Skop Semakan
@@ -90,16 +100,6 @@ function SubSideBar() {
         <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
             Kriteria Ketidakpatuhan
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/jenisaudit" className="sub-nav-link">
-            Jenis Audit
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/kakitangan" className="sub-nav-link">
-            Kakitangan
           </NavLink>
         </li>
         <li>
