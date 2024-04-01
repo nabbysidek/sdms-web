@@ -104,7 +104,11 @@ function ShowSkopKriteriaList() {
               skopKriterias.map((skopKriteriasData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>Skop Semakan</td>
+                  <td>
+                    {skopKriteriasData.skopSemakan
+                      ? skopKriteriasData.skopSemakan.namaSkopSemakan
+                      : "N/A"}
+                  </td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
                     <EditSkopKriteria />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import axiosCustom from "./../../../axios";
@@ -23,6 +23,28 @@ function CreateSkopKriteria() {
   } = useForm();
 
   // ----------BE----------
+  // Fetch skop semakan data
+  const [skopSemakanData, setSkopSemakanData] = useState([]);
+
+  useEffect(() => {
+    const fetchSkopSemakanData = async () => {
+      try {
+        const response = await axiosCustom.get(
+          "http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/display-skop-semakan"
+        );
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setSkopSemakanData(response.data);
+        } else {
+          console.error("Response data is not as expected:", response.data);
+        }
+      } catch (error) {
+        console.error("Error while fetching skop semakan data:", error);
+      }
+    };
+
+    fetchSkopSemakanData();
+  }, []);
+
   // Create skop kriteria
   const createSkopKriteria = async (skopKriteriaInput) => {
     try {
@@ -60,6 +82,35 @@ function CreateSkopKriteria() {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(createSkopKriteria)} onReset={reset}>
+          <Form.Group>
+              <Form.Label>Skop Semakan</Form.Label>
+              <Controller
+                id="skopSemakanId"
+                name="skopSemakanId"
+                defaultValue=""
+                control={control}
+                rules={{ required: "Sila pilih skop semakan" }}
+                render={({ field: { onChange } }) => (
+                  <>
+                    <Form.Select onChange={onChange} defaultValue="">
+                      <option value="" disabled>
+                        Pilih Skop Semakan
+                      </option>
+                      {skopSemakanData.map((skopSemakan) => (
+                        <option key={skopSemakan.id} value={skopSemakan.id}>
+                          {skopSemakan.namaSkopSemakan}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    {errors.skopSemakanId && (
+                      <span className="error-message">
+                        {errors.skopSemakanId.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
+            </Form.Group>
             <Form.Group>
               <Form.Label>Nama Skop Kriteria</Form.Label>
               <Controller
