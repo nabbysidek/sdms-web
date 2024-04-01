@@ -68,7 +68,7 @@ function CreateKakitangan() {
   useEffect(() => {
     const fetchBahagianData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -88,7 +88,7 @@ function CreateKakitangan() {
   useEffect(() => {
     const fetchJabatanData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/display-jabatan"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -108,7 +108,7 @@ function CreateKakitangan() {
   useEffect(() => {
     const fetchUnitData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosCustom.get(
           "http://127.0.0.1:8000/api/tetapan-kriteria/unit/display-unit"
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -127,7 +127,7 @@ function CreateKakitangan() {
   const createKakitangan = async (kakitanganInput) => {
     console.log(kakitanganInput);
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         `http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan`,
         kakitanganInput
       );
