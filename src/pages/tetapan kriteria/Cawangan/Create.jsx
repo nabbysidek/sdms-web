@@ -69,7 +69,7 @@ function CreateCawangan() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateCawangan}>
-        Tambah Cawangan
+        Tambah
       </Button>
 
       <Modal

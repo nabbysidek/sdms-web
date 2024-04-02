@@ -89,7 +89,7 @@ function CreateUnit() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateUnit}>
-        Tambah Unit
+        Tambah
       </Button>
 
       <Modal

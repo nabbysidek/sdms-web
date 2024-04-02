@@ -48,7 +48,7 @@ function CreateWilayah() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateWilayah}>
-        Tambah Wilayah
+        Tambah
       </Button>
 
       <Modal

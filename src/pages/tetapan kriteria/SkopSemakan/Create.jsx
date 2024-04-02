@@ -48,7 +48,7 @@ function CreateSkopSemakan() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopSemakan}>
-        Tambah Skop Semakan
+        Tambah
       </Button>
 
       <Modal

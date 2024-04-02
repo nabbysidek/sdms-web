@@ -6,7 +6,7 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axios from "axios";
+import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
 function ShowKakitanganList() {
@@ -81,10 +81,10 @@ function ShowKakitanganList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-9">
+            <div className="col-md-10">
               <h3 className="table-title">Senarai Kakitangan</h3>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <CreateKakitangan />
             </div>
           </Row>
@@ -94,14 +94,8 @@ function ShowKakitanganList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Wilayah</th>
-              <th>Cawangan</th>
-              <th>Bahagian</th>
-              <th>Jabatan</th>
-              <th>Unit</th>
               <th>ID Kakitangan</th>
               <th>Nama Kakitangan</th>
-              <th>Jawatan Kakitangan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -110,32 +104,8 @@ function ShowKakitanganList() {
               kakitangans.map((kakitangansData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>
-                    {kakitangansData.wilayah
-                      ? kakitangansData.wilayah.namaWilayah
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {kakitangansData.cawangan
-                      ? kakitangansData.cawangan.namaCawangan
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {kakitangansData.bahagian
-                      ? kakitangansData.bahagian.namaBahagian
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {kakitangansData.jabatan
-                      ? kakitangansData.jabatan.namaJabatan
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {kakitangansData.unit ? kakitangansData.unit.idUnit : "N/A"}
-                  </td>
                   <td>{kakitangansData.idKakitangan}</td>
                   <td>{kakitangansData.namaKakitangan}</td>
-                  <td>{kakitangansData.jawatanKakitangan}</td>
                   <td>
                     <EditKakitangan />
                     <Button
