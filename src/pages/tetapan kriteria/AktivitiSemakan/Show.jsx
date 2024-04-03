@@ -8,7 +8,6 @@ import ImportButton from "../../../components/functional buttons/ImportBtn";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
-import axios from "axios";
 
 function ShowAktivitiSemakanList() {
   // -------------- FE ----------------
@@ -26,7 +25,7 @@ function ShowAktivitiSemakanList() {
         `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan?page=${page}`
       );
       setAktivitiSemakans(response.data.data);
-      setTotalPage(response.data.last.page);
+      setTotalPage(response.data.last_page);
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat skop semakan:", error);
     }
