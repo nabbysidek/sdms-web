@@ -1,48 +1,134 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateAktivitiSemakan from "./Create";
 import EditAktivitiSemakan from "./Edit";
+import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import PaginationTable from "../../../components/page layout/PaginationTable";
+import axiosCustom from "./../../../axios";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 function ShowAktivitiSemakanList() {
+  // -------------- FE ----------------
+  const [aktivitiSemakans, setAktivitiSemakans] = useState([]);
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1); // Define currentPage
   const [totalPage, setTotalPage] = useState(1);
+
+  // ------------- BE -------------
+  // List Aktiviti Semakan
+  const fetchAktivitiSemakans = async (page) => {
+    try {
+      const response = await axiosCustom.get(
+        `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan?page=${page}`
+      );
+      setAktivitiSemakans(response.data.data);
+      setTotalPage(response.data.last.page);
+    } catch (error) {
+      console.error("Ralat dalam mengambil maklumat skop semakan:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAktivitiSemakans(currentPage);
+
+    const interval = setInterval(() => {
+      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
+      fetchAktivitiSemakans(nextPage);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentPage, totalPage]);
+
+  // Handle delete
+  const handleDeleteAktivitiSemakan = async (aktivitiSemakanId) => {
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axiosCustom.delete(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan/${aktivitiSemakanId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success,
+          });
+
+          setAktivitiSemakans((prevAktivitiSemakans) =>
+            prevAktivitiSemakans.filter(
+              (aktivitiSemakan) => aktivitiSemakan.id !== aktivitiSemakanId
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error in deleting aktiviti semakan", error);
+      }
+    }
+  };
 
   return (
     <>
       <Container fluid>
         <div className="table-section">
-            <Row>
-                <div className="col-md-8">
-                    <h3 className="table-title">Senarai Aktiviti Semakan</h3>
-                </div>
-                <div className="col-md-4">
-                    <CreateAktivitiSemakan/>
-                </div>
-            </Row>
+          <Row>
+            <div className="col-md-10">
+              <h3 className="table-title">Senarai Aktiviti Semakan</h3>
+            </div>
+            <div className="col-md-2">
+              <CreateAktivitiSemakan />
+            </div>
+          </Row>
         </div>
         <hr />
         <Table responsive>
-            <thead>
-                <tr>
-                    <th>Bil</th>
-                    <th>Nama Aktiviti Semakan</th>
-                    <th>Tindakan</th>
+          <thead>
+            <tr>
+              <th>Bil</th>
+              <th>Skop Semakan</th>
+              <th>Skop Kriteria Ketidakpatuhan</th>
+              <th>Nama Aktiviti Semakan</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {aktivitiSemakans.length > 0 &&
+              aktivitiSemakans.map((aktivitiSemakansData, key) => (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>
+                    {aktivitiSemakansData.skop_kriteria.skop_semakan
+                      ? aktivitiSemakansData.skop_kriteria.skop_semakan
+                          .namaSkopSemakan
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {aktivitiSemakansData.skop_kriteria
+                      ? aktivitiSemakansData.skop_kriteria.namaSkopKriteria
+                      : "N/A"}
+                  </td>
+                  <td>{aktivitiSemakansData.namaAktivitiSemakan}</td>
+                  <td>
+                    <EditAktivitiSemakan />
+                    <Button
+                      onClick={() =>
+                        handleDeleteAktivitiSemakan(aktivitiSemakansData.id)
+                      }
+                      className="delete-btn"
+                    >
+                      Padam
+                    </Button>
+                  </td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Semakan 1</td>
-                    <td>
-                        <EditAktivitiSemakan />
-                        <Button className="delete-btn">Padam</Button>
-                    </td>
-                </tr>
-            </tbody>
+              ))}
+          </tbody>
         </Table>
 
         <PaginationTable
@@ -61,4 +147,4 @@ function ShowAktivitiSemakanList() {
   );
 }
 
-export default ShowAktivitiSemakanList
+export default ShowAktivitiSemakanList;
