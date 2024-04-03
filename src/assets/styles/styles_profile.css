@@ -32,11 +32,6 @@
     margin: 10px 0;
 }
 
-.error-message {
-    color: var(--rederror);
-    font-size: 10px;
-}
-
 @media (max-width: 767px) {
     .set-password-btn {
         width: 100%;

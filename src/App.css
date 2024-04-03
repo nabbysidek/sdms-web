@@ -84,3 +84,13 @@ margin: 10px 10px auto 10px;
   color: #204198;
   background-color: #FFFFFF;
 }
+
+/***************************************/
+/* ***** ERROR HANDLING ************** */
+/**************************************/
+
+.error-message {
+  font-size: .75rem;
+  color: #ff9494;
+  margin-bottom: 0;
+}

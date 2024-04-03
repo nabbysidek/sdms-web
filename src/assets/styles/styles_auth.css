@@ -90,13 +90,3 @@
   text-align: right;
   padding-bottom: 5px;
 }
-
-/***************************************/
-/* ***** ERROR HANDLING ************** */
-/**************************************/
-
-.error-message {
-  font-size: .75rem;
-  color: var(--rederror);
-  margin-bottom: 0;
-}
