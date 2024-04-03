@@ -81,10 +81,12 @@ function ShowSkopKriteriaList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-7">
-              <h3 className="table-title">Senarai Skop Kriteria Ketidakpatuhan</h3>
+            <div className="col-md-10">
+              <h3 className="table-title">
+                Senarai Skop Kriteria Ketidakpatuhan
+              </h3>
             </div>
-            <div className="col-md-5">
+            <div className="col-md-2">
               <CreateSkopKriteria />
             </div>
           </Row>
@@ -105,8 +107,8 @@ function ShowSkopKriteriaList() {
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <td>
-                    {skopKriteriasData.skopSemakan
-                      ? skopKriteriasData.skopSemakan.namaSkopSemakan
+                    {skopKriteriasData.skop_semakan
+                      ? skopKriteriasData.skop_semakan.namaSkopSemakan
                       : "N/A"}
                   </td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
