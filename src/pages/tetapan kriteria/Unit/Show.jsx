@@ -103,13 +103,9 @@ function ShowUnitList() {
               units.map((unitsData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
+                  <td>{unitsData.jabatan.bahagian ? unitsData.jabatan.bahagian.namaBahagian : "N/A"}</td>
                   <td>
-                    {unitsData.bahagian
-                      ? unitsData.bahagian.namaBahagian
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {unitsData.bahagian ? unitsData.jabatan.namaJabatan : "N/A"}
+                    {unitsData.jabatan ? unitsData.jabatan.namaJabatan : "N/A"}
                   </td>
                   <td>{unitsData.namaUnit}</td>
                   <td>
