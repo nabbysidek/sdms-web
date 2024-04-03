@@ -24,6 +24,28 @@ function CreateKriteriaKetidakpatuhan() {
   } = useForm();
 
   // ----------BE----------
+  // Fetch skop semakan data
+  const [skopSemakanData, setSkopSemakanData] = useState([]);
+
+  useEffect(() => {
+    const fetchSkopSemakanData = async () => {
+      try {
+        const response = await axiosCustom.get(
+          "http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/display-skop-semakan"
+        );
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setSkopSemakanData(response.data);
+        } else {
+          console.error("Response data is not as expected:", response.data);
+        }
+      } catch (error) {
+        console.error("Error while fetching Skop Semakan data:", error);
+      }
+    };
+
+    fetchSkopSemakanData();
+  }, []);
+
   // Fetch skop kriteria data
   const [skopKriteriaData, setSkopKriteriaData] = useState([]);
   useEffect(() => {
@@ -43,6 +65,27 @@ function CreateKriteriaKetidakpatuhan() {
     };
 
     fetchSkopKriteriaData();
+  }, []);
+
+  // Fetch aktiviti semakan data
+  const [aktivitiSemakanData, setAktivitiSemakanData] = useState([]);
+  useEffect(() => {
+    const fetchAktivitiSemakanData = async () => {
+      try {
+        const response = await axiosCustom.get(
+          "http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan/display-aktiviti-semakan"
+        );
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setAktivitiSemakanData(response.data); // Set all skop kriteria data
+        } else {
+          console.error("Response data is not as expected:", response.data);
+        }
+      } catch (error) {
+        console.error("Error while fetching Aktiviti Semakan data:", error);
+      }
+    };
+
+    fetchAktivitiSemakanData();
   }, []);
 
   // Create kriteria ketidakpatuhan
@@ -89,7 +132,36 @@ function CreateKriteriaKetidakpatuhan() {
             onReset={reset}
           >
             <Form.Group>
-              <Form.Label>Skop Kriteria</Form.Label>
+              <Form.Label>Skop Semakan</Form.Label>
+              <Controller
+                id="skopSemakanId"
+                name="skopSemakanId"
+                defaultValue=""
+                control={control}
+                rules={{ required: "Sila pilih skop semakan" }}
+                render={({ field: { onChange } }) => (
+                  <>
+                    <Form.Select onChange={onChange} defaultValue="">
+                      <option value="" disabled>
+                        Pilih Skop Semakan
+                      </option>
+                      {skopSemakanData.map((skopSemakan) => (
+                        <option key={skopSemakan.id} value={skopSemakan.id}>
+                          {skopSemakan.namaSkopSemakan}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    {errors.skopSemakanId && (
+                      <span className="error-message">
+                        {errors.skopSemakanId.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Skop Kriteria Ketidakpatuhan</Form.Label>
               <Controller
                 id="skopKriteriaId"
                 name="skopKriteriaId"
@@ -117,35 +189,35 @@ function CreateKriteriaKetidakpatuhan() {
                 )}
               />
             </Form.Group>
-
             <Form.Group>
-              <Form.Label>Kod Kriteria Ketidakpatuhan</Form.Label>
+              <Form.Label>Aktiviti Semakan</Form.Label>
               <Controller
-                id="kodKriteriaKetidakpatuhan"
-                name="kodKriteriaKetidakpatuhan"
+                id="aktivitiSemakanId"
+                name="aktivitiSemakanId"
+                defaultValue=""
                 control={control}
-                rules={{
-                  required: "Kod kriteria ketidakpatuhan baru diperlukan",
-                }}
-                render={({ field: { onChange, value } }) => (
+                rules={{ required: "Sila pilih skop kriteria" }}
+                render={({ field: { onChange } }) => (
                   <>
-                    <Form.Control
-                      type="text"
-                      onChange={onChange}
-                      value={value}
-                      placeholder="Masukkan kod kriteria ketidakpatuhan"
-                      autoFocus
-                    />
-                    {errors.kodKriteriaKetidakpatuhan && (
+                    <Form.Select onChange={onChange} defaultValue="">
+                      <option value="" disabled>
+                        Pilih Skop Kriteria
+                      </option>
+                      {aktivitiSemakanData.map((aktivitiSemakan) => (
+                        <option key={aktivitiSemakan.id} value={aktivitiSemakan.id}>
+                          {aktivitiSemakan.namaAktivitiSemakan}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    {errors.aktivitiSemakanId && (
                       <span className="error-message">
-                        {errors.kodKriteriaKetidakpatuhan.message}
+                        {errors.aktivitiSemakanId.message}
                       </span>
                     )}
                   </>
                 )}
               />
             </Form.Group>
-
             <Form.Group>
               <Form.Label>Nama Kriteria Ketidakpatuhan</Form.Label>
               <Controller

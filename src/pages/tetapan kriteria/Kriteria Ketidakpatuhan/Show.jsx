@@ -87,11 +87,11 @@ function ShowKriteriaKetidakpatuhanList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <Col xl={8}>
-              <h3 className="table-title">Senarai Kesalahan Kriteria Ketidakpatuhan</h3>
+            <Col xl={10}>
+              <h3 className="table-title">Senarai Kriteria Ketidakpatuhan</h3>
             </Col>
 
-            <Col xl={4}>
+            <Col xl={2}>
               <CreateKriteriaKetidakpatuhan />
             </Col>
           </Row>
@@ -114,15 +114,23 @@ function ShowKriteriaKetidakpatuhanList() {
                 (kriteriaKetidakpatuhansData, key) => (
                   <tr key={key}>
                     <td>{key + 1}</td>
-                    <td>Skop Semakan</td>
                     <td>
-                      {kriteriaKetidakpatuhansData.skop_kriteria
-                        ? kriteriaKetidakpatuhansData.skop_kriteria
+                      {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
+                        ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
+                            .namaSkopSemakan
+                        : "N/A"}
+                        </td>
+                    <td>
+                    {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria
+                        ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria
                             .namaSkopKriteria
                         : "N/A"}
                     </td>
                     <td>
-                      {kriteriaKetidakpatuhansData.kodKriteriaKetidakpatuhan}
+                    {kriteriaKetidakpatuhansData.aktiviti_semakan
+                        ? kriteriaKetidakpatuhansData.aktiviti_semakan
+                            .namaAktivitiSemakan
+                        : "N/A"}
                     </td>
                     <td>
                       {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
