@@ -79,10 +79,10 @@ function ShowWilayahList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-9">
+            <div className="col-md-10">
               <h3 className="table-title">Senarai Wilayah</h3>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <CreateWilayah />
             </div>
           </Row>

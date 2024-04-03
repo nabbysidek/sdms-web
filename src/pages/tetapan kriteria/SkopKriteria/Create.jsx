@@ -70,7 +70,7 @@ function CreateSkopKriteria() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopKriteria}>
-        Tambah Skop Kriteria Ketidakpatuhan
+        Tambah
       </Button>
 
       <Modal

@@ -49,7 +49,7 @@ function CreateBahagian() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateBahagian}>
-        Tambah Bahagian
+        Tambah
       </Button>
 
       <Modal

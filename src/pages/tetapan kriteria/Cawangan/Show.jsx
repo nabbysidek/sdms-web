@@ -79,10 +79,10 @@ function ShowCawanganList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-9">
+            <div className="col-md-10">
               <h3 className="table-title">Senarai Cawangan</h3>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <CreateCawangan />
             </div>
           </Row>

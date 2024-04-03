@@ -71,7 +71,7 @@ function CreateKriteriaKetidakpatuhan() {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateKriteria}>
-        Tambah Kriteria Ketidakpatuhan
+        Tambah
       </Button>
 
       <Modal

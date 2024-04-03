@@ -37,7 +37,7 @@ function CreateUnit() {
           console.error("Response data is not as expected:", response.data);
         }
       } catch (error) {
-        console.error("Error while fetching Skop Kriteria data:", error);
+        console.error("Error while fetching Bahagian data:", error);
       }
     };
 
