@@ -105,7 +105,7 @@ function ShowSkopSemakanList() {
                   <td>{key + 1}</td>
                   <td>{skopSemakansData.namaSkopSemakan}</td>
                   <td>
-                    <EditSkopSemakan />
+                    <EditSkopSemakan skopSemakan={skopSemakansData} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopSemakan(skopSemakansData.id)

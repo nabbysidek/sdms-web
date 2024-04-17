@@ -105,7 +105,7 @@ function ShowJenisAuditList() {
                   <td>{key + 1}</td>
                   <td>{jenisAuditsData.namaJenisAudit}</td>
                   <td>
-                    <EditJenisAudit />
+                    <EditJenisAudit jenisAudit={jenisAuditsData} />
                     <Button
                       onClick={() => handleDeleteJenisAudit(jenisAuditsData.id)}
                       className="delete-btn"

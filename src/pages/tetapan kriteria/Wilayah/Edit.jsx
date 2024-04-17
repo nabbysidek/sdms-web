@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditWilayah() {
+function EditWilayah({wilayah}) {
   // ----- FE ---------
   // Handle modal
   const [showEditWilayah, setShowEditWilayah] = useState(false);
@@ -14,10 +16,34 @@ function EditWilayah() {
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditWilayah();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
+  // ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateWilayah = async (wilayahInput) => {
+    
+    try {
+      // Log wilayahInput to see the data being sent to the server
+      console.log('Data being sent to server:', wilayahInput);
+
+      // Ensure wilayahId is defined and contains the correct value
+      console.log('wilayahId:', wilayah.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/wilayah/${wilayah.id}`,
+          wilayahInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Wilayah berjaya dikemaskini");
+          handleCloseEditWilayah();
+      }
+  } catch (error) {
+      console.log("Wilayah tidak berjaya dikemaskini", error);
+  }
   };
 
   return (
@@ -40,19 +66,21 @@ function EditWilayah() {
             <Form.Group>
               <Form.Label>Nama Wilayah</Form.Label>
               <Controller
-                name="wilayah"
+                name="namaWilayah"
+                id="namaWilayah"
                 control={control}
                 rules={{ required: "Wilayah baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Wilayah"
-                      {...field}
                     />
-                    {errors?.wilayah && (
+                    {errors?.namaWilayah && (
                       <span className="error-message">
-                        {errors.wilayah.message}
+                        {errors.namaWilayah.message}
                       </span>
                     )}
                   </>
@@ -62,7 +90,7 @@ function EditWilayah() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateWilayah)}>
             Kemaskini Wilayah
           </Button>
         </Modal.Footer>

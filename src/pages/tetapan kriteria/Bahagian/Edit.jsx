@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditBahagian() {
+function EditBahagian({bahagian}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditBahagian, setShowEditBahagian] = useState(false);
@@ -14,10 +16,34 @@ function EditBahagian() {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditBahagianm();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
+  // ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateBahagian = async (bahagianInput) => {
+    
+    try {
+      // Log bahagianInput to see the data being sent to the server
+      console.log('Data being sent to server:', bahagianInput);
+
+      // Ensure bahagianId is defined and contains the correct value
+      console.log('bahagianId:', bahagian.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/${bahagian.id}`,
+          bahagianInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Bahagian berjaya dikemaskini");
+          handleCloseEditBahagian();
+      }
+  } catch (error) {
+      console.log("Bahagian tidak berjaya dikemaskini", error);
+  }
   };
 
   return (
@@ -40,19 +66,22 @@ function EditBahagian() {
             <Form.Group>
               <Form.Label>Nama Bahagian</Form.Label>
               <Controller
-                name="bahagian"
+                name="namaBahagian"
+                id="namaBahagian"
                 control={control}
+                defaultValue={bahagian.namaBahagian}
                 rules={{ required: "Nama bahagian baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Bahagian"
-                      {...field}
                     />
-                    {errors?.bahagian && (
+                    {errors?.namaBahagian && (
                       <span className="error-message">
-                        {errors.bahagian.message}
+                        {errors.namaBahagian.message}
                       </span>
                     )}
                   </>
@@ -62,7 +91,7 @@ function EditBahagian() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateBahagian)}>
             Kemaskini Bahagian
           </Button>
         </Modal.Footer>

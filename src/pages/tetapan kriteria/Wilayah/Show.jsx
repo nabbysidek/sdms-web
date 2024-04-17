@@ -103,7 +103,7 @@ function ShowWilayahList() {
                   <td>{key + 1}</td>
                   <td>{wilayahsData.namaWilayah}</td>
                   <td>
-                    <EditWilayah />
+                    <EditWilayah wilayah={wilayahsData} />
                     <Button
                       onClick={() => handleDeleteWilayah(wilayahsData.id)}
                       className="delete-btn"

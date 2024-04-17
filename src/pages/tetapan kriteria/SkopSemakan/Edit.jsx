@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditSkopSemakan() {
+function EditSkopSemakan({skopSemakan}) {
   // ----- FE ---------
   // Handle modal
   const [showEditSkopSemakan, setShowEditSkopSemakan] = useState(false);
@@ -14,10 +16,34 @@ function EditSkopSemakan() {
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditSkopSemakan();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
+  // ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateSkopSemakan = async (skopSemakanInput) => {
+    
+    try {
+      // Log skopSemakanInput to see the data being sent to the server
+      console.log('Data being sent to server:', skopSemakanInput);
+
+      // Ensure skopSemakanId is defined and contains the correct value
+      console.log('jskopSemakanId:', skopSemakan.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/${skopSemakan.id}`,
+          skopSemakanInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Skop Semakan berjaya dikemaskini");
+          handleCloseEditSkopSemakan();
+      }
+  } catch (error) {
+      console.log("Skop Semakan tidak berjaya dikemaskini", error);
+  }
   };
 
   return (
@@ -40,19 +66,22 @@ function EditSkopSemakan() {
             <Form.Group>
               <Form.Label>Nama Skop Semakan</Form.Label>
               <Controller
-                name="skopSemakan"
+                name="namaSkopSemakan"
+                id="namaSkopSemakan"
                 control={control}
+                defaultValue={skopSemakan.namaSkopSemakan}
                 rules={{ required: "Skop semakan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Skop semakan"
-                      {...field}
                     />
-                    {errors?.skopSemakan && (
+                    {errors?.namaSkopSemakan && (
                       <span className="error-message">
-                        {errors.skopSemakan.message}
+                        {errors.namaSkopSemakan.message}
                       </span>
                     )}
                   </>
@@ -62,7 +91,7 @@ function EditSkopSemakan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateSkopSemakan)}>
             Kemaskini Skop Semakan
           </Button>
         </Modal.Footer>

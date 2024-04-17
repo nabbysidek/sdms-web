@@ -106,7 +106,7 @@ function ShowBahagianList() {
                   <td>{key + 1}</td>
                   <td>{bahagiansData.namaBahagian}</td>
                   <td>
-                    <EditBahagian />
+                    <EditBahagian bahagian={bahagiansData} />
                     <Button
                       onClick={() => handleDeleteBahagian(bahagiansData.id)}
                       className="delete-btn"
