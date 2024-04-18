@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 
-function EditSkopKriteria() {
+function EditSkopKriteria({skopKriteria}) {
   // ----- FE ---------
   // Handle modal
   const [showEditSkopKriteria, setShowEditSkopKriteria] = useState(false);
@@ -70,19 +70,21 @@ function EditSkopKriteria() {
             <Form.Group>
               <Form.Label>Nama Skop Kriteria</Form.Label>
               <Controller
-                name="skopKriteria"
+                name="namaSkopKriteria"
                 control={control}
+                defaultValue={skopKriteria.namaSkopKriteria}
                 rules={{ required: "Skop kriteria baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Skop kriteria"
-                      {...field}
                     />
-                    {errors?.skopKriteria && (
+                    {errors?.namaSkopKriteria && (
                       <span className="error-message">
-                        {errors.skopKriteria.message}
+                        {errors.namaSkopKriteria.message}
                       </span>
                     )}
                   </>

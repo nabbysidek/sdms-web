@@ -115,7 +115,7 @@ function ShowAktivitiSemakanList() {
                   </td>
                   <td>{aktivitiSemakansData.namaAktivitiSemakan}</td>
                   <td>
-                    <EditAktivitiSemakan />
+                    <EditAktivitiSemakan aktivitiSemakan={aktivitiSemakansData} />
                     <Button
                       onClick={() =>
                         handleDeleteAktivitiSemakan(aktivitiSemakansData.id)

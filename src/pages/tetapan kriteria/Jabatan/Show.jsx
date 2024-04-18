@@ -119,7 +119,7 @@ function Show() {
                   </td>
                   <td>{jabatansData.namaJabatan}</td>
                   <td>
-                    <EditJabatan />
+                    <EditJabatan jabatan={jabatansData} />
                     <Button
                       onClick={() => handleDeleteJabatan(jabatansData.id)}
                       className="delete-btn"

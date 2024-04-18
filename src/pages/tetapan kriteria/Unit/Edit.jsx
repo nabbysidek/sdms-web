@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
-function EditUnit() {
+function EditUnit({unit}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditUnit, setShowEditUnit] = useState(false);
@@ -40,7 +40,7 @@ function EditUnit() {
             <Form.Group>
               <Form.Label>Bahagian</Form.Label>
               <Controller
-                name="bahagian"
+                name="namaBahagian"
                 control={control}
                 rules={{ required: "Sila pilih bahagian" }}
                 render={({ field }) => (
@@ -48,7 +48,7 @@ function EditUnit() {
                     <Form.Select
                       aria-label="bahagianSelect"
                       onChange={(e) => {
-                        setValue("bahagian", e.target.value);
+                        setValue("namaBahagian", e.target.value);
                       }}
                       {...field}
                     >
@@ -57,9 +57,9 @@ function EditUnit() {
                       <option value="2">Two</option>
                       <option value="3">Three</option>
                     </Form.Select>
-                    {errors?.bahagian && (
+                    {errors?.namaBahagian && (
                       <span className="error-message">
-                        {errors.bahagian.message}
+                        {errors.namaBahagian.message}
                       </span>
                     )}
                   </>
@@ -70,7 +70,7 @@ function EditUnit() {
             <Form.Group>
               <Form.Label>Jabatan</Form.Label>
               <Controller
-                name="jabatan"
+                name="namaJabatan"
                 control={control}
                 rules={{ required: "Sila pilih jabatan" }}
                 render={({ field }) => (
@@ -78,7 +78,7 @@ function EditUnit() {
                     <Form.Select
                       aria-label="jabatanSelect"
                       onChange={(e) => {
-                        setValue("jabatan", e.target.value);
+                        setValue("namaJabatan", e.target.value);
                       }}
                       {...field}
                     >
@@ -87,9 +87,9 @@ function EditUnit() {
                       <option value="2">Two</option>
                       <option value="3">Three</option>
                     </Form.Select>
-                    {errors?.jabatan && (
+                    {errors?.namaJabatan && (
                       <span className="error-message">
-                        {errors.jabatan.message}
+                        {errors.namaJabatan.message}
                       </span>
                     )}
                   </>
@@ -100,15 +100,21 @@ function EditUnit() {
             <Form.Group>
               <Form.Label>Nama Unit</Form.Label>
               <Controller
-                name="unit"
+                name="namaUnit"
                 control={control}
+                defaultValue={unit.namaUnit}
                 rules={{ required: "Unit baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Control type="text" placeholder="Unit" {...field} />
-                    {errors?.unit && (
+                    <Form.Control
+                      type="text"
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Unit"
+                    />
+                    {errors?.namaUnit && (
                       <span className="error-message">
-                        {errors.unit.message}
+                        {errors.namaUnit.message}
                       </span>
                     )}
                   </>

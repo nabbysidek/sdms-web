@@ -136,7 +136,7 @@ function ShowKriteriaKetidakpatuhanList() {
                       {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
                     </td>
                     <td>
-                      <EditKriteriaKetidakpatuhan />
+                      <EditKriteriaKetidakpatuhan kriteriaKetidakpatuhan={kriteriaKetidakpatuhansData} />
                       <Button
                         onClick={() =>
                           handleDeleteKriteriaKetidakpatuhan(

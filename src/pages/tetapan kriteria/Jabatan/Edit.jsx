@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
-function EditJabatan() {
+function EditJabatan({jabatan}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditJabatan, setShowEditJabatan] = useState(false);
@@ -70,19 +70,21 @@ function EditJabatan() {
             <Form.Group>
               <Form.Label>Nama Jabatan</Form.Label>
               <Controller
-                name="jabatan"
+                name="namaJabatan"
                 control={control}
+                defaultValue={jabatan.namaJabatan}
                 rules={{ required: "Nama jabatan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Jabatan"
-                      {...field}
                     />
-                    {errors?.jabatan && (
+                    {errors?.namaJabatan && (
                       <span className="error-message">
-                        {errors.jabatan.message}
+                        {errors.namaJabatan.message}
                       </span>
                     )}
                   </>

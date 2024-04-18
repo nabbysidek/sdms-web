@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
-function EditCawangan() {
+function EditCawangan({cawangan}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditCawangan, setShowEditCawangan] = useState(false);
@@ -40,7 +40,7 @@ function EditCawangan() {
             <Form.Group>
               <Form.Label>Wilayah</Form.Label>
               <Controller
-                name="wilayah"
+                name="namaWilayah"
                 control={control}
                 rules={{ required: "Sila pilih wilayah" }}
                 render={({ field }) => (
@@ -48,7 +48,7 @@ function EditCawangan() {
                     <Form.Select
                       aria-label="wilayahSelect"
                       onChange={(e) => {
-                        setValue("wilayah", e.target.value);
+                        setValue("namaWilayah", e.target.value);
                       }}
                       {...field}
                     >
@@ -57,9 +57,9 @@ function EditCawangan() {
                       <option value="2">Two</option>
                       <option value="3">Three</option>
                     </Form.Select>
-                    {errors?.wilayah && (
+                    {errors?.namaWilayah && (
                       <span className="error-message">
-                        {errors.wilayah.message}
+                        {errors.namaWilayah.message}
                       </span>
                     )}
                   </>
@@ -70,19 +70,21 @@ function EditCawangan() {
             <Form.Group>
               <Form.Label>Nama Cawangan</Form.Label>
               <Controller
-                name="cawangan"
+                name="namaCawangan"
                 control={control}
+                defaultValue={cawangan.namaCawangan}
                 rules={{ required: "Nama cawangan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Cawangan"
-                      {...field}
                     />
-                    {errors?.cawangan && (
+                    {errors?.namaCawangan && (
                       <span className="error-message">
-                        {errors.cawangan.message}
+                        {errors.namaCawangan.message}
                       </span>
                     )}
                   </>

@@ -109,7 +109,7 @@ function ShowCawanganList() {
                   </td>
                   <td>{cawangansData.namaCawangan}</td>
                   <td>
-                    <EditCawangan />
+                    <EditCawangan cawangan={cawangansData} />
                     <Button
                       onClick={() => handleDeleteCawangan(cawangansData.id)}
                       className="delete-btn"

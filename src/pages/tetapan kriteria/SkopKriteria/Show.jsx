@@ -113,7 +113,7 @@ function ShowSkopKriteriaList() {
                   </td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
-                    <EditSkopKriteria />
+                    <EditSkopKriteria skopKriteria={skopKriteriasData} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopKriteria(skopKriteriasData.id)

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
 
-function EditKriteriaKetidakpatuhan() {
+function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditKriteria, setShowEditKriteria] = useState(false);
@@ -37,29 +37,29 @@ function EditKriteriaKetidakpatuhan() {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group>
-              <Form.Label>Skop Kriteria</Form.Label>
+          <Form.Group>
+              <Form.Label>Skop Semakan</Form.Label>
               <Controller
-                name="skopKriteria"
+                name="namaSkopSemakan"
                 control={control}
-                rules={{ required: "Sila pilih skop kriteria" }}
+                rules={{ required: "Sila pilih skop semakan" }}
                 render={({ field }) => (
                   <>
                     <Form.Select
-                      aria-label="skopKriteriaSelect"
+                      aria-label="skopSemakanSelect"
                       onChange={(e) => {
-                        setValue("skopKriteria", e.target.value);
+                        setValue("namaSkopSemakan", e.target.value);
                       }}
                       {...field}
                     >
-                      <option value="">Pilih Skop Kriteria</option>
+                      <option value="">Pilih Skop Semakan</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
                       <option value="3">Three</option>
                     </Form.Select>
-                    {errors?.skopKriteria && (
+                    {errors?.namaSkopSemakan && (
                       <span className="error-message">
-                        {errors.skopKriteria.message}
+                        {errors.namaSkopSemakan.message}
                       </span>
                     )}
                   </>
@@ -68,21 +68,58 @@ function EditKriteriaKetidakpatuhan() {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Kod Kriteria Ketidakpatuhan</Form.Label>
+              <Form.Label>Skop Kriteria</Form.Label>
               <Controller
-                name="kodKriteria"
+                name="namaSkopKriteria"
                 control={control}
-                rules={{ required: "Kod kriteria baru diperlukan" }}
+                rules={{ required: "Sila pilih skop kriteria" }}
                 render={({ field }) => (
                   <>
-                    <Form.Control
-                      type="text"
-                      placeholder="Kod kriteria"
+                    <Form.Select
+                      aria-label="skopKriteriaSelect"
+                      onChange={(e) => {
+                        setValue("namaSkopKriteria", e.target.value);
+                      }}
                       {...field}
-                    />
-                    {errors?.kodKriteria && (
+                    >
+                      <option value="">Pilih Skop Kriteria</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </Form.Select>
+                    {errors?.namaSkopKriteria && (
                       <span className="error-message">
-                        {errors.kodKriteria.message}
+                        {errors.namaSkopKriteria.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Aktiviti Semakan</Form.Label>
+              <Controller
+                name="namaAktivitiSemakan"
+                control={control}
+                rules={{ required: "Sila pilih aktiviti semakan" }}
+                render={({ field }) => (
+                  <>
+                    <Form.Select
+                      aria-label="aktivitiSemakanSelect"
+                      onChange={(e) => {
+                        setValue("namaAktivitiSemakan", e.target.value);
+                      }}
+                      {...field}
+                    >
+                      <option value="">Pilih Aktiviti Semakan</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </Form.Select>
+                    {errors?.namaAktivitiSemakan && (
+                      <span className="error-message">
+                        {errors.namaAktivitiSemakan.message}
                       </span>
                     )}
                   </>
@@ -93,19 +130,21 @@ function EditKriteriaKetidakpatuhan() {
             <Form.Group>
               <Form.Label>Nama Kriteria Ketidakpatuhan</Form.Label>
               <Controller
-                name="namaKriteria"
+                name="namaKriteriaKetidakpatuhan"
                 control={control}
+                defaultValue={kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan}
                 rules={{ required: "Nama kriteria baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
-                      placeholder="Nama kriteria"
-                      {...field}
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Nama kriteria ketidakpatuhan"
                     />
-                    {errors?.namaKriteria && (
+                    {errors?.namaKriteriaKetidakpatuhan && (
                       <span className="error-message">
-                        {errors.namaKriteria.message}
+                        {errors.namaKriteriaKetidakpatuhan.message}
                       </span>
                     )}
                   </>

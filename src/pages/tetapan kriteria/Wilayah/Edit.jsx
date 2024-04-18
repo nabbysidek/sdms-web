@@ -69,6 +69,7 @@ function EditWilayah({wilayah}) {
                 name="namaWilayah"
                 id="namaWilayah"
                 control={control}
+                defaultValue={wilayah.namaWilayah}
                 rules={{ required: "Wilayah baru diperlukan" }}
                 render={({ field: { onChange, value } }) => (
                   <>

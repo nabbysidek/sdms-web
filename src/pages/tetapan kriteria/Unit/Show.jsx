@@ -109,7 +109,7 @@ function ShowUnitList() {
                   </td>
                   <td>{unitsData.namaUnit}</td>
                   <td>
-                    <EditUnit />
+                    <EditUnit unit={unitsData} />
                     <Button
                       onClick={() => handleDeleteUnit(unitsData.id)}
                       className="delete-btn"
