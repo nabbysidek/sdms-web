@@ -107,7 +107,7 @@ function ShowKakitanganList() {
                   <td>{kakitangansData.idKakitangan}</td>
                   <td>{kakitangansData.namaKakitangan}</td>
                   <td>
-                    <EditKakitangan />
+                    <EditKakitangan kakitangan={kakitangansData} />
                     <Button
                       onClick={() => handleDeleteKakitangan(kakitangansData.id)}
                       className="delete-btn"
