@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
@@ -76,6 +76,35 @@ function ShowSkopKriteriaList() {
     }
   };
 
+  // Fetch options skop semakan
+  const [namaSkopSemakanOptions, setNamaSkopSemakanOptions] = useState([]);
+
+  const fetchSkopSemakans = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `tetapan-kriteria/skop-semakan/display-skop-semakan`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaSkopSemakanOptions(
+          response.data.map((skopSemakan) => ({
+            value: skopSemakan.id,
+            label: skopSemakan.namaSkopSemakan,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaSkopSemakanOptions]);
+
+  useEffect(() => {
+    fetchSkopSemakans();
+  }, [fetchSkopSemakans]);
+
   return (
     <>
       <Container fluid>
@@ -87,7 +116,7 @@ function ShowSkopKriteriaList() {
               </h3>
             </div>
             <div className="col-md-2">
-              <CreateSkopKriteria />
+              <CreateSkopKriteria skopSemakanOptions={namaSkopSemakanOptions} />
             </div>
           </Row>
         </div>
@@ -113,7 +142,7 @@ function ShowSkopKriteriaList() {
                   </td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
-                    <EditSkopKriteria skopKriteria={skopKriteriasData} />
+                    <EditSkopKriteria skopKriteria={skopKriteriasData} skopSemakanOptions={namaSkopSemakanOptions} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopKriteria(skopKriteriasData.id)
