@@ -37,11 +37,7 @@ function EditKakitangan({kakitangan}) {
         handleCloseEditKakitangan();
     }
 } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
-  });
+    console.log("Kakitangan tidak berjaya dikemaskini", error);
 }
   };
 
