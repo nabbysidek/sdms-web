@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditSkopKriteria({skopKriteria}) {
+function EditSkopKriteria({skopKriteria, skopSemakanOptions}) {
   // ----- FE ---------
   // Handle modal
   const [showEditSkopKriteria, setShowEditSkopKriteria] = useState(false);
@@ -14,11 +16,39 @@ function EditSkopKriteria({skopKriteria}) {
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditSkopKriteria();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
-  };
+  // ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateSkopKriteria = async (skopKriteriaInput) => {
+    
+    try {
+      // Log skopKriteriaInput to see the data being sent to the server
+      console.log('Data being sent to server:', skopKriteriaInput);
+
+      // Ensure skopKriteriaId is defined and contains the correct value
+      console.log('skopKriteriaId:', skopKriteria.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/${skopKriteria.id}`,
+          skopKriteriaInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Skop Kriteria berjaya dikemaskini");
+          handleCloseEditSkopKriteria();
+      }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, // Access the message from the backend response
+  });
+  }
+};
 
   return (
     <div>
@@ -40,26 +70,28 @@ function EditSkopKriteria({skopKriteria}) {
             <Form.Group>
               <Form.Label>Skop Semakan</Form.Label>
               <Controller
-                name="skopSemakan"
+                id="skopSemakanId"
+                name="skopSemakanId"
                 control={control}
+                defaultValue={skopKriteria.skopSemakanId}
                 rules={{ required: "Sila pilih skop semakan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
                       aria-label="skopSemakanSelect"
-                      onChange={(e) => {
-                        setValue("skopSemakan", e.target.value);
-                      }}
-                      {...field}
+                      onChange={onChange}
+                      value={value}
                     >
-                      <option value="">Pilih Skop Semakan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="" disabled>Pilih Skop Semakan</option>
+                      {skopSemakanOptions.map((skopSemakan) => (
+                        <option key={skopSemakan.value} value={skopSemakan.value}>
+                          {skopSemakan.label}
+                        </option>
+                      ))}
                     </Form.Select>
-                    {errors?.skopSemakan && (
+                    {errors?.skopSemakanId && (
                       <span className="error-message">
-                        {errors.skopSemakan.message}
+                        {errors.skopSemakanId.message}
                       </span>
                     )}
                   </>
@@ -94,7 +126,7 @@ function EditSkopKriteria({skopKriteria}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateSkopKriteria)}>
             Kemaskini Skop Kriteria
           </Button>
         </Modal.Footer>
