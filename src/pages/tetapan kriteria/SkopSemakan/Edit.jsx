@@ -25,7 +25,7 @@ function EditSkopSemakan({skopSemakan}) {
       console.log('Data being sent to server:', skopSemakanInput);
 
       // Ensure skopSemakanId is defined and contains the correct value
-      console.log('skopSemakanId:', skopSemakan.id);
+      console.log('jskopSemakanId:', skopSemakan.id);
 
       const response = await axiosCustom.put(
           `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/${skopSemakan.id}`,
