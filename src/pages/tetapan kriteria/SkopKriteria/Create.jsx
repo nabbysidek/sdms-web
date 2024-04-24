@@ -23,28 +23,6 @@ function CreateSkopKriteria({skopSemakanOptions}) {
   } = useForm();
 
   // ----------BE----------
-  // Fetch skop semakan data
-  // const [skopSemakanData, setSkopSemakanData] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchSkopSemakanData = async () => {
-  //     try {
-  //       const response = await axiosCustom.get(
-  //         "http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/display-skop-semakan"
-  //       );
-  //       if (Array.isArray(response.data) && response.data.length > 0) {
-  //         setSkopSemakanData(response.data);
-  //       } else {
-  //         console.error("Response data is not as expected:", response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error while fetching skop semakan data:", error);
-  //     }
-  //   };
-
-  //   fetchSkopSemakanData();
-  // }, []);
-
   // Create skop kriteria
   const createSkopKriteria = async (skopKriteriaInput) => {
     try {
@@ -63,7 +41,11 @@ function CreateSkopKriteria({skopSemakanOptions}) {
         handleCloseCreateSkopKriteria();
       }
     } catch (error) {
-      console.log("Skop kriteria tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 

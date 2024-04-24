@@ -126,8 +126,8 @@ function ShowSkopKriteriaList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Semakan</th>
-              <th>Skop Kriteria Ketidakpatuhan</th>
+              <th>Nama Skop Semakan</th>
+              <th>Nama Skop Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
