@@ -71,7 +71,11 @@ function ShowSkopSemakanList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting skop semakan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, // Access the message from the backend response
+      });
       }
     }
   };
@@ -94,7 +98,7 @@ function ShowSkopSemakanList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Semakan</th>
+              <th>Nama Skop Semakan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
