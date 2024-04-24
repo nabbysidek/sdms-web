@@ -42,7 +42,11 @@ function EditSkopSemakan({skopSemakan}) {
           handleCloseEditSkopSemakan();
       }
   } catch (error) {
-      console.log("Skop Semakan tidak berjaya dikemaskini", error);
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error,
+    });
   }
   };
 

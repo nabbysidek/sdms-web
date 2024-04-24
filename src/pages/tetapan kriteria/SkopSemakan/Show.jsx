@@ -74,7 +74,7 @@ function ShowSkopSemakanList() {
         Swal.fire({
           icon: "error",
           title: "Gagal",
-          text: error.response.data.error, // Access the message from the backend response
+          text: error.response.data.error,
       });
       }
     }
