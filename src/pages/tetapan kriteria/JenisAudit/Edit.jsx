@@ -42,7 +42,11 @@ function EditJenisAudit({jenisAudit}) {
           handleCloseEditJenisAudit();
       }
   } catch (error) {
-      console.log("Jenis audit tidak berjaya dikemaskini", error);
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, // Access the message from the backend response
+    });
   }
   };
 
