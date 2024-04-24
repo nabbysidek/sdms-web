@@ -42,8 +42,11 @@ function CreateKakitangan() {
         handleCloseCreateKakitangan();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 
