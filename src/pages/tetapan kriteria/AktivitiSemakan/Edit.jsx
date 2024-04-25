@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditAktivitiSemakan({ aktivitiSemakan }) {
+function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
   // ----------------- FE -----------------
   // Manage modal visibility
   const [showEditAktivitiSemakan, setShowEditAktivitiSemakan] = useState(false);
@@ -18,10 +20,39 @@ function EditAktivitiSemakan({ aktivitiSemakan }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    handleCloseEditAktivitiSemakan();
-    console.log("Form submitted with data:", data);
-  };
+  // ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateAktivitiSemakan = async (aktivitiSemakanInput) => {
+    
+    try {
+      // Log skopKriteriaInput to see the data being sent to the server
+      console.log('Data being sent to server:', aktivitiSemakanInput);
+
+      // Ensure skopKriteriaId is defined and contains the correct value
+      console.log('aktivitiSemakanId:', aktivitiSemakan.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan/${aktivitiSemakan.id}`,
+          aktivitiSemakanInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Aktiviti Semakan berjaya dikemaskini");
+          handleCloseEditAktivitiSemakan();
+      }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, // Access the message from the backend response
+  });
+  }
+};
 
   return (
     <div>
@@ -42,59 +73,32 @@ function EditAktivitiSemakan({ aktivitiSemakan }) {
           <Modal.Title>Kemaskini Aktiviti Semakan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group>
-              <Form.Label>Skop Semakan</Form.Label>
-              <Controller
-                name="namaSkopSemakan"
-                control={control}
-                rules={{ required: "Sila pilih skop semakan" }}
-                render={({ field }) => (
-                  <>
-                    <Form.Select
-                      aria-label="skopSemakanSelect"
-                      onChange={(e) => {
-                        setValue("namaSkopSemakan", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      <option value="">Pilih Skop Semakan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                    {errors?.namaSkopSemakan && (
-                      <span className="error-message">
-                        {errors.namaSkopSemakan.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
+          <Form>
             <Form.Group>
               <Form.Label>Skop Kriteria Ketidakpatuhan</Form.Label>
               <Controller
-                name="namaSkopKriteriaKetidakpatuhan"
+                id="skopKriteriaId"
+                name="skopKriteriaId"
                 control={control}
-                rules={{ required: "Sila pilih kriteria ketidakpatuhan" }}
-                render={({ field }) => (
+                defaultValue={aktivitiSemakan.skopKriteriaId}
+                rules={{ required: "Sila pilih skop kriteria ketidakpatuhan" }}
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
-                      aria-label="skopKriteriaKetidakpatuhanSelect"
-                      onChange={(e) => {
-                        setValue("namaSkopKriteriaKetidakpatuhan", e.target.value);
-                      }}
-                      {...field}
+                      aria-label="skopKriteriaSelect"
+                      onChange={onChange}
+                      value={value}
                     >
-                      <option value="">Pilih Skop Kriteria Ketidakpatuhan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="" disabled>Pilih Skop Kriteria Ketidakpatuhan</option>
+                      {skopKriteriaOptions.map((skopKriteria) => (
+                        <option key={skopKriteria.value} value={skopKriteria.value}>
+                          {skopKriteria.label}
+                        </option>
+                      ))}
                     </Form.Select>
-                    {errors?.namaSkopKriteriaKetidakpatuhan && (
+                    {errors?.skopKriteriaId && (
                       <span className="error-message">
-                        {errors.namaSkopKriteriaKetidakpatuhan.message}
+                        {errors.skopKriteriaId.message}
                       </span>
                     )}
                   </>
@@ -129,7 +133,7 @@ function EditAktivitiSemakan({ aktivitiSemakan }) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateAktivitiSemakan)}>
             Kemaskini Aktiviti Semakan
           </Button>
         </Modal.Footer>
