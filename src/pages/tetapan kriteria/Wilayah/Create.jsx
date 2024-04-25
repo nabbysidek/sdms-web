@@ -41,7 +41,11 @@ function CreateWilayah() {
         handleCloseCreateWilayah();
       }
     } catch (error) {
-      console.log("Wilayah tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 

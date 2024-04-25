@@ -42,7 +42,11 @@ function EditWilayah({wilayah}) {
           handleCloseEditWilayah();
       }
   } catch (error) {
-      console.log("Wilayah tidak berjaya dikemaskini", error);
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error,
+  });
   }
   };
 

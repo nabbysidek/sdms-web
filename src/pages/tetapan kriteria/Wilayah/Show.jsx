@@ -69,7 +69,11 @@ function ShowWilayahList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting wilayah", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error,
+      });
       }
     }
   };
@@ -92,7 +96,7 @@ function ShowWilayahList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Wilayah</th>
+              <th>Nama Wilayah</th>
               <th>Tindakan</th>
             </tr>
           </thead>
