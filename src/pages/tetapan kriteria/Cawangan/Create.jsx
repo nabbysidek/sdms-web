@@ -4,7 +4,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
-function CreateCawangan() {
+function CreateCawangan({wilayahOptions}) {
   // ----------FE----------
   const [showCreateCawangan, setShowCreateCawangan] = useState(false);
 
@@ -23,27 +23,6 @@ function CreateCawangan() {
   } = useForm();
 
   // ----------BE----------
-  // Fetch wilayah data
-  const [wilayahData, setWilayahData] = useState([]);
-  useEffect(() => {
-    const fetchWilayahData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/wilayah/display-wilayah"
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setWilayahData(response.data); // Display all wilayah data
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching wilayah data:", error);
-      }
-    };
-
-    fetchWilayahData();
-  }, []);
-
   // Create cawangan
   const createCawangan = async (cawanganInput) => {
     try {
@@ -62,7 +41,11 @@ function CreateCawangan() {
         handleCloseCreateCawangan();
       }
     } catch (error) {
-      console.log("Kriteria ketidakpatuhan tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 
@@ -88,18 +71,17 @@ function CreateCawangan() {
               <Controller
                 id="wilayahId"
                 name="wilayahId"
-                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih wilayah" }}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
+                    <Form.Select aria-label="wilayahSelect" onChange={onChange} value={value}>
+                      <option value="">
                         Pilih Wilayah
                       </option>
-                      {wilayahData.map((wilayah) => (
-                        <option key={wilayah.id} value={wilayah.id}>
-                          {wilayah.namaWilayah}
+                      {wilayahOptions.map((wilayah) => (
+                        <option key={wilayah.value} value={wilayah.value}>
+                          {wilayah.label}
                         </option>
                       ))}
                     </Form.Select>
@@ -111,6 +93,32 @@ function CreateCawangan() {
                   </>
                 )}
               />
+              {/* <Controller
+                id="wilayahId"
+                name="wilayahId"
+                defaultValue=""
+                control={control}
+                rules={{ required: "Sila pilih wilayah" }}
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <Form.Select onChange={onChange} value={value}>
+                      <option value="" disabled>
+                        Pilih Wilayah
+                      </option>
+                      {wilayahOptions.map((wilayah) => (
+                        <option key={wilayah.value} value={wilayah.value}>
+                          {wilayah.label}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    {errors.wilayahId && (
+                      <span className="error-message">
+                        {errors.wilayahId.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              /> */}
             </Form.Group>
 
             <Form.Group>
