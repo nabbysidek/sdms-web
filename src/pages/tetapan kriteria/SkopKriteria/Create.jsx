@@ -64,7 +64,7 @@ function CreateSkopKriteria({skopSemakanOptions}) {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(createSkopKriteria)} onReset={reset}>
-          <Form.Group>
+            <Form.Group>
               <Form.Label>Skop Semakan</Form.Label>
               <Controller
                 id="skopSemakanId"
