@@ -25,10 +25,10 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
   const updateAktivitiSemakan = async (aktivitiSemakanInput) => {
     
     try {
-      // Log skopKriteriaInput to see the data being sent to the server
+      // Log aktivitiSemakanInput to see the data being sent to the server
       console.log('Data being sent to server:', aktivitiSemakanInput);
 
-      // Ensure skopKriteriaId is defined and contains the correct value
+      // Ensure aktivitiSemakanId is defined and contains the correct value
       console.log('aktivitiSemakanId:', aktivitiSemakan.id);
 
       const response = await axiosCustom.put(
