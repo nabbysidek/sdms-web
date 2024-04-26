@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan}) {
+function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOptions}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditKriteria, setShowEditKriteria] = useState(false);
@@ -14,11 +16,39 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan}) {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditKriteria();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
-  };
+  // ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateKriteriaKetidakpatuhan = async (kriteriaKetidakpatuhanInput) => {
+    
+    try {
+      // Log kriteriaKetidakpatuhanInput to see the data being sent to the server
+      console.log('Data being sent to server:', kriteriaKetidakpatuhanInput);
+
+      // Ensure kriteriaKetidakpatuhanId is defined and contains the correct value
+      console.log('kriteriaKetidakpatuhanId:', kriteriaKetidakpatuhan.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhan.id}`,
+          kriteriaKetidakpatuhanInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Skop Kriteria berjaya dikemaskini");
+          handleCloseEditKriteria();
+      }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, // Access the message from the backend response
+  });
+  }
+};
 
   return (
     <div>
@@ -37,89 +67,31 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan}) {
         </Modal.Header>
         <Modal.Body>
           <Form>
-          <Form.Group>
-              <Form.Label>Skop Semakan</Form.Label>
-              <Controller
-                name="namaSkopSemakan"
-                control={control}
-                rules={{ required: "Sila pilih skop semakan" }}
-                render={({ field }) => (
-                  <>
-                    <Form.Select
-                      aria-label="skopSemakanSelect"
-                      onChange={(e) => {
-                        setValue("namaSkopSemakan", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      <option value="">Pilih Skop Semakan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                    {errors?.namaSkopSemakan && (
-                      <span className="error-message">
-                        {errors.namaSkopSemakan.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Skop Kriteria</Form.Label>
-              <Controller
-                name="namaSkopKriteria"
-                control={control}
-                rules={{ required: "Sila pilih skop kriteria" }}
-                render={({ field }) => (
-                  <>
-                    <Form.Select
-                      aria-label="skopKriteriaSelect"
-                      onChange={(e) => {
-                        setValue("namaSkopKriteria", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      <option value="">Pilih Skop Kriteria</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                    {errors?.namaSkopKriteria && (
-                      <span className="error-message">
-                        {errors.namaSkopKriteria.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
-
             <Form.Group>
               <Form.Label>Aktiviti Semakan</Form.Label>
               <Controller
-                name="namaAktivitiSemakan"
+                name="aktivitiSemakanId"
+                id="aktivitiSemakanId"
                 control={control}
+                defaultValue={kriteriaKetidakpatuhan.aktivitiSemakanId}
                 rules={{ required: "Sila pilih aktiviti semakan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
                       aria-label="aktivitiSemakanSelect"
-                      onChange={(e) => {
-                        setValue("namaAktivitiSemakan", e.target.value);
-                      }}
-                      {...field}
+                      onChange={onChange}
+                      value={value}
                     >
-                      <option value="">Pilih Aktiviti Semakan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="" disabled>Pilih Aktiviti Semakan</option>
+                      {aktivitiSemakanOptions.map((aktivitiSemakan) => (
+                        <option key={aktivitiSemakan.value} value={aktivitiSemakan.value}>
+                          {aktivitiSemakan.label}
+                        </option>
+                      ))}
                     </Form.Select>
-                    {errors?.namaAktivitiSemakan && (
+                    {errors?.aktivitiSemakanId && (
                       <span className="error-message">
-                        {errors.namaAktivitiSemakan.message}
+                        {errors.aktivitiSemakanId.message}
                       </span>
                     )}
                   </>
@@ -133,7 +105,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan}) {
                 name="namaKriteriaKetidakpatuhan"
                 control={control}
                 defaultValue={kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan}
-                rules={{ required: "Nama kriteria baru diperlukan" }}
+                rules={{ required: "Nama kriteria ketidakpatuhan baru diperlukan" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
@@ -154,7 +126,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateKriteriaKetidakpatuhan)}>
             Kemaskini Kriteria Ketidakpatuhan
           </Button>
         </Modal.Footer>
