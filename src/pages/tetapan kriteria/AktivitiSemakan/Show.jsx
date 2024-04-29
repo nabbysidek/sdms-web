@@ -19,35 +19,6 @@ function ShowAktivitiSemakanList() {
 
   // ------------- BE -------------
   // Fetch options skop semakan data
-  const [namaSkopSemakanOptions, setNamaSkopSemakanOptions] = useState([]);
-
-  const fetchSkopSemakans = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/display-skop-semakan`
-      );
-
-      if (Array.isArray(response.data)) {
-        setNamaSkopSemakanOptions(
-          response.data.map((skopSemakan) => ({
-            value: skopSemakan.id,
-            label: skopSemakan.namaSkopSemakan,
-          }))
-        );
-      } else {
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setNamaSkopSemakanOptions]);
-
-  useEffect(() => {
-    fetchSkopSemakans();
-  }, [fetchSkopSemakans]);
-
-  // Fetch options skop semakan data
   const [namaSkopKriteriaOptions, setNamaSkopKriteriaOptions] = useState([]);
   
   const fetchSkopKriterias = useCallback(async () => {
@@ -126,6 +97,11 @@ function ShowAktivitiSemakanList() {
           );
         }
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, // Access the message from the backend response
+      });
         console.error("Error in deleting aktiviti semakan", error);
       }
     }
