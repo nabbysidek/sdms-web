@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditUnit({unit}) {
+function EditUnit({unit, jabatanOptions}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditUnit, setShowEditUnit] = useState(false);
@@ -14,11 +16,39 @@ function EditUnit({unit}) {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditUnit();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
-  };
+// ------------ BE -------------
+  // Set default values when the kemas kini modal is opened
+  const updateUnit = async (unitInput) => {
+    
+    try {
+      // Log unitInput to see the data being sent to the server
+      console.log('Data being sent to server:', unitInput);
+
+      // Ensure unitId is defined and contains the correct value
+      console.log('unitId:', unit.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/unit/${unit.id}`,
+          unitInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Unit berjaya dikemaskini");
+          handleCloseEditUnit();
+      }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, // Access the message from the backend response
+  });
+  }
+};
 
   return (
     <div>
@@ -38,58 +68,30 @@ function EditUnit({unit}) {
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Bahagian</Form.Label>
-              <Controller
-                name="namaBahagian"
-                control={control}
-                rules={{ required: "Sila pilih bahagian" }}
-                render={({ field }) => (
-                  <>
-                    <Form.Select
-                      aria-label="bahagianSelect"
-                      onChange={(e) => {
-                        setValue("namaBahagian", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      <option value="">Pilih Bahagian</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                    {errors?.namaBahagian && (
-                      <span className="error-message">
-                        {errors.namaBahagian.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
-
-            <Form.Group>
               <Form.Label>Jabatan</Form.Label>
               <Controller
-                name="namaJabatan"
+                name="jabatanId"
+                id="jabatanId"
                 control={control}
+                defaultValue={unit.jabatanId}
                 rules={{ required: "Sila pilih jabatan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
                       aria-label="jabatanSelect"
-                      onChange={(e) => {
-                        setValue("namaJabatan", e.target.value);
-                      }}
-                      {...field}
+                      onChange={onChange}
+                      value={value}
                     >
-                      <option value="">Pilih Jabatan</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="" disabled>Pilih Jabatan</option>
+                      {jabatanOptions.map((jabatan) => (
+                        <option key={jabatan.value} value={jabatan.value}>
+                          {jabatan.label}
+                        </option>
+                      ))}
                     </Form.Select>
-                    {errors?.namaJabatan && (
+                    {errors?.jabatanId && (
                       <span className="error-message">
-                        {errors.namaJabatan.message}
+                        {errors.jabatanId.message}
                       </span>
                     )}
                   </>
@@ -101,6 +103,7 @@ function EditUnit({unit}) {
               <Form.Label>Nama Unit</Form.Label>
               <Controller
                 name="namaUnit"
+                id="namaUnit"
                 control={control}
                 defaultValue={unit.namaUnit}
                 rules={{ required: "Unit baru diperlukan" }}
@@ -112,9 +115,9 @@ function EditUnit({unit}) {
                       value={value}
                       placeholder="Unit"
                     />
-                    {errors?.namaUnit && (
+                    {errors?.Unit && (
                       <span className="error-message">
-                        {errors.namaUnit.message}
+                        {errors.Unit.message}
                       </span>
                     )}
                   </>
@@ -124,7 +127,7 @@ function EditUnit({unit}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateUnit)}>
             Kemaskini Unit
           </Button>
         </Modal.Footer>

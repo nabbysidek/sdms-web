@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateUnit from "./Create";
 import EditUnit from "./Edit";
@@ -18,6 +18,35 @@ function ShowUnitList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
+  // Fetch options jabatan data
+  const [namaJabatanOptions, setNamaJabatanOptions] = useState([]);
+
+  const fetchJabatans = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/display-jabatan`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaJabatanOptions(
+          response.data.map((jabatan) => ({
+            value: jabatan.id,
+            label: jabatan.namaJabatan,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaJabatanOptions]);
+
+  useEffect(() => {
+    fetchJabatans();
+  }, [fetchJabatans]);
+
   // List unit
   const fetchUnits = async (page) => {
     try {
@@ -69,6 +98,11 @@ function ShowUnitList() {
           );
         }
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, // Access the message from the backend response
+      });
         console.error("Error in deleting unit", error);
       }
     }
@@ -83,7 +117,7 @@ function ShowUnitList() {
               <h3 className="table-title">Senarai Unit</h3>
             </div>
             <div className="col-md-2">
-              <CreateUnit />
+              <CreateUnit jabatanOptions={namaJabatanOptions} />
             </div>
           </Row>
         </div>
@@ -92,9 +126,9 @@ function ShowUnitList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Bahagian</th>
-              <th>Jabatan</th>
-              <th>Unit</th>
+              <th>Nama Bahagian</th>
+              <th>Nama Jabatan</th>
+              <th>Nama Unit</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -109,7 +143,7 @@ function ShowUnitList() {
                   </td>
                   <td>{unitsData.namaUnit}</td>
                   <td>
-                    <EditUnit unit={unitsData} />
+                    <EditUnit unit={unitsData} jabatanOptions={namaJabatanOptions} />
                     <Button
                       onClick={() => handleDeleteUnit(unitsData.id)}
                       className="delete-btn"
