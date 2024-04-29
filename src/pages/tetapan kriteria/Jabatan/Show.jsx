@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateJabatan from "./Create";
 import EditJabatan from "./Edit";
@@ -18,6 +18,36 @@ function Show() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
+  // Fetch options bahagian
+  const [namaBahagianOptions, setNamaBahagianOptions] = useState([]);
+
+  const fetchBahagians = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `tetapan-kriteria/bahagian/display-bahagian`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaBahagianOptions(
+          response.data.map((bahagian) => ({
+            value: bahagian.id,
+            label: bahagian.namaBahagian,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaBahagianOptions]);
+
+  useEffect(() => {
+    fetchBahagians();
+  }, [fetchBahagians]);
+
+
   // List jabatan
   const fetchJabatans = async (page) => {
     try {
@@ -93,7 +123,7 @@ function Show() {
               <h3 className="table-title">Senarai Jabatan</h3>
             </div>
             <div className="col-md-3">
-              <CreateJabatan />
+              <CreateJabatan bahagianOptions={namaBahagianOptions} />
             </div>
           </Row>
         </div>
@@ -119,7 +149,7 @@ function Show() {
                   </td>
                   <td>{jabatansData.namaJabatan}</td>
                   <td>
-                    <EditJabatan jabatan={jabatansData} />
+                    <EditJabatan jabatan={jabatansData} bahagianOptions={namaBahagianOptions} />
                     <Button
                       onClick={() => handleDeleteJabatan(jabatansData.id)}
                       className="delete-btn"

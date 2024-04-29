@@ -4,7 +4,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
-function CreateJabatan() {
+function CreateJabatan({bahagianOptions}) {
   // ----------FE----------
   const [showCreateJabatan, setShowCreateJabatan] = useState(false);
 
@@ -24,25 +24,26 @@ function CreateJabatan() {
 
   // ----------BE----------
   // Fetch bahagian data
-  const [bahagianData, setBahagianData] = useState([]);
-  useEffect(() => {
-    const fetchBahagianData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setBahagianData(response.data); // Set all bahagian data
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching Skop Kriteria data:", error);
-      }
-    };
+  // const [bahagianData, setBahagianData] = useState([]);
 
-    fetchBahagianData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchBahagianData = async () => {
+  //     try {
+  //       const response = await axiosCustom.get(
+  //         "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
+  //       );
+  //       if (Array.isArray(response.data) && response.data.length > 0) {
+  //         setBahagianData(response.data); // Set all bahagian data
+  //       } else {
+  //         console.error("Response data is not as expected:", response.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error while fetching Skop Kriteria data:", error);
+  //     }
+  //   };
+
+  //   fetchBahagianData();
+  // }, []);
 
   // Create jabatan
   const createJabatan = async (jabatanInput) => {
@@ -90,15 +91,15 @@ function CreateJabatan() {
                 name="bahagianId"
                 control={control}
                 rules={{ required: "Sila pilih bahagian" }}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
+                    <Form.Select onChange={onChange} value={value}>
+                      <option value="">
                         Pilih Bahagian
                       </option>
-                      {bahagianData.map((bahagian) => (
-                        <option key={bahagian.id} value={bahagian.id}>
-                          {bahagian.namaBahagian}
+                      {bahagianOptions.map((bahagian) => (
+                        <option key={bahagian.value} value={bahagian.value}>
+                          {bahagian.label}
                         </option>
                       ))}
                     </Form.Select>
