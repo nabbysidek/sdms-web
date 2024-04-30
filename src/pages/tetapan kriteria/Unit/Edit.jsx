@@ -17,7 +17,7 @@ function EditUnit({unit, jabatanOptions}) {
   const { errors } = formState;
 
 // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Handle update unit
   const updateUnit = async (unitInput) => {
     
     try {
@@ -36,7 +36,7 @@ function EditUnit({unit, jabatanOptions}) {
           Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success, 
           });
           console.log("Unit berjaya dikemaskini");
           handleCloseEditUnit();
@@ -45,7 +45,7 @@ function EditUnit({unit, jabatanOptions}) {
     Swal.fire({
       icon: "error",
       title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
+      text: error.response.data.error, 
   });
   }
 };

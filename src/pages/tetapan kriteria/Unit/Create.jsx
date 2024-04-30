@@ -23,48 +23,6 @@ function CreateUnit({jabatanOptions}) {
   } = useForm();
 
   // ----------BE----------
-  // Fetch bahagian data
-  // const [bahagianData, setBahagianData] = useState([]);
-  // useEffect(() => {
-  //   const fetchBahagianData = async () => {
-  //     try {
-  //       const response = await axiosCustom.get(
-  //         "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
-  //       );
-  //       if (Array.isArray(response.data) && response.data.length > 0) {
-  //         setBahagianData(response.data); // Set all bahagian data
-  //       } else {
-  //         console.error("Response data is not as expected:", response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error while fetching Bahagian data:", error);
-  //     }
-  //   };
-
-  //   fetchBahagianData();
-  // }, []);
-
-  // Fetch jabatan data
-  // const [jabatanData, setJabatanData] = useState([]);
-  // useEffect(() => {
-  //   const fetchJabatanData = async () => {
-  //     try {
-  //       const response = await axiosCustom.get(
-  //         "http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/display-jabatan"
-  //       );
-  //       if (Array.isArray(response.data) && response.data.length > 0) {
-  //         setJabatanData(response.data); // Set all bahagian data
-  //       } else {
-  //         console.error("Response data is not as expected:", response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error while fetching Skop Kriteria data:", error);
-  //     }
-  //   };
-
-  //   fetchJabatanData();
-  // }, []);
-
   // Create unit
   const createUnit = async (unitInput) => {
     try {
@@ -77,7 +35,7 @@ function CreateUnit({jabatanOptions}) {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         handleCloseCreateUnit();
       }
@@ -85,9 +43,8 @@ function CreateUnit({jabatanOptions}) {
       Swal.fire({
         icon: "error",
         title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+        text: error.response.data.error, 
     });
-      console.log("Unit tidak berjaya ditambah");
     }
   };
 

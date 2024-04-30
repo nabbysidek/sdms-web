@@ -47,6 +47,7 @@ function ShowUnitList() {
     fetchJabatans();
   }, [fetchJabatans]);
 
+
   // List unit
   const fetchUnits = async (page) => {
     try {
@@ -75,6 +76,7 @@ function ShowUnitList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteUnit = async (unitId) => {
     // Display a confirmation dialog
@@ -90,7 +92,7 @@ function ShowUnitList() {
           Swal.fire({
             icon: "success",
             title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
+            text: response.data.success, 
           });
 
           setUnits((prevUnits) =>
@@ -101,7 +103,7 @@ function ShowUnitList() {
         Swal.fire({
           icon: "error",
           title: "Gagal",
-          text: error.response.data.error, // Access the message from the backend response
+          text: error.response.data.error, 
       });
         console.error("Error in deleting unit", error);
       }
