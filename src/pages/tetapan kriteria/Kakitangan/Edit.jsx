@@ -21,7 +21,7 @@ function EditKakitangan({kakitangan}) {
   } = useForm();
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Handle update kakitangan
   const updateKakitangan = async (kakitanganInput) => {
     try {
       const response = await axiosCustom.put(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan/${kakitangan.id}`,
@@ -31,16 +31,15 @@ function EditKakitangan({kakitangan}) {
         Swal.fire({
             icon: "success",
             title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
+            text: response.data.success, 
         });
-        console.log("Kakitangan berjaya dikemaskini");
         handleCloseEditKakitangan();
     }
 } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
+      text: error.response.data.error, 
   });
 }
   };
