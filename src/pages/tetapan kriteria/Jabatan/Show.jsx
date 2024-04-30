@@ -86,6 +86,7 @@ function Show() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteJabatan = async (jabatanId) => {
     // Display a confirmation dialog
@@ -109,7 +110,11 @@ function Show() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting jabatan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error,
+        });
       }
     }
   };

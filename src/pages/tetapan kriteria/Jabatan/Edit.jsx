@@ -17,7 +17,7 @@ function EditJabatan({jabatan, bahagianOptions}) {
   const { errors } = formState;
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Handle update jabatan
   const updateJabatan = async (jabatanInput) => {
     
     try {
