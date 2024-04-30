@@ -73,7 +73,11 @@ function ShowBahagianList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting bahagian", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };

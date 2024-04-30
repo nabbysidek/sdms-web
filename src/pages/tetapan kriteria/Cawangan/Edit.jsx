@@ -16,7 +16,9 @@ function EditCawangan({cawangan, wilayahOptions}) {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  // Set default values when the kemas kini modal is opened
+
+  // ----------- BE ---------------
+  // Handle update cawangan
   const updateCawangan = async (cawanganInput) => {
     
     try {
@@ -35,7 +37,7 @@ function EditCawangan({cawangan, wilayahOptions}) {
           Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success, 
           });
           console.log("Cawangan berjaya dikemaskini");
           handleCloseEditCawangan();
@@ -44,7 +46,7 @@ function EditCawangan({cawangan, wilayahOptions}) {
     Swal.fire({
       icon: "error",
       title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
+      text: error.response.data.error, 
   });
   }
 };

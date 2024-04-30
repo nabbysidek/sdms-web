@@ -47,6 +47,7 @@ function ShowCawanganList() {
     fetchWilayahs();
   }, [fetchWilayahs]);
 
+
   // List cawangan
   const fetchCawangans = async (page) => {
     try {
@@ -75,6 +76,7 @@ function ShowCawanganList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteCawangan = async (cawanganId) => {
     // Display a confirmation dialog
@@ -98,7 +100,11 @@ function ShowCawanganList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting cawangan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };
