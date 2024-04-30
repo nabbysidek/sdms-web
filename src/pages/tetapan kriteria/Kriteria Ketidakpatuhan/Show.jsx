@@ -47,25 +47,6 @@ function ShowKriteriaKetidakpatuhanList() {
     fetchAktivitiSemakans();
   }, [fetchAktivitiSemakans]);
 
-  // useEffect(() => {
-  //   const fetchAktivitiSemakans = async () => {
-  //     try {
-  //       const response = await axiosCustom.get(
-  //         "http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan/display-aktiviti-semakan"
-  //       );
-  //       if (Array.isArray(response.data) && response.data.length > 0) {
-  //         setAktivitiSemakanData(response.data); // Set all skop kriteria data
-  //       } else {
-  //         console.error("Response data is not as expected:", response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error while fetching Aktiviti Semakan data:", error);
-  //     }
-  //   };
-
-  //   fetchAktivitiSemakanData();
-  // }, []);
-
 
   // List kriteria ketidakpatuhan
   const fetchKriteriaKetidakpatuhans = async (page) => {
@@ -98,6 +79,7 @@ function ShowKriteriaKetidakpatuhanList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteKriteriaKetidakpatuhan = async (
     kriteriaKetidakpatuhanId
@@ -126,7 +108,11 @@ function ShowKriteriaKetidakpatuhanList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting kriteria ketidakpatuhan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };

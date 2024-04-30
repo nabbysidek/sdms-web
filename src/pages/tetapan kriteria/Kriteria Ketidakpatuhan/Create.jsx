@@ -35,7 +35,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions}) {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("Kriteria ketidakpatuhan berjaya ditambah");
         handleCloseCreateKriteria();
@@ -44,7 +44,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions}) {
       Swal.fire({
         icon: "error",
         title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+        text: error.response.data.error, 
     });
     }
   };

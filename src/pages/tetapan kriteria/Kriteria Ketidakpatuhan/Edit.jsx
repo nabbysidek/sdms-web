@@ -17,7 +17,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
   const { errors } = formState;
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Handle update kriteria ketidakpatuhan
   const updateKriteriaKetidakpatuhan = async (kriteriaKetidakpatuhanInput) => {
     
     try {
@@ -36,16 +36,15 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
           Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success, 
           });
-          console.log("Skop Kriteria berjaya dikemaskini");
           handleCloseEditKriteria();
       }
   } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
+      text: error.response.data.error, 
   });
   }
 };
