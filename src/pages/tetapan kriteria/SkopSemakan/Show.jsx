@@ -18,7 +18,7 @@ function ShowSkopSemakanList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
-  // List kriteria ketidakpatuhan
+  // List skop semakan
   const fetchskopSemakans = async (page) => {
     try {
       const response = await axiosCustom.get(
@@ -45,6 +45,7 @@ function ShowSkopSemakanList() {
       clearInterval(interval);
     };
   }, [currentPage, totalPage]);
+
 
   // Handle delete
   const handleDeleteSkopSemakan = async (skopSemakanId) => {

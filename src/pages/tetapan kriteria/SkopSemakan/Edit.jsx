@@ -17,7 +17,7 @@ function EditSkopSemakan({skopSemakan}) {
   const { errors } = formState;
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // handle update of skop semakan
   const updateSkopSemakan = async (skopSemakanInput) => {
     
     try {
