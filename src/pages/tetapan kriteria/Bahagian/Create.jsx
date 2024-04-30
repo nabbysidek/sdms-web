@@ -42,7 +42,11 @@ function CreateBahagian() {
         handleCloseCreateBahagian();
       }
     } catch (error) {
-      console.log("Bahagian tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+    });
     }
   };
 

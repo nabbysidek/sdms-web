@@ -17,7 +17,7 @@ function EditBahagian({bahagian}) {
   const { errors } = formState;
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Update bahagian
   const updateBahagian = async (bahagianInput) => {
     
     try {
@@ -42,7 +42,11 @@ function EditBahagian({bahagian}) {
           handleCloseEditBahagian();
       }
   } catch (error) {
-      console.log("Bahagian tidak berjaya dikemaskini", error);
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, 
+  });
   }
   };
 

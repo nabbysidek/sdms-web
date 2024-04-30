@@ -18,7 +18,7 @@ function ShowBahagianList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
-  // List kriteria ketidakpatuhan
+  // List bahagians
   const fetchBahagians = async (page) => {
     try {
       const response = await axiosCustom.get(
@@ -48,6 +48,7 @@ function ShowBahagianList() {
       clearInterval(interval);
     };
   }, [currentPage, totalPage]);
+
 
   // Handle delete
   const handleDeleteBahagian = async (bahagianId) => {
