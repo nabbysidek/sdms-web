@@ -46,6 +46,7 @@ function ShowJenisAuditList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteJenisAudit = async (jenisAuditId) => {
     // Display a confirmation dialog
@@ -71,7 +72,11 @@ function ShowJenisAuditList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting jenis audit", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };
