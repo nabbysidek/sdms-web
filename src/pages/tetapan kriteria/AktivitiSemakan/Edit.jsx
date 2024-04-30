@@ -21,7 +21,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
   } = useForm();
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Update aktiviti semakan
   const updateAktivitiSemakan = async (aktivitiSemakanInput) => {
     
     try {
@@ -40,7 +40,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
           Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success,
           });
           console.log("Aktiviti Semakan berjaya dikemaskini");
           handleCloseEditAktivitiSemakan();
@@ -49,7 +49,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
     Swal.fire({
       icon: "error",
       title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
+      text: error.response.data.error, 
   });
   }
 };

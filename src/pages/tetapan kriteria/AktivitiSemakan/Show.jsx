@@ -18,7 +18,7 @@ function ShowAktivitiSemakanList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ------------- BE -------------
-  // Fetch options skop semakan data
+  // Fetch options skop kriteria data
   const [namaSkopKriteriaOptions, setNamaSkopKriteriaOptions] = useState([]);
   
   const fetchSkopKriterias = useCallback(async () => {
@@ -47,6 +47,7 @@ function ShowAktivitiSemakanList() {
     fetchSkopKriterias();
   }, [fetchSkopKriterias]);
 
+
   // List Aktiviti Semakan
   const fetchAktivitiSemakans = async (page) => {
     try {
@@ -73,6 +74,7 @@ function ShowAktivitiSemakanList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteAktivitiSemakan = async (aktivitiSemakanId) => {
     const confirmResult = await showConfirmationDialog();

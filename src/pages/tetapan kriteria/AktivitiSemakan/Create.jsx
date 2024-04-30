@@ -25,7 +25,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
   } = useForm();
 
   // ----------BE----------
-  // Fetch skop krtieria data
+  // Fetch skop kriteria data
   const [skopKriteriaData, setSkopKriteriaData] = useState([]);
 
   useEffect(() => {
