@@ -35,7 +35,7 @@ function CreateWilayah() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("Wilayah berjaya ditambah");
         handleCloseCreateWilayah();
@@ -44,7 +44,7 @@ function CreateWilayah() {
       Swal.fire({
         icon: "error",
         title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+        text: error.response.data.error, 
     });
     }
   };

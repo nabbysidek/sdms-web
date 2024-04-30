@@ -46,6 +46,7 @@ function ShowWilayahList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteWilayah = async (wilayahId) => {
     // Display a confirmation dialog
@@ -61,7 +62,7 @@ function ShowWilayahList() {
           Swal.fire({
             icon: "success",
             title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
+            text: response.data.success, 
           });
 
           setWilayahs((prevWilayahs) =>

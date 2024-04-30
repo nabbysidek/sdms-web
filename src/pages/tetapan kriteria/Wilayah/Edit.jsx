@@ -17,7 +17,7 @@ function EditWilayah({wilayah}) {
   const { errors } = formState;
 
   // ------------ BE -------------
-  // Set default values when the kemas kini modal is opened
+  // Handle update wilayah
   const updateWilayah = async (wilayahInput) => {
     
     try {
@@ -36,7 +36,7 @@ function EditWilayah({wilayah}) {
           Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success, 
           });
           console.log("Wilayah berjaya dikemaskini");
           handleCloseEditWilayah();
