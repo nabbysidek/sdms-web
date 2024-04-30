@@ -76,6 +76,7 @@ function ShowSkopKriteriaList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteSkopKriteria = async (skopKriteriaId) => {
     // Display a confirmation dialog
@@ -91,7 +92,7 @@ function ShowSkopKriteriaList() {
           Swal.fire({
             icon: "success",
             title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
+            text: response.data.success, 
           });
 
           setSkopKriterias((prevSkopKriterias) =>
@@ -101,7 +102,11 @@ function ShowSkopKriteriaList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting skop kriteria", error);
+        Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+    });
       }
     }
   };
