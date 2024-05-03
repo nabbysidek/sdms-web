@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Table, Dropdown, Container } from "react-bootstrap";
-import ModalAllowAccess from "./ModalAllowAccessPermohonanPengguna";
+import ModalAllowAccessPermohonanPengguna from "./ModalAllowAccessPermohonanPengguna";
 import ModalAllowAccessSenaraiPengguna from "./ModalAllowAccessSenaraiPengguna";
-import ModalRejectAccessSenaraiPengguna from "./ModalRejectAccessPermohonanPengguna";
+import ModalRejectAccessPermohonanPengguna from "./ModalRejectAccessPermohonanPengguna";
 import ModalTerminateAccessSenaraiPengguna from "./ModalTerminateAccessSenaraiPengguna";
 import "../../assets/styles/styles_tetapan_pengguna.css";
 import axiosCustom from "../../axios";
