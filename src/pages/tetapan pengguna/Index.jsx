@@ -6,7 +6,6 @@ import ModalRejectAccessPermohonanPengguna from "./ModalRejectAccessPermohonanPe
 import ModalTerminateAccessSenaraiPengguna from "./ModalTerminateAccessSenaraiPengguna";
 import "../../assets/styles/styles_tetapan_pengguna.css";
 import axiosCustom from "../../axios";
-import ModalRejectAccessPermohonanPengguna from "./ModalRejectAccessPermohonanPengguna";
 
 function IndexTetapanPengguna() {
   // -------------------- BE ---------------------------
