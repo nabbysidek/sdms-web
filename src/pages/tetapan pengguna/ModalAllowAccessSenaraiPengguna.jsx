@@ -90,4 +90,4 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
   );
 }
 
-export default ModalAllowAccess;
+export default ModalAllowAccessSenaraiPengguna;

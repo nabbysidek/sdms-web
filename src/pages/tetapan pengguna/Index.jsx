@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Table, Dropdown, Container } from "react-bootstrap";
-import ModalRejectAccess from "./ModalRejectAccess";
 import ModalAllowAccess from "./ModalAllowAccess";
-import ModalTerminateAccess from "./ModalTerminateAccess";
+import ModalAllowAccessSenaraiPengguna from "./ModalAllowAccessSenaraiPengguna";
+import ModalRejectAccessSenaraiPengguna from "./ModalRejectAccess";
+import ModalTerminateAccessSenaraiPengguna from "./ModalTerminateAccessSenaraiPengguna";
 import "../../assets/styles/styles_tetapan_pengguna.css";
 import axiosCustom from "../../axios";
 
@@ -174,13 +175,13 @@ function IndexTetapanPengguna() {
                       </Dropdown>
                     </td>
                     <td>
-                      <ModalAllowAccess
+                      <ModalAllowAccessSenaraiPengguna
                         disableButtonBenar={
                           senaraiPenggunaData.statusAuditor === "Benar"
                         }
                         userId={senaraiPenggunaData.id}
                       />
-                      <ModalTerminateAccess
+                      <ModalTerminateAccessSenaraiPengguna
                         disableButtonSekat={
                           senaraiPenggunaData.statusAuditor === "Sekat"
                         }
