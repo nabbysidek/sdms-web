@@ -4,7 +4,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalRejectAccess({ userId }) {
+function ModalRejectAccessPermohonanPengguna({ userId }) {
   // -------------------- FE ---------------------------
   const [showModalRejectAccess, setShowModalRejectAccess] = useState(false);
 
@@ -86,4 +86,4 @@ function ModalRejectAccess({ userId }) {
   );
 }
 
-export default ModalRejectAccess;
+export default ModalRejectAccessPermohonanPengguna;

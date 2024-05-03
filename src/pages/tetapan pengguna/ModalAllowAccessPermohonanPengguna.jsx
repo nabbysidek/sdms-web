@@ -4,7 +4,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalAllowAccess({ disableButtonBenar, userId }) {
+function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId }) {
   // -------------------- FE ---------------------------
   const [showModalAllowAccess, setShowModalAllowAccess] = useState(false);
 
@@ -46,7 +46,7 @@ function ModalAllowAccess({ disableButtonBenar, userId }) {
       });
     }
   };
-  
+
   return (
     <>
       <Button
@@ -90,4 +90,4 @@ function ModalAllowAccess({ disableButtonBenar, userId }) {
   );
 }
 
-export default ModalAllowAccess;
+export default ModalAllowAccessPermohonanPengguna;

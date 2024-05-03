@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Table, Dropdown, Container } from "react-bootstrap";
-import ModalAllowAccess from "./ModalAllowAccess";
+import ModalAllowAccess from "./ModalAllowAccessPermohonanPengguna";
 import ModalAllowAccessSenaraiPengguna from "./ModalAllowAccessSenaraiPengguna";
-import ModalRejectAccessSenaraiPengguna from "./ModalRejectAccess";
+import ModalRejectAccessSenaraiPengguna from "./ModalRejectAccessPermohonanPengguna";
 import ModalTerminateAccessSenaraiPengguna from "./ModalTerminateAccessSenaraiPengguna";
 import "../../assets/styles/styles_tetapan_pengguna.css";
 import axiosCustom from "../../axios";
+import ModalRejectAccessPermohonanPengguna from "./ModalRejectAccessPermohonanPengguna";
 
 function IndexTetapanPengguna() {
   // -------------------- BE ---------------------------
@@ -118,8 +119,8 @@ function IndexTetapanPengguna() {
                     <td>{permohonanAksesData.namaAuditor}</td>
                     <td>{permohonanAksesData.emelAuditor}</td>
                     <td>
-                      <ModalAllowAccess userId={permohonanAksesData.id} />
-                      <ModalRejectAccess userId={permohonanAksesData.id} />
+                      <ModalAllowAccessPermohonanPengguna userId={permohonanAksesData.id} />
+                      <ModalRejectAccessPermohonanPengguna userId={permohonanAksesData.id} />
                     </td>
                   </tr>
                 )
