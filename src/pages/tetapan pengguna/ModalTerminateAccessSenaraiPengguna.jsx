@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import axiosCustom from "../../axios";
+import Swal from "sweetalert2";
 
 function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
   const [showModalTerminateAccessSenaraiPengguna, setShowModalTerminateAccessSenaraiPengguna] =
@@ -9,6 +12,10 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
     setShowModalTerminateAccessSenaraiPengguna(false);
   const handleShowModalTerminateAccessSenaraiPengguna = () =>
     setShowModalTerminateAccessSenaraiPengguna(true);
+
+    // Form validation
+    const { handleSubmit, formState } = useForm();
+    const { errors } = formState;
 
     // -------------------- BE ---------------------------
     // Handle update tamatkan akses
@@ -45,7 +52,11 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
 
   return (
     <>
-      <Button className="delete-btn" onClick={handleShowModalTerminateAccessSenaraiPengguna} disabled={disableButtonSekat} >
+      <Button
+        className="delete-btn"
+        onClick={handleShowModalTerminateAccessSenaraiPengguna}
+        disabled={disableButtonSekat}
+      >
         Sekat Akses
       </Button>
 
@@ -58,20 +69,25 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
         <Modal.Header closeButton>
           <Modal.Title>Tamatkan Akses Pengguna?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Adakah anda pasti ingin menamatkan akses pengguna ini?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="btn-secondary"
-            onClick={handleCloseModalTerminateAccessSenaraiPengguna}
-          >
-            Tutup
-          </Button>
-          <Button className="btn-primary" onClick={handleSubmit(updateTamatkanAkses)}>
-            Tamatkan Akses
-          </Button>
-        </Modal.Footer>
+        <Form>
+          <Modal.Body>
+            Adakah anda pasti ingin menamatkan akses pengguna ini?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="btn-secondary"
+              onClick={handleCloseModalTerminateAccessSenaraiPengguna}
+            >
+              Tutup
+            </Button>
+            <Button
+              className="btn-primary"
+              onClick={handleSubmit(updateTamatkanAkses)}
+            >
+              Tamatkan Akses
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
