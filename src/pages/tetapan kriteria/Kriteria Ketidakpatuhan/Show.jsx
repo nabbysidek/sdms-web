@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
@@ -18,6 +18,36 @@ function ShowKriteriaKetidakpatuhanList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
+  // Fetch options aktiviti semakan
+  const [namaAktivitiSemakanOptions, setNamaAktivitiSemakanOptions] = useState([]);
+
+  const fetchAktivitiSemakans = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `tetapan-kriteria/aktiviti-semakan/display-aktiviti-semakan`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaAktivitiSemakanOptions(
+          response.data.map((aktivitiSemakan) => ({
+            value: aktivitiSemakan.id,
+            label: aktivitiSemakan.namaAktivitiSemakan,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaAktivitiSemakanOptions]);
+
+  useEffect(() => {
+    fetchAktivitiSemakans();
+  }, [fetchAktivitiSemakans]);
+
+
   // List kriteria ketidakpatuhan
   const fetchKriteriaKetidakpatuhans = async (page) => {
     try {
@@ -49,6 +79,7 @@ function ShowKriteriaKetidakpatuhanList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteKriteriaKetidakpatuhan = async (
     kriteriaKetidakpatuhanId
@@ -77,7 +108,11 @@ function ShowKriteriaKetidakpatuhanList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting kriteria ketidakpatuhan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };
@@ -92,7 +127,7 @@ function ShowKriteriaKetidakpatuhanList() {
             </Col>
 
             <Col xl={2}>
-              <CreateKriteriaKetidakpatuhan />
+              <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} />
             </Col>
           </Row>
         </div>
@@ -101,9 +136,9 @@ function ShowKriteriaKetidakpatuhanList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Semakan</th>
-              <th>Skop Kriteria Ketidakpatuhan</th>
-              <th>Aktiviti Semakan</th>
+              <th>Nama Skop Semakan</th>
+              <th>Nama Skop Kriteria Ketidakpatuhan</th>
+              <th>Nama Aktiviti Semakan</th>
               <th>Nama Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
             </tr>
@@ -136,7 +171,7 @@ function ShowKriteriaKetidakpatuhanList() {
                       {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
                     </td>
                     <td>
-                      <EditKriteriaKetidakpatuhan />
+                      <EditKriteriaKetidakpatuhan kriteriaKetidakpatuhan={kriteriaKetidakpatuhansData} aktivitiSemakanOptions={namaAktivitiSemakanOptions} />
                       <Button
                         onClick={() =>
                           handleDeleteKriteriaKetidakpatuhan(

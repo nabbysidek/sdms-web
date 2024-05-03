@@ -41,7 +41,11 @@ function CreateJenisAudit() {
         handleCloseCreateJenisAudit();
       }
     } catch (error) {
-      console.log("Jenis audit tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 

@@ -18,7 +18,7 @@ function ShowBahagianList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
-  // List kriteria ketidakpatuhan
+  // List bahagians
   const fetchBahagians = async (page) => {
     try {
       const response = await axiosCustom.get(
@@ -49,6 +49,7 @@ function ShowBahagianList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteBahagian = async (bahagianId) => {
     // Display a confirmation dialog
@@ -72,7 +73,11 @@ function ShowBahagianList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting bahagian", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };
@@ -106,7 +111,7 @@ function ShowBahagianList() {
                   <td>{key + 1}</td>
                   <td>{bahagiansData.namaBahagian}</td>
                   <td>
-                    <EditBahagian />
+                    <EditBahagian bahagian={bahagiansData} />
                     <Button
                       onClick={() => handleDeleteBahagian(bahagiansData.id)}
                       className="delete-btn"

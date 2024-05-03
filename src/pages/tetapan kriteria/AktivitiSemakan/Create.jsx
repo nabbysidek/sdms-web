@@ -4,7 +4,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
-function CreateAktivitiSemakan() {
+function CreateAktivitiSemakan({skopKriteriaOptions}) {
   // ----------------- FE -----------------
   // Manage modal visibility
   const [showCreateAktivitiSemakan, setShowCreateAktivitiSemakan] =
@@ -25,29 +25,7 @@ function CreateAktivitiSemakan() {
   } = useForm();
 
   // ----------BE----------
-  // Fetch skop semakan data
-  const [skopSemakanData, setSkopSemakanData] = useState([]);
-
-  useEffect(() => {
-    const fetchSkopSemakanData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/display-skop-semakan"
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setSkopSemakanData(response.data);
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching Skop Semakan data:", error);
-      }
-    };
-
-    fetchSkopSemakanData();
-  }, []);
-
-  // Fetch skop krtieria data
+  // Fetch skop kriteria data
   const [skopKriteriaData, setSkopKriteriaData] = useState([]);
 
   useEffect(() => {
@@ -87,7 +65,11 @@ function CreateAktivitiSemakan() {
         handleCloseCreateAktivitiSemakan();
       }
     } catch (error) {
-      console.log("Aktiviti semakan tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 
@@ -109,51 +91,21 @@ function CreateAktivitiSemakan() {
         <Modal.Body>
           <Form onSubmit={handleSubmit(CreateAktivitiSemakan)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Skop Semakan</Form.Label>
-              <Controller
-                id="skopSemakanId"
-                name="skopSemakanId"
-                defaultValue=""
-                control={control}
-                rules={{ required: "Sila pilih skop semakan" }}
-                render={({ field: { onChange } }) => (
-                  <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
-                        Pilih Skop Semakan
-                      </option>
-                      {skopSemakanData.map((skopSemakan) => (
-                        <option key={skopSemakan.id} value={skopSemakan.id}>
-                          {skopSemakan.namaSkopSemakan}
-                        </option>
-                      ))}
-                    </Form.Select>
-                    {errors.skopSemakanId && (
-                      <span className="error-message">
-                        {errors.skopSemakanId.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Skop Kriteria</Form.Label>
               <Controller
                 id="skopKriteriaId"
                 name="skopKriteriaId"
-                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih skop kriteria" }}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
+                    <Form.Select onChange={onChange} value={value}>
+                      <option value="">
                         Pilih Skop Kriteria
                       </option>
-                      {skopKriteriaData.map((skopKriteria) => (
-                        <option key={skopKriteria.id} value={skopKriteria.id}>
-                          {skopKriteria.namaSkopKriteria}
+                      {skopKriteriaOptions.map((skopKriteria) => (
+                        <option key={skopKriteria.value} value={skopKriteria.value}>
+                          {skopKriteria.label}
                         </option>
                       ))}
                     </Form.Select>

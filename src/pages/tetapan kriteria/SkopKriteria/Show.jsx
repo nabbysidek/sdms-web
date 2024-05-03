@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateSkopKriteria from "./Create";
 import EditSkopKriteria from "./Edit";
@@ -18,6 +18,36 @@ function ShowSkopKriteriaList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
+  // Fetch options skop semakan
+  const [namaSkopSemakanOptions, setNamaSkopSemakanOptions] = useState([]);
+
+  const fetchSkopSemakans = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `tetapan-kriteria/skop-semakan/display-skop-semakan`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaSkopSemakanOptions(
+          response.data.map((skopSemakan) => ({
+            value: skopSemakan.id,
+            label: skopSemakan.namaSkopSemakan,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaSkopSemakanOptions]);
+
+  useEffect(() => {
+    fetchSkopSemakans();
+  }, [fetchSkopSemakans]);
+
+
   // List skop kriteria
   const fetchSkopKriterias = async (page) => {
     try {
@@ -46,6 +76,7 @@ function ShowSkopKriteriaList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteSkopKriteria = async (skopKriteriaId) => {
     // Display a confirmation dialog
@@ -61,7 +92,7 @@ function ShowSkopKriteriaList() {
           Swal.fire({
             icon: "success",
             title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
+            text: response.data.success, 
           });
 
           setSkopKriterias((prevSkopKriterias) =>
@@ -71,7 +102,11 @@ function ShowSkopKriteriaList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting skop kriteria", error);
+        Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+    });
       }
     }
   };
@@ -87,7 +122,7 @@ function ShowSkopKriteriaList() {
               </h3>
             </div>
             <div className="col-md-2">
-              <CreateSkopKriteria />
+              <CreateSkopKriteria skopSemakanOptions={namaSkopSemakanOptions} />
             </div>
           </Row>
         </div>
@@ -96,8 +131,8 @@ function ShowSkopKriteriaList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Semakan</th>
-              <th>Skop Kriteria Ketidakpatuhan</th>
+              <th>Nama Skop Semakan</th>
+              <th>Nama Skop Kriteria Ketidakpatuhan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -113,7 +148,7 @@ function ShowSkopKriteriaList() {
                   </td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
-                    <EditSkopKriteria />
+                    <EditSkopKriteria skopKriteria={skopKriteriasData} skopSemakanOptions={namaSkopSemakanOptions} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopKriteria(skopKriteriasData.id)

@@ -18,7 +18,7 @@ function ShowSkopSemakanList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
-  // List kriteria ketidakpatuhan
+  // List skop semakan
   const fetchskopSemakans = async (page) => {
     try {
       const response = await axiosCustom.get(
@@ -46,6 +46,7 @@ function ShowSkopSemakanList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteSkopSemakan = async (skopSemakanId) => {
     // Display a confirmation dialog
@@ -71,7 +72,11 @@ function ShowSkopSemakanList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting skop semakan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error,
+      });
       }
     }
   };
@@ -94,7 +99,7 @@ function ShowSkopSemakanList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Semakan</th>
+              <th>Nama Skop Semakan</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -105,7 +110,7 @@ function ShowSkopSemakanList() {
                   <td>{key + 1}</td>
                   <td>{skopSemakansData.namaSkopSemakan}</td>
                   <td>
-                    <EditSkopSemakan />
+                    <EditSkopSemakan skopSemakan={skopSemakansData} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopSemakan(skopSemakansData.id)

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import axiosCustom from "./../../../axios";
+import Swal from "sweetalert2";
 
-function EditCawangan() {
+function EditCawangan({cawangan, wilayahOptions}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditCawangan, setShowEditCawangan] = useState(false);
@@ -14,11 +16,40 @@ function EditCawangan() {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditCwangan();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
-  };
+
+  // ----------- BE ---------------
+  // Handle update cawangan
+  const updateCawangan = async (cawanganInput) => {
+    
+    try {
+      // Log cawanganInput to see the data being sent to the server
+      console.log('Data being sent to server:', cawanganInput);
+
+      // Ensure cawanganId is defined and contains the correct value
+      console.log('cawanganId:', cawangan.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan/${cawangan.id}`,
+          cawanganInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, 
+          });
+          console.log("Cawangan berjaya dikemaskini");
+          handleCloseEditCawangan();
+      }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, 
+  });
+  }
+};
 
   return (
     <div>
@@ -40,26 +71,28 @@ function EditCawangan() {
             <Form.Group>
               <Form.Label>Wilayah</Form.Label>
               <Controller
-                name="wilayah"
+                id="wilayahId"
+                name="wilayahId"
                 control={control}
+                defaultValue={cawangan.wilayahId}
                 rules={{ required: "Sila pilih wilayah" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
                       aria-label="wilayahSelect"
-                      onChange={(e) => {
-                        setValue("wilayah", e.target.value);
-                      }}
-                      {...field}
+                      onChange={onChange}
+                      value={value}
                     >
-                      <option value="">Pilih Wilayah</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="" disabled>Pilih Wilayah</option>
+                      {wilayahOptions.map((wilayah) => (
+                        <option key={wilayah.value} value={wilayah.value}>
+                          {wilayah.label}
+                        </option>
+                      ))}
                     </Form.Select>
-                    {errors?.wilayah && (
+                    {errors?.wilayahId && (
                       <span className="error-message">
-                        {errors.wilayah.message}
+                        {errors.wilayahId.message}
                       </span>
                     )}
                   </>
@@ -70,19 +103,21 @@ function EditCawangan() {
             <Form.Group>
               <Form.Label>Nama Cawangan</Form.Label>
               <Controller
-                name="cawangan"
+                name="namaCawangan"
                 control={control}
+                defaultValue={cawangan.namaCawangan}
                 rules={{ required: "Nama cawangan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Cawangan"
-                      {...field}
                     />
-                    {errors?.cawangan && (
+                    {errors?.namaCawangan && (
                       <span className="error-message">
-                        {errors.cawangan.message}
+                        {errors.namaCawangan.message}
                       </span>
                     )}
                   </>
@@ -92,7 +127,7 @@ function EditCawangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateCawangan)}>
             Kemaskini Cawangan
           </Button>
         </Modal.Footer>

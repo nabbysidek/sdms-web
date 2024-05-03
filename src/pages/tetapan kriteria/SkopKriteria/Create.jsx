@@ -4,7 +4,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
-function CreateSkopKriteria() {
+function CreateSkopKriteria({skopSemakanOptions}) {
   // ----------FE----------
   const [showCreateSkopKriteria, setShowCreateSkopKriteria] = useState(false);
 
@@ -23,28 +23,6 @@ function CreateSkopKriteria() {
   } = useForm();
 
   // ----------BE----------
-  // Fetch skop semakan data
-  const [skopSemakanData, setSkopSemakanData] = useState([]);
-
-  useEffect(() => {
-    const fetchSkopSemakanData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/display-skop-semakan"
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setSkopSemakanData(response.data);
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching skop semakan data:", error);
-      }
-    };
-
-    fetchSkopSemakanData();
-  }, []);
-
   // Create skop kriteria
   const createSkopKriteria = async (skopKriteriaInput) => {
     try {
@@ -63,7 +41,11 @@ function CreateSkopKriteria() {
         handleCloseCreateSkopKriteria();
       }
     } catch (error) {
-      console.log("Skop kriteria tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 
@@ -82,23 +64,22 @@ function CreateSkopKriteria() {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(createSkopKriteria)} onReset={reset}>
-          <Form.Group>
+            <Form.Group>
               <Form.Label>Skop Semakan</Form.Label>
               <Controller
                 id="skopSemakanId"
                 name="skopSemakanId"
-                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih skop semakan" }}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
+                    <Form.Select aria-label="skopSemakanSelect" onChange={onChange} value={value}>
+                      <option value="">
                         Pilih Skop Semakan
                       </option>
-                      {skopSemakanData.map((skopSemakan) => (
-                        <option key={skopSemakan.id} value={skopSemakan.id}>
-                          {skopSemakan.namaSkopSemakan}
+                      {skopSemakanOptions.map((skopSemakan) => (
+                        <option key={skopSemakan.value} value={skopSemakan.value}>
+                          {skopSemakan.label}
                         </option>
                       ))}
                     </Form.Select>

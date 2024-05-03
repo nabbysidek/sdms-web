@@ -36,14 +36,17 @@ function CreateKakitangan() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
-        console.log("Kakitangan berjaya ditambah");
+
         handleCloseCreateKakitangan();
       }
     } catch (error) {
-      console.log("Api respond is not as expected");
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+    });
     }
   };
 

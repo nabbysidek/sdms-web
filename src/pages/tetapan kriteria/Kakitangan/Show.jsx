@@ -46,6 +46,7 @@ function ShowKakitanganList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteKakitangan = async (kakitanganId) => {
     // Display a confirmation dialog
@@ -71,7 +72,11 @@ function ShowKakitanganList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting kakitangan", error);
+        Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+    });
       }
     }
   };
@@ -107,7 +112,7 @@ function ShowKakitanganList() {
                   <td>{kakitangansData.idKakitangan}</td>
                   <td>{kakitangansData.namaKakitangan}</td>
                   <td>
-                    <EditKakitangan />
+                    <EditKakitangan kakitangan={kakitangansData} />
                     <Button
                       onClick={() => handleDeleteKakitangan(kakitangansData.id)}
                       className="delete-btn"

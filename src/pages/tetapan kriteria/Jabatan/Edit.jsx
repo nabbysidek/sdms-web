@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditJabatan() {
+function EditJabatan({jabatan, bahagianOptions}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditJabatan, setShowEditJabatan] = useState(false);
@@ -14,11 +16,39 @@ function EditJabatan() {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    handleCloseEditJabatan();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
-  };
+  // ------------ BE -------------
+  // Handle update jabatan
+  const updateJabatan = async (jabatanInput) => {
+    
+    try {
+      // Log jabatanInput to see the data being sent to the server
+      console.log('Data being sent to server:', jabatanInput);
+
+      // Ensure jabatanId is defined and contains the correct value
+      console.log('jabatanId:', jabatan.id);
+
+      const response = await axiosCustom.put(
+          `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/${jabatan.id}`,
+          jabatanInput
+      );
+
+      if (response.status === 200) {
+          Swal.fire({
+              icon: "success",
+              title: "Berjaya",
+              text: response.data.success, // Access the message from the backend response
+          });
+          console.log("Jabatan berjaya dikemaskini");
+          handleCloseEditJabatan();
+      }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, // Access the message from the backend response
+  });
+  }
+};
 
   return (
     <div>
@@ -40,22 +70,24 @@ function EditJabatan() {
             <Form.Group>
               <Form.Label>Bahagian</Form.Label>
               <Controller
-                name="bahagian"
+                name="bahagianId"
+                id="bahagianId"
                 control={control}
+                defaultValue={jabatan.bahagianId}
                 rules={{ required: "Sila pilih bahagian" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
                       aria-label="bahagianSelect"
-                      onChange={(e) => {
-                        setValue("bahagian", e.target.value);
-                      }}
-                      {...field}
+                      onChange={onChange}
+                      value={value}
                     >
-                      <option value="">Pilih Bahagian</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="" disabled>Pilih Bahagian</option>
+                      {bahagianOptions.map((bahagian) => (
+                        <option key={bahagian.value} value={bahagian.value}>
+                          {bahagian.label}
+                        </option>
+                      ))}
                     </Form.Select>
                     {errors?.bahagian && (
                       <span className="error-message">
@@ -70,19 +102,21 @@ function EditJabatan() {
             <Form.Group>
               <Form.Label>Nama Jabatan</Form.Label>
               <Controller
-                name="jabatan"
+                name="namaJabatan"
                 control={control}
+                defaultValue={jabatan.namaJabatan}
                 rules={{ required: "Nama jabatan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Jabatan"
-                      {...field}
                     />
-                    {errors?.jabatan && (
+                    {errors?.namaJabatan && (
                       <span className="error-message">
-                        {errors.jabatan.message}
+                        {errors.namaJabatan.message}
                       </span>
                     )}
                   </>
@@ -92,7 +126,7 @@ function EditJabatan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateJabatan)}>
             Kemaskini Jabatan
           </Button>
         </Modal.Footer>

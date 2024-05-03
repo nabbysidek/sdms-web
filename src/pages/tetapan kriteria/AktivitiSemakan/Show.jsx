@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateAktivitiSemakan from "./Create";
 import EditAktivitiSemakan from "./Edit";
@@ -18,6 +18,36 @@ function ShowAktivitiSemakanList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ------------- BE -------------
+  // Fetch options skop kriteria data
+  const [namaSkopKriteriaOptions, setNamaSkopKriteriaOptions] = useState([]);
+  
+  const fetchSkopKriterias = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/display-skop-kriteria`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaSkopKriteriaOptions(
+          response.data.map((skopKriteria) => ({
+            value: skopKriteria.id,
+            label: skopKriteria.namaSkopKriteria,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaSkopKriteriaOptions]);
+
+  useEffect(() => {
+    fetchSkopKriterias();
+  }, [fetchSkopKriterias]);
+
+
   // List Aktiviti Semakan
   const fetchAktivitiSemakans = async (page) => {
     try {
@@ -44,6 +74,7 @@ function ShowAktivitiSemakanList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteAktivitiSemakan = async (aktivitiSemakanId) => {
     const confirmResult = await showConfirmationDialog();
@@ -68,6 +99,11 @@ function ShowAktivitiSemakanList() {
           );
         }
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, // Access the message from the backend response
+      });
         console.error("Error in deleting aktiviti semakan", error);
       }
     }
@@ -82,7 +118,7 @@ function ShowAktivitiSemakanList() {
               <h3 className="table-title">Senarai Aktiviti Semakan</h3>
             </div>
             <div className="col-md-2">
-              <CreateAktivitiSemakan />
+              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} />
             </div>
           </Row>
         </div>
@@ -91,8 +127,8 @@ function ShowAktivitiSemakanList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Skop Semakan</th>
-              <th>Skop Kriteria Ketidakpatuhan</th>
+              <th>Nama Skop Semakan</th>
+              <th>Nama Skop Kriteria Ketidakpatuhan</th>
               <th>Nama Aktiviti Semakan</th>
               <th>Tindakan</th>
             </tr>
@@ -115,7 +151,7 @@ function ShowAktivitiSemakanList() {
                   </td>
                   <td>{aktivitiSemakansData.namaAktivitiSemakan}</td>
                   <td>
-                    <EditAktivitiSemakan />
+                    <EditAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} aktivitiSemakan={aktivitiSemakansData} />
                     <Button
                       onClick={() =>
                         handleDeleteAktivitiSemakan(aktivitiSemakansData.id)

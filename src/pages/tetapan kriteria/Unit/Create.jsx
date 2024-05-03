@@ -4,7 +4,7 @@ import { Button, Modal, Form, FormControl } from "react-bootstrap";
 import axiosCustom from "./../../../axios";
 import Swal from "sweetalert2";
 
-function CreateUnit() {
+function CreateUnit({jabatanOptions}) {
   // ----------FE----------
   const [showCreateUnit, setShowCreateUnit] = useState(false);
 
@@ -23,48 +23,6 @@ function CreateUnit() {
   } = useForm();
 
   // ----------BE----------
-  // Fetch bahagian data
-  const [bahagianData, setBahagianData] = useState([]);
-  useEffect(() => {
-    const fetchBahagianData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/display-bahagian"
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setBahagianData(response.data); // Set all bahagian data
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching Bahagian data:", error);
-      }
-    };
-
-    fetchBahagianData();
-  }, []);
-
-  // Fetch jabatan data
-  const [jabatanData, setJabatanData] = useState([]);
-  useEffect(() => {
-    const fetchJabatanData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/display-jabatan"
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setJabatanData(response.data); // Set all bahagian data
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching Skop Kriteria data:", error);
-      }
-    };
-
-    fetchJabatanData();
-  }, []);
-
   // Create unit
   const createUnit = async (unitInput) => {
     try {
@@ -77,12 +35,16 @@ function CreateUnit() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         handleCloseCreateUnit();
       }
     } catch (error) {
-      console.log("Unit tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+    });
     }
   };
 
@@ -104,52 +66,21 @@ function CreateUnit() {
         <Modal.Body>
           <Form onSubmit={handleSubmit(createUnit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Bahagian</Form.Label>
-              <Controller
-                id="bahagianId"
-                name="bahagianId"
-                defaultValue=""
-                control={control}
-                rules={{ required: "Sila pilih bahagian" }}
-                render={({ field: { onChange } }) => (
-                  <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
-                        Pilih Bahagian
-                      </option>
-                      {bahagianData.map((bahagian) => (
-                        <option key={bahagian.id} value={bahagian.id}>
-                          {bahagian.namaBahagian}
-                        </option>
-                      ))}
-                    </Form.Select>
-                    {errors.bahagianId && (
-                      <span className="error-message">
-                        {errors.bahagianId.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
-
-            <Form.Group>
               <Form.Label>Jabatan</Form.Label>
               <Controller
                 id="jabatanId"
                 name="jabatanId"
-                defaultValue=""
                 control={control}
                 rules={{ required: "Sila pilih jabatan" }}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select onChange={onChange} defaultValue="">
-                      <option value="" disabled>
+                    <Form.Select onChange={onChange} value={value}>
+                      <option value="">
                         Pilih Jabatan
                       </option>
-                      {jabatanData.map((jabatan) => (
-                        <option key={jabatan.id} value={jabatan.id}>
-                          {jabatan.namaJabatan}
+                      {jabatanOptions.map((jabatan) => (
+                        <option key={jabatan.value} value={jabatan.value}>
+                          {jabatan.label}
                         </option>
                       ))}
                     </Form.Select>

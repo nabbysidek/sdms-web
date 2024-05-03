@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateCawangan from "./Create";
 import EditCawangan from "./Edit";
@@ -18,6 +18,36 @@ function ShowCawanganList() {
   const [totalPage, setTotalPage] = useState(1);
 
   // ----------BE----------
+  // Fetch wilayah data
+  const [namaWilayahOptions, setNamaWilayahOptions] = useState([]);
+
+  const fetchWilayahs = useCallback(async () => {
+    try {
+      const response = await axiosCustom.get(
+        `tetapan-kriteria/wilayah/display-wilayah`
+      );
+
+      if (Array.isArray(response.data)) {
+        setNamaWilayahOptions(
+          response.data.map((wilayah) => ({
+            value: wilayah.id,
+            label: wilayah.namaWilayah,
+          }))
+        );
+      } else {
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setNamaWilayahOptions]);
+
+  useEffect(() => {
+    fetchWilayahs();
+  }, [fetchWilayahs]);
+
+
   // List cawangan
   const fetchCawangans = async (page) => {
     try {
@@ -46,6 +76,7 @@ function ShowCawanganList() {
     };
   }, [currentPage, totalPage]);
 
+  
   // Handle delete
   const handleDeleteCawangan = async (cawanganId) => {
     // Display a confirmation dialog
@@ -69,7 +100,11 @@ function ShowCawanganList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting cawangan", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error, 
+      });
       }
     }
   };
@@ -83,7 +118,7 @@ function ShowCawanganList() {
               <h3 className="table-title">Senarai Cawangan</h3>
             </div>
             <div className="col-md-2">
-              <CreateCawangan />
+              <CreateCawangan wilayahOptions={namaWilayahOptions} />
             </div>
           </Row>
         </div>
@@ -109,7 +144,7 @@ function ShowCawanganList() {
                   </td>
                   <td>{cawangansData.namaCawangan}</td>
                   <td>
-                    <EditCawangan />
+                    <EditCawangan cawangan={cawangansData} wilayahOptions={namaWilayahOptions} />
                     <Button
                       onClick={() => handleDeleteCawangan(cawangansData.id)}
                       className="delete-btn"

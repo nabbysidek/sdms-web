@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
+import axiosCustom from "../../../axios";
+import Swal from "sweetalert2";
 
-function EditKakitangan() {
+function EditKakitangan({kakitangan}) {
   // ----- FE ---------
   // Handle modal
   const [showEditKakitangan, setShowEditKakitangan] = useState(false);
@@ -11,13 +13,35 @@ function EditKakitangan() {
   const handleShowEditKakitangan = () => setShowEditKakitangan(true);
 
   // Form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const onSubmit = (data) => {
-    handleCloseEditKakitangan();
-    // Perform your submit logic here
-    console.log("Form submitted with data:", data);
+  // ------------ BE -------------
+  // Handle update kakitangan
+  const updateKakitangan = async (kakitanganInput) => {
+    try {
+      const response = await axiosCustom.put(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan/${kakitangan.id}`,
+      kakitanganInput);
+  
+      if (response.status === 200) {
+        Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success, 
+        });
+        handleCloseEditKakitangan();
+    }
+} catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal",
+      text: error.response.data.error, 
+  });
+}
   };
 
   return (
@@ -36,19 +60,22 @@ function EditKakitangan() {
           <Modal.Title>Kemaskini Kakitangan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(updateKakitangan)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Kakitangan</Form.Label>
               <Controller
+                id="namaKakitangan"
                 name="namaKakitangan"
                 control={control}
+                defaultValue={kakitangan.namaKakitangan}
                 rules={{ required: "Nama kakitangan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="Nama Kakitangan"
-                      {...field}
                     />
                     {errors?.namaKakitangan && (
                       <span className="error-message">
@@ -62,15 +89,18 @@ function EditKakitangan() {
             <Form.Group>
               <Form.Label>ID Kakitangan</Form.Label>
               <Controller
+                id="idKakitangan"
                 name="idKakitangan"
                 control={control}
+                defaultValue={kakitangan.idKakitangan}
                 rules={{ required: "ID kakitangan baru diperlukan" }}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
+                      onChange={onChange}
+                      value={value}
                       placeholder="ID Kakitangan"
-                      {...field}
                     />
                     {errors?.idKakitangan && (
                       <span className="error-message">
@@ -84,7 +114,7 @@ function EditKakitangan() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(updateKakitangan)}>
             Kemaskini Kakitangan
           </Button>
         </Modal.Footer>

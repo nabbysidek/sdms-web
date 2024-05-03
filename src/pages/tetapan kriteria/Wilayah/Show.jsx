@@ -46,6 +46,7 @@ function ShowWilayahList() {
     };
   }, [currentPage, totalPage]);
 
+
   // Handle delete
   const handleDeleteWilayah = async (wilayahId) => {
     // Display a confirmation dialog
@@ -61,7 +62,7 @@ function ShowWilayahList() {
           Swal.fire({
             icon: "success",
             title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
+            text: response.data.success, 
           });
 
           setWilayahs((prevWilayahs) =>
@@ -69,7 +70,11 @@ function ShowWilayahList() {
           );
         }
       } catch (error) {
-        console.error("Error in deleting wilayah", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error,
+      });
       }
     }
   };
@@ -92,7 +97,7 @@ function ShowWilayahList() {
           <thead>
             <tr>
               <th>Bil</th>
-              <th>Wilayah</th>
+              <th>Nama Wilayah</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -103,7 +108,7 @@ function ShowWilayahList() {
                   <td>{key + 1}</td>
                   <td>{wilayahsData.namaWilayah}</td>
                   <td>
-                    <EditWilayah />
+                    <EditWilayah wilayah={wilayahsData} />
                     <Button
                       onClick={() => handleDeleteWilayah(wilayahsData.id)}
                       className="delete-btn"

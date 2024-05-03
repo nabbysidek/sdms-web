@@ -41,7 +41,11 @@ function CreateSkopSemakan() {
         handleCloseCreateSkopSemakan();
       }
     } catch (error) {
-      console.log("Skop semakan tidak berjaya ditambah");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+    });
     }
   };
 
