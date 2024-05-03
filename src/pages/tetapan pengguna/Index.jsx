@@ -8,9 +8,55 @@ import axiosCustom from "../../axios";
 
 function IndexTetapanPengguna() {
   // -------------------- BE ---------------------------
+  // Fetch permohonan akses
+  const [permohonanAkses, setPermohonanAkses] = useState([]);
+
+  const fetchPermohonanAkses = async () => {
+    try {
+      const response = await axiosCustom.get(
+        `/tetapan-pengguna/tetapan-akses-pengguna/permohonan-akses`
+      );
+
+      if (response.status >= 200 && response.status < 300) {
+        setPermohonanAkses(response.data);
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPermohonanAkses();
+  }, []);
+
+  // Fetch senarai pengguna
+  const [senaraiPengguna, setSenaraiPengguna] = useState([]);
+
+  const fetchSenaraiPengguna = async () => {
+    try {
+      const response = await axiosCustom.get(
+        `/tetapan-pengguna/tetapan-akses-pengguna/senarai-pengguna`
+      );
+
+      if (response.status >= 200 && response.status < 300) {
+        setSenaraiPengguna(response.data);
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSenaraiPengguna();
+  }, []);
+
   // Fetch peranan for the dropdown
   const [perananOptions, setPerananOptions] = useState([]);
-
+  
   const fetchPeranans = useCallback(async () => {
     try {
       const response = await axiosCustom.get(`/get-peranan`);
@@ -22,40 +68,15 @@ function IndexTetapanPengguna() {
             label: peranan.namaPeranan,
           }))
         );
-      } else {
-        console.log(response.data);
       }
     } catch (error) {
       console.log(error);
     }
   }, [setPerananOptions]);
-
+  
   useEffect(() => {
     fetchPeranans();
   }, [fetchPeranans]);
-
-  // Fetch tetapan akses pengguna
-  const [tetapanAksesPengguna, setTetapanAksesPengguna] = useState({});
-
-  const fetchTetapanAksesPenggunas = async () => {
-    try {
-      const response = await axiosCustom.get(
-        `/tetapan-pengguna/tetapan-akses-pengguna`
-      );
-
-      if (response.status >= 200 && response.status < 300) {
-        setTetapanAksesPengguna(response.data);
-      } else {
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTetapanAksesPenggunas();
-  }, []);
 
   return (
     <>
@@ -81,24 +102,23 @@ function IndexTetapanPengguna() {
             </tr>
           </thead>
           <tbody>
-            {tetapanAksesPengguna.length === 0 ? (
+            {permohonanAkses.length === 0 ? (
               <tr>
                 <td colSpan="5">
                   <center>Tiada rekod.</center>
                 </td>
               </tr>
             ) : (
-              tetapanAksesPengguna.permohonanAkses &&
-              tetapanAksesPengguna.permohonanAkses.data.map(
-                (tetapanAksesPenggunaData, key) => (
+              permohonanAkses.map(
+                (permohonanAksesData, key) => (
                   <tr key={key}>
                     <td>{key + 1}</td>
-                    <td>{tetapanAksesPenggunaData.idAuditor}</td>
-                    <td>{tetapanAksesPenggunaData.namaAuditor}</td>
-                    <td>{tetapanAksesPenggunaData.emelAuditor}</td>
+                    <td>{permohonanAksesData.idAuditor}</td>
+                    <td>{permohonanAksesData.namaAuditor}</td>
+                    <td>{permohonanAksesData.emelAuditor}</td>
                     <td>
-                      <ModalAllowAccess />
-                      <ModalRejectAccess />
+                      <ModalAllowAccess userId={permohonanAksesData.id} />
+                      <ModalRejectAccess userId={permohonanAksesData.id} />
                     </td>
                   </tr>
                 )
@@ -123,15 +143,14 @@ function IndexTetapanPengguna() {
             </tr>
           </thead>
           <tbody>
-            {tetapanAksesPengguna.length < 0 ? (
+            {senaraiPengguna.length < 0 ? (
               <tr>
                 <td colSpan="7">
                   <center>Tiada rekod.</center>
                 </td>
               </tr>
             ) : (
-              tetapanAksesPengguna.senaraiPengguna &&
-              tetapanAksesPengguna.senaraiPengguna.data.map(
+              senaraiPengguna.map(
                 (senaraiPenggunaData, key) => (
                   <tr key={key}>
                     <td>{key + 1}</td>
@@ -159,11 +178,13 @@ function IndexTetapanPengguna() {
                         disableButtonBenar={
                           senaraiPenggunaData.statusAuditor === "Benar"
                         }
+                        userId={senaraiPenggunaData.id}
                       />
                       <ModalTerminateAccess
                         disableButtonSekat={
                           senaraiPenggunaData.statusAuditor === "Sekat"
                         }
+                        userId={senaraiPenggunaData.id}
                       />
                     </td>
                   </tr>

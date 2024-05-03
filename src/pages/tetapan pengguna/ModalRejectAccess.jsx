@@ -1,11 +1,51 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { useForm, Controller } from "react-hook-form";
+import { Modal, Button, Form } from "react-bootstrap";
+import axiosCustom from "../../axios";
+import Swal from "sweetalert2";
 
-function ModalRejectAccess() {
+function ModalRejectAccess({ userId }) {
+  // -------------------- FE ---------------------------
   const [showModalRejectAccess, setShowModalRejectAccess] = useState(false);
 
   const handleCloseModalRejectAccess = () => setShowModalRejectAccess(false);
   const handleShowModalRejectAccess = () => setShowModalRejectAccess(true);
+
+  // Form validation
+  const { handleSubmit, formState } = useForm();
+  const { errors } = formState;
+
+  // -------------------- BE ---------------------------
+  // Handle update tolak permohonan akses
+  const updateTolakPermohonanAkses = async () => {
+    try {
+      const response = await axiosCustom.put(
+        `http://127.0.0.1:8000/api/tetapan-pengguna/permohonan-akses/tolak-akses/${userId}`
+      );
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berjaya",
+          text: response.data.success, // Access the message from the backend response
+        });
+
+        handleCloseModalRejectAccess();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: response.data.error, // Access the message from the backend response
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, // Access the message from the backend response
+      });
+    }
+  };
 
   return (
     <>
@@ -22,18 +62,25 @@ function ModalRejectAccess() {
         <Modal.Header closeButton>
           <Modal.Title>Tolak Permintaan Akses?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Adakah anda pasti ingin menolak permintaan akses pengguna ini?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="btn-secondary"
-            onClick={handleCloseModalRejectAccess}
-          >
-            Tutup
-          </Button>
-          <Button className="btn-primary">Tolak Akses</Button>
-        </Modal.Footer>
+        <Form>
+          <Modal.Body>
+            Adakah anda pasti ingin menolak permintaan akses pengguna ini?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="btn-secondary"
+              onClick={handleCloseModalRejectAccess}
+            >
+              Tutup
+            </Button>
+            <Button
+              className="btn-primary"
+              onClick={handleSubmit(updateTolakPermohonanAkses)}
+            >
+              Tolak Akses
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
