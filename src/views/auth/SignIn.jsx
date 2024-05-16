@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm, useController } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, InputGroup } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
@@ -10,7 +11,7 @@ import axiosCustom from "../../axios";
 
 
 // NEW
-const ControlledInput = ({ name, label, control, rules, type, placeholder }) => {
+const ControlledInput = ({ name, label, control, rules, type, placeholder, togglePassword, handleToggle }) => {
   const {
     field,
     fieldState: { error },
@@ -18,15 +19,23 @@ const ControlledInput = ({ name, label, control, rules, type, placeholder }) => 
   return (
     <Form.Group controlId={name} className="mb-3">
       <Form.Label>{label}</Form.Label>
-      <Form.Control
-        type={type}
-        {...field}
-        isInvalid={!!error}
-        placeholder={placeholder}
-      />
-      <Form.Control.Feedback type="invalid">
-        {error?.message}
-      </Form.Control.Feedback>
+      <InputGroup>
+        <Form.Control
+          type={type}
+          style={{ borderRadius: '0px' }}
+          {...field}
+          isInvalid={!!error}
+          placeholder={placeholder}
+        />
+        {togglePassword && (
+          <InputGroup.Text onClick={handleToggle} style={{ cursor: 'pointer' }}>
+            {type === "password" ? <FaEye /> : <FaEyeSlash />}
+          </InputGroup.Text>
+        )}
+        <Form.Control.Feedback type="invalid">
+          {error?.message}
+        </Form.Control.Feedback>
+      </InputGroup>
     </Form.Group>
   );
 };
@@ -36,6 +45,8 @@ function SignIn() {
   // -------------------- FE ---------------------------
   // Forgot Password Modal
   const [showModal, setShowModal] = useState(false);
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -109,9 +120,17 @@ function SignIn() {
               value: 8,
               message: "Minima 8 karakter",
             },
+            pattern: {
+              value:
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
+              message:
+                "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf, satu nombor, dan satu simbol khas",
+            },
           }}
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Kata laluan anda"
+          togglePassword
+          handleToggle={() => setShowPassword(!showPassword)}
         />
 
         {/* <Form.Group controlId="idAuditor" className="mb-3">
