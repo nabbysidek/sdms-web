@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, InputGroup } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axiosCustom from "../../axios";
+import Swal from "sweetalert2";
 
 function SetPassword() {
   // ------------------- FE ---------------------
@@ -12,6 +14,14 @@ function SetPassword() {
     watch,
   } = useForm();
 
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
+  // Toggle password visibility
+  const toggleShowPassword = () => setShowPassword(!showPassword);
+  const toggleShowNewPassword = () => setShowNewPassword(!showNewPassword);
+
   // ------------------- BE ---------------------
   // Edit password
   const handleUpdatePassword = async (setPasswordInput) => {
@@ -19,12 +29,24 @@ function SetPassword() {
       const response = await axiosCustom.put(`set-kata-laluan`, setPasswordInput);
 
       if (response.status >= 200 && response.status < 300) {
-        console.log("Berjaya set password");
+        Swal.fire({
+          icon: "success",
+          title: "Berjaya",
+          text: response.data.success, 
+        });
       } else {
-        console.log("Response data:", response.data);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: response.data.error, 
+        });
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.error, 
+      });
     }
   };
 
@@ -33,50 +55,62 @@ function SetPassword() {
       <Form onSubmit={handleSubmit(handleUpdatePassword)}>
         <Form.Group controlId="kataLaluanAuditor">
           <Form.Label className="form-label">Kata Laluan</Form.Label>
-          <Form.Control
-            type="password"
-            {...register("kataLaluanAuditor", {
-              required: true,
-              minLength: 8,
-            })}
-            aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
-            placeholder="Kata laluan anda"
-          />
-          {errors.kataLaluanAuditor?.type === "required" && (
+          <InputGroup>
+            <Form.Control
+              type={showPassword ? "text" : "password"}
+              {...register("kataLaluanAuditor", {
+                required: "Kata laluan diperlukan",
+                minLength: { value: 8, message: "Minima 8 karakter" },
+                pattern: {
+                  value:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
+                  message:
+                    "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf, satu nombor, dan satu simbol khas",
+                },
+              })}
+              aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
+              placeholder="Kata laluan anda"
+            />
+            <Button variant="outline-secondary" onClick={toggleShowPassword}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          </InputGroup>
+          {errors.kataLaluanAuditor && (
             <p role="alert" className="error-message">
-              Kata laluan diperlukan
-            </p>
-          )}
-          {errors.kataLaluanAuditor?.type === "minLength" && (
-            <p role="alert" className="error-message">
-              Minima 8 karakter
+              {errors.kataLaluanAuditor.message}
             </p>
           )}
         </Form.Group>
 
         <Form.Group controlId="kataLaluanAuditorBaharu">
           <Form.Label className="form-label">Kata Laluan Baharu</Form.Label>
-          <Form.Control
-            type="password"
-            {...register("kataLaluanAuditorBaharu", {
-              required: true,
-              minLength: 8,
-            })}
-            aria-invalid={errors.kataLaluanAuditorBaharu ? "true" : "false"}
-            placeholder="Kata laluan baharu anda"
-          />
-          {errors.kataLaluanAuditorBaharu?.type === "required" && (
+          <InputGroup>
+            <Form.Control
+              type={showNewPassword ? "text" : "password"}
+              {...register("kataLaluanAuditorBaharu", {
+                required: "Kata laluan baharu diperlukan",
+                minLength: { value: 8, message: "Minima 8 karakter" },
+                pattern: {
+                  value:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
+                  message:
+                    "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf, satu nombor, dan satu simbol khas",
+                },
+              })}
+              aria-invalid={errors.kataLaluanAuditorBaharu ? "true" : "false"}
+              placeholder="Kata laluan baharu anda"
+            />
+            <Button variant="outline-secondary" onClick={toggleShowNewPassword}>
+              {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          </InputGroup>
+          {errors.kataLaluanAuditorBaharu && (
             <p role="alert" className="error-message">
-              Kata laluan baharu diperlukan
-            </p>
-          )}
-          {errors.kataLaluanAuditorBaharu?.type === "minLength" && (
-            <p role="alert" className="error-message">
-              Minima 8 karakter
+              {errors.kataLaluanAuditorBaharu.message}
             </p>
           )}
         </Form.Group>
-        
+
         <Form.Group controlId="kataLaluanAuditorBaharu_confirmation">
           <Form.Label>Sahkan Kata Laluan Baharu</Form.Label>
           <Form.Control
@@ -103,7 +137,7 @@ function SetPassword() {
             </p>
           )}
         </Form.Group>
-        
+
         <Button className="set-password-btn" type="submit">
           Set Kata Laluan
         </Button>
