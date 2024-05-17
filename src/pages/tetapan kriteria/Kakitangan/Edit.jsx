@@ -24,7 +24,7 @@ function EditKakitangan({kakitangan}) {
   // Handle update kakitangan
   const updateKakitangan = async (kakitanganInput) => {
     try {
-      const response = await axiosCustom.put(`http://127.0.0.1:8000/api/tetapan-kriteria/kakitangan/${kakitangan.id}`,
+      const response = await axiosCustom.put(`tetapan-kriteria/kakitangan/${kakitangan.id}`,
       kakitanganInput);
   
       if (response.status === 200) {

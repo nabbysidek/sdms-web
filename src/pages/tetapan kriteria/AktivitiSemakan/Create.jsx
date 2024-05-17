@@ -32,7 +32,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
     const fetchSkopKriteriaData = async () => {
       try {
         const response = await axiosCustom.get(
-          "http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/display-skop-kriteria"
+          `tetapan-kriteria/skop-kriteria/display-skop-kriteria`
         );
         if (Array.isArray(response.data) && response.data.length > 0) {
           setSkopKriteriaData(response.data);
@@ -51,7 +51,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
   const CreateAktivitiSemakan = async (aktivitiSemakanInput) => {
     try {
       const response = await axiosCustom.post(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan`,
+        `tetapan-kriteria/aktiviti-semakan`,
         aktivitiSemakanInput
       );
 

@@ -24,7 +24,7 @@ function ShowAktivitiSemakanList() {
   const fetchSkopKriterias = useCallback(async () => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/display-skop-kriteria`
+        `tetapan-kriteria/skop-kriteria/display-skop-kriteria`
       );
 
       if (Array.isArray(response.data)) {
@@ -52,7 +52,7 @@ function ShowAktivitiSemakanList() {
   const fetchAktivitiSemakans = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan?page=${page}`
+        `tetapan-kriteria/aktiviti-semakan?page=${page}`
       );
       setAktivitiSemakans(response.data.data);
       setTotalPage(response.data.last_page);

@@ -52,7 +52,7 @@ function ShowKriteriaKetidakpatuhanList() {
   const fetchKriteriaKetidakpatuhans = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
+        `tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
       );
       setKriteriaKetidakpatuhans(response.data.data); // Update the state with the array of objects
       setTotalPage(response.data.last_page);
@@ -90,7 +90,7 @@ function ShowKriteriaKetidakpatuhanList() {
     if (confirmResult.isConfirmed) {
       try {
         const response = await axiosCustom.delete(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhanId}`
+          `tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhanId}`
         );
 
         if (response.status === 200) {

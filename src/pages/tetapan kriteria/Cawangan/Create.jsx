@@ -27,7 +27,7 @@ function CreateCawangan({wilayahOptions}) {
   const createCawangan = async (cawanganInput) => {
     try {
       const response = await axiosCustom.post(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan`,
+        `api/tetapan-kriteria/cawangan`,
         cawanganInput
       );
 

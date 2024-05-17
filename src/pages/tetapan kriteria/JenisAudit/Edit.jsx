@@ -28,7 +28,7 @@ function EditJenisAudit({jenisAudit}) {
       console.log('jenisAuditId:', jenisAudit.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/jenis-audit/${jenisAudit.id}`,
+          `tetapan-kriteria/jenis-audit/${jenisAudit.id}`,
           jenisAuditInput
       );
 

@@ -52,7 +52,7 @@ function ShowCawanganList() {
   const fetchCawangans = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan?page=${page}`
+        `tetapan-kriteria/cawangan?page=${page}`
       );
       setCawangans(response.data.data);
       setTotalPage(response.data.last_page);

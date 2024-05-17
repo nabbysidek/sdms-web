@@ -27,7 +27,7 @@ function CreateSkopSemakan() {
   const createSkopSemakan = async (skopSemakanInput) => {
     try {
       const response = await axiosCustom.post(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan`,
+        `tetapan-kriteria/skop-semakan`,
         skopSemakanInput
       );
 

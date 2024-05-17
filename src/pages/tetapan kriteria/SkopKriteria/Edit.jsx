@@ -28,7 +28,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions}) {
       console.log('skopKriteriaId:', skopKriteria.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria/${skopKriteria.id}`,
+          `tetapan-kriteria/skop-kriteria/${skopKriteria.id}`,
           skopKriteriaInput
       );
 

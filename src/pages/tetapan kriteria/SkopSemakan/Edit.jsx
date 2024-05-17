@@ -28,7 +28,7 @@ function EditSkopSemakan({skopSemakan}) {
       console.log('skopSemakanId:', skopSemakan.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/${skopSemakan.id}`,
+          `tetapan-kriteria/skop-semakan/${skopSemakan.id}`,
           skopSemakanInput
       );
 

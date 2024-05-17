@@ -24,7 +24,7 @@ function ShowUnitList() {
   const fetchJabatans = useCallback(async () => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/display-jabatan`
+        `tetapan-kriteria/jabatan/display-jabatan`
       );
 
       if (Array.isArray(response.data)) {
@@ -52,7 +52,7 @@ function ShowUnitList() {
   const fetchUnits = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/unit?page=${page}`
+        `tetapan-kriteria/unit?page=${page}`
       );
       setUnits(response.data.data); // Update the state with the array of objects
       setTotalPage(response.data.last_page);
@@ -85,7 +85,7 @@ function ShowUnitList() {
     if (confirmResult.isConfirmed) {
       try {
         const response = await axiosCustom.delete(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/unit/${unitId}`
+          `tetapan-kriteria/unit/${unitId}`
         );
 
         if (response.status === 200) {

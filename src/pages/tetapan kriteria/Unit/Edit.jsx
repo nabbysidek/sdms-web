@@ -28,7 +28,7 @@ function EditUnit({unit, jabatanOptions}) {
       console.log('unitId:', unit.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/unit/${unit.id}`,
+          `tetapan-kriteria/unit/${unit.id}`,
           unitInput
       );
 

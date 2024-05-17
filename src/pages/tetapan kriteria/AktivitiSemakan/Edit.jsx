@@ -32,7 +32,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
       console.log('aktivitiSemakanId:', aktivitiSemakan.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan/${aktivitiSemakan.id}`,
+          `tetapan-kriteria/aktiviti-semakan/${aktivitiSemakan.id}`,
           aktivitiSemakanInput
       );
 

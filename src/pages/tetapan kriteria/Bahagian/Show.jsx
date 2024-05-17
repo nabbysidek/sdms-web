@@ -22,7 +22,7 @@ function ShowBahagianList() {
   const fetchBahagians = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian?page=${page}`
+        `api/tetapan-kriteria/bahagian?page=${page}`
       );
       setBahagians(response.data.data); // Update the state with the array of objects
       setTotalPage(response.data.last_page);
@@ -58,7 +58,7 @@ function ShowBahagianList() {
     if (confirmResult.isConfirmed) {
       try {
         const response = await axiosCustom.delete(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/${bahagianId}`
+          `tetapan-kriteria/bahagian/${bahagianId}`
         );
 
         if (response.status === 200) {

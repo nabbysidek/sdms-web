@@ -52,7 +52,7 @@ function Show() {
   const fetchJabatans = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan?page=${page}`
+        `tetapan-kriteria/jabatan?page=${page}`
       );
       setJabatans(response.data.data); // Update the state with the array of objects
       setTotalPage(response.data.last_page);

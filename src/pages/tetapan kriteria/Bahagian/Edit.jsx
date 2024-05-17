@@ -28,7 +28,7 @@ function EditBahagian({bahagian}) {
       console.log('bahagianId:', bahagian.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/bahagian/${bahagian.id}`,
+          `tetapan-kriteria/bahagian/${bahagian.id}`,
           bahagianInput
       );
 

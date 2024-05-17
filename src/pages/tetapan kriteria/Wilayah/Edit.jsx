@@ -28,7 +28,7 @@ function EditWilayah({wilayah}) {
       console.log('wilayahId:', wilayah.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/wilayah/${wilayah.id}`,
+          `tetapan-kriteria/wilayah/${wilayah.id}`,
           wilayahInput
       );
 

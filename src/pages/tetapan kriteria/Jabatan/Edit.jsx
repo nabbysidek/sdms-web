@@ -28,7 +28,7 @@ function EditJabatan({jabatan, bahagianOptions}) {
       console.log('jabatanId:', jabatan.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/jabatan/${jabatan.id}`,
+          `tetapan-kriteria/jabatan/${jabatan.id}`,
           jabatanInput
       );
 

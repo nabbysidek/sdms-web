@@ -22,7 +22,7 @@ function ShowSkopSemakanList() {
   const fetchskopSemakans = async (page) => {
     try {
       const response = await axiosCustom.get(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan?page=${page}`
+        `tetapan-kriteria/skop-semakan?page=${page}`
       );
       setSkopSemakans(response.data.data);
       setTotalPage(response.data.last_page);
@@ -55,7 +55,7 @@ function ShowSkopSemakanList() {
     if (confirmResult.isConfirmed) {
       try {
         const response = await axiosCustom.delete(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/skop-semakan/${skopSemakanId}`
+          `tetapan-kriteria/skop-semakan/${skopSemakanId}`
         );
 
         if (response.status === 200) {

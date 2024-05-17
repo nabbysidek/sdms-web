@@ -28,7 +28,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
       console.log('kriteriaKetidakpatuhanId:', kriteriaKetidakpatuhan.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhan.id}`,
+          `tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhan.id}`,
           kriteriaKetidakpatuhanInput
       );
 

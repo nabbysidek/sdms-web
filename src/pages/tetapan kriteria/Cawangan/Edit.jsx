@@ -29,7 +29,7 @@ function EditCawangan({cawangan, wilayahOptions}) {
       console.log('cawanganId:', cawangan.id);
 
       const response = await axiosCustom.put(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan/${cawangan.id}`,
+          `tetapan-kriteria/cawangan/${cawangan.id}`,
           cawanganInput
       );
 

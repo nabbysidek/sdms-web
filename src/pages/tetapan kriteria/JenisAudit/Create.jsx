@@ -27,7 +27,7 @@ function CreateJenisAudit() {
   const createJenisAudit = async (jenisAuditInput) => {
     try {
       const response = await axiosCustom.post(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/jenis-audit`,
+        `tetapan-kriteria/jenis-audit`,
         jenisAuditInput
       );
 

@@ -27,7 +27,7 @@ function CreateUnit({jabatanOptions}) {
   const createUnit = async (unitInput) => {
     try {
       const response = await axiosCustom.post(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/unit`,
+        `tetapan-kriteria/unit`,
         unitInput
       );
 

@@ -27,7 +27,7 @@ function CreateSkopKriteria({skopSemakanOptions}) {
   const createSkopKriteria = async (skopKriteriaInput) => {
     try {
       const response = await axiosCustom.post(
-        `http://127.0.0.1:8000/api/tetapan-kriteria/skop-kriteria`,
+        `tetapan-kriteria/skop-kriteria`,
         skopKriteriaInput
       );
 
