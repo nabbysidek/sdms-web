@@ -22,7 +22,7 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
   const updateTamatkanAkses = async () => {
     try {
       const response = await axiosCustom.put(
-        `http://127.0.0.1:8000/api/tetapan-pengguna/senarai-pengguna/tolak-akses/${userId}`
+        `tetapan-pengguna/senarai-pengguna/tolak-akses/${userId}`
       );
 
       if (response.status === 200) {

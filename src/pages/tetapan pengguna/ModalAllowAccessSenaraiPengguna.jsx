@@ -20,7 +20,7 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
   const updateBenarPermohonanAksesSenaraiPengguna = async () => {
     try {
       const response = await axiosCustom.put(
-        `http://127.0.0.1:8000/api/tetapan-pengguna/senarai-pengguna/benar-akses/${userId}`
+        `tetapan-pengguna/senarai-pengguna/benar-akses/${userId}`
       );
 
       if (response.status === 200) {

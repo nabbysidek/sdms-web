@@ -20,7 +20,7 @@ function ModalRejectAccessPermohonanPengguna({ userId }) {
   const updateTolakPermohonanAkses = async () => {
     try {
       const response = await axiosCustom.put(
-        `http://127.0.0.1:8000/api/tetapan-pengguna/permohonan-akses/tolak-akses/${userId}`
+        `tetapan-pengguna/permohonan-akses/tolak-akses/${userId}`
       );
 
       if (response.status === 200) {
