@@ -16,19 +16,22 @@ const ControlledInput = ({ name, label, control, rules, type, placeholder, toggl
     field,
     fieldState: { error },
   } = useController({ name, control, rules });
+
+  const inputStyle = name === "idAuditor" ? { borderTopRightRadius: '5px', borderBottomRightRadius: '5px' } : {};
+
   return (
     <Form.Group controlId={name} className="mb-3">
       <Form.Label>{label}</Form.Label>
       <InputGroup>
         <Form.Control
           type={type}
-          style={{ borderRadius: '0px' }}
           {...field}
           isInvalid={!!error}
           placeholder={placeholder}
+          style={inputStyle}
         />
         {togglePassword && (
-          <InputGroup.Text onClick={handleToggle} style={{ cursor: 'pointer' }}>
+          <InputGroup.Text onClick={handleToggle} style={{ cursor: 'pointer', borderRadius: '0 5px 5px 0' }}>
             {type === "password" ? <FaEye /> : <FaEyeSlash />}
           </InputGroup.Text>
         )}
