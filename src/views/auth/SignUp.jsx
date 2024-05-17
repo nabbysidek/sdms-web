@@ -1,6 +1,8 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Form, Col, Row, Button, Alert } from "react-bootstrap";
+import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import axios from "axios";
@@ -14,6 +16,12 @@ function SignUp() {
     handleSubmit,
     watch,
   } = useForm();
+
+  // State to manage password visibility
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
+  // Toggle password visibility
+  const toggleShowNewPassword = () => setShowNewPassword(!showNewPassword);
 
   // ------------------- BE ---------------------
   // Sign up user
@@ -129,15 +137,33 @@ function SignUp() {
               <Col xs={6}>
                 <Form.Group controlId="kataLaluanAuditor">
                   <Form.Label className="form-label">Kata Laluan</Form.Label>
-                  <Form.Control
-                    type="password"
-                    {...register("kataLaluanAuditor", {
-                      required: true,
-                      minLength: 8,
-                    })}
-                    aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
-                    placeholder="Kata laluan anda"
-                  />
+                  <InputGroup>
+                    <Form.Control
+                      type={showNewPassword ? "text" : "password"}
+                      {...register("kataLaluanAuditor", {
+                        required: "Kata laluan diperlukan",
+                        minLength: {
+                          value: 8,
+                          message: "Minima 8 karakter",
+                        },
+                        pattern: {
+                          value:
+                            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
+                          message:
+                            "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf, satu nombor, dan satu simbol khas",
+                        },
+                      })}
+                      aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
+                      placeholder="Kata laluan anda"
+                    />
+                    <Button
+                      className="sign-up-show-password"
+                      variant="outline=secondary"
+                      onClick={toggleShowNewPassword}
+                    >
+                      {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                    </Button>
+                  </InputGroup>
                   {errors.kataLaluanAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
                       Kata laluan diperlukan
@@ -168,7 +194,8 @@ function SignUp() {
                     }
                     placeholder="Kata laluan anda"
                   />
-                  {errors.kataLaluanAuditor_confirmation?.type === "required" && (
+                  {errors.kataLaluanAuditor_confirmation?.type ===
+                    "required" && (
                     <p role="alert" className="error-message">
                       Kata laluan diperlukan
                     </p>
