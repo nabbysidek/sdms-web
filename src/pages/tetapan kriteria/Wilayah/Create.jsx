@@ -45,7 +45,7 @@ function CreateWilayah() {
         icon: "error",
         title: "Gagal",
         text: error.response.data.error, 
-    });
+      });
     }
   };
 
