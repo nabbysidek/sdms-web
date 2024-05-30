@@ -1,30 +1,47 @@
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import { useOptionStore } from "../../../store/option-store";
 
 function SearchAktivitiSemakan() {
-    // ----------------- FE -----------------
-    // Form submission and validation
+  // ----------------- FE -----------------
+  // Form submission and validation
+  const { register, handleSubmit, control, setError, setValue, formState } =
+    useForm();
 
-    const {
-        register,
-        handleSubmit,
-        control,
-        setError,
-        setValue, 
-        formState
-    } = useForm();
+  const onSubmit = (data) => {
+    if (!data.aktivitiSemakan) {
+      setError("aktivitiSemakan", {
+        type: "manual",
+        message: "Sila masukkan nama aktiviti semakan",
+      });
+    } else {
+      // Perform your search logic here
+      // console.log("Form submitted with data:", data);
+    }
+  };
 
-    const onSubmit = (data) => {
-        if (!data.aktivitiSemakan) {
-          setError("aktivitiSemakan", {
-            type: "manual",
-            message: "Sila masukkan nama aktiviti semakan",
-          });
-        } else {
-          // Perform your search logic here
-          // console.log("Form submitted with data:", data);
-        }
-      };
+  // ___________________________________ Backend __________________________________
+  const [selectedSkopSemakan, setSelectedSkopSemakan] = useState("");
+  const [selectedSkopKriteria, setSelectedSkopKriteria] = useState("");
+
+  // Display skop semakan & skop kriteria options
+  const {
+    skopSemakanOptions,
+    displaySkopSemakans,
+    skopKriteriaOptions,
+    displaySkopKriterias,
+  } = useOptionStore((state) => ({
+    skopSemakanOptions: state.skopSemakanOptions,
+    displaySkopSemakans: state.displaySkopSemakans,
+    skopKriteriaOptions: state.skopKriteriaOptions,
+    displaySkopKriterias: state.displaySkopKriterias,
+  }));
+
+  useEffect(() => {
+    displaySkopSemakans();
+    displaySkopKriterias(selectedSkopSemakan);
+  }, [displaySkopSemakans, displaySkopKriterias]);
 
   return (
     <>
@@ -36,27 +53,42 @@ function SearchAktivitiSemakan() {
                 {...register("skopSemakanSelect")}
                 aria-label="skopSemakanSelect"
                 onChange={(e) => {
-                  setValue("skopSemakan", e.target.value);
+                  setSelectedSkopSemakan(e.target.value);
                 }}
               >
                 <option value="">Skop Semakan</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {skopSemakanOptions
+                  // Sort wilayah options alphabetically by namaWilayah
+                  .sort((a, b) =>
+                    a.namaSkopSemakan.localeCompare(b.namaSkopSemakan)
+                  )
+                  .map((skopSemakan) => (
+                    <option key={skopSemakan.id} value={skopSemakan.id}>
+                      {skopSemakan.namaSkopSemakan}
+                    </option>
+                  ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-md-4">
-            <Form.Select
+              <Form.Select
                 {...register("skopKriteriaSelect")}
                 aria-label="skopKriteriaSelect"
                 onChange={(e) => {
-                  setValue("skopKriteria", e.target.value);
+                  setSelectedSkopKriteria(e.target.value);
                 }}
               >
                 <option value="">Skop Kriteria Ketidakpatuhan</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {skopKriteriaOptions
+                  .filter(
+                    (skopKriteria) =>
+                      skopKriteria.skopSemakanId ===
+                      parseInt(selectedSkopSemakan)
+                  )
+                  .map((skopKriteria) => (
+                    <option key={skopKriteria.id} value={skopKriteria.id}>
+                      {skopKriteria.namaSkopKriteria}
+                    </option>
+                  ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-md-4">

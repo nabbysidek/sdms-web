@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
+import { useOptionStore } from "../../store/option-store";
 
 function EditKetidakpatuhan() {
   // ------- FE -------------
@@ -16,6 +18,103 @@ function EditKetidakpatuhan() {
     console.log(data);
   };
 
+  // ___________________________________ Backend __________________________________
+  const [selectedWilayah, setSelectedWilayah] = useState("");
+  const [selectedCawangan, setSelectedCawangan] = useState("");
+
+  const [selectedBahagian, setSelectedBahagian] = useState("");
+  const [selectedJabatan, setSelectedJabatan] = useState("");
+  const [selectedUnit, setSelectedUnit] = useState("");
+
+  const [selectedJenisAudit, setSelectedJenisAudit] = useState("");
+  const [selectedSkopSemakan, setSelectedSkopSemakan] = useState("");
+  const [selectedSkopKriteria, setSelectedSkopKriteria] = useState("");
+  const [selectedAktivitiSemakan, setSelectedAktivitiSemakan] = useState("");
+  const [selectedKriteriaKetidakpatuhan, setSelectedKriteriaKetidakpatuhan] =
+    useState("");
+
+  // Display options
+  const {
+    wilayahOptions,
+    displayWilayahs,
+    cawanganOptions,
+    displayCawangans,
+
+    bahagianOptions,
+    displayBahagians,
+    jabatanOptions,
+    displayJabatans,
+    unitOptions,
+    displayUnits,
+
+    jenisAuditOptions,
+    displayJenisAudits,
+    skopSemakanOptions,
+    displaySkopSemakans,
+    skopKriteriaOptions,
+    displaySkopKriterias,
+    aktivitiSemakanOptions,
+    displayAktivitiSemakans,
+    kriteriaKetidakpatuhanOptions,
+    displayKriteriaKetidakpatuhans,
+  } = useOptionStore((state) => ({
+    wilayahOptions: state.wilayahOptions,
+    displayWilayahs: state.displayWilayahs,
+    cawanganOptions: state.cawanganOptions,
+    displayCawangans: state.displayCawangans,
+
+    bahagianOptions: state.bahagianOptions,
+    displayBahagians: state.displayBahagians,
+    jabatanOptions: state.jabatanOptions,
+    displayJabatans: state.displayJabatans,
+    unitOptions: state.unitOptions,
+    displayUnits: state.displayUnits,
+
+    jenisAuditOptions: state.jenisAuditOptions,
+    displayJenisAudits: state.displayJenisAudits,
+    skopSemakanOptions: state.skopSemakanOptions,
+    displaySkopSemakans: state.displaySkopSemakans,
+    skopKriteriaOptions: state.skopKriteriaOptions,
+    displaySkopKriterias: state.displaySkopKriterias,
+    aktivitiSemakanOptions: state.aktivitiSemakanOptions,
+    displayAktivitiSemakans: state.displayAktivitiSemakans,
+    kriteriaKetidakpatuhanOptions: state.kriteriaKetidakpatuhanOptions,
+    displayKriteriaKetidakpatuhans: state.displayKriteriaKetidakpatuhans,
+  }));
+
+  useEffect(() => {
+    displayWilayahs();
+    displayCawangans(selectedWilayah);
+
+    displayBahagians();
+    displayJabatans(selectedBahagian);
+    displayUnits(selectedJabatan);
+
+    displayJenisAudits();
+    displaySkopSemakans();
+    displaySkopKriterias(selectedSkopSemakan);
+    displayAktivitiSemakans(selectedSkopKriteria);
+    displayKriteriaKetidakpatuhans(selectedAktivitiSemakan);
+  }, [
+    displayWilayahs,
+    displayCawangans,
+    selectedWilayah,
+
+    displayBahagians,
+    displayJabatans,
+    selectedBahagian,
+    displayUnits,
+    selectedJabatan,
+
+    displayJenisAudits,
+    displaySkopSemakans,
+    displaySkopKriterias,
+    selectedSkopSemakan,
+    displayAktivitiSemakans,
+    selectedSkopKriteria,
+    displayKriteriaKetidakpatuhans,
+    selectedAktivitiSemakan,
+  ]);
   return (
     <>
       <div className="page-title">
@@ -56,25 +155,40 @@ function EditKetidakpatuhan() {
                   <Form.Group>
                     <Form.Label>Wilayah</Form.Label>
                     <Controller
-                      name="wilayah"
+                      id="wilayahId"
+                      name="wilayahId"
                       control={control}
-                      defaultValue=""
                       rules={{ required: "Sila pilih wilayah" }}
-                      render={({ field }) => (
+                      render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
-                            aria-label="wilayahSelect"
-                            {...field}
-                            isInvalid={!!errors.wilayah}
+                            // aria-label="wilayahSelect"
+                            onChange={(e) => {
+                              onChange(e);
+                              setSelectedWilayah(e.target.value);
+                            }}
+                            value={value}
+                            // isInvalid={!!errors.wilayah}
                           >
                             <option value="">Pilih wilayah</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {wilayahOptions
+                              .sort((a, b) =>
+                                a.namaWilayah.localeCompare(b.namaWilayah)
+                              )
+                              .map((wilayah) => (
+                                <option key={wilayah.id} value={wilayah.id}>
+                                  {wilayah.namaWilayah}
+                                </option>
+                              ))}
                           </Form.Select>
-                          <Form.Control.Feedback type="invalid">
+                          {errors.wilayahId && (
+                            <span className="error-message">
+                              {errors.wilayahId.message}
+                            </span>
+                          )}
+                          {/* <Form.Control.Feedback type="invalid">
                             {errors.wilayah && errors.wilayah.message}
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
                         </>
                       )}
                     />
@@ -84,25 +198,43 @@ function EditKetidakpatuhan() {
                   <Form.Group>
                     <Form.Label>Cawangan</Form.Label>
                     <Controller
-                      name="cawangan"
+                      id="cawanganId"
+                      name="cawanganId"
                       control={control}
                       defaultValue=""
                       rules={{ required: "Sila pilih cawangan" }}
-                      render={({ field }) => (
+                      render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
-                            aria-label="cawanganSelect"
-                            {...field}
-                            isInvalid={!!errors.cawangan}
+                            onChange={(e) => {
+                              onChange(e);
+                              setSelectedCawangan(e.target.value);
+                            }}
+                            value={value}
                           >
-                            <option value="">Pilih cawangan</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="" disabled>
+                              Pilih cawangan
+                            </option>
+                            {cawanganOptions
+                              .filter(
+                                (cawangan) =>
+                                  cawangan.wilayahId ===
+                                  parseInt(selectedWilayah)
+                              )
+                              .map((cawangan) => (
+                                <option key={cawangan.id} value={cawangan.id}>
+                                  {cawangan.namaCawangan}
+                                </option>
+                              ))}
                           </Form.Select>
-                          <Form.Control.Feedback type="invalid">
+                          {errors.cawanganId && (
+                            <span className="error-message">
+                              {errors.cawanganId.message}
+                            </span>
+                          )}
+                          {/* <Form.Control.Feedback type="invalid">
                             {errors.cawangan && errors.cawangan.message}
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
                         </>
                       )}
                     />
@@ -146,25 +278,44 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Bahagian</Form.Label>
                         <Controller
-                          name="bahagian"
+                          id="bahagianId"
+                          name="bahagianId"
                           control={control}
                           defaultValue=""
                           rules={{ required: "Sila pilih bahagian" }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                aria-label="bahagianSelect"
-                                {...field}
-                                isInvalid={!!errors.bahagian}
+                                // aria-label="bahagianSelect"
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedBahagian(e.target.value);
+                                }}
+                                value={value}
+                                // isInvalid={!!errors.bahagian}
                               >
                                 <option value="">Pilih bahagian</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {bahagianOptions
+                                  .sort((a, b) =>
+                                    a.namaBahagian.localeCompare(b.namaBahagian)
+                                  )
+                                  .map((bahagian) => (
+                                    <option
+                                      key={bahagian.id}
+                                      value={bahagian.id}
+                                    >
+                                      {bahagian.namaBahagian}
+                                    </option>
+                                  ))}
                               </Form.Select>
-                              <Form.Control.Feedback type="invalid">
+                              {errors.bahagianId && (
+                                <span className="error-message">
+                                  {errors.bahagianId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.bahagian && errors.bahagian.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -176,25 +327,44 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Jabatan</Form.Label>
                         <Controller
-                          name="jabatan"
+                          id="jabatanId"
+                          name="jabatanId"
                           control={control}
                           defaultValue=""
                           rules={{ required: "Sila pilih jabatan" }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                aria-label="jabatanSelect"
-                                {...field}
-                                isInvalid={!!errors.jabatan}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedJabatan(e.target.value);
+                                }}
+                                value={value}
+                                // aria-label="jabatanSelect"
+                                // {...field}
+                                // isInvalid={!!errors.jabatan}
                               >
                                 <option value="">Pilih jabatan</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {jabatanOptions
+                                  .filter(
+                                    (jabatan) =>
+                                      jabatan.bahagianId ===
+                                      parseInt(selectedBahagian)
+                                  )
+                                  .map((jabatan) => (
+                                    <option key={jabatan.id} value={jabatan.id}>
+                                      {jabatan.namaJabatan}
+                                    </option>
+                                  ))}
                               </Form.Select>
-                              <Form.Control.Feedback type="invalid">
+                              {errors.jabatanId && (
+                                <span className="error-message">
+                                  {errors.jabatanId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.jabatan && errors.jabatan.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -204,25 +374,44 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Unit</Form.Label>
                         <Controller
-                          name="unit"
+                          id="unitId"
+                          name="unitId"
                           control={control}
                           defaultValue=""
                           rules={{ required: "Sila pilih unit" }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                aria-label="unitSelect"
-                                {...field}
-                                isInvalid={!!errors.unit}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedUnit(e.target.value);
+                                }}
+                                value={value}
+                                // aria-label="unitSelect"
+                                // {...field}
+                                // isInvalid={!!errors.unit}
                               >
                                 <option value="">Pilih unit</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {unitOptions
+                                  .filter(
+                                    (unit) =>
+                                      unit.jabatanId ===
+                                      parseInt(selectedJabatan)
+                                  )
+                                  .map((unit) => (
+                                    <option key={unit.id} value={unit.id}>
+                                      {unit.namaUnit}
+                                    </option>
+                                  ))}
                               </Form.Select>
-                              <Form.Control.Feedback type="invalid">
+                              {errors.unitId && (
+                                <span className="error-message">
+                                  {errors.unitId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.unit && errors.unit.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -240,24 +429,32 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Tahun Diaudit</Form.Label>
                         <Controller
+                          id="tahunDiaudit"
                           name="tahunDiaudit"
                           control={control}
                           defaultValue=""
                           rules={{
                             required: "Sila sertakan tahun staff diaudit",
                           }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Control
                                 type="date"
+                                onChange={onChange}
+                                value={value}
                                 placeholder="Tahun"
-                                {...field}
-                                isInvalid={!!errors.tahunDiaudit}
+                                // {...field}
+                                // isInvalid={!!errors.tahunDiaudit}
                               />
-                              <Form.Control.Feedback type="invalid">
+                              {errors.tahunDiaudit && (
+                                <span className="error-message">
+                                  {errors.tahunDiaudit.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.tahunDiaudit &&
                                   errors.tahunDiaudit.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -267,56 +464,101 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Jenis Audit</Form.Label>
                         <Controller
-                          name="jenisAudit"
+                          id="jenisAuditId"
+                          name="jenisAuditId"
                           control={control}
                           defaultValue=""
                           rules={{ required: "Sila pilih jenis audit" }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                aria-label="jenisAuditSelect"
-                                {...field}
-                                isInvalid={!!errors.jenisAudit}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedJenisAudit(e.target.value);
+                                }}
+                                value={value}
+                                // aria-label="jenisAuditSelect"
+                                // {...field}
+                                // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih jenis audit</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {jenisAuditOptions
+                                  .sort((a, b) =>
+                                    a.namaJenisAudit.localeCompare(
+                                      b.namaJenisAudit
+                                    )
+                                  )
+                                  .map((jenisAudit) => (
+                                    <option
+                                      key={jenisAudit.id}
+                                      value={jenisAudit.id}
+                                    >
+                                      {jenisAudit.namaJenisAudit}
+                                    </option>
+                                  ))}
                               </Form.Select>
-                              <Form.Control.Feedback type="invalid">
+                              {errors.jenisAuditId && (
+                                <span className="error-message">
+                                  {errors.jenisAuditId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.jenisAudit && errors.jenisAudit.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <Row>
                     <Col>
                       <Form.Group>
                         <Form.Label>Skop Semakan</Form.Label>
                         <Controller
-                          name="skopSemakan"
+                          id="skopSemakanId"
+                          name="skopSemakanId"
                           control={control}
                           defaultValue=""
                           rules={{ required: "Sila pilih skop semakan" }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                aria-label="skopSemakanSelect"
-                                {...field}
-                                isInvalid={!!errors.jenisAudit}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedSkopSemakan(e.target.value);
+                                }}
+                                value={value}
+                                // aria-label="skopSemakanSelect"
+                                // {...field}
+                                // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih skop semakan</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {skopSemakanOptions
+                                  .sort((a, b) =>
+                                    a.namaSkopSemakan.localeCompare(
+                                      b.namaSkopSemakan
+                                    )
+                                  )
+                                  .map((skopSemakan) => (
+                                    <option
+                                      key={skopSemakan.id}
+                                      value={skopSemakan.id}
+                                    >
+                                      {skopSemakan.namaSkopSemakan}
+                                    </option>
+                                  ))}
                               </Form.Select>
-                              <Form.Control.Feedback type="invalid">
+                              {errors.skopSemakanId && (
+                                <span className="error-message">
+                                  {errors.skopSemakanId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.skopSemakan &&
                                   errors.skopSemakan.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -326,84 +568,163 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Skop Kriteria Ketidakpatuhan</Form.Label>
                         <Controller
-                          name="skopKriteriaKetidakpatuhan"
+                          id="skopKriteriaId"
+                          name="skopKriteriaId"
                           control={control}
                           defaultValue=""
                           rules={{
                             required: "Sila pilih skop kriteria ketidakpatuhan",
                           }}
-                          render={({ field }) => (
+                          render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                aria-label="skopKriteriaKetidakpatuhanSelect"
-                                {...field}
-                                isInvalid={!!errors.skopKriteriaKetidakpatuhan}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedSkopKriteria(e.target.value);
+                                }}
+                                value={value}
+                                // aria-label="skopKriteriaKetidakpatuhanSelect"
+                                // {...field}
+                                // isInvalid={!!errors.skopKriteriaKetidakpatuhan}
                               >
                                 <option value="">
                                   Pilih skop kriteria ketidakpatuhan
                                 </option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {skopKriteriaOptions
+                                  .filter(
+                                    (skopKriteria) =>
+                                      skopKriteria.skopSemakanId ===
+                                      parseInt(selectedSkopSemakan)
+                                  )
+                                  .map((skopKriteria) => (
+                                    <option
+                                      key={skopKriteria.id}
+                                      value={skopKriteria.id}
+                                    >
+                                      {skopKriteria.namaSkopKriteria}
+                                    </option>
+                                  ))}
                               </Form.Select>
-                              <Form.Control.Feedback type="invalid">
+                              {errors.skopKriteriaId && (
+                                <span className="error-message">
+                                  {errors.skopKriteriaId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
                                 {errors.skopKriteriaKetidakpatuhan &&
                                   errors.skopKriteriaKetidakpatuhan.message}
-                              </Form.Control.Feedback>
+                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
                       </Form.Group>
                     </Col>
+                    <Row>
+                      <Form.Group>
+                        <Form.Label>Aktiviti Semakan</Form.Label>
+                        <Controller
+                          id="aktivitiSemakanId"
+                          name="aktivitiSemakanId"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: "Sila pilih aktiviti semakan" }}
+                          render={({ field: { onChange, value } }) => (
+                            <>
+                              <Form.Select
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedAktivitiSemakan(e.target.value);
+                                }}
+                                value={value}
+                                // aria-label="aktivitiSemakanSelect"
+                                // {...field}
+                                // isInvalid={!!errors.aktivitiSemakan}
+                              >
+                                <option value="">Pilih aktiviti semakan</option>
+                                {aktivitiSemakanOptions
+                                  .filter(
+                                    (aktivitiSemakan) =>
+                                      aktivitiSemakan.skopKriteriaId ===
+                                      parseInt(selectedSkopKriteria)
+                                  )
+                                  .map((aktivitiSemakan) => (
+                                    <option
+                                      key={aktivitiSemakan.id}
+                                      value={aktivitiSemakan.id}
+                                    >
+                                      {aktivitiSemakan.namaAktivitiSemakan}
+                                    </option>
+                                  ))}
+                              </Form.Select>
+                              {errors.aktivitiSemakanId && (
+                                <span className="error-message">
+                                  {errors.aktivitiSemakanId.message}
+                                </span>
+                              )}
+                              {/* <Form.Control.Feedback type="invalid">
+                                {errors.aktivitiSemakan &&
+                                  errors.aktivitiSemakan.message}
+                              </Form.Control.Feedback> */}
+                            </>
+                          )}
+                        />
+                      </Form.Group>
+                    </Row>
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Senarai Ketidakpatuhan</Form.Label>
+                      <Form.Label>Kriteria Ketidakpatuhan</Form.Label>
                       <Controller
-                        name="senaraiKetidakpatuhan"
+                        id="kriteriaKetidakpatuhanId"
+                        name="kriteriaKetidakpatuhanId"
                         control={control}
                         defaultValue=""
-                        rules={{ required: "Sila pilih ketidakpatuhan" }}
-                        render={({ field }) => (
+                        rules={{
+                          required: "Sila pilih kriteria ketidakpatuhan",
+                        }}
+                        render={({ field: { onChange, value } }) => (
                           <>
                             <Form.Select
-                              aria-label="senaraiKetidakpatuhanSelect"
-                              {...field}
-                              isInvalid={!!errors.senaraiKetidakpatuhan}
+                              onChange={(e) => {
+                                onChange(e);
+                                setSelectedKriteriaKetidakpatuhan(
+                                  e.target.value
+                                );
+                              }}
+                              value={value}
+                              // aria-label="kriteriaKetidakpatuhanSelect"
+                              // {...field}
+                              // isInvalid={!!errors.kriteriaKetidakpatuhan}
                             >
-                              <option value="">Pilih ketidakpatuhan</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              <option value="">
+                                Pilih kriteria ketidakpatuhan
+                              </option>
+                              {kriteriaKetidakpatuhanOptions
+                                .filter(
+                                  (kriteriaKetidakpatuhan) =>
+                                    kriteriaKetidakpatuhan.aktivitiSemakanId ===
+                                    parseInt(selectedAktivitiSemakan)
+                                )
+                                .map((kriteriaKetidakpatuhan) => (
+                                  <option
+                                    key={kriteriaKetidakpatuhan.id}
+                                    value={kriteriaKetidakpatuhan.id}
+                                  >
+                                    {
+                                      kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan
+                                    }
+                                  </option>
+                                ))}
                             </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                              {errors.senaraiKetidakpatuhan &&
-                                errors.senaraiKetidakpatuhan.message}
-                            </Form.Control.Feedback>
-                          </>
-                        )}
-                      />
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group>
-                      <Form.Label>Tajuk Audit</Form.Label>
-                      <Controller
-                        name="tajukAudit"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: "Sila sertakan tajuk audit" }}
-                        render={({ field }) => (
-                          <>
-                            <Form.Control
-                              type="text"
-                              placeholder="Tajuk audit"
-                              {...field}
-                              isInvalid={!!errors.tajukAudit}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.tajukAudit && errors.tajukAudit.message}
-                            </Form.Control.Feedback>
+                            {errors.kriteriaKetidakpatuhanId && (
+                              <span className="error-message">
+                                {errors.kriteriaKetidakpatuhanId.message}
+                              </span>
+                            )}
+                            {/* <Form.Control.Feedback type="invalid">
+                              {errors.kriteriaKetidakpatuhan &&
+                                errors.kriteriaKetidakpatuhan.message}
+                            </Form.Control.Feedback> */}
                           </>
                         )}
                       />
@@ -413,31 +734,117 @@ function EditKetidakpatuhan() {
                     <Form.Group>
                       <Form.Label>Tahap Risiko</Form.Label>
                       <div>
-                        <Row className="radio-tambah-ketidakpatuhan">
+                        <Row className="radio-edit-ketidakpatuhan">
                           <Col>
-                            <Form.Check
-                              type="radio"
-                              label="Penipuan"
+                            <Controller
                               name="tahapRisikoRadio"
-                              id="radioFraud"
+                              control={control}
+                              rules={{ required: true }}
+                              defaultValue="Biasa"
+                              render={({ field }) => (
+                                <Form.Check
+                                  {...field}
+                                  type="radio"
+                                  label="Penipuan"
+                                  value="Penipuan"
+                                  id="radioFraud"
+                                  checked={field.value === "Penipuan"}
+                                />
+                              )}
                             />
                           </Col>
                           <Col>
-                            <Form.Check
-                              type="radio"
-                              label="Serah Dokumen"
+                            <Controller
                               name="tahapRisikoRadio"
-                              id="radioSerahDoc"
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Form.Check
+                                  {...field}
+                                  type="radio"
+                                  label="Serah Dokumen"
+                                  value="Serah Dokumen"
+                                  id="radioSerahDoc"
+                                  checked={field.value === "Serah Dokumen"}
+                                />
+                              )}
                             />
                           </Col>
                           <Col>
-                            <Form.Check
-                              type="radio"
-                              label="Biasa"
+                            <Controller
                               name="tahapRisikoRadio"
-                              id="radioBiasa"
-                              defaultChecked
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Form.Check
+                                  {...field}
+                                  type="radio"
+                                  label="Biasa"
+                                  value="Biasa"
+                                  id="radioBiasa"
+                                  checked={field.value === "Biasa"}
+                                />
+                              )}
                             />
+                          </Col>
+                        </Row>
+                        {errors.tahapRisikoRadio && (
+                          <p>Tahap Risiko diperlukan</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Form.Group>
+                      <Form.Label>Kesalahan Berulang</Form.Label>
+                      <div>
+                        <Row className="radio-kesalahan-berulang">
+                          <Col>
+                            <Controller
+                              name="kesalahanBerulangRadio"
+                              control={control}
+                              defaultValue="Tidak"
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Form.Check
+                                  {...field}
+                                  type="radio"
+                                  label="Ya"
+                                  value="Ya"
+                                  id="radioYa"
+                                  checked={field.value === "Ya"}
+                                />
+                              )}
+                            />
+                            {/* <Form.Check
+                              type="radio"
+                              label="Ya"
+                              name="kesalahanBerulangRadio"
+                              id="radiokesalahanBerulangYes"
+                            /> */}
+                          </Col>
+                          <Col>
+                            <Controller
+                              name="kesalahanBerulangRadio"
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Form.Check
+                                  {...field}
+                                  type="radio"
+                                  label="Tidak"
+                                  value="Tidak"
+                                  id="radioTidak"
+                                  checked={field.value === "Tidak"}
+                                />
+                              )}
+                            />
+                            {/* <Form.Check
+                              type="radio"
+                              label="Tidak"
+                              name="kesalahanBerulangRadio"
+                              id="radiokesalahanBerulangNo"
+                            /> */}
                           </Col>
                         </Row>
                       </div>
@@ -446,17 +853,32 @@ function EditKetidakpatuhan() {
                   <Row>
                     <Form.Group>
                       <Form.Label>Catatan</Form.Label>
-                      <Form.Control as="textarea" rows={3} />
+                      <Controller
+                        name="catatan"
+                        control={control}
+                        defaultValue=""
+                        render={({ field: { onChange, value } }) => (
+                          <Form.Control
+                            as="textarea"
+                            rows={3}
+                            value={value}
+                            onChange={onChange}
+                          />
+                        )}
+                      />
+                      {/* <Form.Control as="textarea" rows={3} /> */}
                     </Form.Group>
                   </Row>
                   <div className="edit-ketidakpatuhan-actions">
                     <Button
                       onClick={handleSubmit(onSubmit)}
-                      className=".edit-ketidakpatuhan-btn"
+                      className="edit-ketidakpatuhan-btn"
                     >
                       Simpan
                     </Button>{" "}
-                    <Button className="cancel-btn">Batal</Button>{" "}
+                    <Button onClick={() => reset()} className="cancel-btn">
+                      Batal
+                    </Button>{" "}
                   </div>
                 </div>
               </div>

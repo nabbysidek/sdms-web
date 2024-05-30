@@ -27,7 +27,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
   // ----------BE----------
   // Fetch skop kriteria data
   const [skopKriteriaData, setSkopKriteriaData] = useState([]);
-
+  
   useEffect(() => {
     const fetchSkopKriteriaData = async () => {
       try {

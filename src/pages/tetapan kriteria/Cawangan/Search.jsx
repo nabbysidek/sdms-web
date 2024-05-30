@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import { useOptionStore } from "../../../store/option-store";
 
 function SearchCawangan() {
   // --------- FE ------------
@@ -22,6 +23,16 @@ function SearchCawangan() {
     }
   };
 
+  // ___________________________________ Backend __________________________________
+  const { wilayahOptions, displayWilayahs } = useOptionStore((state) => ({
+    wilayahOptions: state.wilayahOptions,
+    displayWilayahs: state.displayWilayahs,
+  }));
+
+  useEffect(() => {
+    displayWilayahs();
+  }, [displayWilayahs]);
+
   return (
     <>
       <Container fluid className="search-bar-section">
@@ -32,13 +43,19 @@ function SearchCawangan() {
                 {...register("wilayahSelect")}
                 aria-label="wilayahSelect"
                 onChange={(e) => {
-                  setValue("wilayah", e.target.value);
+                  onChange(e); // Update form state
+                  setSelectedWilayah(e.target.value); // Update local state
                 }}
               >
                 <option value="">Wilayah</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {wilayahOptions
+                  // Sort wilayah options alphabetically by namaWilayah
+                  .sort((a, b) => a.namaWilayah.localeCompare(b.namaWilayah))
+                  .map((wilayah) => (
+                    <option key={wilayah.id} value={wilayah.id}>
+                      {wilayah.namaWilayah}
+                    </option>
+                  ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-md-6">

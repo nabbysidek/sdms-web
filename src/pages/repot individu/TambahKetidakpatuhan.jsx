@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
+import { useOptionStore } from "../../store/option-store";
 
 function TambahKetidakpatuhan() {
   // ------- FE -------------
@@ -14,6 +16,104 @@ function TambahKetidakpatuhan() {
     formState: { errors },
   } = useForm();
 
+  // ___________________________________ Backend __________________________________
+  const [selectedWilayah, setSelectedWilayah] = useState("");
+  const [selectedCawangan, setSelectedCawangan] = useState("");
+
+  const [selectedBahagian, setSelectedBahagian] = useState("");
+  const [selectedJabatan, setSelectedJabatan] = useState("");
+  const [selectedUnit, setSelectedUnit] = useState("");
+
+  const [selectedJenisAudit, setSelectedJenisAudit] = useState("");
+  const [selectedSkopSemakan, setSelectedSkopSemakan] = useState("");
+  const [selectedSkopKriteria, setSelectedSkopKriteria] = useState("");
+  const [selectedAktivitiSemakan, setSelectedAktivitiSemakan] = useState("");
+  const [selectedKriteriaKetidakpatuhan, setSelectedKriteriaKetidakpatuhan] =
+    useState("");
+
+  // Display options
+  const {
+    wilayahOptions,
+    displayWilayahs,
+    cawanganOptions,
+    displayCawangans,
+
+    bahagianOptions,
+    displayBahagians,
+    jabatanOptions,
+    displayJabatans,
+    unitOptions,
+    displayUnits,
+
+    jenisAuditOptions,
+    displayJenisAudits,
+    skopSemakanOptions,
+    displaySkopSemakans,
+    skopKriteriaOptions,
+    displaySkopKriterias,
+    aktivitiSemakanOptions,
+    displayAktivitiSemakans,
+    kriteriaKetidakpatuhanOptions,
+    displayKriteriaKetidakpatuhans,
+  } = useOptionStore((state) => ({
+    wilayahOptions: state.wilayahOptions,
+    displayWilayahs: state.displayWilayahs,
+    cawanganOptions: state.cawanganOptions,
+    displayCawangans: state.displayCawangans,
+
+    bahagianOptions: state.bahagianOptions,
+    displayBahagians: state.displayBahagians,
+    jabatanOptions: state.jabatanOptions,
+    displayJabatans: state.displayJabatans,
+    unitOptions: state.unitOptions,
+    displayUnits: state.displayUnits,
+
+    jenisAuditOptions: state.jenisAuditOptions,
+    displayJenisAudits: state.displayJenisAudits,
+    skopSemakanOptions: state.skopSemakanOptions,
+    displaySkopSemakans: state.displaySkopSemakans,
+    skopKriteriaOptions: state.skopKriteriaOptions,
+    displaySkopKriterias: state.displaySkopKriterias,
+    aktivitiSemakanOptions: state.aktivitiSemakanOptions,
+    displayAktivitiSemakans: state.displayAktivitiSemakans,
+    kriteriaKetidakpatuhanOptions: state.kriteriaKetidakpatuhanOptions,
+    displayKriteriaKetidakpatuhans: state.displayKriteriaKetidakpatuhans,
+  }));
+
+  useEffect(() => {
+    displayWilayahs();
+    displayCawangans(selectedWilayah);
+
+    displayBahagians();
+    displayJabatans(selectedBahagian);
+    displayUnits(selectedJabatan);
+
+    displayJenisAudits();
+    displaySkopSemakans();
+    displaySkopKriterias(selectedSkopSemakan);
+    displayAktivitiSemakans(selectedSkopKriteria);
+    displayKriteriaKetidakpatuhans(selectedAktivitiSemakan);
+  }, [
+    displayWilayahs,
+    displayCawangans,
+    selectedWilayah,
+
+    displayBahagians,
+    displayJabatans,
+    selectedBahagian,
+    displayUnits,
+    selectedJabatan,
+
+    displayJenisAudits,
+    displaySkopSemakans,
+    displaySkopKriterias,
+    selectedSkopSemakan,
+    displayAktivitiSemakans,
+    selectedSkopKriteria,
+    displayKriteriaKetidakpatuhans,
+    selectedAktivitiSemakan,
+  ]);
+
   const createRepotIndividu = async (repotIndividuInput) => {
     try {
       const response = await axiosCustom.post(
@@ -24,17 +124,17 @@ function TambahKetidakpatuhan() {
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, 
+          text: response.data.success,
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Gagal",
-        text: error.response.data.error,  
+        text: error.response.data.error,
       });
     }
-  }
+  };
 
   return (
     <>
@@ -80,20 +180,28 @@ function TambahKetidakpatuhan() {
                       id="wilayahId"
                       name="wilayahId"
                       control={control}
-                      defaultValue=""
                       rules={{ required: "Sila pilih wilayah" }}
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
                             // aria-label="wilayahSelect"
-                            onChange={onChange}
+                            onChange={(e) => {
+                              onChange(e);
+                              setSelectedWilayah(e.target.value);
+                            }}
                             value={value}
                             // isInvalid={!!errors.wilayah}
                           >
                             <option value="">Pilih wilayah</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {wilayahOptions
+                              .sort((a, b) =>
+                                a.namaWilayah.localeCompare(b.namaWilayah)
+                              )
+                              .map((wilayah) => (
+                                <option key={wilayah.id} value={wilayah.id}>
+                                  {wilayah.namaWilayah}
+                                </option>
+                              ))}
                           </Form.Select>
                           {errors.wilayahId && (
                             <span className="error-message">
@@ -120,15 +228,26 @@ function TambahKetidakpatuhan() {
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
-                            // aria-label="cawanganSelect"
-                            onChange={onChange}
+                            onChange={(e) => {
+                              onChange(e);
+                              setSelectedCawangan(e.target.value);
+                            }}
                             value={value}
-                            // isInvalid={!!errors.cawangan}
                           >
-                            <option value="">Pilih cawangan</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="" disabled>
+                              Pilih cawangan
+                            </option>
+                            {cawanganOptions
+                              .filter(
+                                (cawangan) =>
+                                  cawangan.wilayahId ===
+                                  parseInt(selectedWilayah)
+                              )
+                              .map((cawangan) => (
+                                <option key={cawangan.id} value={cawangan.id}>
+                                  {cawangan.namaCawangan}
+                                </option>
+                              ))}
                           </Form.Select>
                           {errors.cawanganId && (
                             <span className="error-message">
@@ -197,14 +316,26 @@ function TambahKetidakpatuhan() {
                             <>
                               <Form.Select
                                 // aria-label="bahagianSelect"
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedBahagian(e.target.value);
+                                }}
                                 value={value}
                                 // isInvalid={!!errors.bahagian}
                               >
                                 <option value="">Pilih bahagian</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {bahagianOptions
+                                  .sort((a, b) =>
+                                    a.namaBahagian.localeCompare(b.namaBahagian)
+                                  )
+                                  .map((bahagian) => (
+                                    <option
+                                      key={bahagian.id}
+                                      value={bahagian.id}
+                                    >
+                                      {bahagian.namaBahagian}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.bahagianId && (
                                 <span className="error-message">
@@ -233,16 +364,27 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedJabatan(e.target.value);
+                                }}
                                 value={value}
                                 // aria-label="jabatanSelect"
                                 // {...field}
                                 // isInvalid={!!errors.jabatan}
                               >
                                 <option value="">Pilih jabatan</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {jabatanOptions
+                                  .filter(
+                                    (jabatan) =>
+                                      jabatan.bahagianId ===
+                                      parseInt(selectedBahagian)
+                                  )
+                                  .map((jabatan) => (
+                                    <option key={jabatan.id} value={jabatan.id}>
+                                      {jabatan.namaJabatan}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.jabatanId && (
                                 <span className="error-message">
@@ -269,16 +411,27 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedUnit(e.target.value);
+                                }}
                                 value={value}
                                 // aria-label="unitSelect"
                                 // {...field}
                                 // isInvalid={!!errors.unit}
                               >
                                 <option value="">Pilih unit</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {unitOptions
+                                  .filter(
+                                    (unit) =>
+                                      unit.jabatanId ===
+                                      parseInt(selectedJabatan)
+                                  )
+                                  .map((unit) => (
+                                    <option key={unit.id} value={unit.id}>
+                                      {unit.namaUnit}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.unitId && (
                                 <span className="error-message">
@@ -348,16 +501,30 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedJenisAudit(e.target.value);
+                                }}
                                 value={value}
                                 // aria-label="jenisAuditSelect"
                                 // {...field}
                                 // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih jenis audit</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {jenisAuditOptions
+                                  .sort((a, b) =>
+                                    a.namaJenisAudit.localeCompare(
+                                      b.namaJenisAudit
+                                    )
+                                  )
+                                  .map((jenisAudit) => (
+                                    <option
+                                      key={jenisAudit.id}
+                                      value={jenisAudit.id}
+                                    >
+                                      {jenisAudit.namaJenisAudit}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.jenisAuditId && (
                                 <span className="error-message">
@@ -373,6 +540,7 @@ function TambahKetidakpatuhan() {
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <Row>
                     <Col>
                       <Form.Group>
@@ -386,16 +554,30 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedSkopSemakan(e.target.value);
+                                }}
                                 value={value}
                                 // aria-label="skopSemakanSelect"
                                 // {...field}
                                 // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih skop semakan</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {skopSemakanOptions
+                                  .sort((a, b) =>
+                                    a.namaSkopSemakan.localeCompare(
+                                      b.namaSkopSemakan
+                                    )
+                                  )
+                                  .map((skopSemakan) => (
+                                    <option
+                                      key={skopSemakan.id}
+                                      value={skopSemakan.id}
+                                    >
+                                      {skopSemakan.namaSkopSemakan}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.skopSemakanId && (
                                 <span className="error-message">
@@ -425,7 +607,10 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedSkopKriteria(e.target.value);
+                                }}
                                 value={value}
                                 // aria-label="skopKriteriaKetidakpatuhanSelect"
                                 // {...field}
@@ -434,9 +619,20 @@ function TambahKetidakpatuhan() {
                                 <option value="">
                                   Pilih skop kriteria ketidakpatuhan
                                 </option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {skopKriteriaOptions
+                                  .filter(
+                                    (skopKriteria) =>
+                                      skopKriteria.skopSemakanId ===
+                                      parseInt(selectedSkopSemakan)
+                                  )
+                                  .map((skopKriteria) => (
+                                    <option
+                                      key={skopKriteria.id}
+                                      value={skopKriteria.id}
+                                    >
+                                      {skopKriteria.namaSkopKriteria}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.skopKriteriaId && (
                                 <span className="error-message">
@@ -464,16 +660,30 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  onChange(e);
+                                  setSelectedAktivitiSemakan(e.target.value);
+                                }}
                                 value={value}
                                 // aria-label="aktivitiSemakanSelect"
                                 // {...field}
                                 // isInvalid={!!errors.aktivitiSemakan}
                               >
                                 <option value="">Pilih aktiviti semakan</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {aktivitiSemakanOptions
+                                  .filter(
+                                    (aktivitiSemakan) =>
+                                      aktivitiSemakan.skopKriteriaId ===
+                                      parseInt(selectedSkopKriteria)
+                                  )
+                                  .map((aktivitiSemakan) => (
+                                    <option
+                                      key={aktivitiSemakan.id}
+                                      value={aktivitiSemakan.id}
+                                    >
+                                      {aktivitiSemakan.namaAktivitiSemakan}
+                                    </option>
+                                  ))}
                               </Form.Select>
                               {errors.aktivitiSemakanId && (
                                 <span className="error-message">
@@ -504,7 +714,12 @@ function TambahKetidakpatuhan() {
                         render={({ field: { onChange, value } }) => (
                           <>
                             <Form.Select
-                              onChange={onChange}
+                              onChange={(e) => {
+                                onChange(e);
+                                setSelectedKriteriaKetidakpatuhan(
+                                  e.target.value
+                                );
+                              }}
                               value={value}
                               // aria-label="kriteriaKetidakpatuhanSelect"
                               // {...field}
@@ -513,9 +728,22 @@ function TambahKetidakpatuhan() {
                               <option value="">
                                 Pilih kriteria ketidakpatuhan
                               </option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              {kriteriaKetidakpatuhanOptions
+                                .filter(
+                                  (kriteriaKetidakpatuhan) =>
+                                    kriteriaKetidakpatuhan.aktivitiSemakanId ===
+                                    parseInt(selectedAktivitiSemakan)
+                                )
+                                .map((kriteriaKetidakpatuhan) => (
+                                  <option
+                                    key={kriteriaKetidakpatuhan.id}
+                                    value={kriteriaKetidakpatuhan.id}
+                                  >
+                                    {
+                                      kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan
+                                    }
+                                  </option>
+                                ))}
                             </Form.Select>
                             {errors.kriteriaKetidakpatuhanId && (
                               <span className="error-message">

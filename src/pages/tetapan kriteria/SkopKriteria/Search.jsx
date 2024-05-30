@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import { useOptionStore } from "../../../store/option-store";
 
 function SearchSkopKriteria() {
   // --------- FE ------------
@@ -18,12 +20,25 @@ function SearchSkopKriteria() {
     }
   };
 
+  // ___________________________________ Backend __________________________________
+  // Display skop semakan options
+  const { skopSemakanOptions, displaySkopSemakans } = useOptionStore(
+    (state) => ({
+      skopSemakanOptions: state.skopSemakanOptions,
+      displaySkopSemakans: state.displaySkopSemakans,
+    })
+  );
+
+  useEffect(() => {
+    displaySkopSemakans();
+  }, [displaySkopSemakans]);
+  
   return (
     <>
       <Container fluid className="search-bar-section">
         <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
-          <Form.Group className="col-md-4 with-padding-left">
+            <Form.Group className="col-md-4 with-padding-left">
               <Form.Select
                 {...register("skopSemakanSelect")}
                 aria-label="skopSemakanSelect"
@@ -32,9 +47,14 @@ function SearchSkopKriteria() {
                 }}
               >
                 <option value="">Skop Semakan</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {skopSemakanOptions
+                  // Sort wilayah options alphabetically by namaWilayah
+                  .sort((a, b) => a.namaSkopSemakan.localeCompare(b.namaSkopSemakan))
+                  .map((skopSemakan) => (
+                    <option key={skopSemakan.id} value={skopSemakan.id}>
+                      {skopSemakan.namaSkopSemakan}
+                    </option>
+                  ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-md-6">
