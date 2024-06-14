@@ -15,6 +15,7 @@ function ShowWilayahList() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
   // ----------BE----------
   // Handle listing of wilayah
@@ -33,6 +34,12 @@ function ShowWilayahList() {
     }
   };
 
+  const handleAddSuccess = () => {
+    const newTotalPage = Math.ceil((wilayahs.length + 1) / pageSize);
+    setCurrentPage(newTotalPage);
+    fetchWilayahs(newTotalPage);
+  };
+
   return (
     <>
       <Container fluid>
@@ -42,7 +49,7 @@ function ShowWilayahList() {
               <h3 className="table-title">Senarai Wilayah</h3>
             </div>
             <div className="col-md-2">
-              <CreateWilayah onAddSuccess={() => fetchWilayahs(currentPage)} />
+              <CreateWilayah onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -59,10 +66,10 @@ function ShowWilayahList() {
             {wilayahs.length > 0 &&
               wilayahs.map((wilayahsData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>{wilayahsData.namaWilayah}</td>
                   <td>
-                    <EditWilayah wilayah={wilayahsData} />
+                    <EditWilayah wilayah={wilayahsData} onUpdateSuccess={() => fetchWilayahs(currentPage)} />
                     <Button
                       onClick={() => handleDeleteWilayah(wilayahsData.id)}
                       className="delete-btn"

@@ -48,7 +48,7 @@ const useWilayahStore = create((set) => ({
   },
 
   // update wilayah
-  updateWilayah: async (wilayahId, wilayahInput, handleCloseEditWilayah) => {
+  updateWilayah: async (wilayahId, wilayahInput, handleCloseEditWilayah, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/wilayah/${wilayahId}`,
@@ -63,6 +63,7 @@ const useWilayahStore = create((set) => ({
         });
         console.log("Wilayah berjaya dikemaskini");
         handleCloseEditWilayah();
+        onUpdateSuccess();
       }
     } catch (error) {
       Swal.fire({

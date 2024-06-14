@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useWilayahStore from "../../../store/wilayah-store";
 
-function EditWilayah({wilayah}) {
+function EditWilayah({wilayah, onUpdateSuccess}) {
   // ----- FE ---------
   // Handle modal
   const [showEditWilayah, setShowEditWilayah] = useState(false);
@@ -20,7 +20,7 @@ function EditWilayah({wilayah}) {
   const { updateWilayah } = useWilayahStore();
   
   const onSubmit = (wilayahInput) => {
-    updateWilayah(wilayah.id, wilayahInput, handleCloseEditWilayah);
+    updateWilayah(wilayah.id, wilayahInput, handleCloseEditWilayah, onUpdateSuccess);
   };
 
   return (
