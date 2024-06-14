@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useWilayahStore from "../../../store/wilayah-store";
 
-function CreateWilayah() {
+function CreateWilayah({ onAddSuccess }) {
   // ----------FE----------
+  // `Create` modal
   const [showCreateWilayah, setShowCreateWilayah] = useState(false);
 
   const handleShowCreateWilayah = () => setShowCreateWilayah(true);
@@ -22,31 +22,15 @@ function CreateWilayah() {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create wilayah
-  const createWilayah = async (wilayahInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/wilayah`,
-        wilayahInput
-      );
+  // Handle create of wilayah
+  const createWilayah = useWilayahStore((state) => state.createWilayah);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
-        });
-        console.log("Wilayah berjaya ditambah");
-        handleCloseCreateWilayah();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
-      });
-    }
+  const onSubmit = (data) => {
+    createWilayah(data, () => {
+      handleCloseCreateWilayah();
+      // reload the table
+      if (onAddSuccess) onAddSuccess(); 
+    });
   };
 
   return (
@@ -65,7 +49,7 @@ function CreateWilayah() {
           <Modal.Title>Tambah Wilayah</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createWilayah)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Wilayah</Form.Label>
               <Controller
@@ -95,7 +79,7 @@ function CreateWilayah() {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createWilayah)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Wilayah
           </Button>

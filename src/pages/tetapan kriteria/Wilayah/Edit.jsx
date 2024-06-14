@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useWilayahStore from "../../../store/wilayah-store";
 
 function EditWilayah({wilayah}) {
   // ----- FE ---------
@@ -17,37 +16,11 @@ function EditWilayah({wilayah}) {
   const { errors } = formState;
 
   // ------------ BE -------------
-  // Handle update wilayah
-  const updateWilayah = async (wilayahInput) => {
-    
-    try {
-      // Log wilayahInput to see the data being sent to the server
-      console.log('Data being sent to server:', wilayahInput);
-
-      // Ensure wilayahId is defined and contains the correct value
-      console.log('wilayahId:', wilayah.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/wilayah/${wilayah.id}`,
-          wilayahInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, 
-          });
-          console.log("Wilayah berjaya dikemaskini");
-          handleCloseEditWilayah();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error,
-  });
-  }
+  // Handle edit of wilayah
+  const { updateWilayah } = useWilayahStore();
+  
+  const onSubmit = (wilayahInput) => {
+    updateWilayah(wilayah.id, wilayahInput, handleCloseEditWilayah);
   };
 
   return (
@@ -95,7 +68,7 @@ function EditWilayah({wilayah}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateWilayah)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Wilayah
           </Button>
         </Modal.Footer>

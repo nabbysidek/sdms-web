@@ -6,76 +6,30 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useWilayahStore from "../../../store/wilayah-store";
 
 function ShowWilayahList() {
   // ----------FE----------
-  const [wilayahs, setWilayahs] = useState([]);
+  // Initialize state management store
+  const { wilayahs, totalPage, fetchWilayahs, deleteWilayah } = useWilayahStore();
 
   // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // ----------BE----------
-  // List wilayah
-  const fetchWilayahs = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/wilayah?page=${page}`
-      );
-      setWilayahs(response.data.data);
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat wilayah:", error);
-    }
-  };
-
+  // Handle listing of wilayah
   useEffect(() => {
     fetchWilayahs(currentPage);
+  }, [currentPage, fetchWilayahs]);
 
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchWilayahs(nextPage);
-    }, 5000);
-
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-
-  // Handle delete
+  // Handle delete of wilayah
   const handleDeleteWilayah = async (wilayahId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `tetapan-kriteria/wilayah/${wilayahId}`
-        );
-
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, 
-          });
-
-          setWilayahs((prevWilayahs) =>
-            prevWilayahs.filter((wilayah) => wilayah.id !== wilayahId)
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error,
-      });
-      }
+      await deleteWilayah(wilayahId);
+      fetchWilayahs(currentPage);
     }
   };
 
@@ -88,7 +42,7 @@ function ShowWilayahList() {
               <h3 className="table-title">Senarai Wilayah</h3>
             </div>
             <div className="col-md-2">
-              <CreateWilayah />
+              <CreateWilayah onAddSuccess={() => fetchWilayahs(currentPage)} />
             </div>
           </Row>
         </div>
