@@ -1,112 +1,51 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateCawangan from "./Create";
 import EditCawangan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
+import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useCawanganStore from "../../../store/cawangan-store";
 
 function ShowCawanganList() {
-  // ----------FE----------
-  const [cawangans, setCawangans] = useState([]);
+  // initialize state management store
+  const {
+    cawangans,
+    totalPage,
+    namaWilayahOptions,
+    fetchCawangans,
+    deleteCawangan,
+    fetchWilayahs,
+  } = useCawanganStore();
 
   // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  // ----------BE----------
-  // Fetch wilayah data
-  const [namaWilayahOptions, setNamaWilayahOptions] = useState([]);
-
-  const fetchWilayahs = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/wilayah/display-wilayah`
-      );
-
-      if (Array.isArray(response.data)) {
-        setNamaWilayahOptions(
-          response.data.map((wilayah) => ({
-            value: wilayah.id,
-            label: wilayah.namaWilayah,
-          }))
-        );
-      } else {
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setNamaWilayahOptions]);
-
+  // -------- BE --------------
+  // handle listing of cawangan
   useEffect(() => {
+    fetchCawangans(currentPage); 
     fetchWilayahs();
-  }, [fetchWilayahs]);
+  }, [currentPage, fetchCawangans, fetchWilayahs]);
 
-
-  // List cawangan
-  const fetchCawangans = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/cawangan?page=${page}`
-      );
-      setCawangans(response.data.data);
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat cawangan:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCawangans(currentPage);
-
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchCawangans(nextPage);
-    }, 5000);
-
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-  
-  // Handle delete
+  // handle delete of cawangan
   const handleDeleteCawangan = async (cawanganId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/cawangan/${cawanganId}`
-        );
-
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
-          });
-
-          setCawangans((prevCawangans) =>
-            prevCawangans.filter((cawangan) => cawangan.id !== cawanganId)
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error, 
-      });
-      }
+      await deleteCawangan(cawanganId);
+      fetchCawangans(currentPage); // Refetch cawangans after deletion
     }
+  };
+
+  // handles page reload
+  const handleAddSuccess = () => {
+    const newTotalPage = Math.ceil((cawangans.length + 1) / pageSize);
+    setCurrentPage(totalPage);
+    fetchCawangans(totalPage);
   };
 
   return (
@@ -118,7 +57,7 @@ function ShowCawanganList() {
               <h3 className="table-title">Senarai Cawangan</h3>
             </div>
             <div className="col-md-2">
-              <CreateCawangan wilayahOptions={namaWilayahOptions} />
+              <CreateCawangan wilayahOptions={namaWilayahOptions} onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -134,19 +73,19 @@ function ShowCawanganList() {
           </thead>
           <tbody>
             {cawangans.length > 0 &&
-              cawangans.map((cawangansData, key) => (
-                <tr key={key}>
-                  <td>{key + 1}</td>
+              cawangans.map((cawangan, index) => (
+                <tr key={cawangan.id}>
+                  <td>{(currentPage - 1) * pageSize + index + 1}</td>
                   <td>
-                    {cawangansData.wilayah
-                      ? cawangansData.wilayah.namaWilayah
+                    {cawangan.wilayah
+                      ? cawangan.wilayah.namaWilayah
                       : "N/A"}
                   </td>
-                  <td>{cawangansData.namaCawangan}</td>
+                  <td>{cawangan.namaCawangan}</td>
                   <td>
-                    <EditCawangan cawangan={cawangansData} wilayahOptions={namaWilayahOptions} />
+                    <EditCawangan cawangan={cawangan} wilayahOptions={namaWilayahOptions} onUpdateSuccess={() => fetchCawangans(currentPage)} />
                     <Button
-                      onClick={() => handleDeleteCawangan(cawangansData.id)}
+                      onClick={() => handleDeleteCawangan(cawangan.id)}
                       className="delete-btn"
                     >
                       Padam
@@ -163,7 +102,6 @@ function ShowCawanganList() {
           onPageChange={setCurrentPage}
         />
 
-        {/* Functional buttons */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

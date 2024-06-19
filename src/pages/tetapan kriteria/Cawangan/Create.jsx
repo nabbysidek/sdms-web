@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useCawanganStore from "../../../store/cawangan-store.js";
 
-function CreateCawangan({wilayahOptions}) {
+function CreateCawangan({wilayahOptions, onAddSuccess}) {
   // ----------FE----------
   const [showCreateCawangan, setShowCreateCawangan] = useState(false);
 
@@ -23,30 +22,14 @@ function CreateCawangan({wilayahOptions}) {
   } = useForm();
 
   // ----------BE----------
-  // Create cawangan
-  const createCawangan = async (cawanganInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `api/tetapan-kriteria/cawangan`,
-        cawanganInput
-      );
+  // Handle create of cawangan
+  const createCawangan = useCawanganStore((state) => state.createCawangan);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
-        });
-        console.log("Kriteria ketidakpatuhan berjaya ditambah");
-        handleCloseCreateCawangan();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+  const onSubmit = (data) => {
+    createCawangan(data, () => {
+      handleCloseCreateCawangan();
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -93,34 +76,7 @@ function CreateCawangan({wilayahOptions}) {
                   </>
                 )}
               />
-              {/* <Controller
-                id="wilayahId"
-                name="wilayahId"
-                defaultValue=""
-                control={control}
-                rules={{ required: "Sila pilih wilayah" }}
-                render={({ field: { onChange, value } }) => (
-                  <>
-                    <Form.Select onChange={onChange} value={value}>
-                      <option value="" disabled>
-                        Pilih Wilayah
-                      </option>
-                      {wilayahOptions.map((wilayah) => (
-                        <option key={wilayah.value} value={wilayah.value}>
-                          {wilayah.label}
-                        </option>
-                      ))}
-                    </Form.Select>
-                    {errors.wilayahId && (
-                      <span className="error-message">
-                        {errors.wilayahId.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              /> */}
             </Form.Group>
-
             <Form.Group>
               <Form.Label>Nama Cawangan</Form.Label>
               <Controller
@@ -154,7 +110,7 @@ function CreateCawangan({wilayahOptions}) {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createCawangan)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Cawangan
           </Button>

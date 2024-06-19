@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useCawanganStore from "../../../store/cawangan-store";
 
-function EditCawangan({cawangan, wilayahOptions}) {
+function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditCawangan, setShowEditCawangan] = useState(false);
@@ -16,40 +15,15 @@ function EditCawangan({cawangan, wilayahOptions}) {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-
+  // Initialize state management store
+  const { updateCawangan } = useCawanganStore();
+  
   // ----------- BE ---------------
   // Handle update cawangan
-  const updateCawangan = async (cawanganInput) => {
-    
-    try {
-      // Log cawanganInput to see the data being sent to the server
-      console.log('Data being sent to server:', cawanganInput);
 
-      // Ensure cawanganId is defined and contains the correct value
-      console.log('cawanganId:', cawangan.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/cawangan/${cawangan.id}`,
-          cawanganInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, 
-          });
-          console.log("Cawangan berjaya dikemaskini");
-          handleCloseEditCawangan();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-  }
-};
+  const onSubmit = (cawanganInput) => {
+    updateCawangan(cawangan.id, cawanganInput, handleCloseEditCawangan, onUpdateSuccess);
+  };
 
   return (
     <div>
@@ -127,7 +101,7 @@ function EditCawangan({cawangan, wilayahOptions}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateCawangan)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Cawangan
           </Button>
         </Modal.Footer>
