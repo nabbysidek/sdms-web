@@ -34,6 +34,7 @@ function ShowWilayahList() {
     }
   };
 
+  // handles page reload
   const handleAddSuccess = () => {
     const newTotalPage = Math.ceil((wilayahs.length + 1) / pageSize);
     setCurrentPage(newTotalPage);
