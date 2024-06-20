@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import { Button, Modal, Form } from "react-bootstrap";
+import useBahagianStore from "../../../store/bahagian-store";
 
-function EditBahagian({bahagian}) {
+function EditBahagian({bahagian, onUpdateSuccess}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditBahagian, setShowEditBahagian] = useState(false);
@@ -18,36 +17,10 @@ function EditBahagian({bahagian}) {
 
   // ------------ BE -------------
   // Update bahagian
-  const updateBahagian = async (bahagianInput) => {
-    
-    try {
-      // Log bahagianInput to see the data being sent to the server
-      console.log('Data being sent to server:', bahagianInput);
+  const { updateBahagian } = useBahagianStore();
 
-      // Ensure bahagianId is defined and contains the correct value
-      console.log('bahagianId:', bahagian.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/bahagian/${bahagian.id}`,
-          bahagianInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
-          });
-          console.log("Bahagian berjaya dikemaskini");
-          handleCloseEditBahagian();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-  }
+  const onSubmit = (bahagianInput) => {
+    updateBahagian(bahagian.id, bahagianInput, handleCloseEditBahagian, onUpdateSuccess);
   };
 
   return (
@@ -95,7 +68,7 @@ function EditBahagian({bahagian}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateBahagian)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Bahagian
           </Button>
         </Modal.Footer>

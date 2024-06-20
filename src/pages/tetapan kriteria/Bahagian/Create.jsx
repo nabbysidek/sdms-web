@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useBahagianStore from "../../../store/bahagian-store";
 
-function CreateBahagian() {
+function CreateBahagian({ onAddSuccess }) {
   // ----------FE----------
-  // Manage the visibility of the modal
+  // `Create` modal
   const [showCreateBahagian, setShowCreateBahagian] = useState(false);
 
   const handleShowCreateBahagian = () => setShowCreateBahagian(true);
@@ -23,31 +22,15 @@ function CreateBahagian() {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create bahagian
-  const createBahagian = async (bahagianInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/bahagian`,
-        bahagianInput
-      );
+  // handle create bahagian
+  const createBahagian = useBahagianStore((state) => state.createBahagian);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
-        });
-        console.log("Bahagian berjaya ditambah");
-        handleCloseCreateBahagian();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
+  const onSubmit = (data) => {
+    createBahagian(data, () => {
+      handleCloseCreateBahagian();
+      // reload the table
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -66,7 +49,7 @@ function CreateBahagian() {
           <Modal.Title>Tambah Bahagian</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createBahagian)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Bahagian</Form.Label>
               <Controller
@@ -96,7 +79,7 @@ function CreateBahagian() {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createBahagian)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Bahagian
           </Button>
