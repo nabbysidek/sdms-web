@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useJabatanStore from "../../../store/jabatan-store";
 
-function EditJabatan({jabatan, bahagianOptions}) {
+function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
   // ----------- FE --------
   //  Handle modal
   const [showEditJabatan, setShowEditJabatan] = useState(false);
@@ -16,39 +15,15 @@ function EditJabatan({jabatan, bahagianOptions}) {
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  // ------------ BE -------------
+  // Initialize state management store
+  const { updateJabatan } = useJabatanStore();
+  
+  // ----------- BE ---------------
   // Handle update jabatan
-  const updateJabatan = async (jabatanInput) => {
-    
-    try {
-      // Log jabatanInput to see the data being sent to the server
-      console.log('Data being sent to server:', jabatanInput);
 
-      // Ensure jabatanId is defined and contains the correct value
-      console.log('jabatanId:', jabatan.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/jabatan/${jabatan.id}`,
-          jabatanInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
-          });
-          console.log("Jabatan berjaya dikemaskini");
-          handleCloseEditJabatan();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, // Access the message from the backend response
-  });
-  }
-};
+  const onSubmit = (jabatanInput) => {
+    updateJabatan(jabatan.id, jabatanInput, handleCloseEditJabatan, onUpdateSuccess);
+  };
 
   return (
     <div>
@@ -126,7 +101,7 @@ function EditJabatan({jabatan, bahagianOptions}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateJabatan)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Jabatan
           </Button>
         </Modal.Footer>

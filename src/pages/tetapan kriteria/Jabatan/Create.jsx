@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Form, Modal } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useJabatanStore from "../../../store/jabatan-store";
 
-function CreateJabatan({bahagianOptions}) {
+function CreateJabatan({bahagianOptions, onAddSuccess}) {
   // ----------FE----------
+  // `Create` modal
   const [showCreateJabatan, setShowCreateJabatan] = useState(false);
 
   const handleShowCreateJabatan = () => setShowCreateJabatan(true);
@@ -23,35 +23,20 @@ function CreateJabatan({bahagianOptions}) {
   } = useForm();
 
   // ----------BE----------
-  // Create jabatan
-  const createJabatan = async (jabatanInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/jabatan`,
-        jabatanInput
-      );
+  // handle create jabatan
+  const createJabatan = useJabatanStore((state) => state.createJabatan);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success,
-        });
-        handleCloseCreateJabatan();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
+  const onSubmit = (data) => {
+    createJabatan(data, () => {
+      handleCloseCreateJabatan();
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJabatan}>
-        Tambah Jabatan
+        Tambah
       </Button>
 
       <Modal
@@ -64,7 +49,7 @@ function CreateJabatan({bahagianOptions}) {
           <Modal.Title>Tambah Jabatan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createJabatan)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Bahagian</Form.Label>
               <Controller
@@ -127,7 +112,7 @@ function CreateJabatan({bahagianOptions}) {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createJabatan)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Jabatan
           </Button>
