@@ -9,7 +9,7 @@ import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useWilayahStore from "../../../store/wilayah-store";
 
 function ShowWilayahList() {
-  const { wilayahs, totalPage, fetchWilayahs, deleteWilayah } = useWilayahStore();
+  const { wilayahs, totalPage, totalItems, fetchWilayahs, deleteWilayah } = useWilayahStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -40,13 +40,17 @@ function ShowWilayahList() {
 
   // handle page reload
   const handleAddSuccess = async () => {
-    const updatedWilayahs = await fetchWilayahs(currentPage);
+    await fetchWilayahs(currentPage);
 
-    if (updatedWilayahs.length >= pageSize) {
-      setCurrentPage(totalPage + 1);
-      fetchWilayahs(totalPage + 1);
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchWilayahs(newTotalPage);
     } else {
-      fetchWilayahs(currentPage);
+      setCurrentPage(totalPage);
+      await fetchWilayahs(totalPage);
     }
   };
 
