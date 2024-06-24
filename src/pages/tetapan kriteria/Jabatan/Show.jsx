@@ -13,6 +13,7 @@ function Show() {
   const {
     jabatans,
     totalPage,
+    totalItems,
     namaBahagianOptions,
     fetchJabatans,
     deleteJabatan,
@@ -23,29 +24,44 @@ function Show() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-  // -------- BE --------------
-  // handle listing of jabatan
+
+  // fetch jabatans
   useEffect(() => {
     fetchJabatans(currentPage); 
     fetchBahagians();
   }, [currentPage, fetchJabatans, fetchBahagians]);
 
-  // handle delete of jabatan
+  // handle delete of jabatans
   const handleDeleteJabatan = async (jabatanId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteJabatan(jabatanId);
-      fetchJabatans(currentPage); // Refetch jabatans after deletion
+      const updateJabatans = await fetchJabatans(currentPage);
+
+      if (updateJabatans.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchJabatans(newPage);
+      }
     }
   };
 
   // handles page reload
-  const handleAddSuccess = () => {
-    const newTotalPage = Math.ceil((jabatans.length + 1) / pageSize);
-    setCurrentPage(newTotalPage);
-    fetchJabatans(newTotalPage);
+  const handleAddSuccess = async () => {
+    await fetchJabatans(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchJabatans(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchJabatans(totalPage);
+    }
   };
 
   return (
@@ -74,7 +90,7 @@ function Show() {
           {jabatans.length > 0 &&
             jabatans.map((jabatansData, key) => (
               <tr key={key}>
-                <td>{key + 1}</td>
+                <td>{(currentPage - 1) * pageSize + key + 1}</td>
                 <td>
                   {jabatansData.bahagian
                     ? jabatansData.bahagian.namaBahagian
