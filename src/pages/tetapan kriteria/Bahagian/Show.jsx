@@ -9,37 +9,51 @@ import PaginationTable from "../../../components/page layout/PaginationTable";
 import useBahagianStore from "../../../store/bahagian-store";
 
 function ShowBahagianList() {
-  // ----------FE----------
-  // const [bahagians, setBahagians] = useState([]);
-  const { bahagians, totalPage, fetchBahagians, deleteBahagian } = useBahagianStore();
+  const { bahagians, totalPage, totalItems, fetchBahagians, deleteBahagian } = useBahagianStore();
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1); // Define currentPage
   const pageSize = 10;
 
-  // ----------BE----------
-  // Handle listing of bahagians
+  // fetch bahagians
   useEffect(() => {
     fetchBahagians(currentPage);
   }, [currentPage, fetchBahagians]);
 
 
-  // handle delete of bahagian
+  // handle delete of bahagians
   const handleDeleteBahagian = async (bahagianId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteBahagian(bahagianId);
-      fetchBahagians(currentPage);
+      
+      // fetch the total number of items after deletion
+      const updatedBahagians = await fetchBahagians(currentPage);
+
+      // If the current page is empty and not the first page, go to the previous page
+      if (updatedBahagians.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchBahagians(newPage);
+      }
     }
   };
 
   // handles page reload
-  const handleAddSuccess = () => {
-    const newTotalPage = Math.ceil((bahagians.length + 1) / pageSize);
-    setCurrentPage(newTotalPage);
-    fetchBahagians(newTotalPage);
+  const handleAddSuccess = async () => {
+    await fetchBahagians(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchBahagians(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchBahagians(totalPage);
+    }
   };
 
   return (
@@ -68,10 +82,10 @@ function ShowBahagianList() {
             {bahagians.length > 0 &&
               bahagians.map((bahagiansData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>{bahagiansData.namaBahagian}</td>
                   <td>
-                    <EditBahagian bahagian={bahagiansData} onUpdateSuccess={() => fetchWilayahs(currentPage)} />
+                    <EditBahagian bahagian={bahagiansData} onUpdateSuccess={() => fetchBahagians(currentPage)} />
                     <Button
                       onClick={() => handleDeleteBahagian(bahagiansData.id)}
                       className="delete-btn"

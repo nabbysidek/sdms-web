@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const useBahagianStore = create((set) => ({
   bahagians: [],
   totalPage: 1,
+  totalItems: 0,
 
   // fetch bahagian
   fetchBahagians: async (page = 1) => {
@@ -15,7 +16,9 @@ const useBahagianStore = create((set) => ({
       set({
         bahagians: response.data.data,
         totalPage: response.data.last_page,
+        totalItems: response.data.total,
       });
+      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat bahagian:", error);
     }
