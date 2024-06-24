@@ -86,14 +86,14 @@ function ShowCawanganList() {
           </thead>
           <tbody>
             {cawangans.length > 0 &&
-              cawangans.map((cawangan, index) => (
-                <tr key={cawangan.id}>
-                  <td>{(currentPage - 1) * pageSize + index + 1}</td>
-                  <td>{cawangan.wilayah ? cawangan.wilayah.namaWilayah : "N/A"}</td>
-                  <td>{cawangan.namaCawangan}</td>
+              cawangans.map((cawangansData, key) => (
+                <tr key={key}>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
+                  <td>{cawangansData.wilayah ? cawangansData.wilayah.namaWilayah : "N/A"}</td>
+                  <td>{cawangansData.namaCawangan}</td>
                   <td>
-                    <EditCawangan cawangan={cawangan} wilayahOptions={namaWilayahOptions} onUpdateSuccess={() => fetchCawangans(currentPage)} />
-                    <Button onClick={() => handleDeleteCawangan(cawangan.id)} className="delete-btn">
+                    <EditCawangan cawangan={cawangansData} wilayahOptions={namaWilayahOptions} onUpdateSuccess={() => fetchCawangans(currentPage)} />
+                    <Button onClick={() => handleDeleteCawangan(cawangansData.id)} className="delete-btn">
                       Padam
                     </Button>
                   </td>
