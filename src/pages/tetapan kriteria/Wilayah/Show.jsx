@@ -9,92 +9,99 @@ import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useWilayahStore from "../../../store/wilayah-store";
 
 function ShowWilayahList() {
-  // ----------FE----------
-  // Initialize state management store
   const { wilayahs, totalPage, fetchWilayahs, deleteWilayah } = useWilayahStore();
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-  // ----------BE----------
-  // Handle listing of wilayah
+  // fetch wilayahs
   useEffect(() => {
     fetchWilayahs(currentPage);
   }, [currentPage, fetchWilayahs]);
 
-  // Handle delete of wilayah
+  // handle delete wilayahs
   const handleDeleteWilayah = async (wilayahId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteWilayah(wilayahId);
+
+      // fetch the total number of items after deletion
+      const updatedWilayahs = await fetchWilayahs(currentPage);
+
+      // If the current page is empty and not the first page, go to the previous page
+      if (updatedWilayahs.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchWilayahs(newPage);
+      }
+    }
+  };
+
+  // handle page reload
+  const handleAddSuccess = async () => {
+    const updatedWilayahs = await fetchWilayahs(currentPage);
+
+    if (updatedWilayahs.length >= pageSize) {
+      setCurrentPage(totalPage + 1);
+      fetchWilayahs(totalPage + 1);
+    } else {
       fetchWilayahs(currentPage);
     }
   };
 
-  // handles page reload
-  const handleAddSuccess = () => {
-    const newTotalPage = Math.ceil((wilayahs.length + 1) / pageSize);
-    setCurrentPage(newTotalPage);
-    fetchWilayahs(newTotalPage);
-  };
-
   return (
-    <>
-      <Container fluid>
-        <div className="table-section">
-          <Row>
-            <div className="col-md-10">
-              <h3 className="table-title">Senarai Wilayah</h3>
-            </div>
-            <div className="col-md-2">
-              <CreateWilayah onAddSuccess={handleAddSuccess} />
-            </div>
-          </Row>
-        </div>
-        <hr />
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Wilayah</th>
-              <th>Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {wilayahs.length > 0 &&
-              wilayahs.map((wilayahsData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{wilayahsData.namaWilayah}</td>
-                  <td>
-                    <EditWilayah wilayah={wilayahsData} onUpdateSuccess={() => fetchWilayahs(currentPage)} />
-                    <Button
-                      onClick={() => handleDeleteWilayah(wilayahsData.id)}
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+    <Container fluid>
+      <div className="table-section">
+        <Row>
+          <div className="col-md-10">
+            <h3 className="table-title">Senarai Wilayah</h3>
+          </div>
+          <div className="col-md-2">
+            <CreateWilayah onAddSuccess={handleAddSuccess} />
+          </div>
+        </Row>
+      </div>
+      <hr />
+      <Table responsive>
+        <thead>
+          <tr>
+            <th>Bil</th>
+            <th>Nama Wilayah</th>
+            <th>Tindakan</th>
+          </tr>
+        </thead>
+        <tbody>
+          {wilayahs.length > 0 &&
+            wilayahs.map((wilayahsData, key) => (
+              <tr key={key}>
+                <td>{(currentPage - 1) * pageSize + key + 1}</td>
+                <td>{wilayahsData.namaWilayah}</td>
+                <td>
+                  <EditWilayah wilayah={wilayahsData} onUpdateSuccess={() => fetchWilayahs(currentPage)} />
+                  <Button
+                    onClick={() => handleDeleteWilayah(wilayahsData.id)}
+                    className="delete-btn"
+                  >
+                    Padam
+                  </Button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
+      <PaginationTable
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onPageChange={setCurrentPage}
+      />
 
-        <div className="functional-btns-container">
-          <ExportButton />
-          <ImportButton />
-        </div>
-      </Container>
-    </>
+      <div className="functional-btns-container">
+        <ExportButton />
+        <ImportButton />
+      </div>
+    </Container>
   );
 }
 

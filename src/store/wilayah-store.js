@@ -16,6 +16,7 @@ const useWilayahStore = create((set) => ({
         wilayahs: response.data.data,
         totalPage: response.data.last_page,
       });
+      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat wilayah:", error);
     }
