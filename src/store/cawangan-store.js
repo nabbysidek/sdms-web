@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const useCawanganStore = create((set) => ({
   cawangans: [],
   totalPage: 1,
+  totalItems: 0,
   namaWilayahOptions: [],
 
   // fetch cawangan
@@ -16,13 +17,15 @@ const useCawanganStore = create((set) => ({
       set({
         cawangans: response.data.data,
         totalPage: response.data.last_page,
+        totalItems: response.data.total,
       });
+      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat cawangan:", error);
     }
   },
 
-  //   fetch wilayah options
+  // fetch wilayah options
   fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
@@ -70,7 +73,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  //   update cawangan
+  // update cawangan
   updateCawangan: async (cawanganId, cawanganInput, handleCloseEditCawangan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(

@@ -9,43 +9,56 @@ import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useCawanganStore from "../../../store/cawangan-store";
 
 function ShowCawanganList() {
-  // initialize state management store
   const {
     cawangans,
     totalPage,
+    totalItems,
     namaWilayahOptions,
     fetchCawangans,
     deleteCawangan,
     fetchWilayahs,
   } = useCawanganStore();
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-  // -------- BE --------------
-  // handle listing of cawangan
+  // fetch cawangans
   useEffect(() => {
-    fetchCawangans(currentPage); 
+    fetchCawangans(currentPage);
     fetchWilayahs();
   }, [currentPage, fetchCawangans, fetchWilayahs]);
 
-  // handle delete of cawangan
+  // handle delete cawangans
   const handleDeleteCawangan = async (cawanganId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteCawangan(cawanganId);
-      fetchCawangans(currentPage); // Refetch cawangans after deletion
+
+      const updateCawangans = await fetchCawangans(currentPage);
+
+      if (updateCawangans.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchCawangans(newPage);
+      }
     }
   };
 
-  // handles page reload
-  const handleAddSuccess = () => {
-    const newTotalPage = Math.ceil((cawangans.length + 1) / pageSize);
-    setCurrentPage(totalPage);
-    fetchCawangans(totalPage);
+  // handle page reload after storing new data
+  const handleAddSuccess = async () => {
+    await fetchCawangans(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchCawangans(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchCawangans(totalPage);
+    }
   };
 
   return (
@@ -76,18 +89,11 @@ function ShowCawanganList() {
               cawangans.map((cawangan, index) => (
                 <tr key={cawangan.id}>
                   <td>{(currentPage - 1) * pageSize + index + 1}</td>
-                  <td>
-                    {cawangan.wilayah
-                      ? cawangan.wilayah.namaWilayah
-                      : "N/A"}
-                  </td>
+                  <td>{cawangan.wilayah ? cawangan.wilayah.namaWilayah : "N/A"}</td>
                   <td>{cawangan.namaCawangan}</td>
                   <td>
                     <EditCawangan cawangan={cawangan} wilayahOptions={namaWilayahOptions} onUpdateSuccess={() => fetchCawangans(currentPage)} />
-                    <Button
-                      onClick={() => handleDeleteCawangan(cawangan.id)}
-                      className="delete-btn"
-                    >
+                    <Button onClick={() => handleDeleteCawangan(cawangan.id)} className="delete-btn">
                       Padam
                     </Button>
                   </td>
