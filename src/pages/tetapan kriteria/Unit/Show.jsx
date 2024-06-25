@@ -31,7 +31,7 @@ function ShowUnitList() {
   }, [currentPage, fetchUnits, fetchJabatans]);
 
 
-  // handle delete of jabatans
+  // handle delete of units
   const handleDeleteUnit = async (unitId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
