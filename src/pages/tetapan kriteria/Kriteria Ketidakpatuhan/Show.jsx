@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Table, Button, Row, Col, Container } from "react-bootstrap";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
@@ -122,13 +122,13 @@ function ShowKriteriaKetidakpatuhanList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <Col xl={10}>
+            <div className="col-md-10">
               <h3 className="table-title">Senarai Kriteria Ketidakpatuhan</h3>
-            </Col>
+            </div>
 
-            <Col xl={2}>
+            <div className="col-md-2">
               <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} />
-            </Col>
+            </div>
           </Row>
         </div>
         <hr />
