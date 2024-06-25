@@ -1,58 +1,31 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
 
-function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
-  // ----------------- FE -----------------
-  // Manage modal visibility
+function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions, onUpdateSuccess }) {
+  // initialize edit modal
   const [showEditAktivitiSemakan, setShowEditAktivitiSemakan] = useState(false);
 
+  // handle edit modal
   const handleCloseEditAktivitiSemakan = () =>
     setShowEditAktivitiSemakan(false);
   const handleShowEditAktivitiSemakan = () => setShowEditAktivitiSemakan(true);
 
-  // Form submission and validation
+  // form validation
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  // ------------ BE -------------
-  // Update aktiviti semakan
-  const updateAktivitiSemakan = async (aktivitiSemakanInput) => {
-    
-    try {
-      // Log aktivitiSemakanInput to see the data being sent to the server
-      console.log('Data being sent to server:', aktivitiSemakanInput);
+  // initialize state management store
+  const { updateAktivitiSemakan } = useAktivitiSemakanStore();
 
-      // Ensure aktivitiSemakanId is defined and contains the correct value
-      console.log('aktivitiSemakanId:', aktivitiSemakan.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/aktiviti-semakan/${aktivitiSemakan.id}`,
-          aktivitiSemakanInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success,
-          });
-          console.log("Aktiviti Semakan berjaya dikemaskini");
-          handleCloseEditAktivitiSemakan();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-  }
-};
+  // handle update aktiviti semakan
+  const onSubmit = (aktivitiSemakanInput) => {
+    updateAktivitiSemakan(aktivitiSemakan.id, aktivitiSemakanInput, handleCloseEditAktivitiSemakan, onUpdateSuccess);
+  };
 
   return (
     <div>
@@ -133,7 +106,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions }) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateAktivitiSemakan)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Aktiviti Semakan
           </Button>
         </Modal.Footer>

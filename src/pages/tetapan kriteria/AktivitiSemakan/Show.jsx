@@ -6,108 +6,64 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import PaginationTable from "../../../components/page layout/PaginationTable";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
 
 function ShowAktivitiSemakanList() {
-  // -------------- FE ----------------
-  const [aktivitiSemakans, setAktivitiSemakans] = useState([]);
+  // initialize the store
+  const {
+    aktivitiSemakans,
+    totalPage,
+    totalItems,
+    namaSkopKriteriaOptions,
+    fetchAktivitiSemakans,
+    fetchSkopKriterias,
+    deleteAktivitiSemakan,
+  } = useAktivitiSemakanStore();
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  // ------------- BE -------------
-  // Fetch options skop kriteria data
-  const [namaSkopKriteriaOptions, setNamaSkopKriteriaOptions] = useState([]);
-  
-  const fetchSkopKriterias = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-kriteria/display-skop-kriteria`
-      );
-
-      if (Array.isArray(response.data)) {
-        setNamaSkopKriteriaOptions(
-          response.data.map((skopKriteria) => ({
-            value: skopKriteria.id,
-            label: skopKriteria.namaSkopKriteria,
-          }))
-        );
-      } else {
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setNamaSkopKriteriaOptions]);
-
+  // fetch aktiviti semakan
   useEffect(() => {
+    fetchAktivitiSemakans(currentPage); 
     fetchSkopKriterias();
-  }, [fetchSkopKriterias]);
+  }, [currentPage, fetchAktivitiSemakans, fetchSkopKriterias]);
 
-
-  // List Aktiviti Semakan
-  const fetchAktivitiSemakans = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/aktiviti-semakan?page=${page}`
-      );
-      setAktivitiSemakans(response.data.data);
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat skop semakan:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAktivitiSemakans(currentPage);
-
-    const interval = setInterval(() => {
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchAktivitiSemakans(nextPage);
-    }, 5000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-  
-  // Handle delete
+  // handle delete of aktiviti semakan
   const handleDeleteAktivitiSemakan = async (aktivitiSemakanId) => {
+    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `http://127.0.0.1:8000/api/tetapan-kriteria/aktiviti-semakan/${aktivitiSemakanId}`
-        );
+      await deleteAktivitiSemakan(aktivitiSemakanId);
+      const updateAktivitiSemakans = await fetchAktivitiSemakans(currentPage);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success,
-          });
-
-          setAktivitiSemakans((prevAktivitiSemakans) =>
-            prevAktivitiSemakans.filter(
-              (aktivitiSemakan) => aktivitiSemakan.id !== aktivitiSemakanId
-            )
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error, // Access the message from the backend response
-      });
-        console.error("Error in deleting aktiviti semakan", error);
+      if (updateAktivitiSemakans.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchAktivitiSemakans(newPage);
       }
     }
   };
+
+  
+  // handles page reload
+  const handleAddSuccess = async () => {
+    await fetchAktivitiSemakans(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchAktivitiSemakans(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchAktivitiSemakans(totalPage);
+    }
+  };
+
 
   return (
     <>
@@ -118,7 +74,7 @@ function ShowAktivitiSemakanList() {
               <h3 className="table-title">Senarai Aktiviti Semakan</h3>
             </div>
             <div className="col-md-2">
-              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} />
+              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -137,7 +93,7 @@ function ShowAktivitiSemakanList() {
             {aktivitiSemakans.length > 0 &&
               aktivitiSemakans.map((aktivitiSemakansData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>
                     {aktivitiSemakansData.skop_kriteria.skop_semakan
                       ? aktivitiSemakansData.skop_kriteria.skop_semakan
@@ -151,7 +107,7 @@ function ShowAktivitiSemakanList() {
                   </td>
                   <td>{aktivitiSemakansData.namaAktivitiSemakan}</td>
                   <td>
-                    <EditAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} aktivitiSemakan={aktivitiSemakansData} />
+                    <EditAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} aktivitiSemakan={aktivitiSemakansData} onUpdateSuccess={() => fetchAktivitiSemakans(currentPage)} />
                     <Button
                       onClick={() =>
                         handleDeleteAktivitiSemakan(aktivitiSemakansData.id)

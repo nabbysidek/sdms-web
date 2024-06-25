@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
 
-function CreateAktivitiSemakan({skopKriteriaOptions}) {
-  // ----------------- FE -----------------
-  // Manage modal visibility
+function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
+  // initialize create modal
   const [showCreateAktivitiSemakan, setShowCreateAktivitiSemakan] =
     useState(false);
 
+  // handle create modal
   const handleShowCreateAktivitiSemakan = () => setShowCreateAktivitiSemakan(true);
   const handleCloseCreateAktivitiSemakan = () => {
     setShowCreateAktivitiSemakan(false);
     reset();
   };
 
-  // Form submission and validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -24,53 +23,15 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Fetch skop kriteria data
-  const [skopKriteriaData, setSkopKriteriaData] = useState([]);
-  
-  useEffect(() => {
-    const fetchSkopKriteriaData = async () => {
-      try {
-        const response = await axiosCustom.get(
-          `tetapan-kriteria/skop-kriteria/display-skop-kriteria`
-        );
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setSkopKriteriaData(response.data);
-        } else {
-          console.error("Response data is not as expected:", response.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching Skop Kriteria data:", error);
-      }
-    };
+  // initialize state management store
+  const createAktivitiSemakan = useAktivitiSemakanStore((state) => state.createAktivitiSemakan);
 
-    fetchSkopKriteriaData();
-  }, []);
-
-  // Create new aktiviti semakan
-  const CreateAktivitiSemakan = async (aktivitiSemakanInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/aktiviti-semakan`,
-        aktivitiSemakanInput
-      );
-
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
-        });
-        console.log("Aktiviti semakan berjaya ditambah");
-        handleCloseCreateAktivitiSemakan();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+  //  handle create of aktiviti semakan
+  const onSubmit = (data) => {
+    createAktivitiSemakan(data, () => {
+      handleCloseCreateAktivitiSemakan();
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -89,7 +50,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
           <Modal.Title>Tambah Aktiviti Semakan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(CreateAktivitiSemakan)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Skop Kriteria</Form.Label>
               <Controller
@@ -147,7 +108,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions}) {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(CreateAktivitiSemakan)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Aktiviti Semakan
           </Button>
