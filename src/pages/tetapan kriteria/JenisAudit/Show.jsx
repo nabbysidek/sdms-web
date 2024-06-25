@@ -6,78 +6,54 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import PaginationTable from "../../../components/page layout/PaginationTable";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useJenisAuditStore from "../../../store/jenis-audit-store";
 
 function ShowJenisAuditList() {
-  // ----------FE----------
-  const [jenisAudits, setJenisAudits] = useState([]);
+  // initialize store
+  const { jenisAudits, totalPage, totalItems, fetchJenisAudits, deleteJenisAudit } = useJenisAuditStore();
 
-  // Pagination
+  // pagination
   const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  const pageSize = 10;
 
-  // ----------BE----------
-  // List jenis audit
-  const fetchJenisAudits = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/jenis-audit?page=${page}`
-      );
-      setJenisAudits(response.data.data);
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat jenis audit:", error);
-    }
-  };
-
+  // fetch bahagians
   useEffect(() => {
     fetchJenisAudits(currentPage);
+  }, [currentPage, fetchJenisAudits]);
 
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchJenisAudits(nextPage);
-    }, 5000);
 
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-  
-  // Handle delete
-  const handleDeleteJenisAudit = async (jenisAuditId) => {
-    // Display a confirmation dialog
+  // handle delete of bahagians
+  const handleDeleteJenisAudit = async (bahagianId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `tetapan-kriteria/jenis-audit/${jenisAuditId}`
-        );
+      await deleteJenisAudit(bahagianId);
+      
+      // fetch the total number of items after deletion
+      const updatedJenisAudits = await fetchJenisAudits(currentPage);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
-          });
-
-          setJenisAudits((prevJenisAudits) =>
-            prevJenisAudits.filter(
-              (jenisAudit) => jenisAudit.id !== jenisAuditId
-            )
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error, 
-      });
+      // If the current page is empty and not the first page, go to the previous page
+      if (updatedJenisAudits.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchJenisAudits(newPage);
       }
+    }
+  };
+
+  // handles page reload
+  const handleAddSuccess = async () => {
+    await fetchJenisAudits(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchJenisAudits(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchJenisAudits(totalPage);
     }
   };
 
@@ -86,11 +62,11 @@ function ShowJenisAuditList() {
       <Container fluid>
         <div className="table-section">
           <Row>
-            <div className="col-md-9">
+            <div className="col-md-10">
               <h3 className="table-title">Senarai Jenis Audit</h3>
             </div>
-            <div className="col-md-3">
-              <CreateJenisAudit />
+            <div className="col-md-2">
+              <CreateJenisAudit onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -107,10 +83,10 @@ function ShowJenisAuditList() {
             {jenisAudits.length > 0 &&
               jenisAudits.map((jenisAuditsData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>{jenisAuditsData.namaJenisAudit}</td>
                   <td>
-                    <EditJenisAudit jenisAudit={jenisAuditsData} />
+                    <EditJenisAudit jenisAudit={jenisAuditsData} onUpdateSuccess={() => fetchJenisAudits(currentPage)} />
                     <Button
                       onClick={() => handleDeleteJenisAudit(jenisAuditsData.id)}
                       className="delete-btn"

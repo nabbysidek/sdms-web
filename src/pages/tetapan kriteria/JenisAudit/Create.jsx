@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import { Button, Modal, Form } from "react-bootstrap";
+import useJenisAuditStore from "../../../store/jenis-audit-store";
 
-function CreateJenisAudit() {
-  // ----------FE----------
+function CreateJenisAudit({ onAddSuccess }) {
+  // initialize create modal
   const [showCreateJenisAudit, setShowCreateJenisAudit] = useState(false);
 
+  // handle create modal
   const handleShowCreateJenisAudit = () => setShowCreateJenisAudit(true);
   const handleCloseCreateJenisAudit = () => {
     setShowCreateJenisAudit(false);
     reset();
   };
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -22,37 +22,22 @@ function CreateJenisAudit() {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create jenis audit
-  const createJenisAudit = async (jenisAuditInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/jenis-audit`,
-        jenisAuditInput
-      );
+  // initialize store
+  const createJenisAudit = useJenisAuditStore((state) => state.createJenisAudit);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
-        });
-        console.log("Jenis audit berjaya ditambah");
-        handleCloseCreateJenisAudit();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+  // handle create
+  const onSubmit = (data) => {
+    createJenisAudit(data, () => {
+      handleCloseCreateJenisAudit();
+      // reload the table
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJenisAudit}>
-        Tambah Jenis Audit
+        Tambah
       </Button>
 
       <Modal
@@ -65,7 +50,7 @@ function CreateJenisAudit() {
           <Modal.Title>Tambah Jenis Audit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createJenisAudit)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Nama Jenis Audit</Form.Label>
               <Controller
@@ -95,7 +80,7 @@ function CreateJenisAudit() {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createJenisAudit)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Jenis Audit
           </Button>

@@ -1,52 +1,25 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import { Button, Modal, Form } from "react-bootstrap";
+import useJenisAuditStore from "../../../store/jenis-audit-store";
 
-function EditJenisAudit({jenisAudit}) {
-  // ----------- FE --------
-  //  Handle modal
+function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
+  // initialize edit modal
   const [showEditJenisAudit, setShowEditJenisAudit] = useState(false);
 
+  // handle edit modal
   const handleCloseEditJenisAudit = () => setShowEditJenisAudit(false);
   const handleShowEditJenisAudit = () => setShowEditJenisAudit(true);
 
-  // Form validation
+  // form validation
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  // ------------ BE -------------
-  // Handle jenis audit update
-  const updateJenisAudit = async (jenisAuditInput) => {
-    
-    try {
-      // Log jenisAuditInput to see the data being sent to the server
-      console.log('Data being sent to server:', jenisAuditInput);
+  // initialize store
+  const { updateJenisAudit } = useJenisAuditStore();
 
-      // Ensure jenisAuditId is defined and contains the correct value
-      console.log('jenisAuditId:', jenisAudit.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/jenis-audit/${jenisAudit.id}`,
-          jenisAuditInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, 
-          });
-          handleCloseEditJenisAudit();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-    });
-  }
+  const onSubmit = (jenisAuditInput) => {
+    updateJenisAudit(jenisAudit.id, jenisAuditInput, handleCloseEditJenisAudit, onUpdateSuccess);
   };
 
   return (
@@ -65,7 +38,7 @@ function EditJenisAudit({jenisAudit}) {
           <Modal.Title>Tambah Jenis Audit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(updateJenisAudit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
               <Form.Label>Nama Jenis Audit</Form.Label>
               <Controller
@@ -94,7 +67,7 @@ function EditJenisAudit({jenisAudit}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateJenisAudit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Jenis Audit
           </Button>
         </Modal.Footer>
