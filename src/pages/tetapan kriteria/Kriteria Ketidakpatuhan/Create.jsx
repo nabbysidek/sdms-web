@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
 
-function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions}) {
-  // ----------FE----------
-  // Manage the visibility of the modal
-  const [showCreateKriteria, setShowCreateKriteria] = useState(false);
+function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
+  // initialize create modal
+  const [showCreateKriteriaKetidakpatuhan, setShowCreateKriteriaKetidakpatuhan] = useState(false);
 
-  const handleShowCreateKriteria = () => setShowCreateKriteria(true);
-  const handleCloseCreateKriteria = () => {
-    setShowCreateKriteria(false);
+  // handle create modal
+  const handleShowCreateKriteriaKetidakpatuhan = () => setShowCreateKriteriaKetidakpatuhan(true);
+  const handleCloseCreateKriteriaKetidakpatuhan = () => {
+    setShowCreateKriteriaKetidakpatuhan(false);
     reset();
   };
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -23,41 +22,26 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions}) {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create kriteria ketidakpatuhan
-  const createKriteriaKetidakpatuhan = async (kriteriaKetidakpatuhanInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/kriteria-ketidakpatuhan`,
-        kriteriaKetidakpatuhanInput
-      );
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
-        });
-        console.log("Kriteria ketidakpatuhan berjaya ditambah");
-        handleCloseCreateKriteria();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
+  // initialize state management store
+  const createKriteriaKetidakpatuhan = useKriteriaKetidakpatuhanStore((state) => state.createKriteriaKetidakpatuhan);
+
+  //  handle create of kriteria ketidakpatuhan
+  const onSubmit = (data) => {
+    createKriteriaKetidakpatuhan(data, () => {
+      handleCloseCreateKriteriaKetidakpatuhan();
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
     <div>
-      <Button className="create-new-btn" onClick={handleShowCreateKriteria}>
+      <Button className="create-new-btn" onClick={handleShowCreateKriteriaKetidakpatuhan}>
         Tambah
       </Button>
 
       <Modal
-        show={showCreateKriteria}
-        onHide={handleCloseCreateKriteria}
+        show={showCreateKriteriaKetidakpatuhan}
+        onHide={handleCloseCreateKriteriaKetidakpatuhan}
         backdrop="static"
         keyboard={false}
       >
@@ -66,7 +50,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions}) {
         </Modal.Header>
         <Modal.Body>
           <Form
-            onSubmit={handleSubmit(createKriteriaKetidakpatuhan)}
+            onSubmit={handleSubmit(onSubmit)}
             onReset={reset}
           >
             <Form.Group>
@@ -130,7 +114,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions}) {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createKriteriaKetidakpatuhan)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Kriteria Ketidakpatuhan
           </Button>

@@ -1,63 +1,40 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
 
-function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOptions}) {
-  // ----------- FE --------
-  //  Handle modal
-  const [showEditKriteria, setShowEditKriteria] = useState(false);
+function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOptions, onUpdateSuccess}) {
+  // initialize edit modal
+  const [showEditKriteriaKetidakpatuhan, setShowEditKriteriaKetidakpatuhan] = useState(false);
 
-  const handleCloseEditKriteria = () => setShowEditKriteria(false);
-  const handleShowEditKriteria = () => setShowEditKriteria(true);
+  // handle edit modal
+  const handleCloseEditKriteriaKetidakpatuhan = () => setShowEditKriteriaKetidakpatuhan(false);
+  const handleShowEditKriteriaKetidakpatuhan = () => setShowEditKriteriaKetidakpatuhan(true);
 
-  // Form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  // form validation
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // ------------ BE -------------
-  // Handle update kriteria ketidakpatuhan
-  const updateKriteriaKetidakpatuhan = async (kriteriaKetidakpatuhanInput) => {
-    
-    try {
-      // Log kriteriaKetidakpatuhanInput to see the data being sent to the server
-      console.log('Data being sent to server:', kriteriaKetidakpatuhanInput);
+  // initialize state management store
+  const { updateKriteriaKetidakpatuhan } = useKriteriaKetidakpatuhanStore();
 
-      // Ensure kriteriaKetidakpatuhanId is defined and contains the correct value
-      console.log('kriteriaKetidakpatuhanId:', kriteriaKetidakpatuhan.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhan.id}`,
-          kriteriaKetidakpatuhanInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, 
-          });
-          handleCloseEditKriteria();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-  }
-};
+  // handle update aktiviti semakan
+  const onSubmit = (kriteriaKetidakpatuhanInput) => {
+    updateKriteriaKetidakpatuhan(kriteriaKetidakpatuhan.id, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess);
+  };
 
   return (
     <div>
-      <Button className="edit-tetapan-btn" onClick={handleShowEditKriteria}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditKriteriaKetidakpatuhan}>
         Kemaskini
       </Button>
 
       <Modal
-        show={showEditKriteria}
-        onHide={handleCloseEditKriteria}
+        show={showEditKriteriaKetidakpatuhan}
+        onHide={handleCloseEditKriteriaKetidakpatuhan}
         backdrop="static"
         keyboard={false}
       >
@@ -125,7 +102,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateKriteriaKetidakpatuhan)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Kriteria Ketidakpatuhan
           </Button>
         </Modal.Footer>

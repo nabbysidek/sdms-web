@@ -1,119 +1,66 @@
 import { useState, useEffect, useCallback } from "react";
-import { Table, Button, Row, Container } from "react-bootstrap";
+import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import PaginationTable from "../../../components/page layout/PaginationTable";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
 
 function ShowKriteriaKetidakpatuhanList() {
-  // ----------FE----------
-  const [kriteriaKetidakpatuhans, setKriteriaKetidakpatuhans] = useState([]);
+  // initialize the store
+  const {
+    kriteriaKetidakpatuhans,
+    totalPage,
+    totalItems,
+    namaAktivitiSemakanOptions,
+    fetchKriteriaKetidakpatuhans,
+    fetchAktivitiSemakans,
+    deleteKriteriaKetidakpatuhan,
+  } = useKriteriaKetidakpatuhanStore();
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  // ----------BE----------
-  // Fetch options aktiviti semakan
-  const [namaAktivitiSemakanOptions, setNamaAktivitiSemakanOptions] = useState([]);
-
-  const fetchAktivitiSemakans = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/aktiviti-semakan/display-aktiviti-semakan`
-      );
-
-      if (Array.isArray(response.data)) {
-        setNamaAktivitiSemakanOptions(
-          response.data.map((aktivitiSemakan) => ({
-            value: aktivitiSemakan.id,
-            label: aktivitiSemakan.namaAktivitiSemakan,
-          }))
-        );
-      } else {
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setNamaAktivitiSemakanOptions]);
-
+  // fetch kriteria ketidakpatuhans
   useEffect(() => {
+    fetchKriteriaKetidakpatuhans(currentPage); 
     fetchAktivitiSemakans();
-  }, [fetchAktivitiSemakans]);
+  }, [currentPage, fetchKriteriaKetidakpatuhans, fetchAktivitiSemakans]);
 
 
-  // List kriteria ketidakpatuhan
-  const fetchKriteriaKetidakpatuhans = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
-      );
-      setKriteriaKetidakpatuhans(response.data.data); // Update the state with the array of objects
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error(
-        "Ralat dalam mengambil maklumat kriteria ketidakpatuhan:",
-        error
-      );
-    }
-  };
-
-  useEffect(() => {
-    fetchKriteriaKetidakpatuhans(currentPage);
-
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchKriteriaKetidakpatuhans(nextPage);
-    }, 5000);
-
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-  
-  // Handle delete
-  const handleDeleteKriteriaKetidakpatuhan = async (
-    kriteriaKetidakpatuhanId
-  ) => {
+  // handle delete of kriteria ketidakpatuhans
+  const handleDeleteKriteriaKetidakpatuhan = async (kriteriaKetidakpatuhanId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhanId}`
-        );
+      await deleteKriteriaKetidakpatuhan(kriteriaKetidakpatuhanId);
+      const updateKriteriaKetidakpatuhans = await fetchKriteriaKetidakpatuhans(currentPage);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
-          });
-
-          setKriteriaKetidakpatuhans((prevKriteriaKetidakpatuhans) =>
-            prevKriteriaKetidakpatuhans.filter(
-              (kriteriaKetidakpatuhan) =>
-                kriteriaKetidakpatuhan.id !== kriteriaKetidakpatuhanId
-            )
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error, 
-      });
+      if (updateKriteriaKetidakpatuhans.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchKriteriaKetidakpatuhans(newPage);
       }
+    }
+  };
+
+  // handles page reload
+  const handleAddSuccess = async () => {
+    await fetchKriteriaKetidakpatuhans(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchKriteriaKetidakpatuhans(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchKriteriaKetidakpatuhans(totalPage);
     }
   };
 
@@ -127,7 +74,7 @@ function ShowKriteriaKetidakpatuhanList() {
             </div>
 
             <div className="col-md-2">
-              <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} />
+              <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -148,7 +95,7 @@ function ShowKriteriaKetidakpatuhanList() {
               kriteriaKetidakpatuhans.map(
                 (kriteriaKetidakpatuhansData, key) => (
                   <tr key={key}>
-                    <td>{key + 1}</td>
+                    <td>{(currentPage - 1) * pageSize + key + 1}</td>
                     <td>
                       {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
                         ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
@@ -171,7 +118,7 @@ function ShowKriteriaKetidakpatuhanList() {
                       {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
                     </td>
                     <td>
-                      <EditKriteriaKetidakpatuhan kriteriaKetidakpatuhan={kriteriaKetidakpatuhansData} aktivitiSemakanOptions={namaAktivitiSemakanOptions} />
+                      <EditKriteriaKetidakpatuhan kriteriaKetidakpatuhan={kriteriaKetidakpatuhansData} aktivitiSemakanOptions={namaAktivitiSemakanOptions} onUpdateSuccess={() => fetchKriteriaKetidakpatuhans(currentPage)} />
                       <Button
                         onClick={() =>
                           handleDeleteKriteriaKetidakpatuhan(
