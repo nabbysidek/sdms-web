@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
-function CreateSkopKriteria({skopSemakanOptions}) {
-  // ----------FE----------
+function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
+  // initialize create modal
   const [showCreateSkopKriteria, setShowCreateSkopKriteria] = useState(false);
 
+  // handle create modal
   const handleShowCreateSkopKriteria = () => setShowCreateSkopKriteria(true);
   const handleCloseCreateSkopKriteria = () => {
     setShowCreateSkopKriteria(false);
     reset();
   };
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -22,31 +22,15 @@ function CreateSkopKriteria({skopSemakanOptions}) {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create skop kriteria
-  const createSkopKriteria = async (skopKriteriaInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/skop-kriteria`,
-        skopKriteriaInput
-      );
+  // initialize store
+  const createSkopKriteria = useSkopKriteriaStore((state) => state.createSkopKriteria);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
-        });
-        console.log("Skop kriteria berjaya ditambah");
-        handleCloseCreateSkopKriteria();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+  // handle create skop kriteria
+  const onSubmit = (data) => {
+    createSkopKriteria(data, () => {
+      handleCloseCreateSkopKriteria();
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -63,7 +47,7 @@ function CreateSkopKriteria({skopSemakanOptions}) {
           <Modal.Title>Tambah Skop Kriteria</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createSkopKriteria)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Skop Semakan</Form.Label>
               <Controller
@@ -121,7 +105,7 @@ function CreateSkopKriteria({skopSemakanOptions}) {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createSkopKriteria)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Skop Kriteria
           </Button>

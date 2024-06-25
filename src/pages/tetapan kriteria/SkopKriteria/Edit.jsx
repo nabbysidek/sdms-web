@@ -1,54 +1,27 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
-function EditSkopKriteria({skopKriteria, skopSemakanOptions}) {
-  // ----- FE ---------
-  // Handle modal
+function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
+  // initialize edit modal
   const [showEditSkopKriteria, setShowEditSkopKriteria] = useState(false);
 
+  // handle edit modal
   const handleCloseEditSkopKriteria = () => setShowEditSkopKriteria(false);
   const handleShowEditSkopKriteria = () => setShowEditSkopKriteria(true);
 
-  // Form validation
+  // form validation
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  // ------------ BE -------------
-  // Handle update for skop kriteria
-  const updateSkopKriteria = async (skopKriteriaInput) => {
-    
-    try {
-      // Log skopKriteriaInput to see the data being sent to the server
-      console.log('Data being sent to server:', skopKriteriaInput);
+  // initialize store
+  const { updateSkopKriteria } = useSkopKriteriaStore();
 
-      // Ensure skopKriteriaId is defined and contains the correct value
-      console.log('skopKriteriaId:', skopKriteria.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/skop-kriteria/${skopKriteria.id}`,
-          skopKriteriaInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, 
-          });
-          console.log("Skop Kriteria berjaya dikemaskini");
-          handleCloseEditSkopKriteria();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-  }
-};
+  // handle edit
+  const onSubmit = (skopKriteriaInput) => {
+    updateSkopKriteria(skopKriteria.id, skopKriteriaInput, handleCloseEditSkopKriteria, onUpdateSuccess);
+  };
 
   return (
     <div>
@@ -126,7 +99,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateSkopKriteria)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Skop Kriteria
           </Button>
         </Modal.Footer>

@@ -6,110 +6,62 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
 function ShowSkopKriteriaList() {
-  // ----------FE----------
-  const [skopKriterias, setSkopKriterias] = useState([]);
+  const {
+    skopKriterias,
+    totalPage,
+    totalItems,
+    namaSkopSemakanOptions,
+    fetchSkopKriterias,
+    deleteSkopKriteria,
+    fetchSkopSemakans,
+  } = useSkopKriteriaStore();
 
   // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); 
+  const pageSize = 10;
 
-  // ----------BE----------
-  // Fetch options skop semakan
-  const [namaSkopSemakanOptions, setNamaSkopSemakanOptions] = useState([]);
-
-  const fetchSkopSemakans = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-semakan/display-skop-semakan`
-      );
-
-      if (Array.isArray(response.data)) {
-        setNamaSkopSemakanOptions(
-          response.data.map((skopSemakan) => ({
-            value: skopSemakan.id,
-            label: skopSemakan.namaSkopSemakan,
-          }))
-        );
-      } else {
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setNamaSkopSemakanOptions]);
-
-  useEffect(() => {
-    fetchSkopSemakans();
-  }, [fetchSkopSemakans]);
-
-
-  // List skop kriteria
-  const fetchSkopKriterias = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-kriteria?page=${page}`
-      );
-      setSkopKriterias(response.data.data);
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat skop kriteria:", error);
-    }
-  };
-
+  // fetch skop kriteria
   useEffect(() => {
     fetchSkopKriterias(currentPage);
-
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchSkopKriterias(nextPage);
-    }, 5000);
-
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-
-  // Handle delete
+    fetchSkopSemakans();
+  }, [currentPage, fetchSkopKriterias, fetchSkopSemakans]);
+  
+  // handle delete skop kriteria
   const handleDeleteSkopKriteria = async (skopKriteriaId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `tetapan-kriteria/skop-kriteria/${skopKriteriaId}`
-        );
+      await deleteSkopKriteria(skopKriteriaId);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, 
-          });
+      const updateSkopKriterias = await fetchSkopKriterias(currentPage);
 
-          setSkopKriterias((prevSkopKriterias) =>
-            prevSkopKriterias.filter(
-              (skopKriteria) => skopKriteria.id !== skopKriteriaId
-            )
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
-    });
+      if (updateSkopKriterias.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchSkopKriterias(newPage);
       }
     }
   };
+
+  // handle page reload after storing new data
+  const handleAddSuccess = async () => {
+    await fetchSkopKriterias(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchSkopKriterias(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchSkopKriterias(totalPage);
+    }
+  };
+  
 
   return (
     <>
@@ -122,7 +74,7 @@ function ShowSkopKriteriaList() {
               </h3>
             </div>
             <div className="col-md-2">
-              <CreateSkopKriteria skopSemakanOptions={namaSkopSemakanOptions} />
+              <CreateSkopKriteria skopSemakanOptions={namaSkopSemakanOptions} onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -140,7 +92,7 @@ function ShowSkopKriteriaList() {
             {skopKriterias.length > 0 &&
               skopKriterias.map((skopKriteriasData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>
                     {skopKriteriasData.skop_semakan
                       ? skopKriteriasData.skop_semakan.namaSkopSemakan
@@ -148,7 +100,7 @@ function ShowSkopKriteriaList() {
                   </td>
                   <td>{skopKriteriasData.namaSkopKriteria}</td>
                   <td>
-                    <EditSkopKriteria skopKriteria={skopKriteriasData} skopSemakanOptions={namaSkopSemakanOptions} />
+                    <EditSkopKriteria skopKriteria={skopKriteriasData} skopSemakanOptions={namaSkopSemakanOptions} onUpdateSuccess={() => fetchSkopKriterias(currentPage)} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopKriteria(skopKriteriasData.id)
