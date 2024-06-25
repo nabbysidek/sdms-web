@@ -1,53 +1,26 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
-function EditSkopSemakan({skopSemakan}) {
-  // ----- FE ---------
-  // Handle modal
+function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
+  // initialize edit modal
   const [showEditSkopSemakan, setShowEditSkopSemakan] = useState(false);
 
+  // handle edit modal
   const handleCloseEditSkopSemakan = () => setShowEditSkopSemakan(false);
   const handleShowEditSkopSemakan = () => setShowEditSkopSemakan(true);
 
-  // Form validation
+  // form validation
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  // ------------ BE -------------
-  // handle update of skop semakan
-  const updateSkopSemakan = async (skopSemakanInput) => {
-    
-    try {
-      // Log skopSemakanInput to see the data being sent to the server
-      console.log('Data being sent to server:', skopSemakanInput);
+  // initialize store
+  const { updateSkopSemakan } = useSkopSemakanStore();
 
-      // Ensure skopSemakanId is defined and contains the correct value
-      console.log('skopSemakanId:', skopSemakan.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/skop-semakan/${skopSemakan.id}`,
-          skopSemakanInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
-          });
-          console.log("Skop Semakan berjaya dikemaskini");
-          handleCloseEditSkopSemakan();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error,
-    });
-  }
+  // handle edit of skop semakan
+  const onSubmit = (skopSemakanInput) => {
+    updateSkopSemakan(skopSemakan.id, skopSemakanInput, handleCloseEditSkopSemakan, onUpdateSuccess);
   };
 
   return (
@@ -95,7 +68,7 @@ function EditSkopSemakan({skopSemakan}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateSkopSemakan)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Skop Semakan
           </Button>
         </Modal.Footer>

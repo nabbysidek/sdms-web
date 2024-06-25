@@ -6,78 +6,53 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
 function ShowSkopSemakanList() {
-  // ----------FE----------
-  const [skopSemakans, setSkopSemakans] = useState([]);
+  const { skopSemakans, totalPage, totalItems, fetchSkopSemakans, deleteSkopSemakan } = useSkopSemakanStore();
 
   // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  // ----------BE----------
-  // List skop semakan
-  const fetchskopSemakans = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-semakan?page=${page}`
-      );
-      setSkopSemakans(response.data.data);
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat skop semakan:", error);
-    }
-  };
-
+  // fetch skop semakan
   useEffect(() => {
-    fetchskopSemakans(currentPage);
-
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchskopSemakans(nextPage);
-    }, 5000);
-
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
+    fetchSkopSemakans(currentPage);
+  }, [currentPage, fetchSkopSemakans]);
 
 
-  // Handle delete
+  // handle delete of skop semakan
   const handleDeleteSkopSemakan = async (skopSemakanId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `tetapan-kriteria/skop-semakan/${skopSemakanId}`
-        );
+      await deleteSkopSemakan(skopSemakanId);
+      
+      // fetch the total number of items after deletion
+      const updatedSkopSemakans = await fetchSkopSemakans(currentPage);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, // Access the message from the backend response
-          });
-
-          setSkopSemakans((prevSkopSemakans) =>
-            prevSkopSemakans.filter(
-              (skopSemakan) => skopSemakan.id !== skopSemakanId
-            )
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error,
-      });
+      // If the current page is empty and not the first page, go to the previous page
+      if (updatedSkopSemakans.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchSkopSemakans(newPage);
       }
+    }
+  };
+
+  // handles page reload
+  const handleAddSuccess = async () => {
+    await fetchSkopSemakans(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchSkopSemakans(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchSkopSemakans(totalPage);
     }
   };
 
@@ -90,7 +65,7 @@ function ShowSkopSemakanList() {
               <h3 className="table-title">Senarai Skop Semakan</h3>
             </div>
             <div className="col-md-2">
-              <CreateSkopSemakan />
+              <CreateSkopSemakan onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -107,10 +82,10 @@ function ShowSkopSemakanList() {
             {skopSemakans.length > 0 &&
               skopSemakans.map((skopSemakansData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>{skopSemakansData.namaSkopSemakan}</td>
                   <td>
-                    <EditSkopSemakan skopSemakan={skopSemakansData} />
+                    <EditSkopSemakan skopSemakan={skopSemakansData} onUpdateSuccess={() => fetchSkopSemakans(currentPage)} />
                     <Button
                       onClick={() =>
                         handleDeleteSkopSemakan(skopSemakansData.id)

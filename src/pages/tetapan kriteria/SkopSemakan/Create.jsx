@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import { Button, Modal, Form } from "react-bootstrap";
+import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
-function CreateSkopSemakan() {
-  // ----------FE----------
+function CreateSkopSemakan({ onAddSuccess }) {
+  // initialize create modal
   const [showCreateSkopSemakan, setShowCreateSkopSemakan] = useState(false);
 
+  // handle create modal
   const handleShowCreateSkopSemakan = () => setShowCreateSkopSemakan(true);
   const handleCloseCreateSkopSemakan = () => {
     setShowCreateSkopSemakan(false);
     reset();
   };
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -22,31 +22,16 @@ function CreateSkopSemakan() {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create skop semakan
-  const createSkopSemakan = async (skopSemakanInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/skop-semakan`,
-        skopSemakanInput
-      );
+  // initialize store
+  const createSkopSemakan = useSkopSemakanStore((state) => state.createSkopSemakan);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
-        });
-        console.log("Skop Semakan Berjaya ditambah");
-        handleCloseCreateSkopSemakan();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, // Access the message from the backend response
+  // handle create skop semakan
+  const onSubmit = (data) => {
+    createSkopSemakan(data, () => {
+      handleCloseCreateSkopSemakan();
+      // reload the table
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -95,7 +80,7 @@ function CreateSkopSemakan() {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createSkopSemakan)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Skop Semakan
           </Button>
