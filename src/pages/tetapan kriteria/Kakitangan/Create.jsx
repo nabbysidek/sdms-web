@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import { Button, Modal, Form } from "react-bootstrap";
+import useKakitanganStore from "../../../store/kakitangan-store";
 
-function CreateKakitangan() {
-  // ----------FE----------
+function CreateKakitangan({ onAddSuccess }) {
+  // initialize create modal
   const [showCreateKakitangan, setShowCreateKakitangan] = useState(false);
 
+  // handle create modal
   const handleShowCreateKakitangan = () => setShowCreateKakitangan(true);
   const handleCloseCreateKakitangan = () => {
     setShowCreateKakitangan(false);
     reset();
   };
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -22,32 +22,15 @@ function CreateKakitangan() {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create kakitangan
-  const createKakitangan = async (kakitanganInput) => {
-    console.log(kakitanganInput);
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/kakitangan`,
-        kakitanganInput
-      );
+  // handle create kakitangan
+  const createKakitangan = useKakitanganStore((state) => state.createKakitangan);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
-        });
-
-        handleCloseCreateKakitangan();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
+  const onSubmit = (data) => {
+    createKakitangan(data, () => {
+      handleCloseCreateKakitangan();
+      // reload the table
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -66,35 +49,7 @@ function CreateKakitangan() {
           <Modal.Title>Tambah Kakitangan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createKakitangan)} onReset={reset}>
-            <Form.Group>
-              <Form.Label>Nama Kakitangan</Form.Label>
-              <Controller
-                id="namaKakitangan"
-                name="namaKakitangan"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required: "Nama kakitangan baru diperlukan",
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <>
-                    <Form.Control
-                      type="text"
-                      onChange={onChange}
-                      value={value}
-                      placeholder="Masukkan kakitangan"
-                      autoFocus
-                    />
-                    {errors.namaKakitangan && (
-                      <span className="error-message">
-                        {errors.namaKakitangan.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>ID Kakitangan</Form.Label>
               <Controller
@@ -123,12 +78,40 @@ function CreateKakitangan() {
                 )}
               />
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Nama Kakitangan</Form.Label>
+              <Controller
+                id="namaKakitangan"
+                name="namaKakitangan"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: "Nama kakitangan baru diperlukan",
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Masukkan kakitangan"
+                      autoFocus
+                    />
+                    {errors.namaKakitangan && (
+                      <span className="error-message">
+                        {errors.namaKakitangan.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createKakitangan)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Kakitangan
           </Button>

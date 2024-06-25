@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import useKakitanganStore from "../../../store/kakitangan-store";
 
-function EditKakitangan({kakitangan}) {
-  // ----- FE ---------
-  // Handle modal
+function EditKakitangan({kakitangan, onUpdateSuccess}) {
+  // initialize edit modal
   const [showEditKakitangan, setShowEditKakitangan] = useState(false);
 
+  // handle edit modal
   const handleCloseEditKakitangan = () => setShowEditKakitangan(false);
   const handleShowEditKakitangan = () => setShowEditKakitangan(true);
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -20,28 +19,13 @@ function EditKakitangan({kakitangan}) {
     formState: { errors },
   } = useForm();
 
-  // ------------ BE -------------
-  // Handle update kakitangan
-  const updateKakitangan = async (kakitanganInput) => {
-    try {
-      const response = await axiosCustom.put(`tetapan-kriteria/kakitangan/${kakitangan.id}`,
-      kakitanganInput);
-  
-      if (response.status === 200) {
-        Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, 
-        });
-        handleCloseEditKakitangan();
-    }
-} catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-}
+
+  // initialize store
+  const { updateKakitangan } = useKakitanganStore();
+
+  // handle update kakitangan
+  const onSubmit = (kakitanganInput) => {
+    updateKakitangan(kakitangan.id, kakitanganInput, handleCloseEditKakitangan, onUpdateSuccess);
   };
 
   return (
@@ -60,32 +44,7 @@ function EditKakitangan({kakitangan}) {
           <Modal.Title>Kemaskini Kakitangan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(updateKakitangan)} onReset={reset}>
-            <Form.Group>
-              <Form.Label>Nama Kakitangan</Form.Label>
-              <Controller
-                id="namaKakitangan"
-                name="namaKakitangan"
-                control={control}
-                defaultValue={kakitangan.namaKakitangan}
-                rules={{ required: "Nama kakitangan baru diperlukan" }}
-                render={({ field: { onChange, value } }) => (
-                  <>
-                    <Form.Control
-                      type="text"
-                      onChange={onChange}
-                      value={value}
-                      placeholder="Nama Kakitangan"
-                    />
-                    {errors?.namaKakitangan && (
-                      <span className="error-message">
-                        {errors.namaKakitangan.message}
-                      </span>
-                    )}
-                  </>
-                )}
-              />
-            </Form.Group>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>ID Kakitangan</Form.Label>
               <Controller
@@ -111,10 +70,35 @@ function EditKakitangan({kakitangan}) {
                 )}
               />
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Nama Kakitangan</Form.Label>
+              <Controller
+                id="namaKakitangan"
+                name="namaKakitangan"
+                control={control}
+                defaultValue={kakitangan.namaKakitangan}
+                rules={{ required: "Nama kakitangan baru diperlukan" }}
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <Form.Control
+                      type="text"
+                      onChange={onChange}
+                      value={value}
+                      placeholder="Nama Kakitangan"
+                    />
+                    {errors?.namaKakitangan && (
+                      <span className="error-message">
+                        {errors.namaKakitangan.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateKakitangan)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Kakitangan
           </Button>
         </Modal.Footer>
