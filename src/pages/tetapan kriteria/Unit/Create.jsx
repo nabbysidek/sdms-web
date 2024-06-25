@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useUnitStore from "../../../store/unit-store";
 
-function CreateUnit({jabatanOptions}) {
-  // ----------FE----------
+function CreateUnit({jabatanOptions, onAddSuccess}) {
+  // initialize create modal
   const [showCreateUnit, setShowCreateUnit] = useState(false);
 
+  // handle create modal
   const handleShowCreateUnit = () => setShowCreateUnit(true);
   const handleCloseCreateUnit = () => {
     setShowCreateUnit(false);
     reset();
   };
 
-  // Form validation
+  // form validation
   const {
     handleSubmit,
     control,
@@ -22,30 +22,15 @@ function CreateUnit({jabatanOptions}) {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Create unit
-  const createUnit = async (unitInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/unit`,
-        unitInput
-      );
+  // initialize state management store
+  const createUnit = useUnitStore((state) => state.createUnit);
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
-        });
-        handleCloseCreateUnit();
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error, 
+  //  handle create of unit
+  const onSubmit = (data) => {
+    createUnit(data, () => {
+      handleCloseCreateUnit();
+      if (onAddSuccess) onAddSuccess();
     });
-    }
   };
 
   return (
@@ -64,7 +49,7 @@ function CreateUnit({jabatanOptions}) {
           <Modal.Title>Tambah Unit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createUnit)} onReset={reset}>
+          <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
               <Form.Label>Jabatan</Form.Label>
               <Controller
@@ -125,7 +110,7 @@ function CreateUnit({jabatanOptions}) {
         <Modal.Footer>
           <Button
             className="create-new-modal-btn"
-            onClick={handleSubmit(createUnit)}
+            onClick={handleSubmit(onSubmit)}
           >
             Tambah Unit
           </Button>

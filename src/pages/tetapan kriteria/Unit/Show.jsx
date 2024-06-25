@@ -6,107 +6,62 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import axiosCustom from "./../../../axios";
-import Swal from "sweetalert2";
+import useUnitStore from "../../../store/unit-store";
 
 function ShowUnitList() {
-  // ----------FE----------
-  const [units, setUnits] = useState([]);
+  // initialize the store
+  const {
+    units,
+    totalPage,
+    totalItems,
+    namaJabatanOptions,
+    fetchUnits,
+    fetchJabatans,
+    deleteUnit,
+  } = useUnitStore();
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const [totalPage, setTotalPage] = useState(1);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  // ----------BE----------
-  // Fetch options jabatan data
-  const [namaJabatanOptions, setNamaJabatanOptions] = useState([]);
-
-  const fetchJabatans = useCallback(async () => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/jabatan/display-jabatan`
-      );
-
-      if (Array.isArray(response.data)) {
-        setNamaJabatanOptions(
-          response.data.map((jabatan) => ({
-            value: jabatan.id,
-            label: jabatan.namaJabatan,
-          }))
-        );
-      } else {
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setNamaJabatanOptions]);
-
+  // fetch units
   useEffect(() => {
+    fetchUnits(currentPage); 
     fetchJabatans();
-  }, [fetchJabatans]);
+  }, [currentPage, fetchUnits, fetchJabatans]);
 
 
-  // List unit
-  const fetchUnits = async (page) => {
-    try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/unit?page=${page}`
-      );
-      setUnits(response.data.data); // Update the state with the array of objects
-      setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat unit:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUnits(currentPage);
-
-    const interval = setInterval(() => {
-      // Set up recurring fetch every 5 seconds)
-      const nextPage = currentPage === totalPage ? 1 : currentPage + 1;
-      fetchUnits(nextPage);
-    }, 5000);
-
-    // Cleanup the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPage, totalPage]);
-
-
-  // Handle delete
+  // handle delete of jabatans
   const handleDeleteUnit = async (unitId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `tetapan-kriteria/unit/${unitId}`
-        );
+      await deleteUnit(unitId);
+      const updateUnits = await fetchUnits(currentPage);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success, 
-          });
-
-          setUnits((prevUnits) =>
-            prevUnits.filter((unit) => unit.id !== unitId)
-          );
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error, 
-      });
-        console.error("Error in deleting unit", error);
+      if (updateUnits.length === 0 && currentPage > 1) {
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        await fetchUnits(newPage);
       }
+    }
+  };
+
+  
+  // handles page reload
+  const handleAddSuccess = async () => {
+    await fetchUnits(currentPage);
+
+    const totalItemsAfterAdd = totalItems + 1;
+    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+
+    if (totalItemsAfterAdd > pageSize * totalPage) {
+      setCurrentPage(newTotalPage);
+      await fetchUnits(newTotalPage);
+    } else {
+      setCurrentPage(totalPage);
+      await fetchUnits(totalPage);
     }
   };
 
@@ -119,7 +74,7 @@ function ShowUnitList() {
               <h3 className="table-title">Senarai Unit</h3>
             </div>
             <div className="col-md-2">
-              <CreateUnit jabatanOptions={namaJabatanOptions} />
+              <CreateUnit jabatanOptions={namaJabatanOptions} onAddSuccess={handleAddSuccess} />
             </div>
           </Row>
         </div>
@@ -138,14 +93,14 @@ function ShowUnitList() {
             {units.length > 0 &&
               units.map((unitsData, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
+                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
                   <td>{unitsData.jabatan.bahagian ? unitsData.jabatan.bahagian.namaBahagian : "N/A"}</td>
                   <td>
                     {unitsData.jabatan ? unitsData.jabatan.namaJabatan : "N/A"}
                   </td>
                   <td>{unitsData.namaUnit}</td>
                   <td>
-                    <EditUnit unit={unitsData} jabatanOptions={namaJabatanOptions} />
+                    <EditUnit unit={unitsData} jabatanOptions={namaJabatanOptions} onUpdateSuccess={() => fetchUnits(currentPage)} />
                     <Button
                       onClick={() => handleDeleteUnit(unitsData.id)}
                       className="delete-btn"

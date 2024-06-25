@@ -1,54 +1,27 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
-import axiosCustom from "../../../axios";
-import Swal from "sweetalert2";
+import { Button, Modal, Form } from "react-bootstrap";
+import useUnitStore from "../../../store/unit-store";
 
-function EditUnit({unit, jabatanOptions}) {
-  // ----------- FE --------
-  //  Handle modal
+function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
+  //  initialize edit modal
   const [showEditUnit, setShowEditUnit] = useState(false);
 
+  // handle edit modal
   const handleCloseEditUnit = () => setShowEditUnit(false);
   const handleShowEditUnit = () => setShowEditUnit(true);
 
-  // Form validation
+  // form validation
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-// ------------ BE -------------
-  // Handle update unit
-  const updateUnit = async (unitInput) => {
-    
-    try {
-      // Log unitInput to see the data being sent to the server
-      console.log('Data being sent to server:', unitInput);
+  // initialize state management store
+  const { updateUnit } = useUnitStore();
 
-      // Ensure unitId is defined and contains the correct value
-      console.log('unitId:', unit.id);
-
-      const response = await axiosCustom.put(
-          `tetapan-kriteria/unit/${unit.id}`,
-          unitInput
-      );
-
-      if (response.status === 200) {
-          Swal.fire({
-              icon: "success",
-              title: "Berjaya",
-              text: response.data.success, 
-          });
-          console.log("Unit berjaya dikemaskini");
-          handleCloseEditUnit();
-      }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Gagal",
-      text: error.response.data.error, 
-  });
-  }
-};
+  // handle update unit
+  const onSubmit = (unitInput) => {
+    updateUnit(unit.id, unitInput, handleCloseEditUnit, onUpdateSuccess);
+  };
 
   return (
     <div>
@@ -127,7 +100,7 @@ function EditUnit({unit, jabatanOptions}) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="edit-modal-btn" onClick={handleSubmit(updateUnit)}>
+          <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
             Kemaskini Unit
           </Button>
         </Modal.Footer>
