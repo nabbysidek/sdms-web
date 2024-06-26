@@ -111,6 +111,25 @@ const useJenisAuditStore = create((set) => ({
     }
   },
   
+  // search jenis audit
+  searchJenisAudits: async (jenisAuditInput) => {
+    try {
+      const payload = { jenisAuditInput };
+      const response = await axiosCustom.post(
+        `tetapan-kriteria/carian-jenis-audit`,
+        payload
+      );
+      set({
+        jenisAudits: response.data.data.data,
+        totalPage: response.data.data.last_page,
+        totalItems: response.data.data.total,
+      });
+    } catch (error) {
+      if (error.response && error.response.data) {
+        console.error("Ralat dalam mengambil maklumat jenis audit:", error);
+      }
+    }
+  },
 }));
 
 export default useJenisAuditStore;

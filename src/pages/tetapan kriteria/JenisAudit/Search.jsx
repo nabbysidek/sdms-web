@@ -1,21 +1,28 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import useJenisAuditStore from "../../../store/jenis-audit-store";
 
 function SearchJenisAudit() {
-  // --------- FE ------------
-  // Form validation
+  // form validation
   const { handleSubmit, control, setError, formState } = useForm();
 
-  const onSubmit = (data) => {
+  // initialize store
+  const searchJenisAudits = useJenisAuditStore((state) => state.searchJenisAudits);
+
+  // handle search input
+  const onSubmit = async (data) => {
     if (!data.jenisAudit) {
       setError("jenisAudit", {
         type: "manual",
         message: "Sila masukkan jenis audit",
       });
     } else {
-      // Perform your search logic here
-      console.log("Form submitted with data:", data);
+      try {
+        await searchJenisAudits(data.jenisAudit);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
     }
   };
 
