@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
-import SearchResultUntukRepotIndividu from "./SearchResult";
-// import SearchKakitanganModal from "./SearchKakitanganModal";
+import SearchResultUntukRepotIndividu from "./Show";
 import "../../assets/styles/styles_repot_individu.css";
 
 function SearchUntukRepotIndividu() {
