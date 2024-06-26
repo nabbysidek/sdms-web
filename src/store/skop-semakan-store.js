@@ -110,6 +110,26 @@ const useSkopSemakanStore = create((set) => ({
       });
     }
   },
+
+  // search skop semakan
+  searchSkopSemakans: async (skopSemakanInput) => {
+    try {
+      const payload = { skopSemakanInput };
+      const response = await axiosCustom.post(
+        `tetapan-kriteria/carian-skop-semakan`,
+        payload
+      );
+      set({
+        skopSemakans: response.data.data.data,
+        totalPage: response.data.data.last_page,
+        totalItems: response.data.data.total,
+      });
+    } catch (error) {
+      if (error.response && error.response.data) {
+        console.error("Ralat dalam mengambil maklumat skop semakan:", error);
+      }
+    }
+  },
   
 }));
 

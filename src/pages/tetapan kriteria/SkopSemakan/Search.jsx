@@ -1,21 +1,28 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
 function SearchSkopSemakan() {
-  // --------- FE ------------
-  // Form validation
+  // form validation
   const { handleSubmit, control, setError, formState } = useForm();
 
-  const onSubmit = (data) => {
+  // initialize store
+  const searchSkopSemakans = useSkopSemakanStore((state) => state.searchSkopSemakans);
+
+  // handle search input
+  const onSubmit = async (data) => {
     if (!data.skopSemakan) {
       setError("skopSemakan", {
         type: "manual",
         message: "Sila masukkan skop semakan",
       });
     } else {
-      // Perform your search logic here
-      console.log("Form submitted with data:", data);
+      try {
+        await searchSkopSemakans(data.skopSemakan);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
     }
   };
 
