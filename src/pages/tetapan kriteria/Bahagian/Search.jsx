@@ -1,20 +1,27 @@
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import useBahagianStore from "../../../store/bahagian-store";
 
 function SearchBahagian() {
-  // --------- FE ------------
-  // Form validation
+  // form validation
   const { handleSubmit, control, setError, formState } = useForm();
 
-  const onSubmit = (data) => {
+  // initialize store
+  const searchBahagians = useBahagianStore((state) => state.searchBahagians);
+
+  // handle search input
+  const onSubmit = async (data) => {
     if (!data.bahagian) {
       setError("bahagian", {
         type: "manual",
-        message: "Sila masukkan nama bahagian",
+        message: "Sila masukkan bahagian",
       });
     } else {
-      // Perform your search logic here
-      // console.log("Form submitted with data:", data);
+      try {
+        await searchBahagians(data.bahagian);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
     }
   };
 
