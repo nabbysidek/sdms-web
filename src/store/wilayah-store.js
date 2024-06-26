@@ -51,7 +51,12 @@ const useWilayahStore = create((set) => ({
   },
 
   // update wilayah
-  updateWilayah: async (wilayahId, wilayahInput, handleCloseEditWilayah, onUpdateSuccess) => {
+  updateWilayah: async (
+    wilayahId,
+    wilayahInput,
+    handleCloseEditWilayah,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/wilayah/${wilayahId}`,
@@ -103,6 +108,26 @@ const useWilayahStore = create((set) => ({
         title: "Gagal",
         text: error.response.data.error,
       });
+    }
+  },
+
+  // search wilayah
+  searchWilayahs: async (wilayahInput) => {
+    try {
+      const payload = { wilayahInput };
+      const response = await axiosCustom.post(
+        `tetapan-kriteria/carian-wilayah`,
+        payload
+      );
+      set({
+        wilayahs: response.data.data.data,
+        totalPage: response.data.data.last_page,
+        totalItems: response.data.data.total,
+      });
+    } catch (error) {
+      if (error.response && error.response.data) {
+        console.error("Ralat dalam mengambil maklumat wilayah:", error);
+      }
     }
   },
 }));

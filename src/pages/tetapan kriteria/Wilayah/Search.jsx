@@ -1,21 +1,28 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import useWilayahStore from "../../../store/wilayah-store";
 
 function SearchWilayah() {
-  // --------- FE ------------
-  // Form validation
+  // form validation
   const { handleSubmit, control, setError, formState } = useForm();
 
-  const onSubmit = (data) => {
-    if (!data.kriteriaKetidakpatuhan) {
+  // initialize store
+  const searchWilayahs = useWilayahStore((state) => state.searchWilayahs);
+
+  // handle search input
+  const onSubmit = async (data) => {
+    if (!data.wilayah) {
       setError("wilayah", {
         type: "manual",
         message: "Sila masukkan wilayah",
       });
     } else {
-      // Perform your search logic here
-      console.log("Form submitted with data:", data);
+      try {
+        await searchWilayahs(data.wilayah);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
     }
   };
 
