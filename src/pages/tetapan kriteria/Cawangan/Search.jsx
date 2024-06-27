@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
 import { useOptionStore } from "../../../store/option-store";
+import useCawanganStore from "../../../store/cawangan-store";
 
 function SearchCawangan() {
-  // --------- FE ------------
-  // Form validation
-  const [errorMessage, setErrorMessage] = useState("");
+  // form validation
+  const { handleSubmit, control, setError, formState } = useForm();
 
-  const { register, handleSubmit, setValue } = useForm();
+  // initialize store
+  const searchCawangans = useCawanganStore((state) => state.searchCawangans);
 
-  const atLeastOneFilled = (data) => {
-    return Object.values(data).some((field) => !!field);
-  };
+  // handle search input
+  const onSubmit = async (data) => {
+    const { cawangan, wilayahSelect } = data;
 
-  const onSubmit = (data) => {
-    if (!atLeastOneFilled(data)) {
-      setErrorMessage("Sila isikan sekurang-kurangnya satu medan input");
+    if (!cawangan && !wilayahSelect) {
+      setError("cawangan", {
+        type: "manual",
+        message: "Sila masukkan cawangan atau pilih wilayah",
+      });
     } else {
-      setErrorMessage("");
-      console.log(data);
+      try {
+        await searchCawangans(cawangan, wilayahSelect);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
     }
   };
 
-  // ___________________________________ Backend __________________________________
+  // fetch for wilayahOptions
   const { wilayahOptions, displayWilayahs } = useOptionStore((state) => ({
     wilayahOptions: state.wilayahOptions,
     displayWilayahs: state.displayWilayahs,
@@ -39,31 +45,34 @@ function SearchCawangan() {
         <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Form.Group className="col-md-4 with-padding-left">
-              <Form.Select
-                {...register("wilayahSelect")}
-                aria-label="wilayahSelect"
-                onChange={(e) => {
-                  onChange(e); // Update form state
-                  setSelectedWilayah(e.target.value); // Update local state
-                }}
-              >
-                <option value="">Wilayah</option>
-                {wilayahOptions
-                  // Sort wilayah options alphabetically by namaWilayah
-                  .sort((a, b) => a.namaWilayah.localeCompare(b.namaWilayah))
-                  .map((wilayah) => (
-                    <option key={wilayah.id} value={wilayah.id}>
-                      {wilayah.namaWilayah}
-                    </option>
-                  ))}
-              </Form.Select>
+              <Controller
+                name="wilayahSelect"
+                control={control}
+                render={({ field }) => (
+                  <Form.Select {...field} aria-label="wilayahSelect">
+                    <option value="">Wilayah</option>
+                    {wilayahOptions
+                      // Sort wilayah options alphabetically by namaWilayah
+                      .sort((a, b) =>
+                        a.namaWilayah.localeCompare(b.namaWilayah)
+                      )
+                      .map((wilayah) => (
+                        <option key={wilayah.id} value={wilayah.id}>
+                          {wilayah.namaWilayah}
+                        </option>
+                      ))}
+                  </Form.Select>
+                )}
+              />
             </Form.Group>
             <Form.Group className="col-md-6">
-              <Form.Control
-                type="text"
-                placeholder="Cawangan"
-                {...register("cawangan")}
-              ></Form.Control>
+              <Controller
+                name="cawangan"
+                control={control}
+                render={({ field }) => (
+                  <Form.Control {...field} type="text" placeholder="Cawangan" />
+                )}
+              />
             </Form.Group>
             <Form.Group className="col-md-2">
               <Button className="search-bar-btn" type="submit">
@@ -74,9 +83,9 @@ function SearchCawangan() {
         </Form>
       </Container>
 
-      {errorMessage && (
-        <Alert variant="danger" className="alert-display">
-          {errorMessage}
+      {formState.errors.cawangan && (
+        <Alert className="alert-display" variant="danger">
+          {formState.errors.cawangan.message}
         </Alert>
       )}
     </>
