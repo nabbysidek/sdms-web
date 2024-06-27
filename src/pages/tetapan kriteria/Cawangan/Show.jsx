@@ -9,6 +9,7 @@ import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useCawanganStore from "../../../store/cawangan-store";
 
 function ShowCawanganList() {
+  // initialize store
   const {
     cawangans,
     totalPage,
@@ -19,6 +20,7 @@ function ShowCawanganList() {
     fetchWilayahs,
   } = useCawanganStore();
 
+  // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
