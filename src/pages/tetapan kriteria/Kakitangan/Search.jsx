@@ -1,21 +1,28 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form, Button, Row, Alert, Container } from "react-bootstrap";
+import useKakitanganStore from "../../../store/kakitangan-store";
 
 function SearchKakitangan() {
-  // --------- FE ------------
-  // Form validation
+  // form validation
   const { handleSubmit, control, setError, formState } = useForm();
 
-  const onSubmit = (data) => {
-    if (!data.namaKakitangan) {
-      setError("namaKakitangan", {
+  // initialize store
+  const searchKakitangans = useKakitanganStore((state) => state.searchKakitangans);
+
+  // handle search input
+  const onSubmit = async (data) => {
+    if (!data.kakitangan) {
+      setError("kakitangan", {
         type: "manual",
-        message: "Sila masukkan ID atau nama kakitangan",
+        message: "Sila masukkan kakitangan",
       });
     } else {
-      // Perform your search logic here
-      console.log("Form submitted with data:", data);
+      try {
+        await searchKakitangans(data.kakitangan);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
     }
   };
 
@@ -26,7 +33,7 @@ function SearchKakitangan() {
           <Row>
             <Form.Group className="col-md-10">
               <Controller
-                name="namaKakitangan"
+                name="kakitangan"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
