@@ -1,10 +1,10 @@
-// SearchPelaporan.jsx
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
 import SearchResultUntukRepotIndividu from "./Show";
 import "../../assets/styles/styles_repot_individu.css";
+import axiosCustom from "../../axios";
 
 function SearchUntukRepotIndividu() {
   // Manage visibility of the search result
@@ -13,6 +13,9 @@ function SearchUntukRepotIndividu() {
   // Check validation errors
   const [validationErrors, setValidationErrors] = useState(null);
 
+  // store search results
+  const [searchResults, setSearchResults] = useState(null);
+
   // Form validation
   const {
     control,
@@ -20,16 +23,27 @@ function SearchUntukRepotIndividu() {
     formState: { errors },
   } = useForm();
 
-  const validateThenShowTable = (data) => {
-    if (!data.searchStaff) {
+  const onSubmit = async (data) => {
+    if (!data.searchKakitanganInput) {
       setValidationErrors({
-        searchStaff: { message: "ID kakitangan diperlukan " },
+        searchKakitanganInput: { message: "ID kakitangan diperlukan " },
       });
     } else {
       setValidationErrors(null);
       if (Object.keys(errors).length === 0) {
-        // Display modal if the input field is filled
-        setLinkClicked(true);
+        try {
+          const response = await axiosCustom.post('repot-individu/carian-repot-individu', {
+            searchKakitanganInput: data.searchKakitanganInput
+          });
+          setSearchResults(response.data);
+          setLinkClicked(true);
+        } catch (error) {
+          console.error('Error fetching search results', error);
+          setValidationErrors({
+            searchKakitanganInput: { message: "Ralat dalam mencari ID kakitangan" },
+          });
+          console.error('Error fetching search results', error);
+        }
       } else {
         setValidationErrors(errors);
       }
@@ -40,48 +54,48 @@ function SearchUntukRepotIndividu() {
     <>
       <Container fluid className="repot-search-container">
         <Row>
-          <Col xs={12} xl={7}>
+          <Col xs={12} md={7} xl={7}>
             <Form>
               <Form.Group>
                 <Controller
-                  name="searchStaff"
+                  name="searchKakitanganInput"
                   control={control}
                   render={({ field }) => (
                     <Form.Control
                       {...field}
                       type="text"
                       placeholder="ID kakitangan"
-                      isInvalid={!!validationErrors?.searchStaff}
+                      isInvalid={!!validationErrors?.kakitangan}
                     />
                   )}
                 />
               </Form.Group>
             </Form>
           </Col>
-          <Col xs={12} xl={2} className="remove-padding">
+          <Col xs={12} md={2} xl={2} className="remove-padding">
             <Button
               className="repot-search-btn"
               onClick={() => {
-                handleSubmit((data) => validateThenShowTable(data))();
+                handleSubmit((data) => onSubmit(data))();
               }}
             >
               Cari
             </Button>
           </Col>
-          <Col xs={12} xl={3} className="remove-padding">
+          <Col xs={12} md={3} xl={3} className="remove-padding">
             <CreateKakitangan />
           </Col>
         </Row>
       </Container>
 
-      {validationErrors?.searchStaff && (
+      {validationErrors?.kakitangan && (
         <Alert className="alert-display" variant="danger">
-          {validationErrors.searchStaff.message}
+          {validationErrors.kakitangan.message}
         </Alert>
       )}
 
       <div className="pelaporan-search-result">
-        {linkClicked && <SearchResultUntukRepotIndividu />}
+        {linkClicked && <SearchResultUntukRepotIndividu searchResults={searchResults} />}
       </div>
     </>
   );
