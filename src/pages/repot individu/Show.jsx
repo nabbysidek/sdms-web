@@ -80,7 +80,8 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.tahapRisikoAudit}</td>
-                    <td>{item.kesalahanBerulang}</td>
+                    <td>{item.kesalahanBerulang ? "YA" : "TIDAK"}</td>
+                    {/* <td>{item.kesalahanBerulang}</td> */}
                     <td>{item.tarikhAudit}</td>
                     <td>{item.wilayah.namaWilayah}</td>
                     <td>{item.cawangan.namaCawangan}</td>
