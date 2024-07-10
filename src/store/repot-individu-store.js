@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useRepotIndividuStore = create((set, get) => ({
+const useRepotIndividuStore = create((set) => ({
 
   // search
   linkClicked: false,
