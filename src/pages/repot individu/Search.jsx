@@ -7,21 +7,16 @@ import "../../assets/styles/styles_repot_individu.css";
 import axiosCustom from "../../axios";
 
 function SearchUntukRepotIndividu() {
-  // Manage visibility of the search result
+  // manage visibility of the search result
   const [linkClicked, setLinkClicked] = useState(false);
 
-  // Check validation errors
+  // check validation errors
   const [validationErrors, setValidationErrors] = useState(null);
 
   // store search results
   const [searchResults, setSearchResults] = useState(null);
 
-  // Form validation
-  // const {
-  //   control,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
+  // form validation
   const {
     control,
     handleSubmit,
@@ -34,9 +29,9 @@ function SearchUntukRepotIndividu() {
   });
 
   // watch the value of searchKakitanganInput
-  // to fix unctrolled to controlled input
   const searchKakitanganInputValue = watch("searchKakitanganInput");
 
+  // submit for the search
   const onSubmit = async (data) => {
     if (!data.searchKakitanganInput) {
       setValidationErrors({
