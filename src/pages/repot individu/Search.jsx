@@ -17,11 +17,25 @@ function SearchUntukRepotIndividu() {
   const [searchResults, setSearchResults] = useState(null);
 
   // Form validation
+  // const {
+  //   control,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    watch, // adding watch to the destructuring
+  } = useForm({
+    defaultValues: {
+      searchKakitanganInput: "", // to ensure a default value is set
+    },
+  });
+
+  // watch the value of searchKakitanganInput
+  // to fix unctrolled to controlled input
+  const searchKakitanganInputValue = watch("searchKakitanganInput");
 
   const onSubmit = async (data) => {
     if (!data.searchKakitanganInput) {
@@ -65,7 +79,8 @@ function SearchUntukRepotIndividu() {
                       {...field}
                       type="text"
                       placeholder="ID kakitangan"
-                      isInvalid={!!validationErrors?.kakitangan}
+                      value={searchKakitanganInputValue} // to fix unctrolled to controlled input
+                      isInvalid={!!validationErrors?.searchKakitanganInput}
                     />
                   )}
                 />
@@ -88,9 +103,9 @@ function SearchUntukRepotIndividu() {
         </Row>
       </Container>
 
-      {validationErrors?.kakitangan && (
+      {validationErrors?.searchKakitanganInput && (
         <Alert className="alert-display" variant="danger">
-          {validationErrors.kakitangan.message}
+          {validationErrors.searchKakitanganInput.message}
         </Alert>
       )}
 
