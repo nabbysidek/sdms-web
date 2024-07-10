@@ -4,7 +4,10 @@ import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import "../../assets/styles/styles_repot_individu.css";
 
-function SearchResultUntukRepotIndividu() {
+function SearchResultUntukRepotIndividu({ searchResults }) {
+  // fetch to display data
+  const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
+
   return (
     <>
       <div className="kakitangan-info-container">
@@ -17,7 +20,7 @@ function SearchResultUntukRepotIndividu() {
             <Col xs={12}>
               <Form.Group>
                 <Form.Label>Nama</Form.Label>
-                <Form.Control type="text" defaultValue="" disabled />
+                <Form.Control type="text" value={maklumatKakitangan.namaKakitangan} disabled />
               </Form.Group>
             </Col>
           </Row>
@@ -25,7 +28,7 @@ function SearchResultUntukRepotIndividu() {
             <Col xs={12}>
               <Form.Group>
                 <Form.Label>ID Kakitangan</Form.Label>
-                <Form.Control type="text" defaultValue="" disabled />
+                <Form.Control type="text" value={maklumatKakitangan.idKakitangan} disabled />
               </Form.Group>
             </Col>
           </Row>
@@ -35,16 +38,12 @@ function SearchResultUntukRepotIndividu() {
       <Container fluid>
         <div className="repot-table">
           <Row>
-            <Col md={7}>
-              <h3 className="repot-table-title">
-                Senarai Ketidakpatuhan Kakitangan
-              </h3>
+            <Col md={10}>
+              <h3 className="repot-table-title">Senarai Ketidakpatuhan Kakitangan</h3>
             </Col>
-            <Col md={5}>
+            <Col md={2}>
               <Link to="/tambahketidakpatuhan">
-                <Button className="to-page-tambah-ketidakpatuhan-btn">
-                  Tambah Ketidakpatuhan Kakitangan
-                </Button>
+                <Button className="to-page-tambah-ketidakpatuhan-btn">Tambah</Button>
               </Link>
             </Col>
           </Row>
@@ -76,32 +75,33 @@ function SearchResultUntukRepotIndividu() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Fraud</td>
-                <td>Ya</td>
-                <td>2015</td>
-                <td>Kelantan</td>
-                <td>Kota Bharu</td>
-                <td>PA</td>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>A</td>
-                <td>Skop 1</td>
-                <td>Skop 2</td>
-                <td>Aktiviti Semakan</td>
-                <td>Kriteria Ketidakpatuhan A</td>
-                <td>Catatan</td>
-                <td>
-                  <Link to="/editketidakpatuhan">
-                    <Button className="edit-ketidakpatuhan-btn">
-                      Edit
-                    </Button>
-                  </Link>
-                  <Button className="delete-btn">Padam</Button>
-                </td>
-              </tr>
+              {senaraiKetidakpatuhanKakitangan.data.length > 0 &&
+                senaraiKetidakpatuhanKakitangan.data.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.tahapRisikoAudit}</td>
+                    <td>{item.kesalahanBerulang}</td>
+                    <td>{item.tarikhAudit}</td>
+                    <td>{item.wilayah.namaWilayah}</td>
+                    <td>{item.cawangan.namaCawangan}</td>
+                    <td>{item.jawatanKakitangan}</td>
+                    <td>{item.bahagian.namaBahagian}</td>
+                    <td>{item.jabatan.namaJabatan}</td>
+                    <td>{item.unit.namaUnit}</td>
+                    <td>{item.jenis_audit.namaJenisAudit}</td>
+                    <td>{item.skop_semakan.namaSkopSemakan}</td>
+                    <td>{item.skop_kriteria.namaSkopKriteria}</td>
+                    <td>{item.aktiviti_semakan.namaAktivitiSemakan}</td>
+                    <td>{item.kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan}</td>
+                    <td>{item.catatanAudit}</td>
+                    <td>
+                      <Link to="/editketidakpatuhan">
+                        <Button className="edit-ketidakpatuhan-btn">Edit</Button>
+                      </Link>
+                      <Button className="delete-btn">Padam</Button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </div>
