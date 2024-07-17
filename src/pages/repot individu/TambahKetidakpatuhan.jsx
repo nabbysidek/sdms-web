@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
 import axiosCustom from "../../axios";
@@ -13,6 +14,7 @@ function TambahKetidakpatuhan() {
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -116,6 +118,7 @@ function TambahKetidakpatuhan() {
 
   const createRepotIndividu = async (repotIndividuInput) => {
     try {
+      console.log("Form Input:", repotIndividuInput);
       const response = await axiosCustom.post(
         `repot-individu/ketidakpatuhan-kakitangan`,
         repotIndividuInput
@@ -136,6 +139,15 @@ function TambahKetidakpatuhan() {
     }
   };
 
+  // display maklumat kakitangan
+  const location = useLocation();
+  const { id, namaKakitangan, idKakitangan } = location.state || {};
+
+  // set kakitanganId value when the component mounts
+  useEffect(() => {
+    setValue("kakitanganId", id);
+  }, [id, setValue]);
+
   return (
     <>
       <div className="page-title">
@@ -153,7 +165,7 @@ function TambahKetidakpatuhan() {
                 <Col xs={12}>
                   <Form.Group>
                     <Form.Label>Nama</Form.Label>
-                    <Form.Control type="text" defaultValue="" disabled />
+                    <Form.Control type="text" value={namaKakitangan} disabled />
                   </Form.Group>
                 </Col>
               </Row>
@@ -161,17 +173,19 @@ function TambahKetidakpatuhan() {
                 <Col xs={12}>
                   <Form.Group>
                     <Form.Label>ID Kakitangan</Form.Label>
-                    <Form.Control type="text" defaultValue="" disabled />
+                    <Form.Control type="text" value={idKakitangan} disabled />
                   </Form.Group>
                 </Col>
               </Row>
             </div>
           </div>
-          {/* Form Tambah ketidakpatuhan */}
           <div>
             <h4>Lokasi</h4>
             <hr />
-            <Form onSubmit={handleSubmit(createRepotIndividu)} onReset={reset}>
+            <Form
+              onSubmit={handleSubmit((data) => createRepotIndividu(data))}
+              onReset={reset}
+            >
               <Row>
                 <Col xs={12} xl={6}>
                   <Form.Group>
@@ -184,13 +198,11 @@ function TambahKetidakpatuhan() {
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
-                            // aria-label="wilayahSelect"
                             onChange={(e) => {
                               onChange(e);
                               setSelectedWilayah(e.target.value);
                             }}
                             value={value}
-                            // isInvalid={!!errors.wilayah}
                           >
                             <option value="">Pilih wilayah</option>
                             {wilayahOptions
@@ -208,9 +220,6 @@ function TambahKetidakpatuhan() {
                               {errors.wilayahId.message}
                             </span>
                           )}
-                          {/* <Form.Control.Feedback type="invalid">
-                            {errors.wilayah && errors.wilayah.message}
-                          </Form.Control.Feedback> */}
                         </>
                       )}
                     />
@@ -254,9 +263,6 @@ function TambahKetidakpatuhan() {
                               {errors.cawanganId.message}
                             </span>
                           )}
-                          {/* <Form.Control.Feedback type="invalid">
-                            {errors.cawangan && errors.cawangan.message}
-                          </Form.Control.Feedback> */}
                         </>
                       )}
                     />
@@ -272,8 +278,8 @@ function TambahKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Jawatan Kakitangan Waktu Audit</Form.Label>
                         <Controller
-                          name="jawatanStaff"
-                          id="jawatanStaff"
+                          name="jawatanKakitangan"
+                          id="jawatanKakitangan"
                           control={control}
                           defaultValue=""
                           rules={{
@@ -287,17 +293,12 @@ function TambahKetidakpatuhan() {
                                 onChange={onChange}
                                 value={value}
                                 placeholder="Jawatan kakitangan"
-                                // isInvalid={!!errors.jawatanStaff}
                               />
-                              {errors.jawatanStaff && (
+                              {errors.jawatanKakitangan && (
                                 <span className="error-message">
-                                  {errors.jawatanStaff.message}
+                                  {errors.jawatanKakitangan.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.jawatanStaff &&
-                                  errors.jawatanStaff.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -315,13 +316,11 @@ function TambahKetidakpatuhan() {
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                // aria-label="bahagianSelect"
                                 onChange={(e) => {
                                   onChange(e);
                                   setSelectedBahagian(e.target.value);
                                 }}
                                 value={value}
-                                // isInvalid={!!errors.bahagian}
                               >
                                 <option value="">Pilih bahagian</option>
                                 {bahagianOptions
@@ -342,9 +341,6 @@ function TambahKetidakpatuhan() {
                                   {errors.bahagianId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.bahagian && errors.bahagian.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -369,9 +365,6 @@ function TambahKetidakpatuhan() {
                                   setSelectedJabatan(e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="jabatanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.jabatan}
                               >
                                 <option value="">Pilih jabatan</option>
                                 {jabatanOptions
@@ -391,9 +384,6 @@ function TambahKetidakpatuhan() {
                                   {errors.jabatanId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.jabatan && errors.jabatan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -416,9 +406,6 @@ function TambahKetidakpatuhan() {
                                   setSelectedUnit(e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="unitSelect"
-                                // {...field}
-                                // isInvalid={!!errors.unit}
                               >
                                 <option value="">Pilih unit</option>
                                 {unitOptions
@@ -438,9 +425,6 @@ function TambahKetidakpatuhan() {
                                   {errors.unitId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.unit && errors.unit.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -458,8 +442,8 @@ function TambahKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Tahun Diaudit</Form.Label>
                         <Controller
-                          id="tahunDiaudit"
-                          name="tahunDiaudit"
+                          id="tarikhAudit"
+                          name="tarikhAudit"
                           control={control}
                           defaultValue=""
                           rules={{
@@ -472,18 +456,12 @@ function TambahKetidakpatuhan() {
                                 onChange={onChange}
                                 value={value}
                                 placeholder="Tahun"
-                                // {...field}
-                                // isInvalid={!!errors.tahunDiaudit}
                               />
-                              {errors.tahunDiaudit && (
+                              {errors.tarikhAudit && (
                                 <span className="error-message">
-                                  {errors.tahunDiaudit.message}
+                                  {errors.tarikhAudit.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.tahunDiaudit &&
-                                  errors.tahunDiaudit.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -506,9 +484,6 @@ function TambahKetidakpatuhan() {
                                   setSelectedJenisAudit(e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="jenisAuditSelect"
-                                // {...field}
-                                // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih jenis audit</option>
                                 {jenisAuditOptions
@@ -531,9 +506,6 @@ function TambahKetidakpatuhan() {
                                   {errors.jenisAuditId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.jenisAudit && errors.jenisAudit.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -559,9 +531,6 @@ function TambahKetidakpatuhan() {
                                   setSelectedSkopSemakan(e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="skopSemakanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih skop semakan</option>
                                 {skopSemakanOptions
@@ -584,10 +553,6 @@ function TambahKetidakpatuhan() {
                                   {errors.skopSemakanId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.skopSemakan &&
-                                  errors.skopSemakan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -612,9 +577,6 @@ function TambahKetidakpatuhan() {
                                   setSelectedSkopKriteria(e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="skopKriteriaKetidakpatuhanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.skopKriteriaKetidakpatuhan}
                               >
                                 <option value="">
                                   Pilih skop kriteria ketidakpatuhan
@@ -639,10 +601,6 @@ function TambahKetidakpatuhan() {
                                   {errors.skopKriteriaId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.skopKriteriaKetidakpatuhan &&
-                                  errors.skopKriteriaKetidakpatuhan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -665,9 +623,6 @@ function TambahKetidakpatuhan() {
                                   setSelectedAktivitiSemakan(e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="aktivitiSemakanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.aktivitiSemakan}
                               >
                                 <option value="">Pilih aktiviti semakan</option>
                                 {aktivitiSemakanOptions
@@ -690,10 +645,6 @@ function TambahKetidakpatuhan() {
                                   {errors.aktivitiSemakanId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.aktivitiSemakan &&
-                                  errors.aktivitiSemakan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -721,9 +672,6 @@ function TambahKetidakpatuhan() {
                                 );
                               }}
                               value={value}
-                              // aria-label="kriteriaKetidakpatuhanSelect"
-                              // {...field}
-                              // isInvalid={!!errors.kriteriaKetidakpatuhan}
                             >
                               <option value="">
                                 Pilih kriteria ketidakpatuhan
@@ -750,10 +698,6 @@ function TambahKetidakpatuhan() {
                                 {errors.kriteriaKetidakpatuhanId.message}
                               </span>
                             )}
-                            {/* <Form.Control.Feedback type="invalid">
-                              {errors.kriteriaKetidakpatuhan &&
-                                errors.kriteriaKetidakpatuhan.message}
-                            </Form.Control.Feedback> */}
                           </>
                         )}
                       />
@@ -766,7 +710,7 @@ function TambahKetidakpatuhan() {
                         <Row className="radio-tambah-ketidakpatuhan">
                           <Col>
                             <Controller
-                              name="tahapRisikoRadio"
+                              name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
                               defaultValue="Biasa"
@@ -784,7 +728,7 @@ function TambahKetidakpatuhan() {
                           </Col>
                           <Col>
                             <Controller
-                              name="tahapRisikoRadio"
+                              name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -801,7 +745,7 @@ function TambahKetidakpatuhan() {
                           </Col>
                           <Col>
                             <Controller
-                              name="tahapRisikoRadio"
+                              name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -817,7 +761,7 @@ function TambahKetidakpatuhan() {
                             />
                           </Col>
                         </Row>
-                        {errors.tahapRisikoRadio && (
+                        {errors.tahapRisikoAudit && (
                           <p>Tahap Risiko diperlukan</p>
                         )}
                       </div>
@@ -830,7 +774,7 @@ function TambahKetidakpatuhan() {
                         <Row className="radio-kesalahan-berulang">
                           <Col>
                             <Controller
-                              name="kesalahanBerulangRadio"
+                              name="kesalahanBerulang"
                               control={control}
                               defaultValue="Tidak"
                               rules={{ required: true }}
@@ -845,16 +789,10 @@ function TambahKetidakpatuhan() {
                                 />
                               )}
                             />
-                            {/* <Form.Check
-                              type="radio"
-                              label="Ya"
-                              name="kesalahanBerulangRadio"
-                              id="radiokesalahanBerulangYes"
-                            /> */}
                           </Col>
                           <Col>
                             <Controller
-                              name="kesalahanBerulangRadio"
+                              name="kesalahanBerulang"
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -868,12 +806,6 @@ function TambahKetidakpatuhan() {
                                 />
                               )}
                             />
-                            {/* <Form.Check
-                              type="radio"
-                              label="Tidak"
-                              name="kesalahanBerulangRadio"
-                              id="radiokesalahanBerulangNo"
-                            /> */}
                           </Col>
                         </Row>
                       </div>
@@ -883,7 +815,7 @@ function TambahKetidakpatuhan() {
                     <Form.Group>
                       <Form.Label>Catatan</Form.Label>
                       <Controller
-                        name="catatan"
+                        name="catatanAudit"
                         control={control}
                         defaultValue=""
                         render={({ field: { onChange, value } }) => (
@@ -895,7 +827,6 @@ function TambahKetidakpatuhan() {
                           />
                         )}
                       />
-                      {/* <Form.Control as="textarea" rows={3} /> */}
                     </Form.Group>
                   </Row>
                   <div className="tambah-ketidakpatuhan-actions">
