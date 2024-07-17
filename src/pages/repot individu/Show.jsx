@@ -7,7 +7,7 @@ import "../../assets/styles/styles_repot_individu.css";
 function SearchResultUntukRepotIndividu({ searchResults }) {
   // fetch to display data
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
-
+console.log(maklumatKakitangan.id);
   return (
     <>
       <div className="kakitangan-info-container">
@@ -20,7 +20,11 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
             <Col xs={12}>
               <Form.Group>
                 <Form.Label>Nama</Form.Label>
-                <Form.Control type="text" value={maklumatKakitangan.namaKakitangan} disabled />
+                <Form.Control
+                  type="text"
+                  value={maklumatKakitangan.namaKakitangan}
+                  disabled
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -28,7 +32,11 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
             <Col xs={12}>
               <Form.Group>
                 <Form.Label>ID Kakitangan</Form.Label>
-                <Form.Control type="text" value={maklumatKakitangan.idKakitangan} disabled />
+                <Form.Control
+                  type="text"
+                  value={maklumatKakitangan.idKakitangan}
+                  disabled
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -39,11 +47,22 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
         <div className="repot-table">
           <Row>
             <Col md={10}>
-              <h3 className="repot-table-title">Senarai Ketidakpatuhan Kakitangan</h3>
+              <h3 className="repot-table-title">
+                Senarai Ketidakpatuhan Kakitangan
+              </h3>
             </Col>
             <Col md={2}>
-              <Link to="/tambahketidakpatuhan">
-                <Button className="to-page-tambah-ketidakpatuhan-btn">Tambah</Button>
+              <Link
+                to="/tambahketidakpatuhan"
+                state={{
+                  id: maklumatKakitangan.id,
+                  namaKakitangan: maklumatKakitangan.namaKakitangan,
+                  idKakitangan: maklumatKakitangan.idKakitangan,
+                }}
+              >
+                <Button className="to-page-tambah-ketidakpatuhan-btn">
+                  Tambah
+                </Button>
               </Link>
             </Col>
           </Row>
@@ -92,11 +111,21 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
                     <td>{item.skop_semakan.namaSkopSemakan}</td>
                     <td>{item.skop_kriteria.namaSkopKriteria}</td>
                     <td>{item.aktiviti_semakan.namaAktivitiSemakan}</td>
-                    <td>{item.kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan}</td>
+                    <td>
+                      {item.kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan}
+                    </td>
                     <td>{item.catatanAudit}</td>
                     <td>
-                      <Link to="/editketidakpatuhan">
-                        <Button className="edit-ketidakpatuhan-btn">Edit</Button>
+                      <Link
+                        to="/editketidakpatuhan"
+                        state={{
+                          namaKakitangan: maklumatKakitangan.namaKakitangan,
+                          idKakitangan: maklumatKakitangan.idKakitangan,
+                        }}
+                      >
+                        <Button className="edit-ketidakpatuhan-btn">
+                          Edit
+                        </Button>
                       </Link>
                       <Button className="delete-btn">Padam</Button>
                     </td>
