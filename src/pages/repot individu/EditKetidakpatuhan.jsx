@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
 import { useOptionStore } from "../../store/option-store";
 
 function EditKetidakpatuhan() {
   // ------- FE -------------
+  // display maklumat kakitangan
+  const location = useLocation();
+  const { id, namaKakitangan, idKakitangan, audits } = location.state || {};
+
   // Form validation
   const {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -19,19 +25,19 @@ function EditKetidakpatuhan() {
   };
 
   // ___________________________________ Backend __________________________________
-  const [selectedWilayah, setSelectedWilayah] = useState("");
-  const [selectedCawangan, setSelectedCawangan] = useState("");
+  // const [selectedWilayah, setSelectedWilayah] = useState("");
+  // const [selectedCawangan, setSelectedCawangan] = useState("");
 
-  const [selectedBahagian, setSelectedBahagian] = useState("");
-  const [selectedJabatan, setSelectedJabatan] = useState("");
-  const [selectedUnit, setSelectedUnit] = useState("");
+  // const [selectedBahagian, setSelectedBahagian] = useState("");
+  // const [selectedJabatan, setSelectedJabatan] = useState("");
+  // const [selectedUnit, setSelectedUnit] = useState("");
 
-  const [selectedJenisAudit, setSelectedJenisAudit] = useState("");
-  const [selectedSkopSemakan, setSelectedSkopSemakan] = useState("");
-  const [selectedSkopKriteria, setSelectedSkopKriteria] = useState("");
-  const [selectedAktivitiSemakan, setSelectedAktivitiSemakan] = useState("");
-  const [selectedKriteriaKetidakpatuhan, setSelectedKriteriaKetidakpatuhan] =
-    useState("");
+  // const [selectedJenisAudit, setSelectedJenisAudit] = useState("");
+  // const [selectedSkopSemakan, setSelectedSkopSemakan] = useState("");
+  // const [selectedSkopKriteria, setSelectedSkopKriteria] = useState("");
+  // const [selectedAktivitiSemakan, setSelectedAktivitiSemakan] = useState("");
+  // const [selectedKriteriaKetidakpatuhan, setSelectedKriteriaKetidakpatuhan] =
+  //   useState("");
 
   // Display options
   const {
@@ -84,37 +90,50 @@ function EditKetidakpatuhan() {
 
   useEffect(() => {
     displayWilayahs();
-    displayCawangans(selectedWilayah);
+    displayCawangans(audits.wilayah?.id);
 
     displayBahagians();
-    displayJabatans(selectedBahagian);
-    displayUnits(selectedJabatan);
+    displayJabatans(audits.bahagian?.id);
+    displayUnits(audits.jabatan?.id);
 
     displayJenisAudits();
     displaySkopSemakans();
-    displaySkopKriterias(selectedSkopSemakan);
-    displayAktivitiSemakans(selectedSkopKriteria);
-    displayKriteriaKetidakpatuhans(selectedAktivitiSemakan);
+    displaySkopKriterias(audits.skop_semakan?.id);
+    displayAktivitiSemakans(audits.skop_kriteria?.id);
+    displayKriteriaKetidakpatuhans(audits.aktiviti_semakan?.id);
+
+    setValue("wilayahId", audits.wilayah?.id);
+    setValue("cawanganId", audits.cawangan?.id);
+    setValue("bahagianId", audits.bahagian?.id);
+    setValue("jabatanId", audits.jabatan?.id);
+    setValue("unitId", audits.unit?.id);
+    setValue("jenisAuditId", audits.jenis_audit?.id);
+    setValue("skopSemakanId", audits.skop_semakan?.id);
+    setValue("skopKriteriaId", audits.skop_kriteria?.id);
+    setValue("aktivitiSemakanId", audits.aktiviti_semakan?.id);
+    setValue("kriteriaKetidakpatuhanId", audits.kriteria_ketidakpatuhan?.id);
+
+    setValue("jawatanKakitangan", audits.jawatanKakitangan);
+    setValue("tarikhAudit", audits.tarikhAudit);
+    setValue("catatanAudit", audits.catatanAudit);
+
+    setValue("tahapRisikoAudit", audits.tahapRisikoAudit);
+    setValue("kesalahanBerulang", audits.kesalahanBerulang);
   }, [
     displayWilayahs,
     displayCawangans,
-    selectedWilayah,
-
+    audits,
     displayBahagians,
     displayJabatans,
-    selectedBahagian,
     displayUnits,
-    selectedJabatan,
-
     displayJenisAudits,
     displaySkopSemakans,
     displaySkopKriterias,
-    selectedSkopSemakan,
     displayAktivitiSemakans,
-    selectedSkopKriteria,
     displayKriteriaKetidakpatuhans,
-    selectedAktivitiSemakan,
+    setValue,
   ]);
+
   return (
     <>
       <div className="page-title">
@@ -132,7 +151,7 @@ function EditKetidakpatuhan() {
                 <Col xs={12}>
                   <Form.Group>
                     <Form.Label>Nama</Form.Label>
-                    <Form.Control type="text" defaultValue="" disabled />
+                    <Form.Control type="text" value={namaKakitangan} disabled />
                   </Form.Group>
                 </Col>
               </Row>
@@ -140,7 +159,7 @@ function EditKetidakpatuhan() {
                 <Col xs={12}>
                   <Form.Group>
                     <Form.Label>ID Kakitangan</Form.Label>
-                    <Form.Control type="text" defaultValue="" disabled />
+                    <Form.Control type="text" value={idKakitangan} disabled />
                   </Form.Group>
                 </Col>
               </Row>
@@ -162,13 +181,11 @@ function EditKetidakpatuhan() {
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
-                            // aria-label="wilayahSelect"
                             onChange={(e) => {
                               onChange(e);
-                              setSelectedWilayah(e.target.value);
+                              setValue("wilayahId", e.target.value);
                             }}
                             value={value}
-                            // isInvalid={!!errors.wilayah}
                           >
                             <option value="">Pilih wilayah</option>
                             {wilayahOptions
@@ -186,9 +203,6 @@ function EditKetidakpatuhan() {
                               {errors.wilayahId.message}
                             </span>
                           )}
-                          {/* <Form.Control.Feedback type="invalid">
-                            {errors.wilayah && errors.wilayah.message}
-                          </Form.Control.Feedback> */}
                         </>
                       )}
                     />
@@ -201,25 +215,20 @@ function EditKetidakpatuhan() {
                       id="cawanganId"
                       name="cawanganId"
                       control={control}
-                      defaultValue=""
                       rules={{ required: "Sila pilih cawangan" }}
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
                             onChange={(e) => {
                               onChange(e);
-                              setSelectedCawangan(e.target.value);
+                              setValue("cawanganId", e.target.value);
                             }}
                             value={value}
                           >
-                            <option value="" disabled>
-                              Pilih cawangan
-                            </option>
+                            <option value="">Pilih cawangan</option>
                             {cawanganOptions
-                              .filter(
-                                (cawangan) =>
-                                  cawangan.wilayahId ===
-                                  parseInt(selectedWilayah)
+                              .sort((a, b) =>
+                                a.namaCawangan.localeCompare(b.namaCawangan)
                               )
                               .map((cawangan) => (
                                 <option key={cawangan.id} value={cawangan.id}>
@@ -232,9 +241,6 @@ function EditKetidakpatuhan() {
                               {errors.cawanganId.message}
                             </span>
                           )}
-                          {/* <Form.Control.Feedback type="invalid">
-                            {errors.cawangan && errors.cawangan.message}
-                          </Form.Control.Feedback> */}
                         </>
                       )}
                     />
@@ -250,7 +256,7 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Jawatan Kakitangan Waktu Audit</Form.Label>
                         <Controller
-                          name="jawatanStaff"
+                          name="jawatanKakitangan"
                           control={control}
                           defaultValue=""
                           rules={{
@@ -263,11 +269,11 @@ function EditKetidakpatuhan() {
                                 type="text"
                                 placeholder="Jawatan kakitangan"
                                 {...field}
-                                isInvalid={!!errors.jawatanStaff}
+                                isInvalid={!!errors.jawatanKakitangan}
                               />
                               <Form.Control.Feedback type="invalid">
-                                {errors.jawatanStaff &&
-                                  errors.jawatanStaff.message}
+                                {errors.jawatanKakitangan &&
+                                  errors.jawatanKakitangan.message}
                               </Form.Control.Feedback>
                             </>
                           )}
@@ -281,18 +287,15 @@ function EditKetidakpatuhan() {
                           id="bahagianId"
                           name="bahagianId"
                           control={control}
-                          defaultValue=""
                           rules={{ required: "Sila pilih bahagian" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
-                                // aria-label="bahagianSelect"
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedBahagian(e.target.value);
+                                  setValue("bahagianId", e.target.value);
                                 }}
                                 value={value}
-                                // isInvalid={!!errors.bahagian}
                               >
                                 <option value="">Pilih bahagian</option>
                                 {bahagianOptions
@@ -313,9 +316,6 @@ function EditKetidakpatuhan() {
                                   {errors.bahagianId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.bahagian && errors.bahagian.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -330,26 +330,20 @@ function EditKetidakpatuhan() {
                           id="jabatanId"
                           name="jabatanId"
                           control={control}
-                          defaultValue=""
                           rules={{ required: "Sila pilih jabatan" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedJabatan(e.target.value);
+                                  setValue("jabatanId", e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="jabatanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.jabatan}
                               >
                                 <option value="">Pilih jabatan</option>
                                 {jabatanOptions
-                                  .filter(
-                                    (jabatan) =>
-                                      jabatan.bahagianId ===
-                                      parseInt(selectedBahagian)
+                                  .sort((a, b) =>
+                                    a.namaJabatan.localeCompare(b.namaJabatan)
                                   )
                                   .map((jabatan) => (
                                     <option key={jabatan.id} value={jabatan.id}>
@@ -362,9 +356,6 @@ function EditKetidakpatuhan() {
                                   {errors.jabatanId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.jabatan && errors.jabatan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -377,26 +368,20 @@ function EditKetidakpatuhan() {
                           id="unitId"
                           name="unitId"
                           control={control}
-                          defaultValue=""
                           rules={{ required: "Sila pilih unit" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedUnit(e.target.value);
+                                  setValue("unitId", e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="unitSelect"
-                                // {...field}
-                                // isInvalid={!!errors.unit}
                               >
                                 <option value="">Pilih unit</option>
                                 {unitOptions
-                                  .filter(
-                                    (unit) =>
-                                      unit.jabatanId ===
-                                      parseInt(selectedJabatan)
+                                  .sort((a, b) =>
+                                    a.namaUnit.localeCompare(b.namaUnit)
                                   )
                                   .map((unit) => (
                                     <option key={unit.id} value={unit.id}>
@@ -409,9 +394,6 @@ function EditKetidakpatuhan() {
                                   {errors.unitId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.unit && errors.unit.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -429,32 +411,24 @@ function EditKetidakpatuhan() {
                       <Form.Group>
                         <Form.Label>Tahun Diaudit</Form.Label>
                         <Controller
-                          id="tahunDiaudit"
-                          name="tahunDiaudit"
+                          name="tarikhAudit"
                           control={control}
                           defaultValue=""
                           rules={{
-                            required: "Sila sertakan tahun staff diaudit",
+                            required: "Sila sertakan tarikh audit",
                           }}
-                          render={({ field: { onChange, value } }) => (
+                          render={({ field }) => (
                             <>
                               <Form.Control
-                                type="date"
-                                onChange={onChange}
-                                value={value}
-                                placeholder="Tahun"
-                                // {...field}
-                                // isInvalid={!!errors.tahunDiaudit}
+                                type="text"
+                                placeholder="Tarikh audit"
+                                {...field}
+                                isInvalid={!!errors.tarikhAudit}
                               />
-                              {errors.tahunDiaudit && (
-                                <span className="error-message">
-                                  {errors.tahunDiaudit.message}
-                                </span>
-                              )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.tahunDiaudit &&
-                                  errors.tahunDiaudit.message}
-                              </Form.Control.Feedback> */}
+                              <Form.Control.Feedback type="invalid">
+                                {errors.tarikhAudit &&
+                                  errors.tarikhAudit.message}
+                              </Form.Control.Feedback>
                             </>
                           )}
                         />
@@ -467,19 +441,15 @@ function EditKetidakpatuhan() {
                           id="jenisAuditId"
                           name="jenisAuditId"
                           control={control}
-                          defaultValue=""
-                          rules={{ required: "Sila pilih jenis audit" }}
+                          rules={{ required: "Sila pilih jenisAudit" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedJenisAudit(e.target.value);
+                                  setValue("jenisAuditId", e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="jenisAuditSelect"
-                                // {...field}
-                                // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih jenis audit</option>
                                 {jenisAuditOptions
@@ -502,9 +472,6 @@ function EditKetidakpatuhan() {
                                   {errors.jenisAuditId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.jenisAudit && errors.jenisAudit.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -520,19 +487,15 @@ function EditKetidakpatuhan() {
                           id="skopSemakanId"
                           name="skopSemakanId"
                           control={control}
-                          defaultValue=""
                           rules={{ required: "Sila pilih skop semakan" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedSkopSemakan(e.target.value);
+                                  setValue("skopSemakanId", e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="skopSemakanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.jenisAudit}
                               >
                                 <option value="">Pilih skop semakan</option>
                                 {skopSemakanOptions
@@ -555,10 +518,6 @@ function EditKetidakpatuhan() {
                                   {errors.skopSemakanId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.skopSemakan &&
-                                  errors.skopSemakan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -571,30 +530,22 @@ function EditKetidakpatuhan() {
                           id="skopKriteriaId"
                           name="skopKriteriaId"
                           control={control}
-                          defaultValue=""
-                          rules={{
-                            required: "Sila pilih skop kriteria ketidakpatuhan",
-                          }}
+                          rules={{ required: "Sila pilih skop kriteria" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedSkopKriteria(e.target.value);
+                                  setValue("skopKriteriaId", e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="skopKriteriaKetidakpatuhanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.skopKriteriaKetidakpatuhan}
                               >
-                                <option value="">
-                                  Pilih skop kriteria ketidakpatuhan
-                                </option>
+                                <option value="">Pilih skop kriteria</option>
                                 {skopKriteriaOptions
-                                  .filter(
-                                    (skopKriteria) =>
-                                      skopKriteria.skopSemakanId ===
-                                      parseInt(selectedSkopSemakan)
+                                  .sort((a, b) =>
+                                    a.namaSkopKriteria.localeCompare(
+                                      b.namaSkopKriteria
+                                    )
                                   )
                                   .map((skopKriteria) => (
                                     <option
@@ -610,10 +561,6 @@ function EditKetidakpatuhan() {
                                   {errors.skopKriteriaId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.skopKriteriaKetidakpatuhan &&
-                                  errors.skopKriteriaKetidakpatuhan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -626,26 +573,22 @@ function EditKetidakpatuhan() {
                           id="aktivitiSemakanId"
                           name="aktivitiSemakanId"
                           control={control}
-                          defaultValue=""
                           rules={{ required: "Sila pilih aktiviti semakan" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setSelectedAktivitiSemakan(e.target.value);
+                                  setValue("aktivitiSemakanId", e.target.value);
                                 }}
                                 value={value}
-                                // aria-label="aktivitiSemakanSelect"
-                                // {...field}
-                                // isInvalid={!!errors.aktivitiSemakan}
                               >
                                 <option value="">Pilih aktiviti semakan</option>
                                 {aktivitiSemakanOptions
-                                  .filter(
-                                    (aktivitiSemakan) =>
-                                      aktivitiSemakan.skopKriteriaId ===
-                                      parseInt(selectedSkopKriteria)
+                                  .sort((a, b) =>
+                                    a.namaAktivitiSemakan.localeCompare(
+                                      b.namaAktivitiSemakan
+                                    )
                                   )
                                   .map((aktivitiSemakan) => (
                                     <option
@@ -661,10 +604,6 @@ function EditKetidakpatuhan() {
                                   {errors.aktivitiSemakanId.message}
                                 </span>
                               )}
-                              {/* <Form.Control.Feedback type="invalid">
-                                {errors.aktivitiSemakan &&
-                                  errors.aktivitiSemakan.message}
-                              </Form.Control.Feedback> */}
                             </>
                           )}
                         />
@@ -678,7 +617,6 @@ function EditKetidakpatuhan() {
                         id="kriteriaKetidakpatuhanId"
                         name="kriteriaKetidakpatuhanId"
                         control={control}
-                        defaultValue=""
                         rules={{
                           required: "Sila pilih kriteria ketidakpatuhan",
                         }}
@@ -687,23 +625,21 @@ function EditKetidakpatuhan() {
                             <Form.Select
                               onChange={(e) => {
                                 onChange(e);
-                                setSelectedKriteriaKetidakpatuhan(
+                                setValue(
+                                  "kriteriaKetidakpatuhanId",
                                   e.target.value
                                 );
                               }}
                               value={value}
-                              // aria-label="kriteriaKetidakpatuhanSelect"
-                              // {...field}
-                              // isInvalid={!!errors.kriteriaKetidakpatuhan}
                             >
                               <option value="">
                                 Pilih kriteria ketidakpatuhan
                               </option>
                               {kriteriaKetidakpatuhanOptions
-                                .filter(
-                                  (kriteriaKetidakpatuhan) =>
-                                    kriteriaKetidakpatuhan.aktivitiSemakanId ===
-                                    parseInt(selectedAktivitiSemakan)
+                                .sort((a, b) =>
+                                  a.namaKriteriaKetidakpatuhan.localeCompare(
+                                    b.namaKriteriaKetidakpatuhan
+                                  )
                                 )
                                 .map((kriteriaKetidakpatuhan) => (
                                   <option
@@ -721,10 +657,6 @@ function EditKetidakpatuhan() {
                                 {errors.kriteriaKetidakpatuhanId.message}
                               </span>
                             )}
-                            {/* <Form.Control.Feedback type="invalid">
-                              {errors.kriteriaKetidakpatuhan &&
-                                errors.kriteriaKetidakpatuhan.message}
-                            </Form.Control.Feedback> */}
                           </>
                         )}
                       />
@@ -737,10 +669,9 @@ function EditKetidakpatuhan() {
                         <Row className="radio-edit-ketidakpatuhan">
                           <Col>
                             <Controller
-                              name="tahapRisikoRadio"
+                              name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
-                              defaultValue="Biasa"
                               render={({ field }) => (
                                 <Form.Check
                                   {...field}
@@ -748,14 +679,14 @@ function EditKetidakpatuhan() {
                                   label="Penipuan"
                                   value="Penipuan"
                                   id="radioFraud"
-                                  checked={field.value === "Penipuan"}
+                                  checked={field.value === "PENIPUAN"}
                                 />
                               )}
                             />
                           </Col>
                           <Col>
                             <Controller
-                              name="tahapRisikoRadio"
+                              name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -765,14 +696,14 @@ function EditKetidakpatuhan() {
                                   label="Serah Dokumen"
                                   value="Serah Dokumen"
                                   id="radioSerahDoc"
-                                  checked={field.value === "Serah Dokumen"}
+                                  checked={field.value === "SERAH DOKUMEN"}
                                 />
                               )}
                             />
                           </Col>
                           <Col>
                             <Controller
-                              name="tahapRisikoRadio"
+                              name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -782,13 +713,13 @@ function EditKetidakpatuhan() {
                                   label="Biasa"
                                   value="Biasa"
                                   id="radioBiasa"
-                                  checked={field.value === "Biasa"}
+                                  checked={field.value === "BIASA"}
                                 />
                               )}
                             />
                           </Col>
                         </Row>
-                        {errors.tahapRisikoRadio && (
+                        {errors.tahapRisikoAudit && (
                           <p>Tahap Risiko diperlukan</p>
                         )}
                       </div>
@@ -800,32 +731,25 @@ function EditKetidakpatuhan() {
                       <div>
                         <Row className="radio-kesalahan-berulang">
                           <Col>
-                            <Controller
-                              name="kesalahanBerulangRadio"
-                              control={control}
-                              defaultValue="Tidak"
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <Form.Check
-                                  {...field}
-                                  type="radio"
-                                  label="Ya"
-                                  value="Ya"
-                                  id="radioYa"
-                                  checked={field.value === "Ya"}
-                                />
-                              )}
-                            />
-                            {/* <Form.Check
+                          <Controller
+                          name="kesalahanBerulang"
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Form.Check
+                              {...field}
                               type="radio"
                               label="Ya"
-                              name="kesalahanBerulangRadio"
-                              id="radiokesalahanBerulangYes"
-                            /> */}
+                              value="Ya"
+                              id="radioYa"
+                              checked={field.value === "YA"}
+                            />
+                          )}
+                        />
                           </Col>
                           <Col>
                             <Controller
-                              name="kesalahanBerulangRadio"
+                              name="kesalahanBerulang"
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -835,16 +759,10 @@ function EditKetidakpatuhan() {
                                   label="Tidak"
                                   value="Tidak"
                                   id="radioTidak"
-                                  checked={field.value === "Tidak"}
+                                  checked={field.value === "TIDAK"}
                                 />
                               )}
                             />
-                            {/* <Form.Check
-                              type="radio"
-                              label="Tidak"
-                              name="kesalahanBerulangRadio"
-                              id="radiokesalahanBerulangNo"
-                            /> */}
                           </Col>
                         </Row>
                       </div>
@@ -854,25 +772,33 @@ function EditKetidakpatuhan() {
                     <Form.Group>
                       <Form.Label>Catatan</Form.Label>
                       <Controller
-                        name="catatan"
+                        name="catatanAudit"
                         control={control}
                         defaultValue=""
-                        render={({ field: { onChange, value } }) => (
-                          <Form.Control
-                            as="textarea"
-                            rows={3}
-                            value={value}
-                            onChange={onChange}
-                          />
+                        rules={{
+                          required: "Sila sertakan catatan audit",
+                        }}
+                        render={({ field }) => (
+                          <>
+                            <Form.Control
+                              as="textarea"
+                              placeholder="Catatan audit"
+                              {...field}
+                              isInvalid={!!errors.catatanAudit}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.catatanAudit &&
+                                errors.catatanAudit.message}
+                            </Form.Control.Feedback>
+                          </>
                         )}
                       />
-                      {/* <Form.Control as="textarea" rows={3} /> */}
                     </Form.Group>
                   </Row>
                   <div className="edit-ketidakpatuhan-actions">
                     <Button
                       onClick={handleSubmit(onSubmit)}
-                      className="edit-ketidakpatuhan-btn"
+                      className="tambah-ketidakpatuhan-btn"
                     >
                       Simpan
                     </Button>{" "}

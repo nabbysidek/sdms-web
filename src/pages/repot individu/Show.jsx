@@ -95,32 +95,34 @@ console.log(maklumatKakitangan.id);
             </thead>
             <tbody>
               {senaraiKetidakpatuhanKakitangan.data.length > 0 &&
-                senaraiKetidakpatuhanKakitangan.data.map((item, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.tahapRisikoAudit}</td>
-                    <td>{item.kesalahanBerulang ? "YA" : "TIDAK"}</td>
-                    <td>{item.tarikhAudit}</td>
-                    <td>{item.wilayah.namaWilayah}</td>
-                    <td>{item.cawangan.namaCawangan}</td>
-                    <td>{item.jawatanKakitangan}</td>
-                    <td>{item.bahagian.namaBahagian}</td>
-                    <td>{item.jabatan.namaJabatan}</td>
-                    <td>{item.unit.namaUnit}</td>
-                    <td>{item.jenis_audit.namaJenisAudit}</td>
-                    <td>{item.skop_semakan.namaSkopSemakan}</td>
-                    <td>{item.skop_kriteria.namaSkopKriteria}</td>
-                    <td>{item.aktiviti_semakan.namaAktivitiSemakan}</td>
+                senaraiKetidakpatuhanKakitangan.data.map((audits, key) => (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <td>{audits.tahapRisikoAudit}</td>
+                    <td>{audits.kesalahanBerulang}</td>
+                    <td>{audits.tarikhAudit}</td>
+                    <td>{audits.wilayah.namaWilayah}</td>
+                    <td>{audits.cawangan.namaCawangan}</td>
+                    <td>{audits.jawatanKakitangan}</td>
+                    <td>{audits.bahagian.namaBahagian}</td>
+                    <td>{audits.jabatan.namaJabatan}</td>
+                    <td>{audits.unit.namaUnit}</td>
+                    <td>{audits.jenis_audit.namaJenisAudit}</td>
+                    <td>{audits.skop_semakan.namaSkopSemakan}</td>
+                    <td>{audits.skop_kriteria.namaSkopKriteria}</td>
+                    <td>{audits.aktiviti_semakan.namaAktivitiSemakan}</td>
                     <td>
-                      {item.kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan}
+                      {audits.kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan}
                     </td>
-                    <td>{item.catatanAudit}</td>
+                    <td>{audits.catatanAudit}</td>
                     <td>
                       <Link
                         to="/editketidakpatuhan"
                         state={{
+                          id: maklumatKakitangan.id,
                           namaKakitangan: maklumatKakitangan.namaKakitangan,
                           idKakitangan: maklumatKakitangan.idKakitangan,
+                          audits: audits,
                         }}
                       >
                         <Button className="edit-ketidakpatuhan-btn">
