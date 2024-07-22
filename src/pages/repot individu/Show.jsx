@@ -3,11 +3,40 @@ import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import "../../assets/styles/styles_repot_individu.css";
+import showConfirmationDialog from "../tetapan kriteria/showConfirmationDialog";
+import axiosCustom from "../../axios";
+import Swal from "sweetalert2";
 
 function SearchResultUntukRepotIndividu({ searchResults }) {
   // fetch to display data
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
-console.log(maklumatKakitangan.id);
+
+  const handleDeleteRepotIndividu = async (auditId) => {
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const response = await axiosCustom.delete(
+          `repot-individu/ketidakpatuhan-kakitangan/${auditId}`
+        );
+
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: response.data.success,
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: error.response.data.error,
+        });
+      }
+    }
+  }
+
   return (
     <>
       <div className="kakitangan-info-container">
@@ -129,7 +158,7 @@ console.log(maklumatKakitangan.id);
                           Edit
                         </Button>
                       </Link>
-                      <Button className="delete-btn">Padam</Button>
+                      <Button onClick={() => handleDeleteRepotIndividu(audits.id)} className="delete-btn">Padam</Button>
                     </td>
                   </tr>
                 ))}
