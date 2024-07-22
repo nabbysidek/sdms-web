@@ -118,7 +118,7 @@ function TambahKetidakpatuhan() {
 
   const createRepotIndividu = async (repotIndividuInput) => {
     try {
-      console.log("Form Input:", repotIndividuInput);
+      // console.log("Form Input:", repotIndividuInput);
       const response = await axiosCustom.post(
         `repot-individu/ketidakpatuhan-kakitangan`,
         repotIndividuInput
@@ -719,9 +719,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Penipuan"
-                                  value="Penipuan"
+                                  value="PENIPUAN"
                                   id="radioFraud"
-                                  checked={field.value === "Penipuan"}
+                                  checked={field.value === "PENIPUAN"}
                                 />
                               )}
                             />
@@ -736,9 +736,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Serah Dokumen"
-                                  value="Serah Dokumen"
+                                  value="SERAH DOKUMEN"
                                   id="radioSerahDoc"
-                                  checked={field.value === "Serah Dokumen"}
+                                  checked={field.value === "SERAH DOKUMEN"}
                                 />
                               )}
                             />
@@ -753,9 +753,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Biasa"
-                                  value="Biasa"
+                                  value="BIASA"
                                   id="radioBiasa"
-                                  checked={field.value === "Biasa"}
+                                  checked={field.value === "BIASA"}
                                 />
                               )}
                             />
@@ -783,9 +783,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Ya"
-                                  value="Ya"
+                                  value="YA"
                                   id="radioYa"
-                                  checked={field.value === "Ya"}
+                                  checked={field.value === "YA"}
                                 />
                               )}
                             />
@@ -800,9 +800,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Tidak"
-                                  value="Tidak"
+                                  value="TIDAK"
                                   id="radioTidak"
-                                  checked={field.value === "Tidak"}
+                                  checked={field.value === "TIDAK"}
                                 />
                               )}
                             />
