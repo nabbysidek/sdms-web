@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
+function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId }) {
   const [showModalTerminateAccessSenaraiPengguna, setShowModalTerminateAccessSenaraiPengguna] =
     useState(false);
 
@@ -22,7 +22,7 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
   const updateTamatkanAkses = async () => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-pengguna/senarai-pengguna/tolak-akses/${userId}`
+        `tetapan-pengguna/senarai-pengguna/sekat-akses/${userId}`
       );
 
       if (response.status === 200) {
@@ -48,7 +48,6 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat }) {
       });
     }
   };
-
 
   return (
     <>
