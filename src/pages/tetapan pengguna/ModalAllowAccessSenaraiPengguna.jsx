@@ -6,10 +6,15 @@ import Swal from "sweetalert2";
 
 function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
   // -------------------- FE ---------------------------
-  const [showModalAllowAccessSenaraiPengguna, setShowModalAllowAccessSenaraiPengguna] = useState(false);
+  const [
+    showModalAllowAccessSenaraiPengguna,
+    setShowModalAllowAccessSenaraiPengguna,
+  ] = useState(false);
 
-  const handleCloseModalAllowAccessSenaraiPengguna = () => setShowModalAllowAccessSenaraiPengguna(false);
-  const handleShowModalAllowAccessSenaraiPengguna = () => setShowModalAllowAccessSenaraiPengguna(true);
+  const handleCloseModalAllowAccessSenaraiPengguna = () =>
+    setShowModalAllowAccessSenaraiPengguna(false);
+  const handleShowModalAllowAccessSenaraiPengguna = () =>
+    setShowModalAllowAccessSenaraiPengguna(true);
 
   // Form validation
   const { handleSubmit, formState } = useForm();
@@ -46,7 +51,7 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
       });
     }
   };
-  
+
   return (
     <>
       <Button

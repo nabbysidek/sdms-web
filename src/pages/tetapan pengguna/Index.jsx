@@ -57,7 +57,7 @@ function IndexTetapanPengguna() {
 
   // Fetch peranan for the dropdown
   const [perananOptions, setPerananOptions] = useState([]);
-  
+
   const fetchPeranans = useCallback(async () => {
     try {
       const response = await axiosCustom.get(`/get-peranan`);
@@ -74,7 +74,7 @@ function IndexTetapanPengguna() {
       console.log(error);
     }
   }, [setPerananOptions]);
-  
+
   useEffect(() => {
     fetchPeranans();
   }, [fetchPeranans]);
@@ -110,20 +110,22 @@ function IndexTetapanPengguna() {
                 </td>
               </tr>
             ) : (
-              permohonanAkses.map(
-                (permohonanAksesData, key) => (
-                  <tr key={key}>
-                    <td>{key + 1}</td>
-                    <td>{permohonanAksesData.idAuditor}</td>
-                    <td>{permohonanAksesData.namaAuditor}</td>
-                    <td>{permohonanAksesData.emelAuditor}</td>
-                    <td>
-                      <ModalAllowAccessPermohonanPengguna userId={permohonanAksesData.id} />
-                      <ModalRejectAccessPermohonanPengguna userId={permohonanAksesData.id} />
-                    </td>
-                  </tr>
-                )
-              )
+              permohonanAkses.map((permohonanAksesData, key) => (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>{permohonanAksesData.idAuditor}</td>
+                  <td>{permohonanAksesData.namaAuditor}</td>
+                  <td>{permohonanAksesData.emelAuditor}</td>
+                  <td>
+                    <ModalAllowAccessPermohonanPengguna
+                      userId={permohonanAksesData.id}
+                    />
+                    <ModalRejectAccessPermohonanPengguna
+                      userId={permohonanAksesData.id}
+                    />
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </Table>
@@ -151,46 +153,44 @@ function IndexTetapanPengguna() {
                 </td>
               </tr>
             ) : (
-              senaraiPengguna.map(
-                (senaraiPenggunaData, key) => (
-                  <tr key={key}>
-                    <td>{key + 1}</td>
-                    <td>{senaraiPenggunaData.idAuditor}</td>
-                    <td>{senaraiPenggunaData.namaAuditor}</td>
-                    <td>{senaraiPenggunaData.emelAuditor}</td>
-                    <td>{senaraiPenggunaData.statusAuditor}</td>
-                    <td>
-                      <Dropdown>
-                        <Dropdown.Toggle className="user-level-btn">
-                          Tahap Pengguna
-                        </Dropdown.Toggle>
+              senaraiPengguna.map((senaraiPenggunaData, key) => (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>{senaraiPenggunaData.idAuditor}</td>
+                  <td>{senaraiPenggunaData.namaAuditor}</td>
+                  <td>{senaraiPenggunaData.emelAuditor}</td>
+                  <td>{senaraiPenggunaData.statusAuditor}</td>
+                  <td>
+                    <Dropdown>
+                      <Dropdown.Toggle className="user-level-btn">
+                        Tahap Pengguna
+                      </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="user-level-item">
-                          {perananOptions.map((perananOptions) => (
-                            <Dropdown.Item key={perananOptions.value}>
-                              {perananOptions.label}
-                            </Dropdown.Item>
-                          ))}
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </td>
-                    <td>
-                      <ModalAllowAccessSenaraiPengguna
-                        disableButtonBenar={
-                          senaraiPenggunaData.statusAuditor === "Benar"
-                        }
-                        userId={senaraiPenggunaData.id}
-                      />
-                      <ModalTerminateAccessSenaraiPengguna
-                        disableButtonSekat={
-                          senaraiPenggunaData.statusAuditor === "Sekat"
-                        }
-                        userId={senaraiPenggunaData.id}
-                      />
-                    </td>
-                  </tr>
-                )
-              )
+                      <Dropdown.Menu className="user-level-item">
+                        {perananOptions.map((perananOptions) => (
+                          <Dropdown.Item key={perananOptions.value}>
+                            {perananOptions.label}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                  <td>
+                    <ModalAllowAccessSenaraiPengguna
+                      disableButtonBenar={
+                        senaraiPenggunaData.statusAuditor === "BENAR"
+                      }
+                      userId={senaraiPenggunaData.id}
+                    />
+                    <ModalTerminateAccessSenaraiPengguna
+                      disableButtonSekat={
+                        senaraiPenggunaData.statusAuditor === "SEKAT"
+                      }
+                      userId={senaraiPenggunaData.id}
+                    />
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </Table>
