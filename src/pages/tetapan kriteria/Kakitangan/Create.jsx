@@ -36,7 +36,7 @@ function CreateKakitangan({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateKakitangan}>
-        Tambah
+        Tambah Kakitangan
       </Button>
 
       <Modal

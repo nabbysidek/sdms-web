@@ -3,39 +3,15 @@ import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import "../../assets/styles/styles_repot_individu.css";
-import showConfirmationDialog from "../tetapan kriteria/showConfirmationDialog";
-import axiosCustom from "../../axios";
-import Swal from "sweetalert2";
+import useRepotIndividuStore from "../../store/repot-individu-store";
 
 function SearchResultUntukRepotIndividu({ searchResults }) {
-  // fetch to display data
+  /* Destructuring assignment to extract maklumatKakitangan & 
+  senaraiKetidakpatuhanKakitangan from searchResults object */
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
-
-  const handleDeleteRepotIndividu = async (auditId) => {
-    const confirmResult = await showConfirmationDialog();
-
-    if (confirmResult.isConfirmed) {
-      try {
-        const response = await axiosCustom.delete(
-          `repot-individu/ketidakpatuhan-kakitangan/${auditId}`
-        );
-
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: response.data.success,
-          });
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error,
-        });
-      }
-    }
-  }
+  /* Destructuring assignment to extract 
+  handleDeleteRepotIndividu from the useRepotIndividuStore hook */
+  const { handleDeleteRepotIndividu } = useRepotIndividuStore();
 
   return (
     <>
@@ -48,7 +24,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
           <Row>
             <Col xs={12}>
               <Form.Group>
-                <Form.Label>Nama</Form.Label>
+                <Form.Label>NAMA KAKITANGAN</Form.Label>
                 <Form.Control
                   type="text"
                   value={maklumatKakitangan.namaKakitangan}
@@ -60,7 +36,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
           <Row>
             <Col xs={12}>
               <Form.Group>
-                <Form.Label>ID Kakitangan</Form.Label>
+                <Form.Label>ID KAKITANGAN</Form.Label>
                 <Form.Control
                   type="text"
                   value={maklumatKakitangan.idKakitangan}
@@ -75,12 +51,12 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
       <Container fluid>
         <div className="repot-table">
           <Row>
-            <Col md={10}>
+            <Col md={8}>
               <h3 className="repot-table-title">
                 Senarai Ketidakpatuhan Kakitangan
               </h3>
             </Col>
-            <Col md={2}>
+            <Col md={4}>
               <Link
                 to="/tambahketidakpatuhan"
                 state={{
@@ -90,7 +66,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
                 }}
               >
                 <Button className="to-page-tambah-ketidakpatuhan-btn">
-                  Tambah
+                  Tambah Ketidakpatuhan
                 </Button>
               </Link>
             </Col>
