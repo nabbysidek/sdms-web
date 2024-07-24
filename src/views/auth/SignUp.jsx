@@ -46,7 +46,6 @@ function SignUp() {
           text: response.data.success,
         });
 
-        console.log('Berjaya register');
       } else {
         console.log('Unexpected response status:', response.status);
         console.log('Response data:', response.data);
