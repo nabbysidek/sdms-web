@@ -38,7 +38,8 @@ function EditKetidakpatuhan() {
       Swal.fire({
         icon: "error",
         title: "Gagal",
-        text: error.response?.data?.error || "Something went wrong",
+        text: error.response.data.error
+        // text: error.response?.data?.error || "Gagal",
       });
       console.log(error);
     }
@@ -787,27 +788,20 @@ function EditKetidakpatuhan() {
                     </Form.Group>
                   </Row>
                   <Row>
+                    {/* Note: Catatan is not a required field */}
                     <Form.Group>
                       <Form.Label>Catatan</Form.Label>
                       <Controller
                         name="catatanAudit"
                         control={control}
                         defaultValue=""
-                        rules={{
-                          required: "Sila sertakan catatan audit",
-                        }}
                         render={({ field }) => (
                           <>
                             <Form.Control
                               as="textarea"
                               placeholder="Catatan audit"
                               {...field}
-                              isInvalid={!!errors.catatanAudit}
                             />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.catatanAudit &&
-                                errors.catatanAudit.message}
-                            </Form.Control.Feedback>
                           </>
                         )}
                       />
