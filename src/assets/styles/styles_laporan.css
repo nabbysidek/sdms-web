@@ -67,7 +67,7 @@
  /* to remove unnecessary left padding on each input field */
 @media (min-width: 767px) {
   .remove-padding {
-    padding-left: 0;
+    padding-left: 0; 
   }
 }
 
@@ -83,6 +83,10 @@
 
   .margin-for-mobile {
     margin-top: 5px;
+  }
+
+  .col-md-3 {
+    padding-top: 0 !important;
   }
 }
   
