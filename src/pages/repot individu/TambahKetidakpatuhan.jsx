@@ -118,12 +118,13 @@ function TambahKetidakpatuhan() {
 
   const createRepotIndividu = async (repotIndividuInput) => {
     try {
-      // console.log("Form Input:", repotIndividuInput);
       const response = await axiosCustom.post(
         `repot-individu/ketidakpatuhan-kakitangan`,
         repotIndividuInput
       );
+
       if (response.status === 200) {
+        console.log('Berjaya')
         Swal.fire({
           icon: "success",
           title: "Berjaya",
