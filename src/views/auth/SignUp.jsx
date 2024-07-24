@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function SignUp() {
   // ------------------- FE ---------------------
@@ -39,12 +40,24 @@ function SignUp() {
       );
   
       if (response.status >= 200 && response.status < 300) {
+        Swal.fire({
+          icon: "success",
+          title: "Permohonan akses diterima. Log masuk selepas diberi akses.",
+          text: response.data.success,
+        });
+
         console.log('Berjaya register');
       } else {
         console.log('Unexpected response status:', response.status);
         console.log('Response data:', response.data);
       }
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Permohonan akses gagal",
+        text: error.response.data.error,
+      });
+
       if (error.response) {
         console.log('Server response status:', error.response.status);
         console.log('Server response data:', error.response.data);
