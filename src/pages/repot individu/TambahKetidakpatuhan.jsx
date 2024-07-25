@@ -851,7 +851,7 @@ function TambahKetidakpatuhan() {
                       Simpan
                     </Button>{" "}
                     <Button onClick={handleCancel} className="cancel-btn">
-                      Batal
+                      Kembali
                     </Button>{" "}
                   </div>
                 </div>
