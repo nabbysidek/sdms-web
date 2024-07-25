@@ -79,6 +79,12 @@ function IndexTetapanPengguna() {
     fetchPeranans();
   }, [fetchPeranans]);
 
+  // Helper function to get the namaPeranan for a given perananId
+  const getPerananLabel = (perananId) => {
+    const peranan = perananOptions.find((p) => p.value === perananId);
+    return peranan ? peranan.label : 'Ralat';
+  };
+
   return (
     <>
       {/* Page title section */}
@@ -141,7 +147,7 @@ function IndexTetapanPengguna() {
               <th>Nama Kakitangan</th>
               <th>Emel Kakitangan</th>
               <th>Status Auditor</th>
-              <th>Peranan</th>
+              <th>Tahap Pengguna</th>
               <th>Tindakan</th>
             </tr>
           </thead>
@@ -161,7 +167,7 @@ function IndexTetapanPengguna() {
                   <td>{senaraiPenggunaData.emelAuditor}</td>
                   <td>{senaraiPenggunaData.statusAuditor}</td>
                   <td>
-                    <Dropdown>
+                    {/* <Dropdown>
                       <Dropdown.Toggle className="user-level-btn">
                         Tahap Pengguna
                       </Dropdown.Toggle>
@@ -170,6 +176,19 @@ function IndexTetapanPengguna() {
                         {perananOptions.map((perananOptions) => (
                           <Dropdown.Item key={perananOptions.value}>
                             {perananOptions.label}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown> */}
+                    <Dropdown>
+                      <Dropdown.Toggle className="user-level-btn">
+                        {getPerananLabel(senaraiPenggunaData.perananId)}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu className="user-level-item">
+                        {perananOptions.map((perananOption) => (
+                          <Dropdown.Item key={perananOption.value}>
+                            {perananOption.label}
                           </Dropdown.Item>
                         ))}
                       </Dropdown.Menu>
