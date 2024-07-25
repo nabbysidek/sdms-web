@@ -20,9 +20,9 @@
 }
 
 .btn:disabled {
-  background-color: var(--allowgreen);
-  border-color: var(--allowgreen);
-  opacity: 1;
+  background-color: #929292;
+  border-color: #929292;
+  cursor: not-allowed;
 }
 
 .user-level-btn {
