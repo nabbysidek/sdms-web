@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
 import { useOptionStore } from "../../store/option-store";
-import axiosCustom from "../../axios";
-import Swal from "sweetalert2";
+import useRepotIndividuStore from "../../store/repot-individu-store";
 
 function EditKetidakpatuhan() {
   // ------- FE -------------
-  // display maklumat kakitangan
+  // Retrieve maklumat kakitangan & the audit
   const location = useLocation();
-  const { id, namaKakitangan, idKakitangan, audits } = location.state || {};
+  const { namaKakitangan, idKakitangan, audits } = location.state || {};
+
+  /* Destructuring assignment to extract 
+  handleEditRepotIndividu from the useRepotIndividuStore hook */ 
+  const { handleEditRepotIndividu } = useRepotIndividuStore();
 
   // Form validation
   const {
@@ -21,45 +24,18 @@ function EditKetidakpatuhan() {
     setValue,
   } = useForm();
 
-  const editRepotIndividu = async (repotIndividuInput) => {
-    try {
-      const response = await axiosCustom.put(
-        `repot-individu/ketidakpatuhan-kakitangan/${audits.id}`,
-        repotIndividuInput
-      );
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error
-        // text: error.response?.data?.error || "Gagal",
-      });
-      console.log(error);
-    }
+  const onSubmit = (data) => {
+    handleEditRepotIndividu(data, audits.id);
+  };
+  
+    // To navigate to the previous page
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
   };
 
   // ___________________________________ Backend __________________________________
-  // const [selectedWilayah, setSelectedWilayah] = useState("");
-  // const [selectedCawangan, setSelectedCawangan] = useState("");
-
-  // const [selectedBahagian, setSelectedBahagian] = useState("");
-  // const [selectedJabatan, setSelectedJabatan] = useState("");
-  // const [selectedUnit, setSelectedUnit] = useState("");
-
-  // const [selectedJenisAudit, setSelectedJenisAudit] = useState("");
-  // const [selectedSkopSemakan, setSelectedSkopSemakan] = useState("");
-  // const [selectedSkopKriteria, setSelectedSkopKriteria] = useState("");
-  // const [selectedAktivitiSemakan, setSelectedAktivitiSemakan] = useState("");
-  // const [selectedKriteriaKetidakpatuhan, setSelectedKriteriaKetidakpatuhan] =
-  //   useState("");
-
   // Display options
   const {
     wilayahOptions,
@@ -187,7 +163,7 @@ function EditKetidakpatuhan() {
           <div>
             <h4>Lokasi</h4>
             <hr />
-            <Form onSubmit={handleSubmit((data) => editRepotIndividu(data))}>
+            <Form onSubmit={handleSubmit(onSubmit)}>
               <Row>
                 <Col xs={12} xl={6}>
                   <Form.Group>
@@ -809,12 +785,12 @@ function EditKetidakpatuhan() {
                   </Row>
                   <div className="edit-ketidakpatuhan-actions">
                     <Button
-                      onClick={handleSubmit(editRepotIndividu)}
+                      type="submit"
                       className="tambah-ketidakpatuhan-btn"
                     >
                       Simpan
                     </Button>{" "}
-                    <Button onClick={() => reset()} className="cancel-btn">
+                    <Button onClick={handleCancel} className="cancel-btn">
                       Batal
                     </Button>{" "}
                   </div>

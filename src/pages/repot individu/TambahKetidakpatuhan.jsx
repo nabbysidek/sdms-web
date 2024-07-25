@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import "../../assets/styles/styles_repot_individu.css";
-import axiosCustom from "../../axios";
-import Swal from "sweetalert2";
+import useRepotIndividuStore from "../../store/repot-individu-store";
 import { useOptionStore } from "../../store/option-store";
+import "../../assets/styles/styles_repot_individu.css";
 
 function TambahKetidakpatuhan() {
   // ------- FE -------------
@@ -17,6 +16,29 @@ function TambahKetidakpatuhan() {
     setValue,
     formState: { errors },
   } = useForm();
+
+  // handle create of ketidakpatuhan kakitangan
+  const { handleCreateRepotIndividu } = useRepotIndividuStore();
+
+  const onSubmit = (data) => {
+    handleCreateRepotIndividu(data);
+  }
+
+  // navigate to the previous page
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
+  // display maklumat kakitangan
+  const location = useLocation();
+  const { id, namaKakitangan, idKakitangan } = location.state || {};
+
+  // set kakitanganId value when the component mounts
+  useEffect(() => {
+    setValue("kakitanganId", id);
+  }, [id, setValue]);
 
   // ___________________________________ Backend __________________________________
   const [selectedWilayah, setSelectedWilayah] = useState("");
@@ -116,38 +138,29 @@ function TambahKetidakpatuhan() {
     selectedAktivitiSemakan,
   ]);
 
-  const createRepotIndividu = async (repotIndividuInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `repot-individu/ketidakpatuhan-kakitangan`,
-        repotIndividuInput
-      );
+  // const createRepotIndividu = async (repotIndividuInput) => {
+  //   try {
+  //     const response = await axiosCustom.post(
+  //       `repot-individu/ketidakpatuhan-kakitangan`,
+  //       repotIndividuInput
+  //     );
 
-      if (response.status === 200) {
-        console.log('Berjaya')
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error,
-      });
-    }
-  };
-
-  // display maklumat kakitangan
-  const location = useLocation();
-  const { id, namaKakitangan, idKakitangan } = location.state || {};
-
-  // set kakitanganId value when the component mounts
-  useEffect(() => {
-    setValue("kakitanganId", id);
-  }, [id, setValue]);
+  //     if (response.status === 200) {
+  //       console.log('Berjaya')
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Berjaya",
+  //         text: response.data.success,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Gagal",
+  //       text: error.response.data.error,
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -184,7 +197,7 @@ function TambahKetidakpatuhan() {
             <h4>Lokasi</h4>
             <hr />
             <Form
-              onSubmit={handleSubmit((data) => createRepotIndividu(data))}
+              onSubmit={handleSubmit(onSubmit)}
               onReset={reset}
             >
               <Row>
@@ -832,12 +845,12 @@ function TambahKetidakpatuhan() {
                   </Row>
                   <div className="tambah-ketidakpatuhan-actions">
                     <Button
-                      onClick={handleSubmit(createRepotIndividu)}
+                      type="submit"
                       className="tambah-ketidakpatuhan-btn"
                     >
                       Simpan
                     </Button>{" "}
-                    <Button onClick={() => reset()} className="cancel-btn">
+                    <Button onClick={handleCancel} className="cancel-btn">
                       Batal
                     </Button>{" "}
                   </div>
