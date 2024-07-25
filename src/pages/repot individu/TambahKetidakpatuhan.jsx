@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../../assets/styles/styles_repot_individu.css";
-import axiosCustom from "../../axios";
-import Swal from "sweetalert2";
 import { useOptionStore } from "../../store/option-store";
+import useRepotIndividuStore from "../../store/repot-individu-store";
 
 function TambahKetidakpatuhan() {
   // ------- FE -------------
@@ -116,29 +115,12 @@ function TambahKetidakpatuhan() {
     selectedAktivitiSemakan,
   ]);
 
-  const createRepotIndividu = async (repotIndividuInput) => {
-    try {
-      const response = await axiosCustom.post(
-        `repot-individu/ketidakpatuhan-kakitangan`,
-        repotIndividuInput
-      );
+  // handle create of ketidakpatuhan kakitangan
+  const { handleCreateRepotIndividu } = useRepotIndividuStore();
 
-      if (response.status === 200) {
-        console.log('Berjaya')
-        Swal.fire({
-          icon: "success",
-          title: "Berjaya",
-          text: response.data.success,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.error,
-      });
-    }
-  };
+  const onSubmit = (data) => {
+    handleCreateRepotIndividu(data);
+  }
 
   // display maklumat kakitangan
   const location = useLocation();
@@ -148,6 +130,13 @@ function TambahKetidakpatuhan() {
   useEffect(() => {
     setValue("kakitanganId", id);
   }, [id, setValue]);
+
+  // navigate to the previous page
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
 
   return (
     <>
@@ -184,7 +173,7 @@ function TambahKetidakpatuhan() {
             <h4>Lokasi</h4>
             <hr />
             <Form
-              onSubmit={handleSubmit((data) => createRepotIndividu(data))}
+              onSubmit={handleSubmit(onSubmit)}
               onReset={reset}
             >
               <Row>
@@ -832,12 +821,12 @@ function TambahKetidakpatuhan() {
                   </Row>
                   <div className="tambah-ketidakpatuhan-actions">
                     <Button
-                      onClick={handleSubmit(createRepotIndividu)}
+                      type="submit"
                       className="tambah-ketidakpatuhan-btn"
                     >
                       Simpan
                     </Button>{" "}
-                    <Button onClick={() => reset()} className="cancel-btn">
+                    <Button onClick={handleCancel} className="cancel-btn">
                       Batal
                     </Button>{" "}
                   </div>
