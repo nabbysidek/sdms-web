@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
-import "../../assets/styles/styles_repot_individu.css";
 import useRepotIndividuStore from "../../store/repot-individu-store";
+import "../../assets/styles/styles_repot_individu.css";
 
 function SearchResultUntukRepotIndividu({ searchResults }) {
   /* Destructuring assignment to extract maklumatKakitangan & 
@@ -15,6 +15,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
 
   return (
     <>
+    {/* BAHAGIAN MAKLUMAT KAKITANGAN */}
       <div className="kakitangan-info-container">
         <div className="page-title">
           <h3>Maklumat Kakitangan</h3>
@@ -47,7 +48,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
           </Row>
         </div>
       </div>
-
+      {/* BAHAGIAN JADUAL AUDIT KETIDAKPATUHAN KAKITANGAN */}
       <Container fluid>
         <div className="repot-table">
           <Row>
@@ -57,6 +58,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
               </h3>
             </Col>
             <Col md={4}>
+            {/* ACTION: TAMBAH KETIDAKPATUHAN KAKITANGAN */}
               <Link
                 to="/tambahketidakpatuhan"
                 state={{
@@ -72,10 +74,9 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
             </Col>
           </Row>
         </div>
-
         <hr />
-
         <div>
+          {/* JADUAL AUDIT KETIDAKPATUHAN KAKITANGAN */}
           <Table responsive>
             <thead>
               <tr>
@@ -121,6 +122,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
                     </td>
                     <td>{audits.catatanAudit}</td>
                     <td>
+                      {/* ACTION: EDIT KETIDAKPATUHAN KAKITANGAN */}
                       <Link
                         to="/editketidakpatuhan"
                         state={{
@@ -134,6 +136,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
                           Edit
                         </Button>
                       </Link>
+                      {/* ACTION: PADAM KETIDAKPATUHAN KAKITANGAN */}
                       <Button onClick={() => handleDeleteRepotIndividu(audits.id)} className="delete-btn">Padam</Button>
                     </td>
                   </tr>
@@ -141,7 +144,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
             </tbody>
           </Table>
         </div>
-
+        {/* IMPORT DAN EKSPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />
