@@ -160,9 +160,9 @@ function SignUp() {
                         },
                         pattern: {
                           value:
-                            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
                           message:
-                            "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf, satu nombor, dan satu simbol khas",
+                            "Mesti ada huruf besar, huruf kecil, nombor, dan simbol khas",
                         },
                       })}
                       aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
@@ -184,6 +184,11 @@ function SignUp() {
                   {errors.kataLaluanAuditor?.type === "minLength" && (
                     <p role="alert" className="error-message">
                       Minima 8 karakter
+                    </p>
+                  )}
+                  {errors.kataLaluanAuditor?.type === "pattern" && (
+                    <p role="alert" className="error-message">
+                      Mesti ada huruf besar, huruf kecil, nombor, dan simbol khas
                     </p>
                   )}
                 </Form.Group>
