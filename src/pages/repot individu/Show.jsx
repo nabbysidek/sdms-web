@@ -25,7 +25,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
           <Row>
             <Col xs={12}>
               <Form.Group>
-                <Form.Label>NAMA KAKITANGAN</Form.Label>
+                <Form.Label>Nama Kakitangan</Form.Label>
                 <Form.Control
                   type="text"
                   value={maklumatKakitangan.namaKakitangan}
@@ -37,7 +37,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
           <Row>
             <Col xs={12}>
               <Form.Group>
-                <Form.Label>ID KAKITANGAN</Form.Label>
+                <Form.Label>ID Kakitangan</Form.Label>
                 <Form.Control
                   type="text"
                   value={maklumatKakitangan.idKakitangan}
