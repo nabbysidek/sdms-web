@@ -7,45 +7,39 @@ import PaginationTable from "../../../components/page layout/PaginationTable";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useKakitanganStore from "../../../store/kakitangan-store";
-import { useReactTable, getCoreRowModel, flexRender } from "@tanstack/react-table";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+} from "@tanstack/react-table";
+import axiosCustom from "../../../axios";
 
 function ShowKakitanganList() {
-  // initialize store
-  const { kakitangans, totalPage, totalItems, fetchKakitangans, deleteKakitangan } = useKakitanganStore();
+  const [kakitangans, setKakitangans] = useState([]);
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const pageSize = 10;
-
-  // fetch kakitangan
   useEffect(() => {
-    fetchKakitangans(currentPage);
-  }, [currentPage, fetchKakitangans]);
+    fetchKakitangans();
+  }, []);
+
+  const fetchKakitangans = async () => {
+    try {
+      const response = await axiosCustom.get(`tetapan-kriteria/kakitangan`);
+      setKakitangans(response.data);
+      // setTotalPage(response.data.last_page);
+    } catch (error) {
+      console.error("Ralat dalam mengambil maklumat kakitangan:", error);
+    }
+  };
 
   const data = useMemo(() => kakitangans, [kakitangans]);
 
-  const handleDeleteKakitangan = useCallback(async (kakitanganId) => {
-    const confirmResult = await showConfirmationDialog();
-
-    if (confirmResult.isConfirmed) {
-      await deleteKakitangan(kakitanganId);
-      await fetchKakitangans(currentPage);
-    }
-  }, [deleteKakitangan, fetchKakitangans, currentPage]);
-
-  const handleAddSuccess = useCallback(async () => {
-    await fetchKakitangans(currentPage);
-  }, [fetchKakitangans, currentPage]);
-
-  const handleUpdateSuccess = useCallback(async () => {
-    await fetchKakitangans(currentPage);
-  }, [fetchKakitangans, currentPage]);
-
   const columns = useMemo(() => [
     {
-      header: "ID",
+      header: "Bil",
       accessorFn: (row, i) => i + 1,
-      id: 'index',
+      id: "index",
     },
     {
       header: "ID Kakitangan",
@@ -59,19 +53,24 @@ function ShowKakitanganList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
-          <EditKakitangan kakitangan={row.original} onUpdateSuccess={handleUpdateSuccess} />
-          <Button
-            onClick={() => handleDeleteKakitangan(row.original.id)}
-            className="delete-btn"
-          >
-            Padam
-          </Button>
+          <Button>Edit</Button>
+          <Button>Delete</Button>
         </div>
       ),
     },
-  ], [handleDeleteKakitangan, handleUpdateSuccess]);
+  ]);
 
-  const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
+  const [sorting, setSorting] = useState([]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: { sorting: sorting },
+    onSortingChange: setSorting,
+  });
 
   return (
     <Container fluid>
@@ -81,7 +80,7 @@ function ShowKakitanganList() {
             <h3 className="table-title">Senarai Kakitangan</h3>
           </div>
           <div className="col-md-3">
-            <CreateKakitangan onAddSuccess={handleAddSuccess} />
+            <Button>Create</Button>
           </div>
         </Row>
       </div>
@@ -91,17 +90,28 @@ function ShowKakitanganList() {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: " 🔼", desc: " 🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
                 </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
@@ -110,6 +120,30 @@ function ShowKakitanganList() {
           ))}
         </tbody>
       </Table>
+      <Button
+        onClick={() => table.firstPage()}
+        disabled={!table.getCanPreviousPage()}
+      >
+        {"<<"}
+      </Button>
+      <Button
+        onClick={() => table.previousPage()}
+        disabled={!table.getCanPreviousPage()}
+      >
+        {"<"}
+      </Button>
+      <Button
+        onClick={() => table.nextPage()}
+        disabled={!table.getCanNextPage()}
+      >
+        {">"}
+      </Button>
+      <Button
+        onClick={() => table.lastPage()}
+        disabled={!table.getCanNextPage()}
+      >
+        {">>"}
+      </Button>
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />

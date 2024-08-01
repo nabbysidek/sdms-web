@@ -8,7 +8,7 @@ const useKakitanganStore = create((set) => ({
     totalItems: 0,
 
     // fetch kakitangan
-    fetchKakitangans: async (page = 1) => {
+    fetchKakitangans: async (page = 0) => {
         try {
           const response = await axiosCustom.get(
             `tetapan-kriteria/kakitangan?page=${page}`
