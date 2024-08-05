@@ -2,8 +2,9 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateKakitangan from "./Create";
 import EditKakitangan from "./Edit";
+import SearchKakitangan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useKakitanganStore from "../../../store/kakitangan-store";
@@ -13,26 +14,29 @@ import {
   flexRender,
   getPaginationRowModel,
   getSortedRowModel,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
-import axiosCustom from "../../../axios";
 
 function ShowKakitanganList() {
-  const [kakitangans, setKakitangans] = useState([]);
+  // ACCESS TO STORE
+  const { kakitangans, fetchKakitangans, deleteKakitangan } = useKakitanganStore();
 
+  // FETCH KAKITANGANS
   useEffect(() => {
     fetchKakitangans();
-  }, []);
+  }, [fetchKakitangans]);
 
-  const fetchKakitangans = async () => {
-    try {
-      const response = await axiosCustom.get(`tetapan-kriteria/kakitangan`);
-      setKakitangans(response.data);
-      // setTotalPage(response.data.last_page);
-    } catch (error) {
-      console.error("Ralat dalam mengambil maklumat kakitangan:", error);
+// HANDLE DELETE KAKITANGAN
+ const handleDeleteKakitangan = useCallback(async (kakitanganId) => {
+    const confirmResult = await showConfirmationDialog();
+
+    if (confirmResult.isConfirmed) {
+      await deleteKakitangan(kakitanganId);
+      // await fetchKakitangans(currentPage);
     }
-  };
+  }, [deleteKakitangan, fetchKakitangans]);
 
+  // CONSTRUCT TABLE
   const data = useMemo(() => kakitangans, [kakitangans]);
 
   const columns = useMemo(() => [
@@ -53,14 +57,21 @@ function ShowKakitanganList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
-          <Button>Edit</Button>
-          <Button>Delete</Button>
+          <EditKakitangan kakitangan={row.original} onUpdateSuccess={fetchKakitangans} />
+          <Button
+            onClick={() => handleDeleteKakitangan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
         </div>
       ),
     },
   ]);
 
+  // FOR SORTING
   const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
   const table = useReactTable({
     data,
@@ -68,19 +79,23 @@ function ShowKakitanganList() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    state: { sorting: sorting },
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter:filtering, },
     onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
   });
 
   return (
     <Container fluid>
+      <SearchKakitangan filterValue={filtering} onFilterChange={setFiltering} />
+      {/* <input type="text" value={filtering} onChange={ (e) => setFiltering(e.target.value)} /> */}
       <div className="table-section">
         <Row>
           <div className="col-md-9">
             <h3 className="table-title">Senarai Kakitangan</h3>
           </div>
           <div className="col-md-3">
-            <Button>Create</Button>
+            <CreateKakitangan onAddSuccess={fetchKakitangans} /> 
           </div>
         </Row>
       </div>
@@ -120,30 +135,7 @@ function ShowKakitanganList() {
           ))}
         </tbody>
       </Table>
-      <Button
-        onClick={() => table.firstPage()}
-        disabled={!table.getCanPreviousPage()}
-      >
-        {"<<"}
-      </Button>
-      <Button
-        onClick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
-      >
-        {"<"}
-      </Button>
-      <Button
-        onClick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}
-      >
-        {">"}
-      </Button>
-      <Button
-        onClick={() => table.lastPage()}
-        disabled={!table.getCanNextPage()}
-      >
-        {">>"}
-      </Button>
+      <Pagination table={table}/>
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />
