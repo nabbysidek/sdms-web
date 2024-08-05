@@ -4,21 +4,17 @@ import Swal from "sweetalert2";
 
 const useKakitanganStore = create((set) => ({
     kakitangans: [],
-    totalPage: 1,
-    totalItems: 0,
 
     // fetch kakitangan
-    fetchKakitangans: async (page = 0) => {
+    fetchKakitangans: async () => {
         try {
           const response = await axiosCustom.get(
-            `tetapan-kriteria/kakitangan?page=${page}`
+            `tetapan-kriteria/kakitangan`
           );
           set({
-            kakitangans: response.data.data,
-            totalPage: response.data.last_page,
-            totalItems: response.data.total,
+            kakitangans: response.data,
           });
-          return response.data.data; // provide updated fetching for delete and handleAddsuccess
+          // return response.data; // provide updated fetching for delete and handleAddsuccess
         } catch (error) {
           console.error("Ralat dalam mengambil maklumat kakitangan:", error);
         }
