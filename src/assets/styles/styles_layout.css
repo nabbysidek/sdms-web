@@ -277,16 +277,6 @@ color: #000;
 /* *************** PAGINATION  ************* */
 /* **************************************** */
 
-.active>.page-link, .page-link.active {
-  background-color: var(--darkblue);
-  border-color: var(--darkblue);
-  z-index: 0;
-}
-
-.page-link {
-  color: var(--darkblue);
-}
-
-.pagination {
-  margin: 10px auto;
+.pagination-btn button {
+  margin-right: 1px;
 }
