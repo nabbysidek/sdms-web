@@ -13,7 +13,6 @@ function IndexKakitangan() {
       </div>
 
       <div className="page-content">
-        <SearchKakitangan />
         <ShowKakitanganList />
       </div>
     </>
