@@ -4,21 +4,16 @@ import Swal from "sweetalert2";
 
 const useBahagianStore = create((set) => ({
   bahagians: [],
-  totalPage: 1,
-  totalItems: 0,
 
   // fetch bahagian
-  fetchBahagians: async (page = 1) => {
+  fetchBahagians: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/bahagian?page=${page}`
+        `tetapan-kriteria/bahagian`
       );
       set({
-        bahagians: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        bahagians: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat bahagian:", error);
     }

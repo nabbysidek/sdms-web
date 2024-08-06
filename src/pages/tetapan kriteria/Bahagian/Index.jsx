@@ -13,7 +13,6 @@ function IndexBahagian() {
       </div>
 
       <div className="page-content">
-        <SearchBahagian />
         <ShowBahagianList />
       </div>
     </div>
