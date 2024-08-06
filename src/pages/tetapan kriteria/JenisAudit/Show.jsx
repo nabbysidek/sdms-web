@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateJenisAudit from "./Create";
 import EditJenisAudit from "./Edit";
+import SearchJenisAudit from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
@@ -15,7 +16,6 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import SearchJenisAudit from "./Search";
 
 function ShowJenisAuditList() {
   // initialize store
