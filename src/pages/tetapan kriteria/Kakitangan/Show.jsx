@@ -88,7 +88,6 @@ function ShowKakitanganList() {
   return (
     <Container fluid>
       <SearchKakitangan filterValue={filtering} onFilterChange={setFiltering} />
-      {/* <input type="text" value={filtering} onChange={ (e) => setFiltering(e.target.value)} /> */}
       <div className="table-section">
         <Row>
           <div className="col-md-9">

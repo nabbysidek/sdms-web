@@ -1,5 +1,4 @@
 import React from "react";
-import SearchKakitangan from "./Search";
 import ShowKakitanganList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
