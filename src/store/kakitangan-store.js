@@ -14,7 +14,6 @@ const useKakitanganStore = create((set) => ({
           set({
             kakitangans: response.data,
           });
-          // return response.data; // provide updated fetching for delete and handleAddsuccess
         } catch (error) {
           console.error("Ralat dalam mengambil maklumat kakitangan:", error);
         }
