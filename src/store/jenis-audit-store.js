@@ -6,13 +6,14 @@ const useJenisAuditStore = create((set) => ({
   jenisAudits: [],
 
   // fetch jenisAudit
-  fetchJenisAudits: async (page = 1) => {
+  fetchJenisAudits: async () => {
     try {
       const response = await axiosCustom.get(
         `tetapan-kriteria/jenis-audit`
       );
+      console.log(response);
       set({
-        jenisAudits: response.data.data,
+        jenisAudits: response.data,
       });
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat jenis audit:", error);
