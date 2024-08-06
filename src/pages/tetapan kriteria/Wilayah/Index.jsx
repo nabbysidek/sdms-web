@@ -13,7 +13,6 @@ function IndexWilayah() {
       </div>
 
       <div className="page-content">
-        <SearchWilayah />
         <ShowWilayahList />
       </div>
     </>

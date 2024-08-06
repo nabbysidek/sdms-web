@@ -4,21 +4,16 @@ import Swal from "sweetalert2";
 
 const useWilayahStore = create((set) => ({
   wilayahs: [],
-  totalPage: 1,
-  totalItems: 0,
 
   // Fetch wilayah
-  fetchWilayahs: async (page = 1) => {
+  fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/wilayah?page=${page}`
+        `tetapan-kriteria/wilayah`
       );
       set({
-        wilayahs: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        wilayahs: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat wilayah:", error);
     }
