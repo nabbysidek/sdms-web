@@ -1,5 +1,4 @@
 import React from "react";
-import SearchJenisAudit from "./Search";
 import ShowJenisAuditList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
@@ -13,7 +12,6 @@ function IndexJenisAudit() {
       </div>
 
       <div className="page-content">
-        <SearchJenisAudit />
         <ShowJenisAuditList />
       </div>
     </>

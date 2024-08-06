@@ -4,21 +4,16 @@ import Swal from "sweetalert2";
 
 const useJenisAuditStore = create((set) => ({
   jenisAudits: [],
-  totalPage: 1,
-  totalItems: 0,
 
   // fetch jenisAudit
   fetchJenisAudits: async (page = 1) => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/jenis-audit?page=${page}`
+        `tetapan-kriteria/jenis-audit`
       );
       set({
         jenisAudits: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat jenis audit:", error);
     }
