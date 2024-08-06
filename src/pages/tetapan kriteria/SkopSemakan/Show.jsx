@@ -1,110 +1,130 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateSkopSemakan from "./Create";
 import EditSkopSemakan from "./Edit";
+import SearchSkopSemakan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useSkopSemakanStore from "../../../store/skop-semakan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowSkopSemakanList() {
-  const { skopSemakans, totalPage, totalItems, fetchSkopSemakans, deleteSkopSemakan } = useSkopSemakanStore();
-
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const { skopSemakans, fetchSkopSemakans, deleteSkopSemakan } = useSkopSemakanStore();
 
   // fetch skop semakan
   useEffect(() => {
-    fetchSkopSemakans(currentPage);
-  }, [currentPage, fetchSkopSemakans]);
+    fetchSkopSemakans();
+  }, [fetchSkopSemakans]);
 
 
   // handle delete of skop semakan
-  const handleDeleteSkopSemakan = async (skopSemakanId) => {
+  const handleDeleteSkopSemakan = useCallback( async (skopSemakanId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteSkopSemakan(skopSemakanId);
-      
-      // fetch the total number of items after deletion
-      const updatedSkopSemakans = await fetchSkopSemakans(currentPage);
-
-      // If the current page is empty and not the first page, go to the previous page
-      if (updatedSkopSemakans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchSkopSemakans(newPage);
-      }
     }
-  };
+  }, [deleteSkopSemakan, fetchSkopSemakans]);
 
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchSkopSemakans(currentPage);
+  const data = useMemo(() => skopSemakans, [skopSemakans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Nama Skop Semakan",
+      accessorKey: "namaSkopSemakan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          <EditSkopSemakan skopSemakan={row.original} onUpdateSuccess={fetchSkopSemakans} />
+          <Button onClick={() => handleDeleteSkopSemakan(row.original.id)} className="delete-btn">Padam</Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // FOR SORTING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchSkopSemakans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchSkopSemakans(totalPage);
-    }
-  };
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter:filtering, },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <>
       <Container fluid>
+      <SearchSkopSemakan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
             <div className="col-md-10">
               <h3 className="table-title">Senarai Skop Semakan</h3>
             </div>
             <div className="col-md-2">
-              <CreateSkopSemakan onAddSuccess={handleAddSuccess} />
+              <CreateSkopSemakan onAddSuccess={fetchSkopSemakans} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Skop Semakan</th>
-              <th>Tindakan</th>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: " 🔼", desc: " 🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
+              ))}
             </tr>
+          ))}
           </thead>
           <tbody>
-            {skopSemakans.length > 0 &&
-              skopSemakans.map((skopSemakansData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{skopSemakansData.namaSkopSemakan}</td>
-                  <td>
-                    <EditSkopSemakan skopSemakan={skopSemakansData} onUpdateSuccess={() => fetchSkopSemakans(currentPage)} />
-                    <Button
-                      onClick={() =>
-                        handleDeleteSkopSemakan(skopSemakansData.id)
-                      }
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
+            </tr>
+          ))}
           </tbody>
         </Table>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
+        <Pagination table={table}/>
 
         <div className="functional-btns-container">
           <ExportButton />

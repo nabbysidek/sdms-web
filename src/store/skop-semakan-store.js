@@ -4,21 +4,17 @@ import Swal from "sweetalert2";
 
 const useSkopSemakanStore = create((set) => ({
   skopSemakans: [],
-  totalPage: 1,
-  totalItems: 0,
 
   // fetch skop semakan
-  fetchSkopSemakans: async (page = 1) => {
+  fetchSkopSemakans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-semakan?page=${page}`
+        `tetapan-kriteria/skop-semakan`
       );
       set({
-        skopSemakans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        skopSemakans: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
+
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat skopSemakan:", error);
     }
