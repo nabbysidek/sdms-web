@@ -1,96 +1,154 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateAktivitiSemakan from "./Create";
 import EditAktivitiSemakan from "./Edit";
+import SearchAktivitiSemakan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowAktivitiSemakanList() {
   // initialize the store
   const {
     aktivitiSemakans,
-    totalPage,
-    totalItems,
     namaSkopKriteriaOptions,
     fetchAktivitiSemakans,
     fetchSkopKriterias,
     deleteAktivitiSemakan,
   } = useAktivitiSemakanStore();
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
   // fetch aktiviti semakan
   useEffect(() => {
-    fetchAktivitiSemakans(currentPage); 
+    fetchAktivitiSemakans(); 
     fetchSkopKriterias();
-  }, [currentPage, fetchAktivitiSemakans, fetchSkopKriterias]);
+  }, [fetchAktivitiSemakans, fetchSkopKriterias]);
 
   // handle delete of aktiviti semakan
-  const handleDeleteAktivitiSemakan = async (aktivitiSemakanId) => {
+  const handleDeleteAktivitiSemakan = useCallback(async (aktivitiSemakanId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteAktivitiSemakan(aktivitiSemakanId);
-      const updateAktivitiSemakans = await fetchAktivitiSemakans(currentPage);
-
-      if (updateAktivitiSemakans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchAktivitiSemakans(newPage);
-      }
     }
-  };
+  },[deleteAktivitiSemakan, fetchAktivitiSemakans]);
+
+  const data = useMemo(() => aktivitiSemakans, [aktivitiSemakans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Nama Skop Semakan",
+      accessorFn: (row) => row.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+    },
+    {
+      header: "Nama Jabatan",
+      accessorFn: (row) => row.skop_kriteria?.namaSkopKriteria || "N/A",
+    },
+    {
+      header: "Nama Aktiviti Semakan",
+      accessorKey: "namaAktivitiSemakan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          <EditAktivitiSemakan
+            aktivitiSemakan={row.original}
+            skopKriteriaOptions={namaSkopKriteriaOptions}
+            onUpdateSuccess={fetchAktivitiSemakans}
+          />
+          <Button
+            onClick={() => handleDeleteAktivitiSemakan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
 
   
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchAktivitiSemakans(currentPage);
+  // FOR SORTING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
-
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchAktivitiSemakans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchAktivitiSemakans(totalPage);
-    }
-  };
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter: filtering },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
 
   return (
     <>
       <Container fluid>
+      <SearchAktivitiSemakan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
             <div className="col-md-10">
               <h3 className="table-title">Senarai Aktiviti Semakan</h3>
             </div>
             <div className="col-md-2">
-              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={handleAddSuccess} />
+              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={fetchAktivitiSemakans} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Skop Semakan</th>
-              <th>Nama Skop Kriteria Ketidakpatuhan</th>
-              <th>Nama Aktiviti Semakan</th>
-              <th>Tindakan</th>
-            </tr>
+          {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {
+                      { asc: " 🔼", desc: " 🔽" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody>
-            {aktivitiSemakans.length > 0 &&
+          {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+            {/* {aktivitiSemakans.length > 0 &&
               aktivitiSemakans.map((aktivitiSemakansData, key) => (
                 <tr key={key}>
                   <td>{(currentPage - 1) * pageSize + key + 1}</td>
@@ -118,15 +176,11 @@ function ShowAktivitiSemakanList() {
                     </Button>
                   </td>
                 </tr>
-              ))}
+              ))} */}
           </tbody>
         </Table>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
+        <Pagination table={table}/>
 
         {/* Functional buttons */}
         <div className="functional-btns-container">

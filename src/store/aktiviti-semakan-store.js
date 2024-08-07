@@ -4,20 +4,16 @@ import Swal from "sweetalert2";
 
 const useAktivitiSemakanStore = create((set) => ({
   aktivitiSemakans: [],
-  totalPage: 1,
-  totalItems: 0,
   namaSkopKriteriaOptions: [],
 
   // fetch aktiviti semakan
-  fetchAktivitiSemakans: async (page = 1) => {
+  fetchAktivitiSemakans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/aktiviti-semakan?page=${page}`
+        `tetapan-kriteria/aktiviti-semakan`
       );
       set({
-        aktivitiSemakans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        aktivitiSemakans: response.data,
       });
       return response.data.data;
     } catch (error) {
