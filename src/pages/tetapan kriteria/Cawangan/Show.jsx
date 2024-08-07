@@ -31,7 +31,7 @@ function ShowCawanganList() {
   useEffect(() => {
     fetchCawangans();
     fetchWilayahs();
-  }, [fetchCawangans]);
+  }, [fetchCawangans, fetchWilayahs]);
 
   // handle delete cawangans
   const handleDeleteCawangan = useCallback(

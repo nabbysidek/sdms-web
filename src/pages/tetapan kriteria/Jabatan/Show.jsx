@@ -30,8 +30,8 @@ function Show() {
   // fetch jabatans
   useEffect(() => {
     fetchJabatans(); 
-    // fetchBahagians();
-  }, [fetchJabatans]);
+    fetchBahagians();
+  }, [fetchJabatans, fetchBahagians]);
 
   // handle delete of jabatans
   const handleDeleteJabatan = useCallback(async (jabatanId) => {
