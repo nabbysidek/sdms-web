@@ -1,96 +1,153 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateUnit from "./Create";
 import EditUnit from "./Edit";
+import SearchUnit from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useUnitStore from "../../../store/unit-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowUnitList() {
   // initialize the store
   const {
     units,
-    totalPage,
-    totalItems,
     namaJabatanOptions,
     fetchUnits,
-    fetchJabatans,
     deleteUnit,
+    fetchJabatans,
   } = useUnitStore();
-
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
 
   // fetch units
   useEffect(() => {
-    fetchUnits(currentPage); 
+    fetchUnits(); 
     fetchJabatans();
-  }, [currentPage, fetchUnits, fetchJabatans]);
+  }, [fetchUnits, fetchJabatans]);
 
 
   // handle delete of units
-  const handleDeleteUnit = async (unitId) => {
+  const handleDeleteUnit = useCallback(async (unitId) => {
     // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteUnit(unitId);
-      const updateUnits = await fetchUnits(currentPage);
-
-      if (updateUnits.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchUnits(newPage);
-      }
     }
-  };
+  },[deleteUnit, fetchUnits]);
 
+  const data = useMemo(() => units, [units]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Nama Bahagian",
+      accessorFn: (row) => row.jabatan?.bahagian?.namaBahagian || "N/A",
+    },
+    {
+      header: "Nama Jabatan",
+      accessorFn: (row) => row.jabatan?.namaJabatan || "N/A",
+    },
+    {
+      header: "Nama Unit",
+      accessorKey: "namaUnit",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          <EditUnit
+            unit={row.original}
+            jabatanOptions={namaJabatanOptions}
+            onUpdateSuccess={fetchUnits}
+          />
+          <Button
+            onClick={() => handleDeleteUnit(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
   
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchUnits(currentPage);
+  // FOR SORTING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
-
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchUnits(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchUnits(totalPage);
-    }
-  };
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter: filtering },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <>
       <Container fluid>
+      <SearchUnit filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
             <div className="col-md-10">
               <h3 className="table-title">Senarai Unit</h3>
             </div>
             <div className="col-md-2">
-              <CreateUnit jabatanOptions={namaJabatanOptions} onAddSuccess={handleAddSuccess} />
+              <CreateUnit jabatanOptions={namaJabatanOptions} onAddSuccess={fetchUnits} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Bahagian</th>
-              <th>Nama Jabatan</th>
-              <th>Nama Unit</th>
-              <th>Tindakan</th>
-            </tr>
+          {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {
+                      { asc: " 🔼", desc: " 🔽" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody>
-            {units.length > 0 &&
+          {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+            {/* {units.length > 0 &&
               units.map((unitsData, key) => (
                 <tr key={key}>
                   <td>{(currentPage - 1) * pageSize + key + 1}</td>
@@ -109,15 +166,11 @@ function ShowUnitList() {
                     </Button>
                   </td>
                 </tr>
-              ))}
+              ))} */}
           </tbody>
         </Table>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
+        <Pagination table={table}/>
 
         <div className="functional-btns-container">
           <ExportButton />

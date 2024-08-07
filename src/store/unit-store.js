@@ -4,22 +4,17 @@ import Swal from "sweetalert2";
 
 const useUnitStore = create((set) => ({
   units: [],
-  totalPage: 1,
-  totalItems: 0,
   namaJabatanOptions: [],
 
   // fetch unit
-  fetchUnits: async (page = 1) => {
+  fetchUnits: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/unit?page=${page}`
+        `tetapan-kriteria/unit`
       );
       set({
-        units: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        units: response.data,
       });
-      return response.data.data;
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat unit:", error);
     }
