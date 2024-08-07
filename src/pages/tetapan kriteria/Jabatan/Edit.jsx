@@ -102,7 +102,7 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Jabatan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

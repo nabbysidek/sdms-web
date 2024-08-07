@@ -114,7 +114,7 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Jabatan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

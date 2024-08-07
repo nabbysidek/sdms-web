@@ -1,6 +1,5 @@
 import React from "react";
 import ShowJabatanList from "./Show";
-import SearchJabatan from "./Search";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 function IndexJabatan() {
   return (
@@ -12,7 +11,6 @@ function IndexJabatan() {
       </div>
 
       <div className="page-content">
-        <SearchJabatan />
         <ShowJabatanList />
       </div>
     </>
