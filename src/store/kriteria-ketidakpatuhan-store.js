@@ -4,22 +4,17 @@ import Swal from "sweetalert2";
 
 const useKriteriaKetidakpatuhanStore = create((set) => ({
   kriteriaKetidakpatuhans: [],
-  totalPage: 1,
-  totalItems: 0,
   namaAktivitiSemakanOptions: [],
 
   // fetch kriteria ketidakpatuhan
-  fetchKriteriaKetidakpatuhans: async (page = 1) => {
+  fetchKriteriaKetidakpatuhans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
+        `tetapan-kriteria/kriteria-ketidakpatuhan`
       );
       set({
-        kriteriaKetidakpatuhans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        kriteriaKetidakpatuhans: response.data,
       });
-      return response.data.data;
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat kriteria ketidakpatuhan:", error);
     }
