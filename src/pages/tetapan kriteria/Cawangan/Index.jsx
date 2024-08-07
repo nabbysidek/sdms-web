@@ -13,7 +13,6 @@ function IndexCawangan() {
       </div>
 
       <div className="page-content">
-        <SearchCawangan />
         <ShowCawanganList />
       </div>
     </>

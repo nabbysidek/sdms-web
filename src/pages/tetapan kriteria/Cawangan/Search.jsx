@@ -1,93 +1,60 @@
-import React, { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { Form, Button, Row, Alert, Container } from "react-bootstrap";
-import { useOptionStore } from "../../../store/option-store";
-import useCawanganStore from "../../../store/cawangan-store";
+import React from "react";
+// import { useForm, Controller } from "react-hook-form";
+import { Form, Row, Container } from "react-bootstrap";
+// import { useOptionStore } from "../../../store/option-store";
+// import useCawanganStore from "../../../store/cawangan-store";
 
-function SearchCawangan() {
+function SearchCawangan({ filterValue, onFilterChange }) {
   // form validation
-  const { handleSubmit, control, setError, formState } = useForm();
+  // const { handleSubmit, control, setError, formState } = useForm();
 
-  // initialize store
-  const searchCawangans = useCawanganStore((state) => state.searchCawangans);
+  // // initialize store
+  // const searchCawangans = useCawanganStore((state) => state.searchCawangans);
 
-  // handle search input
-  const onSubmit = async (data) => {
-    const { cawangan, wilayahSelect } = data;
+  // // handle search input
+  // const onSubmit = async (data) => {
+  //   const { cawangan, wilayahSelect } = data;
 
-    if (!cawangan && !wilayahSelect) {
-      setError("cawangan", {
-        type: "manual",
-        message: "Sila masukkan cawangan atau pilih wilayah",
-      });
-    } else {
-      try {
-        await searchCawangans(cawangan, wilayahSelect);
-      } catch (error) {
-        console.error("Search error:", error);
-      }
-    }
-  };
+  //   if (!cawangan && !wilayahSelect) {
+  //     setError("cawangan", {
+  //       type: "manual",
+  //       message: "Sila masukkan cawangan atau pilih wilayah",
+  //     });
+  //   } else {
+  //     try {
+  //       await searchCawangans(cawangan, wilayahSelect);
+  //     } catch (error) {
+  //       console.error("Search error:", error);
+  //     }
+  //   }
+  // };
 
-  // fetch for wilayahOptions
-  const { wilayahOptions, displayWilayahs } = useOptionStore((state) => ({
-    wilayahOptions: state.wilayahOptions,
-    displayWilayahs: state.displayWilayahs,
-  }));
+  // // fetch for wilayahOptions
+  // const { wilayahOptions, displayWilayahs } = useOptionStore((state) => ({
+  //   wilayahOptions: state.wilayahOptions,
+  //   displayWilayahs: state.displayWilayahs,
+  // }));
 
-  useEffect(() => {
-    displayWilayahs();
-  }, [displayWilayahs]);
+  // useEffect(() => {
+  //   displayWilayahs();
+  // }, [displayWilayahs]);
 
   return (
     <>
       <Container fluid className="search-bar-section">
-        <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
+        <Form className="search-bar">
           <Row>
-            <Form.Group className="col-md-4 with-padding-left">
-              <Controller
-                name="wilayahSelect"
-                control={control}
-                render={({ field }) => (
-                  <Form.Select {...field} aria-label="wilayahSelect">
-                    <option value="">Wilayah</option>
-                    {wilayahOptions
-                      // Sort wilayah options alphabetically by namaWilayah
-                      .sort((a, b) =>
-                        a.namaWilayah.localeCompare(b.namaWilayah)
-                      )
-                      .map((wilayah) => (
-                        <option key={wilayah.id} value={wilayah.id}>
-                          {wilayah.namaWilayah}
-                        </option>
-                      ))}
-                  </Form.Select>
-                )}
+            <Form.Group className="col-md-12">
+              <Form.Control
+                type="text"
+                placeholder="Cari cawangan melalui nama cawangan atau wilayah."
+                value={filterValue}
+                onChange={(e) => onFilterChange(e.target.value)}
               />
-            </Form.Group>
-            <Form.Group className="col-md-6">
-              <Controller
-                name="cawangan"
-                control={control}
-                render={({ field }) => (
-                  <Form.Control {...field} type="text" placeholder="Cawangan" />
-                )}
-              />
-            </Form.Group>
-            <Form.Group className="col-md-2">
-              <Button className="search-bar-btn" type="submit">
-                Cari
-              </Button>
             </Form.Group>
           </Row>
         </Form>
       </Container>
-
-      {formState.errors.cawangan && (
-        <Alert className="alert-display" variant="danger">
-          {formState.errors.cawangan.message}
-        </Alert>
-      )}
     </>
   );
 }

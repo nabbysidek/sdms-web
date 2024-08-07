@@ -4,22 +4,17 @@ import Swal from "sweetalert2";
 
 const useCawanganStore = create((set) => ({
   cawangans: [],
-  totalPage: 1,
-  totalItems: 0,
   namaWilayahOptions: [],
 
   // fetch cawangan
-  fetchCawangans: async (page = 1) => {
+  fetchCawangans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/cawangan?page=${page}`
+        `tetapan-kriteria/cawangan`
       );
       set({
-        cawangans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        cawangans: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat cawangan:", error);
     }

@@ -102,7 +102,7 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Cawangan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>
