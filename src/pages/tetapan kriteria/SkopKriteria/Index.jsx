@@ -1,5 +1,4 @@
 import React from "react";
-import SearchSkopKriteria from "./Search";
 import ShowSkopKriteriaList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
@@ -13,7 +12,6 @@ function IndexSkopKriteria() {
       </div>
 
       <div className="page-content">
-        <SearchSkopKriteria />
         <ShowSkopKriteriaList />
       </div>
     </>

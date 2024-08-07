@@ -4,22 +4,17 @@ import Swal from "sweetalert2";
 
 const useSkopKriteriaStore = create((set) => ({
   skopKriterias: [],
-  totalPage: 1,
-  totalItems: 0,
   namaSkopSemakanOptions: [],
 
   // fetch skop kriteria
-  fetchSkopKriterias: async (page = 1) => {
+  fetchSkopKriterias: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-kriteria?page=${page}`
+        `tetapan-kriteria/skop-kriteria`
       );
       set({
-        skopKriterias: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        skopKriterias: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat skop kriteria:", error);
     }
