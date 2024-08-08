@@ -81,7 +81,7 @@ function CreateBahagian({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Bahagian
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

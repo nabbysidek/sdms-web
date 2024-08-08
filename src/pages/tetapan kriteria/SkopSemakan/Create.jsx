@@ -82,7 +82,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Skop Semakan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

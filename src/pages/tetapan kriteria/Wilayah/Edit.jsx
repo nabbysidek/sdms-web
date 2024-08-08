@@ -69,7 +69,7 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Wilayah
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

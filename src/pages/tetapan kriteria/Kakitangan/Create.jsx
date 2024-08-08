@@ -95,7 +95,6 @@ function CreateKakitangan({ onAddSuccess }) {
                       onChange={onChange}
                       value={value}
                       placeholder="Masukkan kakitangan"
-                      autoFocus
                     />
                     {errors.namaKakitangan && (
                       <span className="error-message">
@@ -113,7 +112,7 @@ function CreateKakitangan({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Kakitangan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

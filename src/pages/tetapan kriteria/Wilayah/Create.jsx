@@ -81,7 +81,7 @@ function CreateWilayah({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Wilayah
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

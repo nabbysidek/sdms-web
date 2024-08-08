@@ -107,7 +107,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Skop Kriteria
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

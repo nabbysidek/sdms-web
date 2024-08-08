@@ -69,7 +69,7 @@ function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Skop Semakan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

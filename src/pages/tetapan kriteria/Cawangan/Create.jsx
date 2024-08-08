@@ -113,7 +113,7 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Cawangan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

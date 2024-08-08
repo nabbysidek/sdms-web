@@ -112,7 +112,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Unit
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

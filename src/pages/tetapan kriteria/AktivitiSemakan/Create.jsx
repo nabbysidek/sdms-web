@@ -110,7 +110,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Aktiviti Semakan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

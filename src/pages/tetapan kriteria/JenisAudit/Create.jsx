@@ -82,7 +82,7 @@ function CreateJenisAudit({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Jenis Audit
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

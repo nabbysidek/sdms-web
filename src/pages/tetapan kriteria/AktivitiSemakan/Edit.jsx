@@ -107,7 +107,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions, onUpdateSuc
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Aktiviti Semakan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

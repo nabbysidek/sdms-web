@@ -100,7 +100,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Skop Kriteria
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

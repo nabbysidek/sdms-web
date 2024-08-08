@@ -69,7 +69,7 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Bahagian
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

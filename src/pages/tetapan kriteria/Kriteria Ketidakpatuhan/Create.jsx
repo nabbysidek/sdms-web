@@ -116,7 +116,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Kriteria Ketidakpatuhan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

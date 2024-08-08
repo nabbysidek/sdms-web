@@ -101,7 +101,7 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Unit
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

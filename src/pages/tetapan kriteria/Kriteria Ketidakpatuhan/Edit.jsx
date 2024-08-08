@@ -103,7 +103,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Kriteria Ketidakpatuhan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>
