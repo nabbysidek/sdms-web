@@ -10,7 +10,7 @@ function SearchJenisAudit({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari jenis audit melalui nama jenis audit."
+                placeholder="Cari melalui nama jenis audit."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

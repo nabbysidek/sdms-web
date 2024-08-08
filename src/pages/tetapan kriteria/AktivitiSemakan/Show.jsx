@@ -51,11 +51,11 @@ function ShowAktivitiSemakanList() {
       id: "index",
     },
     {
-      header: "Nama Skop Semakan",
+      header: "Skop Semakan",
       accessorFn: (row) => row.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
     },
     {
-      header: "Nama Jabatan",
+      header: "Skop Kriteria Ketidakpatuhan",
       accessorFn: (row) => row.skop_kriteria?.namaSkopKriteria || "N/A",
     },
     {
@@ -106,10 +106,10 @@ function ShowAktivitiSemakanList() {
       <SearchAktivitiSemakan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Aktiviti Semakan</h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={fetchAktivitiSemakans} />
             </div>
           </Row>

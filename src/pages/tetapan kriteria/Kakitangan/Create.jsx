@@ -94,7 +94,7 @@ function CreateKakitangan({ onAddSuccess }) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan kakitangan"
+                      placeholder="Masukkan nama kakitangan"
                     />
                     {errors.namaKakitangan && (
                       <span className="error-message">

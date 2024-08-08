@@ -36,7 +36,7 @@ function CreateWilayah({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateWilayah}>
-        Tambah
+        Tambah Wilayah
       </Button>
 
       <Modal
@@ -63,7 +63,7 @@ function CreateWilayah({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan wilayah"
+                    placeholder="Masukkan nama wilayah"
                     autoFocus
                   />
                 )}

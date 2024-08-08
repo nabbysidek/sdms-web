@@ -36,7 +36,7 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateCawangan}>
-        Tambah
+        Tambah cawangan
       </Button>
 
       <Modal
@@ -94,7 +94,7 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan cawangan"
+                      placeholder="Masukkan nama cawangan"
                       autoFocus
                     />
                     {errors.namaCawangan && (

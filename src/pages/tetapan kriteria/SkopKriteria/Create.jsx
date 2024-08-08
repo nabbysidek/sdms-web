@@ -36,7 +36,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopKriteria}>
-        Tambah
+        Tambah Skop Kriteria
       </Button>
 
       <Modal
@@ -89,7 +89,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan skop kriteria"
+                    placeholder="Masukkan nama skop kriteria ketidakpatuhan"
                     autoFocus
                   />
                 )}

@@ -53,7 +53,7 @@ function ShowCawanganList() {
       id: "index",
     },
     {
-      header: "Nama Wilayah",
+      header: "Wilayah",
       accessorFn: (row) => row.wilayah?.namaWilayah || "N/A",
     },
     {
@@ -102,10 +102,10 @@ function ShowCawanganList() {
         <SearchCawangan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Cawangan</h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateCawangan
                 wilayahOptions={namaWilayahOptions}
                 onAddSuccess={fetchCawangans}

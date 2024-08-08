@@ -51,7 +51,7 @@ function Show() {
       id: "index",
     },
     {
-      header: "Nama Bahagian",
+      header: "Bahagian",
       accessorFn: (row) => row.bahagian?.namaBahagian || "N/A",
     },
     {
@@ -99,10 +99,10 @@ function Show() {
       <SearchJabatan filterValue={filtering} onFilterChange={setFiltering} />
       <div className="table-section">
         <Row>
-          <div className="col-md-9">
+          <div className="col-md-10">
             <h3 className="table-title">Senarai Jabatan</h3>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <CreateJabatan bahagianOptions={namaBahagianOptions} onAddSuccess={fetchJabatans} />
           </div>
         </Row>

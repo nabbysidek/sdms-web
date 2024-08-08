@@ -36,7 +36,7 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJabatan}>
-        Tambah
+        Tambah jabatan
       </Button>
 
       <Modal
@@ -95,7 +95,7 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan jabatan"
+                      placeholder="Masukkan nama jabatan"
                       autoFocus
                     />
                     {errors.namaJabatan && (

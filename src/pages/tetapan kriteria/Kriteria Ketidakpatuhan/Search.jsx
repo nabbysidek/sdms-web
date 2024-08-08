@@ -55,7 +55,7 @@ function SearchKriteriaKetidakpatuhan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari kriteria ketidakpatuhan melalui nama kriteria ketidakpatuhan."
+                placeholder="Cari melalui nama kriteria ketidakpatuhan, aktiviti semakan, skop kriteria atau skop semakan."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

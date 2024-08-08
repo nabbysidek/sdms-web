@@ -36,8 +36,8 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateKriteriaKetidakpatuhan}>
-        Tambah
-      </Button>
+        Tambah Kriteria Ketidakpatuhan
+      </Button> 
 
       <Modal
         show={showCreateKriteriaKetidakpatuhan}
@@ -97,7 +97,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan kriteria ketidakpatuhan"
+                      placeholder="Masukkan nama kriteria ketidakpatuhan"
                       autoFocus
                     />
                     {errors.namaKriteriaKetidakpatuhan && (

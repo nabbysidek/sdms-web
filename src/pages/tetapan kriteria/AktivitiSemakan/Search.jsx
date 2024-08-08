@@ -49,7 +49,7 @@ function SearchAktivitiSemakan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari aktiviti semakan melalui nama aktiviti semakan atau skop kriteria ketidakpatuhan."
+                placeholder="Cari melalui nama aktiviti semakan atau skop kriteria ketidakpatuhan."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

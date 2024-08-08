@@ -37,7 +37,7 @@ function CreateJenisAudit({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJenisAudit}>
-        Tambah
+        Tambah Jenis Audit
       </Button>
 
       <Modal
@@ -64,7 +64,7 @@ function CreateJenisAudit({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan jenis audit"
+                    placeholder="Masukkan jenis audit baru"
                     autoFocus
                   />
                 )}

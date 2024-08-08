@@ -52,15 +52,15 @@ function ShowKriteriaKetidakpatuhanList() {
       id: "index",
     },
     {
-      header: "Nama Skop Semakan",
+      header: "Skop Semakan",
       accessorFn: (row) => row.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
     },
     {
-      header: "Nama Skop Kriteria Ketidakpatuhan",
+      header: "Skop Kriteria Ketidakpatuhan",
       accessorFn: (row) => row.aktiviti_semakan?.skop_kriteria?.namaSkopKriteria || "N/A",
     },
     {
-      header: "Nama Aktiviti Semakan",
+      header: "Aktiviti Semakan",
       accessorFn: (row) => row.aktiviti_semakan?.namaAktivitiSemakan || "N/A",
     },
     {
@@ -109,11 +109,11 @@ function ShowKriteriaKetidakpatuhanList() {
       <SearchKriteriaKetidakpatuhan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-8">
               <h3 className="table-title">Senarai Kriteria Ketidakpatuhan</h3>
             </div>
 
-            <div className="col-md-2">
+            <div className="col-md-4">
               <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} onAddSuccess={fetchKriteriaKetidakpatuhans} />
             </div>
           </Row>

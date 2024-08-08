@@ -37,7 +37,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateAktivitiSemakan}>
-        Tambah
+        Tambah Aktiviti Semakan
       </Button>
 
       <Modal
@@ -92,7 +92,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan aktiviti semakan"
+                    placeholder="Masukkan nama aktiviti semakan"
                     autoFocus
                   />
                 )}

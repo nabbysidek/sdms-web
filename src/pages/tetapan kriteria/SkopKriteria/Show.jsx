@@ -49,7 +49,7 @@ function ShowSkopKriteriaList() {
       id: "index",
     },
     {
-      header: "Nama Skop Semakan",
+      header: "Skop Semakan",
       accessorFn: (row) => row.skop_semakan?.namaSkopSemakan || "N/A",
     },
     {
@@ -98,12 +98,12 @@ function ShowSkopKriteriaList() {
       <SearchSkopKriteria filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">
-                Senarai Skop Kriteria Ketidakpatuhan
+                Senarai Skop Kriteria
               </h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateSkopKriteria skopSemakanOptions={namaSkopSemakanOptions} onAddSuccess={fetchSkopKriterias} />
             </div>
           </Row>

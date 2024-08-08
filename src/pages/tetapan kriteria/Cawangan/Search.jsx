@@ -47,7 +47,7 @@ function SearchCawangan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari cawangan melalui nama cawangan atau wilayah."
+                placeholder="Cari melalui nama cawangan atau wilayah"
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

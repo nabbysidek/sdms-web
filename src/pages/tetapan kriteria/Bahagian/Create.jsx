@@ -36,7 +36,7 @@ function CreateBahagian({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateBahagian}>
-        Tambah
+        Tambah bahagian
       </Button>
 
       <Modal
@@ -63,7 +63,7 @@ function CreateBahagian({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan bahagian"
+                    placeholder="Masukkan nama bahagian"
                     autoFocus
                   />
                 )}

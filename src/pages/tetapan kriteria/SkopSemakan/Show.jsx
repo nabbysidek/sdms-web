@@ -79,10 +79,10 @@ function ShowSkopSemakanList() {
       <SearchSkopSemakan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Skop Semakan</h3>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CreateSkopSemakan onAddSuccess={fetchSkopSemakans} />
             </div>
           </Row>

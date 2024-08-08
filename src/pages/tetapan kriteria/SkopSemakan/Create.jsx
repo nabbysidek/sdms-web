@@ -37,7 +37,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopSemakan}>
-        Tambah
+        Tambah Skop Semakan
       </Button>
 
       <Modal
@@ -64,7 +64,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan skop semakan"
+                    placeholder="Masukkan nama skop semakan"
                     autoFocus
                   />
                 )}

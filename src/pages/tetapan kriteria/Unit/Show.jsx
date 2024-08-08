@@ -52,11 +52,11 @@ function ShowUnitList() {
       id: "index",
     },
     {
-      header: "Nama Bahagian",
+      header: "Bahagian",
       accessorFn: (row) => row.jabatan?.bahagian?.namaBahagian || "N/A",
     },
     {
-      header: "Nama Jabatan",
+      header: "Jabatan",
       accessorFn: (row) => row.jabatan?.namaJabatan || "N/A",
     },
     {

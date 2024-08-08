@@ -36,7 +36,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateUnit}>
-        Tambah
+        Tambah unit
       </Button>
 
       <Modal
@@ -93,7 +93,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan unit"
+                      placeholder="Masukkan nama unit"
                       autoFocus
                     />
                     {errors.namaUnit && (
