@@ -108,7 +108,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
                     <td>{audits.kesalahanBerulang}</td>
                     <td>{audits.tarikhAudit}</td>
                     <td>{audits.wilayah.namaWilayah}</td>
-                    <td>{audits.cawangan.namaCawangan}</td>
+                    {/* <td>{audits.cawangan.namaCawangan}</td> */}
                     <td>{audits.jawatanKakitangan}</td>
                     <td>{audits.bahagian.namaBahagian}</td>
                     <td>{audits.jabatan.namaJabatan}</td>

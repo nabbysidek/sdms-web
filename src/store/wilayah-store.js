@@ -105,26 +105,6 @@ const useWilayahStore = create((set) => ({
       });
     }
   },
-
-  // search wilayah
-  searchWilayahs: async (wilayahInput) => {
-    try {
-      const payload = { wilayahInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-wilayah`,
-        payload
-      );
-      set({
-        wilayahs: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat wilayah:", error);
-      }
-    }
-  },
 }));
 
 export default useWilayahStore;

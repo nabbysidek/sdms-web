@@ -105,26 +105,6 @@ const useKakitanganStore = create((set) => ({
           });
         }
       },
-
-      // search kakitangan
-  searchKakitangans: async (kakitanganInput) => {
-    try {
-      const payload = { kakitanganInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-kakitangan`,
-        payload
-      );
-      set({
-        kakitangans: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat kakitangan:", error);
-      }
-    }
-  },
 }));
 
 export default useKakitanganStore;

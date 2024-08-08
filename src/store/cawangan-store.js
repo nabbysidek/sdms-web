@@ -123,27 +123,6 @@ const useCawanganStore = create((set) => ({
       });
     }
   },
-
-  // search cawangan
-  searchCawangans: async (cawanganInput, wilayahId) => {
-    try {
-      const payload = { cawanganInput, wilayahId };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-cawangan`,
-        payload
-      );
-      set({
-        cawangans: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat cawangan:", error);
-      }
-    }
-  },
-
 }));
 
 export default useCawanganStore;

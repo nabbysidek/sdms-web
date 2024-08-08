@@ -105,27 +105,6 @@ const useBahagianStore = create((set) => ({
       });
     }
   },
-  
-  // search bahagian
-  searchBahagians: async (bahagianInput) => {
-    try {
-      const payload = { bahagianInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-bahagian`,
-        payload
-      );
-      set({
-        bahagians: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat bahagian:", error);
-      }
-    }
-  },
-
 }));
 
 export default useBahagianStore;
