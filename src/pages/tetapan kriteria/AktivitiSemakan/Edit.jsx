@@ -4,25 +4,25 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
 
 function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions, onUpdateSuccess }) {
-  // initialize edit modal
+  // INITIALIZE EDIT AKTIVITI SEMAKAN MODAL
   const [showEditAktivitiSemakan, setShowEditAktivitiSemakan] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT AKTIVITI SEMAKAN MODAL
   const handleCloseEditAktivitiSemakan = () =>
     setShowEditAktivitiSemakan(false);
   const handleShowEditAktivitiSemakan = () => setShowEditAktivitiSemakan(true);
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  // initialize state management store
+  // USE OF AKTIVITI SEMAKAN STORE
   const { updateAktivitiSemakan } = useAktivitiSemakanStore();
 
-  // handle update aktiviti semakan
+  // HANDLE EDIT OF AN AKTIVITI SEMAKAN
   const onSubmit = (aktivitiSemakanInput) => {
     updateAktivitiSemakan(aktivitiSemakan.id, aktivitiSemakanInput, handleCloseEditAktivitiSemakan, onUpdateSuccess);
   };

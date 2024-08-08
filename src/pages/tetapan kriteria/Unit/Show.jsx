@@ -18,7 +18,7 @@ import {
 } from "@tanstack/react-table";
 
 function ShowUnitList() {
-  // initialize the store
+  // USE OF UNIT STORE
   const {
     units,
     namaJabatanOptions,
@@ -27,16 +27,14 @@ function ShowUnitList() {
     fetchJabatans,
   } = useUnitStore();
 
-  // fetch units
+   // FETCH FROM STORE: UNIT & JABATAN
   useEffect(() => {
     fetchUnits(); 
     fetchJabatans();
   }, [fetchUnits, fetchJabatans]);
 
-
-  // handle delete of units
+  // HANDLE DELETE OF UNIT
   const handleDeleteUnit = useCallback(async (unitId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
@@ -44,6 +42,8 @@ function ShowUnitList() {
     }
   },[deleteUnit, fetchUnits]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => units, [units]);
   const columns = useMemo(() => [
     {
@@ -67,6 +67,7 @@ function ShowUnitList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditUnit
             unit={row.original}
             jabatanOptions={namaJabatanOptions}
@@ -83,10 +84,11 @@ function ShowUnitList() {
     },
   ]);
   
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -147,31 +149,12 @@ function ShowUnitList() {
                 ))}
               </tr>
             ))}
-            {/* {units.length > 0 &&
-              units.map((unitsData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{unitsData.jabatan.bahagian ? unitsData.jabatan.bahagian.namaBahagian : "N/A"}</td>
-                  <td>
-                    {unitsData.jabatan ? unitsData.jabatan.namaJabatan : "N/A"}
-                  </td>
-                  <td>{unitsData.namaUnit}</td>
-                  <td>
-                    <EditUnit unit={unitsData} jabatanOptions={namaJabatanOptions} onUpdateSuccess={() => fetchUnits(currentPage)} />
-                    <Button
-                      onClick={() => handleDeleteUnit(unitsData.id)}
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
-              ))} */}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
-
+        
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

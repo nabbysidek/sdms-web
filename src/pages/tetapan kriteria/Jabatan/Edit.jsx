@@ -1,26 +1,24 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import useJabatanStore from "../../../store/jabatan-store";
 
 function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
-  // ----------- FE --------
-  //  Handle modal
+  // INITIALIZE EDIT JABATAN MODAL
   const [showEditJabatan, setShowEditJabatan] = useState(false);
 
+  // HANDLE DISPLAY OF EDIT JABATAN MODAL
   const handleCloseEditJabatan = () => setShowEditJabatan(false);
   const handleShowEditJabatan = () => setShowEditJabatan(true);
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  // Initialize state management store
+  // USE OF JABATAN STORE
   const { updateJabatan } = useJabatanStore();
   
-  // ----------- BE ---------------
-  // Handle update jabatan
-
+  // HANDLE EDIT OF AN JABATAN
   const onSubmit = (jabatanInput) => {
     updateJabatan(jabatan.id, jabatanInput, handleCloseEditJabatan, onUpdateSuccess);
   };

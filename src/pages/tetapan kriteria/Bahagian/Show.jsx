@@ -18,15 +18,15 @@ import {
 } from "@tanstack/react-table";
 
 function ShowBahagianList() {
+  // USE OF BAHAGIAN STORE
   const { bahagians, fetchBahagians, deleteBahagian } = useBahagianStore();
 
-  // fetch bahagians
+  // FETCH FROM STORE: BAHAGIAN
   useEffect(() => {
     fetchBahagians();
   }, [fetchBahagians]);
 
-
-  // handle delete of bahagians
+  // HANDLE DELETE OF BAHAGIAN
   const handleDeleteBahagian = useCallback(async (bahagianId) => {
     const confirmResult = await showConfirmationDialog();
 
@@ -35,6 +35,8 @@ function ShowBahagianList() {
     }
   }, [deleteBahagian, fetchBahagians]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => bahagians, [bahagians]);
   const columns = useMemo(() => [
     {
@@ -50,6 +52,7 @@ function ShowBahagianList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditBahagian bahagian={row.original} onUpdateSuccess={fetchBahagians} />
           <Button onClick={() => handleDeleteBahagian(row.original.id)} className="delete-btn">Padam</Button>
         </div>
@@ -57,10 +60,11 @@ function ShowBahagianList() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -123,10 +127,10 @@ function ShowBahagianList() {
           ))}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
 
-        {/* Functional buttons */}
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

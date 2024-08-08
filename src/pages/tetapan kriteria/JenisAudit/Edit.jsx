@@ -4,20 +4,20 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useJenisAuditStore from "../../../store/jenis-audit-store";
 
 function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
-  // initialize edit modal
+  // INITIALIZE EDIT JENIS AUDIT MODAL
   const [showEditJenisAudit, setShowEditJenisAudit] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT JENIS AUDIT MODAL
   const handleCloseEditJenisAudit = () => setShowEditJenisAudit(false);
   const handleShowEditJenisAudit = () => setShowEditJenisAudit(true);
 
-  // form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const { control, handleSubmit, formState: {errors} } = useForm();
 
-  // initialize store
+  // USE OF JENIS AUDIT STORE
   const { updateJenisAudit } = useJenisAuditStore();
 
+  // HANDLE EDIT OF AN JENIS AUDIT
   const onSubmit = (jenisAuditInput) => {
     updateJenisAudit(jenisAudit.id, jenisAuditInput, handleCloseEditJenisAudit, onUpdateSuccess);
   };

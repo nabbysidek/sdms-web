@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Form, Modal } from "react-bootstrap";
 import useJabatanStore from "../../../store/jabatan-store";
 
 function CreateJabatan({bahagianOptions, onAddSuccess}) {
-  // ----------FE----------
-  // `Create` modal
+  // INITIALIZE CREATE JABATAN MODAL
   const [showCreateJabatan, setShowCreateJabatan] = useState(false);
 
+  // HANDLE DISPLAY OF CREATE JABATAN MODAL
   const handleShowCreateJabatan = () => setShowCreateJabatan(true);
   const handleCloseCreateJabatan = () => {
     setShowCreateJabatan(false);
     reset();
   };
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,10 +22,10 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // handle create jabatan
+  // USE OF JABATAN STORE
   const createJabatan = useJabatanStore((state) => state.createJabatan);
 
+  //  HANDLE CREATE A NEW OF JABATAN
   const onSubmit = (data) => {
     createJabatan(data, () => {
       handleCloseCreateJabatan();

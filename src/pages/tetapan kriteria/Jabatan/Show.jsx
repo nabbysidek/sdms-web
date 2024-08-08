@@ -18,7 +18,7 @@ import {
 } from "@tanstack/react-table";
 
 function Show() {
-  // initialize state management store
+  // USE OF JABATAN STORE
   const {
     jabatans,
     namaBahagianOptions,
@@ -27,15 +27,14 @@ function Show() {
     fetchBahagians,
   } = useJabatanStore();
 
-  // fetch jabatans
+  // FETCH FROM STORE: JABATAN & BAHAGIAN
   useEffect(() => {
     fetchJabatans(); 
     fetchBahagians();
   }, [fetchJabatans, fetchBahagians]);
 
-  // handle delete of jabatans
+  // HANDLE DELETE OF JABATAN
   const handleDeleteJabatan = useCallback(async (jabatanId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
@@ -43,6 +42,8 @@ function Show() {
     }
   },[deleteJabatan, fetchJabatans]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => jabatans, [jabatans]);
   const columns = useMemo(() => [
     {
@@ -62,6 +63,7 @@ function Show() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditJabatan
             jabatan={row.original}
             bahagianOptions={namaBahagianOptions}
@@ -78,10 +80,11 @@ function Show() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -143,9 +146,10 @@ function Show() {
             ))}
         </tbody>
       </Table>
-
+      {/* PAGINATION */}
       <Pagination table={table}/>
-
+      
+      {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />

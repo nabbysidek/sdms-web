@@ -6,7 +6,7 @@ const useJabatanStore = create((set) => ({
     jabatans: [],
     namaBahagianOptions: [],
 
-    // fetch jabatan
+    // FETCH JABATAN
     fetchJabatans: async () => {
         try {
           const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useJabatanStore = create((set) => ({
         }
       },
 
-    //  fetch bahagian options
+    //  FETCH BAHAGIAN OPTIONS
     fetchBahagians: async () => {
         try {
             const response = await axiosCustom.get(
@@ -42,7 +42,7 @@ const useJabatanStore = create((set) => ({
           }
     },
 
-    // create jabatan
+    // CREATE JABATAN
   createJabatan: async (jabatanInput, handleCloseCreateJabatan) => {
     try {
       const response = await axiosCustom.post(
@@ -68,7 +68,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  //   update jabatan
+  //   UPDATE JABATAN
   updateJabatan: async (jabatanId, jabatanInput, handleCloseEditJabatan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -95,7 +95,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  // delete jabatan
+  // DELETE JABATAN
   deleteJabatan: async (jabatanId) => {
     try {
       const response = await axiosCustom.delete(

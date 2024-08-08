@@ -18,7 +18,7 @@ import {
 } from "@tanstack/react-table";
 
 function ShowAktivitiSemakanList() {
-  // initialize the store
+  // USE OF AKTIVITI SEMAKAN STORE
   const {
     aktivitiSemakans,
     namaSkopKriteriaOptions,
@@ -27,15 +27,14 @@ function ShowAktivitiSemakanList() {
     deleteAktivitiSemakan,
   } = useAktivitiSemakanStore();
 
-  // fetch aktiviti semakan
+  // FETCH FROM STORE: AKTIVITI SEMAKAN & SKOP KRITERIA
   useEffect(() => {
     fetchAktivitiSemakans(); 
     fetchSkopKriterias();
   }, [fetchAktivitiSemakans, fetchSkopKriterias]);
 
-  // handle delete of aktiviti semakan
+  // HANDLE DELETE OF AKTIVITI SEMAKAN
   const handleDeleteAktivitiSemakan = useCallback(async (aktivitiSemakanId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
@@ -43,6 +42,8 @@ function ShowAktivitiSemakanList() {
     }
   },[deleteAktivitiSemakan, fetchAktivitiSemakans]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => aktivitiSemakans, [aktivitiSemakans]);
   const columns = useMemo(() => [
     {
@@ -66,6 +67,7 @@ function ShowAktivitiSemakanList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditAktivitiSemakan
             aktivitiSemakan={row.original}
             skopKriteriaOptions={namaSkopKriteriaOptions}
@@ -83,10 +85,11 @@ function ShowAktivitiSemakanList() {
   ]);
 
   
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -98,7 +101,6 @@ function ShowAktivitiSemakanList() {
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
   });
-
 
   return (
     <>
@@ -148,41 +150,12 @@ function ShowAktivitiSemakanList() {
                 ))}
               </tr>
             ))}
-            {/* {aktivitiSemakans.length > 0 &&
-              aktivitiSemakans.map((aktivitiSemakansData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>
-                    {aktivitiSemakansData.skop_kriteria.skop_semakan
-                      ? aktivitiSemakansData.skop_kriteria.skop_semakan
-                          .namaSkopSemakan
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {aktivitiSemakansData.skop_kriteria
-                      ? aktivitiSemakansData.skop_kriteria.namaSkopKriteria
-                      : "N/A"}
-                  </td>
-                  <td>{aktivitiSemakansData.namaAktivitiSemakan}</td>
-                  <td>
-                    <EditAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} aktivitiSemakan={aktivitiSemakansData} onUpdateSuccess={() => fetchAktivitiSemakans(currentPage)} />
-                    <Button
-                      onClick={() =>
-                        handleDeleteAktivitiSemakan(aktivitiSemakansData.id)
-                      }
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
-              ))} */}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
 
-        {/* Functional buttons */}
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

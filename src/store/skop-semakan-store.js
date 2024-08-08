@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useSkopSemakanStore = create((set) => ({
   skopSemakans: [],
 
-  // fetch skop semakan
+  // FETCH SKOP SEMAKAN
   fetchSkopSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // create skop semakan
+  // CREATE SKOP SEMAKAN
   createSkopSemakan: async (skopSemakanInput, handleCloseCreateSkopSemakan) => {
     try {
       const response = await axiosCustom.post(
@@ -32,7 +32,7 @@ const useSkopSemakanStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("SkopSemakan berjaya ditambah");
         handleCloseCreateSkopSemakan();
@@ -46,7 +46,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // update skop semakan
+  // UPDATE SKOP SEMAKAN
   updateSkopSemakan: async (
     skopSemakanId,
     skopSemakanInput,
@@ -63,7 +63,7 @@ const useSkopSemakanStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("SkopSemakan berjaya dikemaskini");
         handleCloseEditSkopSemakan();
@@ -78,7 +78,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // delete skop semakan
+  // DELETE SKOP SEMAKAN
   deleteSkopSemakan: async (skopSemakanId) => {
     try {
       const response = await axiosCustom.delete(

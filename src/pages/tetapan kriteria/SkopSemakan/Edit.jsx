@@ -4,21 +4,21 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
 function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
-  // initialize edit modal
+  // INITIALIZE EDIT SKOP SEMAKAN MODAL
   const [showEditSkopSemakan, setShowEditSkopSemakan] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT SKOP SEMAKAN MODAL
   const handleCloseEditSkopSemakan = () => setShowEditSkopSemakan(false);
   const handleShowEditSkopSemakan = () => setShowEditSkopSemakan(true);
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  // initialize store
+  // USE OF SKOP SEMAKAN STORE
   const { updateSkopSemakan } = useSkopSemakanStore();
 
-  // handle edit of skop semakan
+  // HANDLE EDIT OF AN SKOP SEMAKAN
   const onSubmit = (skopSemakanInput) => {
     updateSkopSemakan(skopSemakan.id, skopSemakanInput, handleCloseEditSkopSemakan, onUpdateSuccess);
   };

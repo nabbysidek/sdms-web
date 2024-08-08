@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useJenisAuditStore = create((set) => ({
   jenisAudits: [],
 
-  // fetch jenisAudit
+  // FETCH JENIS AUDIT
   fetchJenisAudits: async () => {
     try {
       const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // create jenisAudit
+  // CREATE JENIS AUDIT
   createJenisAudit: async (jenisAuditInput, handleCloseCreateJenisAudit) => {
     try {
       const response = await axiosCustom.post(
@@ -32,7 +32,7 @@ const useJenisAuditStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("Jenis audit berjaya ditambah");
         handleCloseCreateJenisAudit();
@@ -46,7 +46,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // update jenisAudit
+  // UPDATE JENIS AUDIT
   updateJenisAudit: async (
     jenisAuditId,
     jenisAuditInput,
@@ -63,7 +63,7 @@ const useJenisAuditStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("Jenis audit berjaya dikemaskini");
         handleCloseEditJenisAudit();
@@ -78,7 +78,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // delete jenisAudit
+  // DELETE JENIS AUDIT
   deleteJenisAudit: async (jenisAuditId) => {
     try {
       const response = await axiosCustom.delete(

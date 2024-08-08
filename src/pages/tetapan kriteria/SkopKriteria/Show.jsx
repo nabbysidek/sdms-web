@@ -18,6 +18,7 @@ import {
 } from "@tanstack/react-table";
 
 function ShowSkopKriteriaList() {
+  // USE OF SKOP KRITERIA STORE
   const {
     skopKriterias,
     namaSkopSemakanOptions,
@@ -26,13 +27,13 @@ function ShowSkopKriteriaList() {
     fetchSkopSemakans,
   } = useSkopKriteriaStore();
 
-  // fetch skop kriteria
+  // FETCH FROM STORE: SKOP SEMAKAN & SKOP KRITERIA
   useEffect(() => {
     fetchSkopKriterias();
     fetchSkopSemakans();
   }, [fetchSkopKriterias, fetchSkopSemakans]);
   
-  // handle delete skop kriteria
+  // HANDLE DELETE OF SKOP KRITERIA
   const handleDeleteSkopKriteria = useCallback(async (skopKriteriaId) => {
     const confirmResult = await showConfirmationDialog();
 
@@ -41,6 +42,8 @@ function ShowSkopKriteriaList() {
     }
   },[deleteSkopKriteria, fetchSkopKriterias]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => skopKriterias, [skopKriterias]);
   const columns = useMemo(() => [
     {
@@ -60,6 +63,7 @@ function ShowSkopKriteriaList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditSkopKriteria
             skopKriteria={row.original}
             skopSemakanOptions={namaSkopSemakanOptions}
@@ -76,10 +80,11 @@ function ShowSkopKriteriaList() {
     },
   ]);
   
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -142,34 +147,12 @@ function ShowSkopKriteriaList() {
                 ))}
               </tr>
             ))}
-            {/* {skopKriterias.length > 0 &&
-              skopKriterias.map((skopKriteriasData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>
-                    {skopKriteriasData.skop_semakan
-                      ? skopKriteriasData.skop_semakan.namaSkopSemakan
-                      : "N/A"}
-                  </td>
-                  <td>{skopKriteriasData.namaSkopKriteria}</td>
-                  <td>
-                    <EditSkopKriteria skopKriteria={skopKriteriasData} skopSemakanOptions={namaSkopSemakanOptions} onUpdateSuccess={() => fetchSkopKriterias(currentPage)} />
-                    <Button
-                      onClick={() =>
-                        handleDeleteSkopKriteria(skopKriteriasData.id)
-                      }
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
-              ))} */}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
 
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

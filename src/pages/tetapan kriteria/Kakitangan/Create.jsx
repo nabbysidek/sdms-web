@@ -4,17 +4,17 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useKakitanganStore from "../../../store/kakitangan-store";
 
 function CreateKakitangan({ onAddSuccess }) {
-  // initialize create modal
+  // INITIALIZE CREATE KAKITANGAN MODAL
   const [showCreateKakitangan, setShowCreateKakitangan] = useState(false);
 
-  // handle create modal
+  // HANDLE DISPLAY OF CREATE KAKITANGAN MODAL
   const handleShowCreateKakitangan = () => setShowCreateKakitangan(true);
   const handleCloseCreateKakitangan = () => {
     setShowCreateKakitangan(false);
     reset();
   };
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,13 +22,13 @@ function CreateKakitangan({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // handle create kakitangan
+  // USE OF KAKITANGAN STORE
   const createKakitangan = useKakitanganStore((state) => state.createKakitangan);
 
+  //  HANDLE CREATE A NEW OF KAKITANGAN
   const onSubmit = (data) => {
     createKakitangan(data, () => {
       handleCloseCreateKakitangan();
-      // reload the table
       if (onAddSuccess) onAddSuccess();
     });
   };
@@ -36,7 +36,7 @@ function CreateKakitangan({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateKakitangan}>
-        Tambah Kakitangan
+        Tambah kakitangan
       </Button>
 
       <Modal

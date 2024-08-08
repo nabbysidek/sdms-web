@@ -18,7 +18,7 @@ import {
 } from "@tanstack/react-table";
 
 function ShowKriteriaKetidakpatuhanList() {
-  // initialize the store
+  // USE OF KRITERIA KETIDAKPATUHAN STORE
   const {
     kriteriaKetidakpatuhans,
     namaAktivitiSemakanOptions,
@@ -27,16 +27,15 @@ function ShowKriteriaKetidakpatuhanList() {
     deleteKriteriaKetidakpatuhan,
   } = useKriteriaKetidakpatuhanStore();
 
-  // fetch kriteria ketidakpatuhans
+  // FETCH FROM STORE: KRITERIA KETIDAKPATUHAN & AKTIVITI SEMAKAN
   useEffect(() => {
     fetchKriteriaKetidakpatuhans(); 
     fetchAktivitiSemakans();
   }, [fetchKriteriaKetidakpatuhans, fetchAktivitiSemakans]);
 
 
-  // handle delete of kriteria ketidakpatuhans
+  // HANDLE DELETE OF KRITERIA KETIDAKPATUHAN
   const handleDeleteKriteriaKetidakpatuhan = useCallback(async (kriteriaKetidakpatuhanId) => {
-    // Display a confirmation dialog
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
@@ -44,6 +43,8 @@ function ShowKriteriaKetidakpatuhanList() {
     }
   },[deleteKriteriaKetidakpatuhan, fetchKriteriaKetidakpatuhans]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => kriteriaKetidakpatuhans, [kriteriaKetidakpatuhans]);
   const columns = useMemo(() => [
     {
@@ -71,6 +72,7 @@ function ShowKriteriaKetidakpatuhanList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditKriteriaKetidakpatuhan
             kriteriaKetidakpatuhan={row.original}
             aktivitiSemakanOptions={namaAktivitiSemakanOptions}
@@ -87,10 +89,11 @@ function ShowKriteriaKetidakpatuhanList() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -152,54 +155,12 @@ function ShowKriteriaKetidakpatuhanList() {
                 ))}
               </tr>
             ))}
-            {/* {kriteriaKetidakpatuhans.length > 0 &&
-              kriteriaKetidakpatuhans.map(
-                (kriteriaKetidakpatuhansData, key) => (
-                  <tr key={key}>
-                    <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                    <td>
-                      {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
-                        ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
-                            .namaSkopSemakan
-                        : "N/A"}
-                        </td>
-                    <td>
-                    {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria
-                        ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria
-                            .namaSkopKriteria
-                        : "N/A"}
-                    </td>
-                    <td>
-                    {kriteriaKetidakpatuhansData.aktiviti_semakan
-                        ? kriteriaKetidakpatuhansData.aktiviti_semakan
-                            .namaAktivitiSemakan
-                        : "N/A"}
-                    </td>
-                    <td>
-                      {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
-                    </td>
-                    <td>
-                      <EditKriteriaKetidakpatuhan kriteriaKetidakpatuhan={kriteriaKetidakpatuhansData} aktivitiSemakanOptions={namaAktivitiSemakanOptions} onUpdateSuccess={() => fetchKriteriaKetidakpatuhans(currentPage)} />
-                      <Button
-                        onClick={() =>
-                          handleDeleteKriteriaKetidakpatuhan(
-                            kriteriaKetidakpatuhansData.id
-                          )
-                        }
-                        className="delete-btn"
-                      >
-                        Padam
-                      </Button>
-                    </td>
-                  </tr>
-                )
-              )} */}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
 
-        {/* Functional buttons */}
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

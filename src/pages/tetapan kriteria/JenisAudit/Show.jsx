@@ -18,15 +18,15 @@ import {
 } from "@tanstack/react-table";
 
 function ShowJenisAuditList() {
-  // initialize store
+  // USE OF JENIS AUDIT STORE
   const { jenisAudits, fetchJenisAudits, deleteJenisAudit } = useJenisAuditStore();
 
-  // fetch jenis audit
+  // FETCH FROM STORE: JENIS AUDIT
   useEffect(() => {
     fetchJenisAudits();
   }, [fetchJenisAudits]);
 
-  // handle delete of jenis audit
+  // HANDLE DELETE OF JENIS AUDIT
   const handleDeleteJenisAudit = useCallback(async (jenisAuditId) => {
     const confirmResult = await showConfirmationDialog();
 
@@ -35,6 +35,8 @@ function ShowJenisAuditList() {
     }
   }, [deleteJenisAudit, fetchJenisAudits]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => jenisAudits, [jenisAudits]);
   const columns = useMemo(() => [
     {
@@ -50,6 +52,7 @@ function ShowJenisAuditList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditJenisAudit jenisAudit={row.original} onUpdateSuccess={fetchJenisAudits} />
           <Button onClick={() => handleDeleteJenisAudit(row.original.id)} className="delete-btn">Padam</Button>
         </div>
@@ -57,10 +60,11 @@ function ShowJenisAuditList() {
     },
   ]);
 
-    // FOR SORTING
+    // SORTING AND FILTERING
     const [sorting, setSorting] = useState([]);
     const [filtering, setFiltering] = useState("");
-  
+
+    // TABLE DECLARATION
     const table = useReactTable({
       data,
       columns,
@@ -123,9 +127,10 @@ function ShowJenisAuditList() {
           ))}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
-
+        
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

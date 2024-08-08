@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useCawanganStore from "../../../store/cawangan-store.js";
 
 function CreateCawangan({wilayahOptions, onAddSuccess}) {
-  // ----------FE----------
-  // `Create` modal
+  // INITIALIZE CREATE CAWANGAN MODAL
   const [showCreateCawangan, setShowCreateCawangan] = useState(false);
 
+  // HANDLE DISPLAY OF CREATE CAWANGAN MODAL
   const handleShowCreateCawangan = () => setShowCreateCawangan(true);
   const handleCloseCreateCawangan = () => {
     setShowCreateCawangan(false);
     reset();
   };
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,10 +22,10 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // ----------BE----------
-  // Handle create of cawangan
+  // USE OF CAWANGAN STORE
   const createCawangan = useCawanganStore((state) => state.createCawangan);
 
+  //  HANDLE CREATE A NEW OF CAWANGAN
   const onSubmit = (data) => {
     createCawangan(data, () => {
       handleCloseCreateCawangan();

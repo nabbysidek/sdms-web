@@ -6,7 +6,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
   kriteriaKetidakpatuhans: [],
   namaAktivitiSemakanOptions: [],
 
-  // fetch kriteria ketidakpatuhan
+  // FETCH KRITERIA KETIDAKPATUHAN
   fetchKriteriaKetidakpatuhans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // fetch kriteria ketidakpatuhan options
+  // FETCH AKTIVITI SEMAKAN OPTIONS
   fetchAktivitiSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -42,7 +42,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // create kriteria ketidakpatuhan
+  // CREATE KRITERIA KETIDAKPATUHAN
   createKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanInput, handleCloseCreateKriteriaKetidakpatuhan) => {
     try {
       const response = await axiosCustom.post(
@@ -68,7 +68,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // update kriteria ketidakpatuhan
+  // UPDATE KRITERIA KETIDAKPATUHAN
   updateKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanId, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -95,7 +95,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // delete kriteria ketidakpatuhan
+  // DELETE KRITIERIA KETIDAKPATUHAN
   deleteKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanId) => {
     try {
       const response = await axiosCustom.delete(

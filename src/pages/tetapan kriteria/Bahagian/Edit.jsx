@@ -4,21 +4,21 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useBahagianStore from "../../../store/bahagian-store";
 
 function EditBahagian({bahagian, onUpdateSuccess}) {
-  // ----------- FE --------
-  //  Handle modal
+  // INITIALIZE EDIT BAHAGIAN MODAL
   const [showEditBahagian, setShowEditBahagian] = useState(false);
 
+  // HANDLE DISPLAY OF EDIT BAHAGIAN MODAL
   const handleCloseEditBahagian = () => setShowEditBahagian(false);
   const handleShowEditBahagian = () => setShowEditBahagian(true);
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  // ------------ BE -------------
-  // Update bahagian
+  // USE OF BAHAGIAN STORE
   const { updateBahagian } = useBahagianStore();
 
+  // HANDLE EDIT OF AN BAHAGIAN
   const onSubmit = (bahagianInput) => {
     updateBahagian(bahagian.id, bahagianInput, handleCloseEditBahagian, onUpdateSuccess);
   };

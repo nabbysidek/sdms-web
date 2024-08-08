@@ -6,7 +6,7 @@ const useCawanganStore = create((set) => ({
   cawangans: [],
   namaWilayahOptions: [],
 
-  // fetch cawangan
+  // FETCH CAWANGAN
   fetchCawangans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // fetch wilayah options
+  // FETCH WILAYAH OPTIONS
   fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
@@ -42,7 +42,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // create cawangan
+  // CREATE CAWANGAN
   createCawangan: async (cawanganInput, handleCloseCreateCawangan) => {
     try {
       const response = await axiosCustom.post(
@@ -68,7 +68,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // update cawangan
+  // UPDATE CAWANGAN
   updateCawangan: async (cawanganId, cawanganInput, handleCloseEditCawangan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -95,7 +95,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // delete cawangan
+  // DELETE CAWANGAN
   deleteCawangan: async (cawanganId) => {
     try {
       const response = await axiosCustom.delete(
@@ -106,7 +106,7 @@ const useCawanganStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
 
         set((state) => ({

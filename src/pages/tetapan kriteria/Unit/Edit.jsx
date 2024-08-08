@@ -4,21 +4,21 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useUnitStore from "../../../store/unit-store";
 
 function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
-  //  initialize edit modal
+  // INITIALIZE EDIT UNIT MODAL
   const [showEditUnit, setShowEditUnit] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT UNIT MODAL
   const handleCloseEditUnit = () => setShowEditUnit(false);
   const handleShowEditUnit = () => setShowEditUnit(true);
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  // initialize state management store
+  // USE OF UNIT STORE
   const { updateUnit } = useUnitStore();
 
-  // handle update unit
+  // HANDLE EDIT OF AN UNIT
   const onSubmit = (unitInput) => {
     updateUnit(unit.id, unitInput, handleCloseEditUnit, onUpdateSuccess);
   };

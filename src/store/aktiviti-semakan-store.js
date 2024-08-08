@@ -6,7 +6,7 @@ const useAktivitiSemakanStore = create((set) => ({
   aktivitiSemakans: [],
   namaSkopKriteriaOptions: [],
 
-  // fetch aktiviti semakan
+  // FETCH AKTIVITI SEMAKAN
   fetchAktivitiSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -21,7 +21,7 @@ const useAktivitiSemakanStore = create((set) => ({
     }
   },
 
-  // fetch skopKriteria options
+  // FETCH SKOP KRITERIA OPTIONS
   fetchSkopKriterias: async () => {
     try {
       const response = await axiosCustom.get(
@@ -43,7 +43,7 @@ const useAktivitiSemakanStore = create((set) => ({
     }
   },
 
-  // create aktiviti semakan
+  // CREATE AKTIVITI SEMAKAN
   createAktivitiSemakan: async (aktivitiSemakanInput, handleCloseCreateAktivitiSemakan) => {
     try {
       const response = await axiosCustom.post(
@@ -69,7 +69,7 @@ const useAktivitiSemakanStore = create((set) => ({
     }
   },
 
-  // update aktiviti semakan
+  // UPDATE AKTIVITI SEMAKAN
   updateAktivitiSemakan: async (aktivitiSemakanId, aktivitiSemakanInput, handleCloseEditAktivitiSemakan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -96,7 +96,7 @@ const useAktivitiSemakanStore = create((set) => ({
     }
   },
 
-  // delete aktiviti semakan
+  // DELETE AKTIVITI SEMAKAN
   deleteAktivitiSemakan: async (aktivitiSemakanId) => {
     try {
       const response = await axiosCustom.delete(

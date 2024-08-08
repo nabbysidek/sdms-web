@@ -4,17 +4,17 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useWilayahStore from "../../../store/wilayah-store";
 
 function CreateWilayah({ onAddSuccess }) {
-  // ----------FE----------
-  // `Create` modal
+  // INITIALIZE CREATE WILAYAH MODAL
   const [showCreateWilayah, setShowCreateWilayah] = useState(false);
 
+  // HANDLE DISPLAY OF CREATE WILAYAH MODAL
   const handleShowCreateWilayah = () => setShowCreateWilayah(true);
   const handleCloseCreateWilayah = () => {
     setShowCreateWilayah(false);
     reset();
   };
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,13 +22,13 @@ function CreateWilayah({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // Handle create of wilayah
+  // USE OF WILAYAH STORE
   const createWilayah = useWilayahStore((state) => state.createWilayah);
 
+  //  HANDLE CREATE A NEW OF WILAYAH
   const onSubmit = (data) => {
     createWilayah(data, () => {
       handleCloseCreateWilayah();
-      // reload the table
       if (onAddSuccess) onAddSuccess(); 
     });
   };
@@ -36,7 +36,7 @@ function CreateWilayah({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateWilayah}>
-        Tambah Wilayah
+        Tambah wilayah
       </Button>
 
       <Modal

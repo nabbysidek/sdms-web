@@ -4,21 +4,24 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useWilayahStore from "../../../store/wilayah-store";
 
 function EditWilayah({wilayah, onUpdateSuccess}) {
-  // ----- FE ---------
-  // Handle modal
+  // INITIALIZE EDIT WILAYAH MODAL
   const [showEditWilayah, setShowEditWilayah] = useState(false);
 
+  // HANDLE DISPLAY OF EDIT WILAYAH MODAL
   const handleCloseEditWilayah = () => setShowEditWilayah(false);
   const handleShowEditWilayah = () => setShowEditWilayah(true);
 
-  // Form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // ------------ BE -------------
-  // Handle edit of wilayah
+  // USE OF WILAYAH STORE
   const { updateWilayah } = useWilayahStore();
   
+  // HANDLE EDIT OF AN WILAYAH
   const onSubmit = (wilayahInput) => {
     updateWilayah(wilayah.id, wilayahInput, handleCloseEditWilayah, onUpdateSuccess);
   };

@@ -1,5 +1,4 @@
 import React from "react";
-import SearchBahagian from "./Search";
 import ShowBahagianList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 

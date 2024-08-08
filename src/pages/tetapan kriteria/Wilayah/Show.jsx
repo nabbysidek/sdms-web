@@ -18,14 +18,15 @@ import {
 } from "@tanstack/react-table";
 
 function ShowWilayahList() {
+  // USE OF WILAYAH STORE
   const { wilayahs, fetchWilayahs, deleteWilayah } = useWilayahStore();
 
-  // fetch wilayahs
+  // FETCH FROM STORE: WILAYAH
   useEffect(() => {
     fetchWilayahs();
   }, [fetchWilayahs]);
 
-  // handle delete wilayahs
+  // HANDLE DELETE OF WILAYAH
   const handleDeleteWilayah = useCallback(async (wilayahId) => {
     const confirmResult = await showConfirmationDialog();
 
@@ -34,6 +35,8 @@ function ShowWilayahList() {
     }
   }, [deleteWilayah, fetchWilayahs]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => wilayahs, [wilayahs]);
   const columns = useMemo(() => [
     {
@@ -49,6 +52,7 @@ function ShowWilayahList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditWilayah wilayah={row.original} onUpdateSuccess={fetchWilayahs} />
           <Button onClick={() => handleDeleteWilayah(row.original.id)} className="delete-btn">Padam</Button>
         </div>
@@ -56,10 +60,11 @@ function ShowWilayahList() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -121,9 +126,10 @@ function ShowWilayahList() {
           ))}
         </tbody>
       </Table>
-
+      {/* PAGINATION */}
       <Pagination table={table}/>
 
+      {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />

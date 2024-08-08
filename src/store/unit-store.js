@@ -6,7 +6,7 @@ const useUnitStore = create((set) => ({
   units: [],
   namaJabatanOptions: [],
 
-  // fetch unit
+  // FETCH UNIT
   fetchUnits: async () => {
     try {
       const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // fetch jabatan options
+  // FETCH JABATAN OPTIONS
   fetchJabatans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -42,7 +42,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // create unit
+  // CREATE UNIT
   createUnit: async (unitInput, handleCloseCreateUnit) => {
     try {
       const response = await axiosCustom.post(
@@ -68,7 +68,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // update unit
+  // UPDATE UNIT
   updateUnit: async (unitId, unitInput, handleCloseEditUnit, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -95,7 +95,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // delete unit
+  // DELETE UNIT
   deleteUnit: async (unitId) => {
     try {
       const response = await axiosCustom.delete(

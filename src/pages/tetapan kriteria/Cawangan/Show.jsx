@@ -18,7 +18,7 @@ import {
 } from "@tanstack/react-table";
 
 function ShowCawanganList() {
-  // initialize store
+  // USE OF CAWANGAN STORE
   const {
     cawangans,
     namaWilayahOptions,
@@ -27,13 +27,13 @@ function ShowCawanganList() {
     fetchWilayahs,
   } = useCawanganStore();
 
-  // fetch cawangans
+  // FETCH FROM STORE: CAWANGAN & WILAYAH
   useEffect(() => {
     fetchCawangans();
     fetchWilayahs();
   }, [fetchCawangans, fetchWilayahs]);
 
-  // handle delete cawangans
+  // HANDLE DELETE OF CAWANGAN
   const handleDeleteCawangan = useCallback(
     async (cawanganId) => {
       const confirmResult = await showConfirmationDialog();
@@ -45,6 +45,8 @@ function ShowCawanganList() {
     [deleteCawangan, fetchCawangans]
   );
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => cawangans, [cawangans]);
   const columns = useMemo(() => [
     {
@@ -64,6 +66,7 @@ function ShowCawanganList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditCawangan
             cawangan={row.original}
             wilayahOptions={namaWilayahOptions}
@@ -80,10 +83,11 @@ function ShowCawanganList() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -149,9 +153,10 @@ function ShowCawanganList() {
             ))}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
-
+        
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

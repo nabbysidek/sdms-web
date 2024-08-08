@@ -6,7 +6,7 @@ const useSkopKriteriaStore = create((set) => ({
   skopKriterias: [],
   namaSkopSemakanOptions: [],
 
-  // fetch skop kriteria
+  // FETCH SKOP KRITERIA
   fetchSkopKriterias: async () => {
     try {
       const response = await axiosCustom.get(
@@ -20,7 +20,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // fetch skop semakan options
+  // FETCH SKOP SEMAKAN OPTIONS
   fetchSkopSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -42,7 +42,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // create skopKriteria
+  // CREATE SKOP KRITERIA
   createSkopKriteria: async (skopKriteriaInput, handleCloseCreateSkopKriteria) => {
     try {
       const response = await axiosCustom.post(
@@ -68,7 +68,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // update skopKriteria
+  // UPDATE SKOP KRITIERIA
   updateSkopKriteria: async (skopKriteriaId, skopKriteriaInput, handleCloseEditSkopKriteria, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -95,7 +95,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // delete skopKriteria
+  // DELETE SKOP KRITERIA
   deleteSkopKriteria: async (skopKriteriaId) => {
     try {
       const response = await axiosCustom.delete(
@@ -106,7 +106,7 @@ const useSkopKriteriaStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
 
         set((state) => ({

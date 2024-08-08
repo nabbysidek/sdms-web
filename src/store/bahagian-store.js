@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useBahagianStore = create((set) => ({
   bahagians: [],
 
-  // fetch bahagian
+  // FETCH BAHAGIAN
   fetchBahagians: async () => {
     try {
       const response = await axiosCustom.get(
@@ -19,7 +19,7 @@ const useBahagianStore = create((set) => ({
     }
   },
 
-  // create bahagian
+  // CREATE BAHAGIAN
   createBahagian: async (bahagianInput, handleCloseCreateBahagian) => {
     try {
       const response = await axiosCustom.post(
@@ -45,7 +45,7 @@ const useBahagianStore = create((set) => ({
     }
   },
 
-  // update bahagian
+  // UPDATE BAHAGIAN
   updateBahagian: async (
     bahagianId,
     bahagianInput,
@@ -62,7 +62,7 @@ const useBahagianStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success,
         });
         console.log("Bahagian berjaya dikemaskini");
         handleCloseEditBahagian();
@@ -77,7 +77,7 @@ const useBahagianStore = create((set) => ({
     }
   },
 
-  // delete bahagian
+  // DELETE BAHAGIAN
   deleteBahagian: async (bahagianId) => {
     try {
       const response = await axiosCustom.delete(

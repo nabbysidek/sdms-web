@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useWilayahStore = create((set) => ({
   wilayahs: [],
 
-  // Fetch wilayah
+  // FETCH WILAYAH
   fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
@@ -19,7 +19,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // create wilayah
+  // CREATE WILAYAH
   createWilayah: async (wilayahInput, handleCloseCreateWilayah) => {
     try {
       const response = await axiosCustom.post(
@@ -45,7 +45,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // update wilayah
+  // UPDATE WILAYAH
   updateWilayah: async (
     wilayahId,
     wilayahInput,
@@ -77,7 +77,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // delete wilayah
+  // DELETE WILAYAH
   deleteWilayah: async (wilayahId) => {
     try {
       const response = await axiosCustom.delete(

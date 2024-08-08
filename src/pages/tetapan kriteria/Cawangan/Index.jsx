@@ -1,5 +1,4 @@
 import React from "react";
-import SearchCawangan from "./Search";
 import ShowCawanganList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 

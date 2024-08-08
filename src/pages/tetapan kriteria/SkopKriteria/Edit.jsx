@@ -4,21 +4,24 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
 function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
-  // initialize edit modal
+  // INITIALIZE EDIT SKOP KRITERIA MODAL
   const [showEditSkopKriteria, setShowEditSkopKriteria] = useState(false);
 
-  // handle edit modal
+ // HANDLE DISPLAY OF EDIT SKOP KRITERIA MODAL
   const handleCloseEditSkopKriteria = () => setShowEditSkopKriteria(false);
   const handleShowEditSkopKriteria = () => setShowEditSkopKriteria(true);
 
-  // form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // initialize store
+  // USE OF SKOP KRITERIA STORE
   const { updateSkopKriteria } = useSkopKriteriaStore();
 
-  // handle edit
+  // HANDLE EDIT OF AN SKOP KRITERIA
   const onSubmit = (skopKriteriaInput) => {
     updateSkopKriteria(skopKriteria.id, skopKriteriaInput, handleCloseEditSkopKriteria, onUpdateSuccess);
   };

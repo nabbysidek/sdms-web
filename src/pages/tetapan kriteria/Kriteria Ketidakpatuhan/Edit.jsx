@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
 
 function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOptions, onUpdateSuccess}) {
-  // initialize edit modal
+  // INITIALIZE EDIT KRITERIA KETIDAKPATUHAN MODAL
   const [showEditKriteriaKetidakpatuhan, setShowEditKriteriaKetidakpatuhan] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT KRITERIA KETIDAKPATUHAN MODAL
   const handleCloseEditKriteriaKetidakpatuhan = () => setShowEditKriteriaKetidakpatuhan(false);
   const handleShowEditKriteriaKetidakpatuhan = () => setShowEditKriteriaKetidakpatuhan(true);
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  // initialize state management store
+  // USE OF KRITERIA KETIDAKPATUHAN STORE
   const { updateKriteriaKetidakpatuhan } = useKriteriaKetidakpatuhanStore();
 
-  // handle update aktiviti semakan
+  // HANDLE EDIT OF AN KRITERIA KETIDAKPATUHAN
   const onSubmit = (kriteriaKetidakpatuhanInput) => {
     updateKriteriaKetidakpatuhan(kriteriaKetidakpatuhan.id, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess);
   };

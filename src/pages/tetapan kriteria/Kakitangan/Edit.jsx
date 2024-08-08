@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useKakitanganStore from "../../../store/kakitangan-store";
 
 function EditKakitangan({kakitangan, onUpdateSuccess}) {
-  // initialize edit modal
+  // INITIALIZE EDIT KAKITANGAN MODAL
   const [showEditKakitangan, setShowEditKakitangan] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT KAKITANGAN MODAL
   const handleCloseEditKakitangan = () => setShowEditKakitangan(false);
   const handleShowEditKakitangan = () => setShowEditKakitangan(true);
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -19,11 +19,10 @@ function EditKakitangan({kakitangan, onUpdateSuccess}) {
     formState: { errors },
   } = useForm();
 
-
-  // initialize store
+  // USE OF KAKITANGAN STORE
   const { updateKakitangan } = useKakitanganStore();
 
-  // handle update kakitangan
+  // HANDLE EDIT OF AN KAKITANGAN
   const onSubmit = (kakitanganInput) => {
     updateKakitangan(kakitangan.id, kakitanganInput, handleCloseEditKakitangan, onUpdateSuccess);
   };

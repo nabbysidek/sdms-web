@@ -18,27 +18,26 @@ import {
 } from "@tanstack/react-table";
 
 function ShowKakitanganList() {
-  // ACCESS TO STORE
+  // USE OF KAKITANGAN STORE
   const { kakitangans, fetchKakitangans, deleteKakitangan } = useKakitanganStore();
 
-  // FETCH KAKITANGANS
+  // FETCH FROM STORE: KAKITANGAN
   useEffect(() => {
     fetchKakitangans();
   }, [fetchKakitangans]);
 
-// HANDLE DELETE KAKITANGAN
- const handleDeleteKakitangan = useCallback(async (kakitanganId) => {
-    const confirmResult = await showConfirmationDialog();
+  // HANDLE DELETE OF KAKITANGAN
+  const handleDeleteKakitangan = useCallback(async (kakitanganId) => {
+      const confirmResult = await showConfirmationDialog();
 
-    if (confirmResult.isConfirmed) {
-      await deleteKakitangan(kakitanganId);
-      // await fetchKakitangans(currentPage);
-    }
-  }, [deleteKakitangan, fetchKakitangans]);
+      if (confirmResult.isConfirmed) {
+        await deleteKakitangan(kakitanganId);
+      }
+    }, [deleteKakitangan, fetchKakitangans]);
 
-  // CONSTRUCT TABLE
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => kakitangans, [kakitangans]);
-
   const columns = useMemo(() => [
     {
       header: "Bil",
@@ -57,6 +56,7 @@ function ShowKakitanganList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditKakitangan kakitangan={row.original} onUpdateSuccess={fetchKakitangans} />
           <Button
             onClick={() => handleDeleteKakitangan(row.original.id)}
@@ -69,10 +69,11 @@ function ShowKakitanganList() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -134,7 +135,10 @@ function ShowKakitanganList() {
           ))}
         </tbody>
       </Table>
+      {/* PAGINATION */}
       <Pagination table={table}/>
+
+      {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />

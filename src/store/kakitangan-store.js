@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useKakitanganStore = create((set) => ({
     kakitangans: [],
 
-    // fetch kakitangan
+    // FETCH KAKITANGAN
     fetchKakitangans: async () => {
         try {
           const response = await axiosCustom.get(
@@ -19,7 +19,7 @@ const useKakitanganStore = create((set) => ({
         }
       },
     
-    // create kakitangan
+    // CREATE KAKITANGAN
     createKakitangan: async (kakitanganInput, handleCloseCreateKakitangan) => {
         try {
           const response = await axiosCustom.post(
@@ -45,7 +45,7 @@ const useKakitanganStore = create((set) => ({
         }
       },
 
-    // update kakitangan
+    // UPDATE KAKITANGAN
     updateKakitangan: async (
         kakitanganId,
         kakitanganInput,
@@ -62,7 +62,7 @@ const useKakitanganStore = create((set) => ({
             Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success, 
             });
             console.log("Kakitangan berjaya dikemaskini");
             handleCloseEditKakitangan();
@@ -77,7 +77,7 @@ const useKakitanganStore = create((set) => ({
         }
       },
 
-    // delete kakitangan
+    // DELETE KAKITANGAN
     deleteKakitangan: async (kakitanganId) => {
         try {
           const response = await axiosCustom.delete(

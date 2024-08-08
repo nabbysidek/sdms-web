@@ -18,15 +18,15 @@ import {
 } from "@tanstack/react-table";
 
 function ShowSkopSemakanList() {
+  // USE OF SKOP SEMAKAN STORE
   const { skopSemakans, fetchSkopSemakans, deleteSkopSemakan } = useSkopSemakanStore();
 
-  // fetch skop semakan
+  // FETCH FROM STORE: SKOP SEMAKAN
   useEffect(() => {
     fetchSkopSemakans();
   }, [fetchSkopSemakans]);
 
-
-  // handle delete of skop semakan
+  // HANDLE DELETE OF SKOP SEMAKAN
   const handleDeleteSkopSemakan = useCallback( async (skopSemakanId) => {
     const confirmResult = await showConfirmationDialog();
 
@@ -35,6 +35,8 @@ function ShowSkopSemakanList() {
     }
   }, [deleteSkopSemakan, fetchSkopSemakans]);
 
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => skopSemakans, [skopSemakans]);
   const columns = useMemo(() => [
     {
@@ -50,6 +52,7 @@ function ShowSkopSemakanList() {
       header: "Tindakan",
       cell: ({ row }) => (
         <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditSkopSemakan skopSemakan={row.original} onUpdateSuccess={fetchSkopSemakans} />
           <Button onClick={() => handleDeleteSkopSemakan(row.original.id)} className="delete-btn">Padam</Button>
         </div>
@@ -57,10 +60,11 @@ function ShowSkopSemakanList() {
     },
   ]);
 
-  // FOR SORTING
+  // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // TABLE DECLARATION
   const table = useReactTable({
     data,
     columns,
@@ -123,9 +127,10 @@ function ShowSkopSemakanList() {
           ))}
           </tbody>
         </Table>
-
+        {/* PAGINATION */}
         <Pagination table={table}/>
-
+        
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

@@ -1,26 +1,24 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import useCawanganStore from "../../../store/cawangan-store";
 
 function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
-  // ----------- FE --------
-  //  Handle modal
+  // INITIALIZE EDIT CAWANGAN MODAL
   const [showEditCawangan, setShowEditCawangan] = useState(false);
 
+  // HANDLE DISPLAY OF EDIT CAWANGAN MODAL
   const handleCloseEditCawangan = () => setShowEditCawangan(false);
   const handleShowEditCawangan = () => setShowEditCawangan(true);
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const { control, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
 
-  // Initialize state management store
+  // USE OF CAWANGAN STORE
   const { updateCawangan } = useCawanganStore();
   
-  // ----------- BE ---------------
-  // Handle update cawangan
-
+  // HANDLE EDIT OF AN CAWANGAN
   const onSubmit = (cawanganInput) => {
     updateCawangan(cawangan.id, cawanganInput, handleCloseEditCawangan, onUpdateSuccess);
   };
