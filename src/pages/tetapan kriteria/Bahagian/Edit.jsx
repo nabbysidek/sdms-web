@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useBahagianStore from "../../../store/bahagian-store";
@@ -12,8 +12,12 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
   const handleShowEditBahagian = () => setShowEditBahagian(true);
 
   // FORM VALIDATION FOR MODAL
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // USE OF BAHAGIAN STORE
   const { updateBahagian } = useBahagianStore();
@@ -22,6 +26,16 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
   const onSubmit = (bahagianInput) => {
     updateBahagian(bahagian.id, bahagianInput, handleCloseEditBahagian, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditBahagian) {
+      reset({
+        idBahagian: bahagian.idBahagian,
+        namaBahagian: bahagian.namaBahagian,
+      });
+    }
+  }, [showEditBahagian, bahagian, reset]);
 
   return (
     <div>

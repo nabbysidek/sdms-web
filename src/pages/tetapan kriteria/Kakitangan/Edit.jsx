@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useKakitanganStore from "../../../store/kakitangan-store";
@@ -26,6 +26,16 @@ function EditKakitangan({kakitangan, onUpdateSuccess}) {
   const onSubmit = (kakitanganInput) => {
     updateKakitangan(kakitangan.id, kakitanganInput, handleCloseEditKakitangan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditKakitangan) {
+      reset({
+        idKakitangan: kakitangan.idKakitangan,
+        namaKakitangan: kakitangan.namaKakitangan,
+      });
+    }
+  }, [showEditKakitangan, kakitangan, reset]);
 
   return (
     <div>

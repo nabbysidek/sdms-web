@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useCawanganStore from "../../../store/cawangan-store";
@@ -12,8 +12,12 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
   const handleShowEditCawangan = () => setShowEditCawangan(true);
 
   // FORM VALIDATION FOR MODAL
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // USE OF CAWANGAN STORE
   const { updateCawangan } = useCawanganStore();
@@ -22,6 +26,16 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
   const onSubmit = (cawanganInput) => {
     updateCawangan(cawangan.id, cawanganInput, handleCloseEditCawangan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditCawangan) {
+      reset({
+        wilayahId: cawangan.wilayahId,
+        namaCawangan: cawangan.namaCawangan,
+      });
+    }
+  }, [showEditCawangan, cawangan, reset]);
 
   return (
     <div>

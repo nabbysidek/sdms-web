@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useWilayahStore from "../../../store/wilayah-store";
@@ -15,6 +15,7 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -25,6 +26,16 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
   const onSubmit = (wilayahInput) => {
     updateWilayah(wilayah.id, wilayahInput, handleCloseEditWilayah, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditWilayah) {
+      reset({
+        idWilayah: wilayah.idWilayah,
+        namaWilayah: wilayah.namaWilayah,
+      });
+    }
+  }, [showEditWilayah, wilayah, reset]);
 
   return (
     <div>

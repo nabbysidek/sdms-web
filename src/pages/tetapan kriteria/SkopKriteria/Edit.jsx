@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
@@ -15,6 +15,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -25,6 +26,16 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
   const onSubmit = (skopKriteriaInput) => {
     updateSkopKriteria(skopKriteria.id, skopKriteriaInput, handleCloseEditSkopKriteria, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditSkopKriteria) {
+      reset({
+        skopSemakanId: skopKriteria.skopSemakanId,
+        namaSkopKriteria: skopKriteria.namaSkopKriteria,
+      });
+    }
+  }, [showEditSkopKriteria, skopKriteria, reset]);
 
   return (
     <div>

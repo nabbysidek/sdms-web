@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
@@ -16,6 +16,7 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions, onUpdateSuc
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -26,6 +27,16 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions, onUpdateSuc
   const onSubmit = (aktivitiSemakanInput) => {
     updateAktivitiSemakan(aktivitiSemakan.id, aktivitiSemakanInput, handleCloseEditAktivitiSemakan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditAktivitiSemakan) {
+      reset({
+        skopKriteriaId: aktivitiSemakan.skopKriteriaId,
+        namaAktivitiSemakan: aktivitiSemakan.namaAktivitiSemakan,
+      });
+    }
+  }, [showEditAktivitiSemakan, aktivitiSemakan, reset]);
 
   return (
     <div>

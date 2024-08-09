@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useUnitStore from "../../../store/unit-store";
@@ -12,8 +12,12 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
   const handleShowEditUnit = () => setShowEditUnit(true);
 
   // FORM VALIDATION FOR MODAL
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // USE OF UNIT STORE
   const { updateUnit } = useUnitStore();
@@ -22,6 +26,16 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
   const onSubmit = (unitInput) => {
     updateUnit(unit.id, unitInput, handleCloseEditUnit, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditUnit) {
+      reset({
+        jabatanId: unit.jabatanId,
+        namaUnit: unit.namaUnit,
+      });
+    }
+  }, [showEditUnit, unit, reset]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
@@ -15,6 +15,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -25,6 +26,16 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
   const onSubmit = (kriteriaKetidakpatuhanInput) => {
     updateKriteriaKetidakpatuhan(kriteriaKetidakpatuhan.id, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditKriteriaKetidakpatuhan) {
+      reset({
+        aktivitiSemakanId: kriteriaKetidakpatuhan.aktivitiSemakanId,
+        namaKriteriaKetidakpatuhan: kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan,
+      });
+    }
+  }, [showEditKriteriaKetidakpatuhan, kriteriaKetidakpatuhan, reset]);
 
   return (
     <div>

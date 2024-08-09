@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useJenisAuditStore from "../../../store/jenis-audit-store";
@@ -12,7 +12,7 @@ function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
   const handleShowEditJenisAudit = () => setShowEditJenisAudit(true);
 
   // FORM VALIDATION FOR MODAL
-  const { control, handleSubmit, formState: {errors} } = useForm();
+  const { control, handleSubmit, reset, formState: {errors} } = useForm();
 
   // USE OF JENIS AUDIT STORE
   const { updateJenisAudit } = useJenisAuditStore();
@@ -21,6 +21,15 @@ function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
   const onSubmit = (jenisAuditInput) => {
     updateJenisAudit(jenisAudit.id, jenisAuditInput, handleCloseEditJenisAudit, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditJenisAudit) {
+      reset({
+        namaJenisAudit: jenisAudit.namaJenisAudit,
+      });
+    }
+  }, [showEditJenisAudit, jenisAudit, reset]);
 
   return (
     <div>
