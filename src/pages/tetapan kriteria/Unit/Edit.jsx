@@ -88,9 +88,9 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
                       value={value}
                       placeholder="Unit"
                     />
-                    {errors?.Unit && (
+                    {errors?.namaUnit && (
                       <span className="error-message">
-                        {errors.Unit.message}
+                        {errors.namaUnit.message}
                       </span>
                     )}
                   </>

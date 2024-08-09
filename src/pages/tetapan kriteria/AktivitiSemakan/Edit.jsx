@@ -94,9 +94,9 @@ function EditAktivitiSemakan({ aktivitiSemakan, skopKriteriaOptions, onUpdateSuc
                       value={value}
                       placeholder="Aktiviti Semakan"
                     />
-                    {errors?.aktivitiSemakan && (
+                    {errors?.namaAktivitiSemakan && (
                       <span className="error-message">
-                        {errors.aktivitiSemakan.message}
+                        {errors.namaAktivitiSemakan.message}
                       </span>
                     )}
                   </>
