@@ -44,6 +44,10 @@ hr {
   text-align: left;
   margin: 10px auto auto 10px;
 }
+
+.page-title h3 {
+  margin-left: 12px;
+}
   
 .page-content {
 margin: 10px 10px auto 10px;

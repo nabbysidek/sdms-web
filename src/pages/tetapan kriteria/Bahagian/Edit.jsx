@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useBahagianStore from "../../../store/bahagian-store";
 
 function EditBahagian({bahagian, onUpdateSuccess}) {
-  // ----------- FE --------
-  //  Handle modal
+  // INITIALIZE EDIT BAHAGIAN MODAL
   const [showEditBahagian, setShowEditBahagian] = useState(false);
 
+  // HANDLE DISPLAY OF EDIT BAHAGIAN MODAL
   const handleCloseEditBahagian = () => setShowEditBahagian(false);
   const handleShowEditBahagian = () => setShowEditBahagian(true);
 
-  // Form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  // ------------ BE -------------
-  // Update bahagian
+  // USE OF BAHAGIAN STORE
   const { updateBahagian } = useBahagianStore();
 
+  // HANDLE EDIT OF AN BAHAGIAN
   const onSubmit = (bahagianInput) => {
     updateBahagian(bahagian.id, bahagianInput, handleCloseEditBahagian, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditBahagian) {
+      reset({
+        idBahagian: bahagian.idBahagian,
+        namaBahagian: bahagian.namaBahagian,
+      });
+    }
+  }, [showEditBahagian, bahagian, reset]);
 
   return (
     <div>
@@ -69,7 +83,7 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Bahagian
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

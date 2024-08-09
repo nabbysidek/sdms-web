@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
 
 function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
-  // initialize create modal
+  // INITIALIZE CREATE AKTIVITI SEMAKAN MODAL
   const [showCreateAktivitiSemakan, setShowCreateAktivitiSemakan] =
     useState(false);
 
-  // handle create modal
+  // HANDLE DISPLAY OF CREATE AKTIVITI SEMAKAN MODAL
   const handleShowCreateAktivitiSemakan = () => setShowCreateAktivitiSemakan(true);
   const handleCloseCreateAktivitiSemakan = () => {
     setShowCreateAktivitiSemakan(false);
     reset();
   };
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -23,10 +23,10 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // initialize state management store
+  // USE OF AKTIVITI SEMAKAN STORE
   const createAktivitiSemakan = useAktivitiSemakanStore((state) => state.createAktivitiSemakan);
 
-  //  handle create of aktiviti semakan
+  //  HANDLE CREATE A NEW OF AKTIVITI SEMAKAN
   const onSubmit = (data) => {
     createAktivitiSemakan(data, () => {
       handleCloseCreateAktivitiSemakan();
@@ -37,7 +37,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateAktivitiSemakan}>
-        Tambah
+        Tambah aktiviti semakan
       </Button>
 
       <Modal
@@ -92,7 +92,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan aktiviti semakan"
+                    placeholder="Masukkan nama aktiviti semakan"
                     autoFocus
                   />
                 )}
@@ -110,7 +110,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Aktiviti Semakan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

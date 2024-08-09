@@ -4,17 +4,17 @@ import { Button, Modal, Form, FormControl } from "react-bootstrap";
 import useUnitStore from "../../../store/unit-store";
 
 function CreateUnit({jabatanOptions, onAddSuccess}) {
-  // initialize create modal
+  // INITIALIZE CREATE AKTIVITI SEMAKAN MODAL
   const [showCreateUnit, setShowCreateUnit] = useState(false);
 
-  // handle create modal
+  // HANDLE DISPLAY OF CREATE AKTIVITI SEMAKAN MODAL
   const handleShowCreateUnit = () => setShowCreateUnit(true);
   const handleCloseCreateUnit = () => {
     setShowCreateUnit(false);
     reset();
   };
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,10 +22,10 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // initialize state management store
+  // USE OF AKTIVITI SEMAKAN STORE
   const createUnit = useUnitStore((state) => state.createUnit);
 
-  //  handle create of unit
+  //  HANDLE CREATE A NEW OF AKTIVITI SEMAKAN
   const onSubmit = (data) => {
     createUnit(data, () => {
       handleCloseCreateUnit();
@@ -36,7 +36,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateUnit}>
-        Tambah
+        Tambah unit
       </Button>
 
       <Modal
@@ -93,7 +93,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan unit"
+                      placeholder="Masukkan nama unit"
                       autoFocus
                     />
                     {errors.namaUnit && (
@@ -112,7 +112,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Unit
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

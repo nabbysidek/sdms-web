@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useUnitStore from "../../../store/unit-store";
 
 function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
-  //  initialize edit modal
+  // INITIALIZE EDIT UNIT MODAL
   const [showEditUnit, setShowEditUnit] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT UNIT MODAL
   const handleCloseEditUnit = () => setShowEditUnit(false);
   const handleShowEditUnit = () => setShowEditUnit(true);
 
-  // form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  // initialize state management store
+  // USE OF UNIT STORE
   const { updateUnit } = useUnitStore();
 
-  // handle update unit
+  // HANDLE EDIT OF AN UNIT
   const onSubmit = (unitInput) => {
     updateUnit(unit.id, unitInput, handleCloseEditUnit, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditUnit) {
+      reset({
+        jabatanId: unit.jabatanId,
+        namaUnit: unit.namaUnit,
+      });
+    }
+  }, [showEditUnit, unit, reset]);
 
   return (
     <div>
@@ -88,9 +102,9 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
                       value={value}
                       placeholder="Unit"
                     />
-                    {errors?.Unit && (
+                    {errors?.namaUnit && (
                       <span className="error-message">
-                        {errors.Unit.message}
+                        {errors.namaUnit.message}
                       </span>
                     )}
                   </>
@@ -101,7 +115,7 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Unit
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

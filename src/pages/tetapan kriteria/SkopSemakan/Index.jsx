@@ -1,5 +1,4 @@
 import React from "react";
-import SearchSkopSemakan from "./Search";
 import ShowSkopSemakanList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
@@ -13,7 +12,6 @@ function IndexSkopSemakan() {
       </div>
 
       <div className="page-content">
-        <SearchSkopSemakan />
         <ShowSkopSemakanList />
       </div>
     </>

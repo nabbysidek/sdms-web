@@ -1,26 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useJenisAuditStore from "../../../store/jenis-audit-store";
 
 function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
-  // initialize edit modal
+  // INITIALIZE EDIT JENIS AUDIT MODAL
   const [showEditJenisAudit, setShowEditJenisAudit] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT JENIS AUDIT MODAL
   const handleCloseEditJenisAudit = () => setShowEditJenisAudit(false);
   const handleShowEditJenisAudit = () => setShowEditJenisAudit(true);
 
-  // form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const { control, handleSubmit, reset, formState: {errors} } = useForm();
 
-  // initialize store
+  // USE OF JENIS AUDIT STORE
   const { updateJenisAudit } = useJenisAuditStore();
 
+  // HANDLE EDIT OF AN JENIS AUDIT
   const onSubmit = (jenisAuditInput) => {
     updateJenisAudit(jenisAudit.id, jenisAuditInput, handleCloseEditJenisAudit, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditJenisAudit) {
+      reset({
+        namaJenisAudit: jenisAudit.namaJenisAudit,
+      });
+    }
+  }, [showEditJenisAudit, jenisAudit, reset]);
 
   return (
     <div>
@@ -68,7 +77,7 @@ function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Jenis Audit
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

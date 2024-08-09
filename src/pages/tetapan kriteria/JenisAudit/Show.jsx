@@ -1,110 +1,136 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Button, Row, Table, Container } from "react-bootstrap";
 import CreateJenisAudit from "./Create";
 import EditJenisAudit from "./Edit";
+import SearchJenisAudit from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import useJenisAuditStore from "../../../store/jenis-audit-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowJenisAuditList() {
-  // initialize store
-  const { jenisAudits, totalPage, totalItems, fetchJenisAudits, deleteJenisAudit } = useJenisAuditStore();
+  // USE OF JENIS AUDIT STORE
+  const { jenisAudits, fetchJenisAudits, deleteJenisAudit } = useJenisAuditStore();
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const pageSize = 10;
-
-  // fetch bahagians
+  // FETCH FROM STORE: JENIS AUDIT
   useEffect(() => {
-    fetchJenisAudits(currentPage);
-  }, [currentPage, fetchJenisAudits]);
+    fetchJenisAudits();
+  }, [fetchJenisAudits]);
 
-
-  // handle delete of bahagians
-  const handleDeleteJenisAudit = async (bahagianId) => {
+  // HANDLE DELETE OF JENIS AUDIT
+  const handleDeleteJenisAudit = useCallback(async (jenisAuditId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
-      await deleteJenisAudit(bahagianId);
-      
-      // fetch the total number of items after deletion
-      const updatedJenisAudits = await fetchJenisAudits(currentPage);
-
-      // If the current page is empty and not the first page, go to the previous page
-      if (updatedJenisAudits.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchJenisAudits(newPage);
-      }
+      await deleteJenisAudit(jenisAuditId);
     }
-  };
+  }, [deleteJenisAudit, fetchJenisAudits]);
 
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchJenisAudits(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => jenisAudits, [jenisAudits]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Nama Jenis Audit",
+      accessorKey: "namaJenisAudit",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditJenisAudit jenisAudit={row.original} onUpdateSuccess={fetchJenisAudits} />
+          <Button onClick={() => handleDeleteJenisAudit(row.original.id)} className="delete-btn">Padam</Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+    // SORTING AND FILTERING
+    const [sorting, setSorting] = useState([]);
+    const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchJenisAudits(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchJenisAudits(totalPage);
-    }
-  };
+    // TABLE DECLARATION
+    const table = useReactTable({
+      data,
+      columns,
+      getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+      getFilteredRowModel: getFilteredRowModel(),
+      state: { sorting: sorting, globalFilter:filtering, },
+      onSortingChange: setSorting,
+      onGlobalFilterChange: setFiltering,
+    });
 
   return (
     <>
       <Container fluid>
+        <SearchJenisAudit filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Jenis Audit</h3>
             </div>
-            <div className="col-md-2">
-              <CreateJenisAudit onAddSuccess={handleAddSuccess} />
+            <div className="col-md-3">
+              <CreateJenisAudit onAddSuccess={fetchJenisAudits} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Jenis Audit</th>
-              <th>Tindakan</th>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: " 🔼", desc: " 🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
+              ))}
             </tr>
+          ))}
           </thead>
           <tbody>
-            {jenisAudits.length > 0 &&
-              jenisAudits.map((jenisAuditsData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{jenisAuditsData.namaJenisAudit}</td>
-                  <td>
-                    <EditJenisAudit jenisAudit={jenisAuditsData} onUpdateSuccess={() => fetchJenisAudits(currentPage)} />
-                    <Button
-                      onClick={() => handleDeleteJenisAudit(jenisAuditsData.id)}
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
+            </tr>
+          ))}
           </tbody>
         </Table>
-
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
-
+        {/* PAGINATION */}
+        <Pagination table={table}/>
+        
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

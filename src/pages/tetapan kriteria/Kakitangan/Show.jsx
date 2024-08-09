@@ -1,118 +1,149 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateKakitangan from "./Create";
 import EditKakitangan from "./Edit";
+import SearchKakitangan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useKakitanganStore from "../../../store/kakitangan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowKakitanganList() {
-  // initialize store
-  const { kakitangans, totalPage, totalItems, fetchKakitangans, deleteKakitangan } = useKakitanganStore();
+  // USE OF KAKITANGAN STORE
+  const { kakitangans, fetchKakitangans, deleteKakitangan } = useKakitanganStore();
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const pageSize = 10;
-
-  // fetch kakitangan
+  // FETCH FROM STORE: KAKITANGAN
   useEffect(() => {
-    fetchKakitangans(currentPage);
-  }, [currentPage, fetchKakitangans]);
+    fetchKakitangans();
+  }, [fetchKakitangans]);
 
+  // HANDLE DELETE OF KAKITANGAN
+  const handleDeleteKakitangan = useCallback(async (kakitanganId) => {
+      const confirmResult = await showConfirmationDialog();
 
-  // handle delete of kakitangan
-  const handleDeleteKakitangan = async (kakitanganId) => {
-    const confirmResult = await showConfirmationDialog();
-
-    if (confirmResult.isConfirmed) {
-      await deleteKakitangan(kakitanganId);
-      
-      // fetch the total number of items after deletion
-      const updatedKakitangans = await fetchKakitangans(currentPage);
-
-      // If the current page is empty and not the first page, go to the previous page
-      if (updatedKakitangans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchKakitangans(newPage);
+      if (confirmResult.isConfirmed) {
+        await deleteKakitangan(kakitanganId);
       }
-    }
-  };
+    }, [deleteKakitangan, fetchKakitangans]);
 
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchKakitangans(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => kakitangans, [kakitangans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "ID Kakitangan",
+      accessorKey: "idKakitangan",
+    },
+    {
+      header: "Nama Kakitangan",
+      accessorKey: "namaKakitangan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditKakitangan kakitangan={row.original} onUpdateSuccess={fetchKakitangans} />
+          <Button
+            onClick={() => handleDeleteKakitangan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchKakitangans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchKakitangans(totalPage);
-    }
-  };
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter:filtering, },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
-    <>
-      <Container fluid>
-        <div className="table-section">
-          <Row>
-            <div className="col-md-9">
-              <h3 className="table-title">Senarai Kakitangan</h3>
-            </div>
-            <div className="col-md-3">
-              <CreateKakitangan onAddSuccess={handleAddSuccess} />
-            </div>
-          </Row>
-        </div>
-        <hr />
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Bil</th>
-              <th>ID Kakitangan</th>
-              <th>Nama Kakitangan</th>
-              <th>Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {kakitangans.length > 0 &&
-              kakitangans.map((kakitangansData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{kakitangansData.idKakitangan}</td>
-                  <td>{kakitangansData.namaKakitangan}</td>
-                  <td>
-                    <EditKakitangan kakitangan={kakitangansData} onUpdateSuccess={() => fetchKakitangans(currentPage)} />
-                    <Button
-                      onClick={() => handleDeleteKakitangan(kakitangansData.id)}
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
+    <Container fluid>
+      <SearchKakitangan filterValue={filtering} onFilterChange={setFiltering} />
+      <div className="table-section">
+        <Row>
+          <div className="col-md-9">
+            <h3 className="table-title">Senarai Kakitangan</h3>
+          </div>
+          <div className="col-md-3">
+            <CreateKakitangan onAddSuccess={fetchKakitangans} /> 
+          </div>
+        </Row>
+      </div>
+      <hr />
+      <Table responsive>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: " 🔼", desc: " 🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
               ))}
-          </tbody>
-        </Table>
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      {/* PAGINATION */}
+      <Pagination table={table}/>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
-
-        <div className="functional-btns-container">
-          <ExportButton />
-          <ImportButton />
-        </div>
-      </Container>
-    </>
+      {/* IMPORT AND EXPORT */}
+      <div className="functional-btns-container">
+        <ExportButton />
+        <ImportButton />
+      </div>
+    </Container>
   );
 }
 

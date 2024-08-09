@@ -4,28 +4,23 @@ import Swal from "sweetalert2";
 
 const useJabatanStore = create((set) => ({
     jabatans: [],
-    totalPage: 1,
-    totalItems: 0,
     namaBahagianOptions: [],
 
-    // fetch jabatan
-    fetchJabatans: async (page = 1) => {
+    // FETCH JABATAN
+    fetchJabatans: async () => {
         try {
           const response = await axiosCustom.get(
-            `tetapan-kriteria/jabatan?page=${page}`
+            `tetapan-kriteria/jabatan`
           );
           set({
-            jabatans: response.data.data,
-            totalPage: response.data.last_page,
-            totalItems: response.data.total,
+            jabatans: response.data,
           });
-          return response.data.data; // provide updated fetching for delete and handleAddsuccess
         } catch (error) {
           console.error("Ralat dalam mengambil maklumat jabatan:", error);
         }
       },
 
-    //  fetch bahagian options
+    //  FETCH BAHAGIAN OPTIONS
     fetchBahagians: async () => {
         try {
             const response = await axiosCustom.get(
@@ -47,7 +42,7 @@ const useJabatanStore = create((set) => ({
           }
     },
 
-    // create jabatan
+    // CREATE JABATAN
   createJabatan: async (jabatanInput, handleCloseCreateJabatan) => {
     try {
       const response = await axiosCustom.post(
@@ -73,7 +68,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  //   update jabatan
+  //   UPDATE JABATAN
   updateJabatan: async (jabatanId, jabatanInput, handleCloseEditJabatan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -100,7 +95,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  // delete jabatan
+  // DELETE JABATAN
   deleteJabatan: async (jabatanId) => {
     try {
       const response = await axiosCustom.delete(

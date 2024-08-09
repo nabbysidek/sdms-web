@@ -1,30 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
 
 function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOptions, onUpdateSuccess}) {
-  // initialize edit modal
+  // INITIALIZE EDIT KRITERIA KETIDAKPATUHAN MODAL
   const [showEditKriteriaKetidakpatuhan, setShowEditKriteriaKetidakpatuhan] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT KRITERIA KETIDAKPATUHAN MODAL
   const handleCloseEditKriteriaKetidakpatuhan = () => setShowEditKriteriaKetidakpatuhan(false);
   const handleShowEditKriteriaKetidakpatuhan = () => setShowEditKriteriaKetidakpatuhan(true);
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  // initialize state management store
+  // USE OF KRITERIA KETIDAKPATUHAN STORE
   const { updateKriteriaKetidakpatuhan } = useKriteriaKetidakpatuhanStore();
 
-  // handle update aktiviti semakan
+  // HANDLE EDIT OF AN KRITERIA KETIDAKPATUHAN
   const onSubmit = (kriteriaKetidakpatuhanInput) => {
     updateKriteriaKetidakpatuhan(kriteriaKetidakpatuhan.id, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditKriteriaKetidakpatuhan) {
+      reset({
+        aktivitiSemakanId: kriteriaKetidakpatuhan.aktivitiSemakanId,
+        namaKriteriaKetidakpatuhan: kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan,
+      });
+    }
+  }, [showEditKriteriaKetidakpatuhan, kriteriaKetidakpatuhan, reset]);
 
   return (
     <div>
@@ -103,7 +114,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Kriteria Ketidakpatuhan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

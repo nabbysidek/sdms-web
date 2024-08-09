@@ -4,27 +4,23 @@ import Swal from "sweetalert2";
 
 const useJenisAuditStore = create((set) => ({
   jenisAudits: [],
-  totalPage: 1,
-  totalItems: 0,
 
-  // fetch jenisAudit
-  fetchJenisAudits: async (page = 1) => {
+  // FETCH JENIS AUDIT
+  fetchJenisAudits: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/jenis-audit?page=${page}`
+        `tetapan-kriteria/jenis-audit`
       );
+      console.log(response);
       set({
-        jenisAudits: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        jenisAudits: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat jenis audit:", error);
     }
   },
 
-  // create jenisAudit
+  // CREATE JENIS AUDIT
   createJenisAudit: async (jenisAuditInput, handleCloseCreateJenisAudit) => {
     try {
       const response = await axiosCustom.post(
@@ -36,7 +32,7 @@ const useJenisAuditStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("Jenis audit berjaya ditambah");
         handleCloseCreateJenisAudit();
@@ -50,7 +46,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // update jenisAudit
+  // UPDATE JENIS AUDIT
   updateJenisAudit: async (
     jenisAuditId,
     jenisAuditInput,
@@ -67,7 +63,7 @@ const useJenisAuditStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("Jenis audit berjaya dikemaskini");
         handleCloseEditJenisAudit();
@@ -82,7 +78,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // delete jenisAudit
+  // DELETE JENIS AUDIT
   deleteJenisAudit: async (jenisAuditId) => {
     try {
       const response = await axiosCustom.delete(
@@ -108,26 +104,6 @@ const useJenisAuditStore = create((set) => ({
         title: "Gagal",
         text: error.response.data.error,
       });
-    }
-  },
-  
-  // search jenis audit
-  searchJenisAudits: async (jenisAuditInput) => {
-    try {
-      const payload = { jenisAuditInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-jenis-audit`,
-        payload
-      );
-      set({
-        jenisAudits: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat jenis audit:", error);
-      }
     }
   },
 }));

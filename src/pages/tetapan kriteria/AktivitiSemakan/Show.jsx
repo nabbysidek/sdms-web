@@ -1,134 +1,161 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateAktivitiSemakan from "./Create";
 import EditAktivitiSemakan from "./Edit";
+import SearchAktivitiSemakan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowAktivitiSemakanList() {
-  // initialize the store
+  // USE OF AKTIVITI SEMAKAN STORE
   const {
     aktivitiSemakans,
-    totalPage,
-    totalItems,
     namaSkopKriteriaOptions,
     fetchAktivitiSemakans,
     fetchSkopKriterias,
     deleteAktivitiSemakan,
   } = useAktivitiSemakanStore();
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  // fetch aktiviti semakan
+  // FETCH FROM STORE: AKTIVITI SEMAKAN & SKOP KRITERIA
   useEffect(() => {
-    fetchAktivitiSemakans(currentPage); 
+    fetchAktivitiSemakans(); 
     fetchSkopKriterias();
-  }, [currentPage, fetchAktivitiSemakans, fetchSkopKriterias]);
+  }, [fetchAktivitiSemakans, fetchSkopKriterias]);
 
-  // handle delete of aktiviti semakan
-  const handleDeleteAktivitiSemakan = async (aktivitiSemakanId) => {
-    // Display a confirmation dialog
+  // HANDLE DELETE OF AKTIVITI SEMAKAN
+  const handleDeleteAktivitiSemakan = useCallback(async (aktivitiSemakanId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteAktivitiSemakan(aktivitiSemakanId);
-      const updateAktivitiSemakans = await fetchAktivitiSemakans(currentPage);
-
-      if (updateAktivitiSemakans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchAktivitiSemakans(newPage);
-      }
     }
-  };
+  },[deleteAktivitiSemakan, fetchAktivitiSemakans]);
+
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => aktivitiSemakans, [aktivitiSemakans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Skop Semakan",
+      accessorFn: (row) => row.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+    },
+    {
+      header: "Skop Kriteria Ketidakpatuhan",
+      accessorFn: (row) => row.skop_kriteria?.namaSkopKriteria || "N/A",
+    },
+    {
+      header: "Nama Aktiviti Semakan",
+      accessorKey: "namaAktivitiSemakan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditAktivitiSemakan
+            aktivitiSemakan={row.original}
+            skopKriteriaOptions={namaSkopKriteriaOptions}
+            onUpdateSuccess={fetchAktivitiSemakans}
+          />
+          <Button
+            onClick={() => handleDeleteAktivitiSemakan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
 
   
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchAktivitiSemakans(currentPage);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
-
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchAktivitiSemakans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchAktivitiSemakans(totalPage);
-    }
-  };
-
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter: filtering },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <>
       <Container fluid>
+      <SearchAktivitiSemakan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Aktiviti Semakan</h3>
             </div>
-            <div className="col-md-2">
-              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={handleAddSuccess} />
+            <div className="col-md-3">
+              <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={fetchAktivitiSemakans} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Skop Semakan</th>
-              <th>Nama Skop Kriteria Ketidakpatuhan</th>
-              <th>Nama Aktiviti Semakan</th>
-              <th>Tindakan</th>
-            </tr>
+          {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {
+                      { asc: " 🔼", desc: " 🔽" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody>
-            {aktivitiSemakans.length > 0 &&
-              aktivitiSemakans.map((aktivitiSemakansData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>
-                    {aktivitiSemakansData.skop_kriteria.skop_semakan
-                      ? aktivitiSemakansData.skop_kriteria.skop_semakan
-                          .namaSkopSemakan
-                      : "N/A"}
+          {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
-                  <td>
-                    {aktivitiSemakansData.skop_kriteria
-                      ? aktivitiSemakansData.skop_kriteria.namaSkopKriteria
-                      : "N/A"}
-                  </td>
-                  <td>{aktivitiSemakansData.namaAktivitiSemakan}</td>
-                  <td>
-                    <EditAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} aktivitiSemakan={aktivitiSemakansData} onUpdateSuccess={() => fetchAktivitiSemakans(currentPage)} />
-                    <Button
-                      onClick={() =>
-                        handleDeleteAktivitiSemakan(aktivitiSemakansData.id)
-                      }
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+                ))}
+              </tr>
+            ))}
           </tbody>
         </Table>
+        {/* PAGINATION */}
+        <Pagination table={table}/>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
-
-        {/* Functional buttons */}
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

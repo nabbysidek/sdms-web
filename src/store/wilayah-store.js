@@ -4,27 +4,22 @@ import Swal from "sweetalert2";
 
 const useWilayahStore = create((set) => ({
   wilayahs: [],
-  totalPage: 1,
-  totalItems: 0,
 
-  // Fetch wilayah
-  fetchWilayahs: async (page = 1) => {
+  // FETCH WILAYAH
+  fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/wilayah?page=${page}`
+        `tetapan-kriteria/wilayah`
       );
       set({
-        wilayahs: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        wilayahs: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat wilayah:", error);
     }
   },
 
-  // create wilayah
+  // CREATE WILAYAH
   createWilayah: async (wilayahInput, handleCloseCreateWilayah) => {
     try {
       const response = await axiosCustom.post(
@@ -50,7 +45,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // update wilayah
+  // UPDATE WILAYAH
   updateWilayah: async (
     wilayahId,
     wilayahInput,
@@ -82,7 +77,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // delete wilayah
+  // DELETE WILAYAH
   deleteWilayah: async (wilayahId) => {
     try {
       const response = await axiosCustom.delete(
@@ -108,26 +103,6 @@ const useWilayahStore = create((set) => ({
         title: "Gagal",
         text: error.response.data.error,
       });
-    }
-  },
-
-  // search wilayah
-  searchWilayahs: async (wilayahInput) => {
-    try {
-      const payload = { wilayahInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-wilayah`,
-        payload
-      );
-      set({
-        wilayahs: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat wilayah:", error);
-      }
     }
   },
 }));

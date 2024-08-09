@@ -4,17 +4,17 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
 function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
-  // initialize create modal
+  // INITIALIZE CREATE AKTIVITI SEMAKAN MODAL
   const [showCreateSkopKriteria, setShowCreateSkopKriteria] = useState(false);
 
-  // handle create modal
+  // HANDLE DISPLAY OF CREATE AKTIVITI SEMAKAN MODAL
   const handleShowCreateSkopKriteria = () => setShowCreateSkopKriteria(true);
   const handleCloseCreateSkopKriteria = () => {
     setShowCreateSkopKriteria(false);
     reset();
   };
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,10 +22,10 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // initialize store
+  // USE OF AKTIVITI SEMAKAN STORE
   const createSkopKriteria = useSkopKriteriaStore((state) => state.createSkopKriteria);
 
-  // handle create skop kriteria
+  //  HANDLE CREATE A NEW OF AKTIVITI SEMAKAN
   const onSubmit = (data) => {
     createSkopKriteria(data, () => {
       handleCloseCreateSkopKriteria();
@@ -36,7 +36,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopKriteria}>
-        Tambah
+        Tambah skop kriteria
       </Button>
 
       <Modal
@@ -89,7 +89,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan skop kriteria"
+                    placeholder="Masukkan nama skop kriteria ketidakpatuhan"
                     autoFocus
                   />
                 )}
@@ -107,7 +107,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Skop Kriteria
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

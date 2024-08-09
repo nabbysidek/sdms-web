@@ -1,29 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Modal, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import useJabatanStore from "../../../store/jabatan-store";
 
 function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
-  // ----------- FE --------
-  //  Handle modal
+  // INITIALIZE EDIT JABATAN MODAL
   const [showEditJabatan, setShowEditJabatan] = useState(false);
 
+  // HANDLE DISPLAY OF EDIT JABATAN MODAL
   const handleCloseEditJabatan = () => setShowEditJabatan(false);
   const handleShowEditJabatan = () => setShowEditJabatan(true);
 
-  // Form validation
-  const { control, handleSubmit, formState, setValue } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  // Initialize state management store
+  // USE OF JABATAN STORE
   const { updateJabatan } = useJabatanStore();
   
-  // ----------- BE ---------------
-  // Handle update jabatan
-
+  // HANDLE EDIT OF AN JABATAN
   const onSubmit = (jabatanInput) => {
     updateJabatan(jabatan.id, jabatanInput, handleCloseEditJabatan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditJabatan) {
+      reset({
+        bahagianId: jabatan.bahagianId,
+        namaJabatan: jabatan.namaJabatan,
+      });
+    }
+  }, [showEditJabatan, jabatan, reset]);
 
   return (
     <div>
@@ -102,7 +114,7 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Jabatan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

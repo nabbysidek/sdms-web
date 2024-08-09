@@ -4,17 +4,17 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useJenisAuditStore from "../../../store/jenis-audit-store";
 
 function CreateJenisAudit({ onAddSuccess }) {
-  // initialize create modal
+  // INITIALIZE CREATE JENIS AUDIT MODAL
   const [showCreateJenisAudit, setShowCreateJenisAudit] = useState(false);
 
-  // handle create modal
+  // HANDLE DISPLAY OF CREATE JENIS AUDIT MODAL
   const handleShowCreateJenisAudit = () => setShowCreateJenisAudit(true);
   const handleCloseCreateJenisAudit = () => {
     setShowCreateJenisAudit(false);
     reset();
   };
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,14 +22,13 @@ function CreateJenisAudit({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // initialize store
+  // USE OF JENIS AUDIT STORE
   const createJenisAudit = useJenisAuditStore((state) => state.createJenisAudit);
 
-  // handle create
+  //  HANDLE CREATE A NEW OF JENIS AUDIT
   const onSubmit = (data) => {
     createJenisAudit(data, () => {
       handleCloseCreateJenisAudit();
-      // reload the table
       if (onAddSuccess) onAddSuccess();
     });
   };
@@ -37,7 +36,7 @@ function CreateJenisAudit({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJenisAudit}>
-        Tambah
+        Tambah jenis audit
       </Button>
 
       <Modal
@@ -64,7 +63,7 @@ function CreateJenisAudit({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan jenis audit"
+                    placeholder="Masukkan jenis audit baru"
                     autoFocus
                   />
                 )}
@@ -82,7 +81,7 @@ function CreateJenisAudit({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Jenis Audit
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

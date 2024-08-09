@@ -1,122 +1,155 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateJabatan from "./Create";
 import EditJabatan from "./Edit";
+import SearchJabatan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import useJabatanStore from "../../../store/jabatan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function Show() {
-  // initialize state management store
+  // USE OF JABATAN STORE
   const {
     jabatans,
-    totalPage,
-    totalItems,
     namaBahagianOptions,
     fetchJabatans,
     deleteJabatan,
     fetchBahagians,
   } = useJabatanStore();
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-
-  // fetch jabatans
+  // FETCH FROM STORE: JABATAN & BAHAGIAN
   useEffect(() => {
-    fetchJabatans(currentPage); 
+    fetchJabatans(); 
     fetchBahagians();
-  }, [currentPage, fetchJabatans, fetchBahagians]);
+  }, [fetchJabatans, fetchBahagians]);
 
-  // handle delete of jabatans
-  const handleDeleteJabatan = async (jabatanId) => {
-    // Display a confirmation dialog
+  // HANDLE DELETE OF JABATAN
+  const handleDeleteJabatan = useCallback(async (jabatanId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteJabatan(jabatanId);
-      const updateJabatans = await fetchJabatans(currentPage);
-
-      if (updateJabatans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchJabatans(newPage);
-      }
     }
-  };
+  },[deleteJabatan, fetchJabatans]);
 
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchJabatans(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => jabatans, [jabatans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Bahagian",
+      accessorFn: (row) => row.bahagian?.namaBahagian || "N/A",
+    },
+    {
+      header: "Nama Jabatan",
+      accessorKey: "namaJabatan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditJabatan
+            jabatan={row.original}
+            bahagianOptions={namaBahagianOptions}
+            onUpdateSuccess={fetchJabatans}
+          />
+          <Button
+            onClick={() => handleDeleteJabatan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchJabatans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchJabatans(totalPage);
-    }
-  };
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter: filtering },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <Container fluid>
+      <SearchJabatan filterValue={filtering} onFilterChange={setFiltering} />
       <div className="table-section">
         <Row>
-          <div className="col-md-9">
+          <div className="col-md-10">
             <h3 className="table-title">Senarai Jabatan</h3>
           </div>
-          <div className="col-md-3">
-            <CreateJabatan bahagianOptions={namaBahagianOptions} onAddSuccess={handleAddSuccess} />
+          <div className="col-md-2">
+            <CreateJabatan bahagianOptions={namaBahagianOptions} onAddSuccess={fetchJabatans} />
           </div>
         </Row>
       </div>
       <hr />
       <Table responsive>
         <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Nama Bahagian</th>
-            <th>Nama Jabatan</th>
-            <th>Tindakan</th>
-          </tr>
+        {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {
+                      { asc: " 🔼", desc: " 🔽" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
+                  </th>
+                ))}
+              </tr>
+            ))}
         </thead>
         <tbody>
-          {jabatans.length > 0 &&
-            jabatans.map((jabatansData, key) => (
-              <tr key={key}>
-                <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                <td>
-                  {jabatansData.bahagian
-                    ? jabatansData.bahagian.namaBahagian
-                    : "N/A"}
-                </td>
-                <td>{jabatansData.namaJabatan}</td>
-                <td>
-                  <EditJabatan jabatan={jabatansData} bahagianOptions={namaBahagianOptions} onUpdateSuccess={() => fetchJabatans(currentPage)} />
-                  <Button
-                    onClick={() => handleDeleteJabatan(jabatansData.id)}
-                    className="delete-btn"
-                  >
-                    Padam
-                  </Button>
-                </td>
+        {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
               </tr>
             ))}
         </tbody>
       </Table>
-
-      <PaginationTable
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onPageChange={setCurrentPage}
-      />
-
+      {/* PAGINATION */}
+      <Pagination table={table}/>
+      
+      {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />

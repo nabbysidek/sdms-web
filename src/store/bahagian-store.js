@@ -4,27 +4,22 @@ import Swal from "sweetalert2";
 
 const useBahagianStore = create((set) => ({
   bahagians: [],
-  totalPage: 1,
-  totalItems: 0,
 
-  // fetch bahagian
-  fetchBahagians: async (page = 1) => {
+  // FETCH BAHAGIAN
+  fetchBahagians: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/bahagian?page=${page}`
+        `tetapan-kriteria/bahagian`
       );
       set({
-        bahagians: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        bahagians: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat bahagian:", error);
     }
   },
 
-  // create bahagian
+  // CREATE BAHAGIAN
   createBahagian: async (bahagianInput, handleCloseCreateBahagian) => {
     try {
       const response = await axiosCustom.post(
@@ -50,7 +45,7 @@ const useBahagianStore = create((set) => ({
     }
   },
 
-  // update bahagian
+  // UPDATE BAHAGIAN
   updateBahagian: async (
     bahagianId,
     bahagianInput,
@@ -67,7 +62,7 @@ const useBahagianStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success,
         });
         console.log("Bahagian berjaya dikemaskini");
         handleCloseEditBahagian();
@@ -82,7 +77,7 @@ const useBahagianStore = create((set) => ({
     }
   },
 
-  // delete bahagian
+  // DELETE BAHAGIAN
   deleteBahagian: async (bahagianId) => {
     try {
       const response = await axiosCustom.delete(
@@ -110,27 +105,6 @@ const useBahagianStore = create((set) => ({
       });
     }
   },
-  
-  // search bahagian
-  searchBahagians: async (bahagianInput) => {
-    try {
-      const payload = { bahagianInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-bahagian`,
-        payload
-      );
-      set({
-        bahagians: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat bahagian:", error);
-      }
-    }
-  },
-
 }));
 
 export default useBahagianStore;

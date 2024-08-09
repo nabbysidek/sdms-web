@@ -4,27 +4,22 @@ import Swal from "sweetalert2";
 
 const useKakitanganStore = create((set) => ({
     kakitangans: [],
-    totalPage: 1,
-    totalItems: 0,
 
-    // fetch kakitangan
-    fetchKakitangans: async (page = 1) => {
+    // FETCH KAKITANGAN
+    fetchKakitangans: async () => {
         try {
           const response = await axiosCustom.get(
-            `tetapan-kriteria/kakitangan?page=${page}`
+            `tetapan-kriteria/kakitangan`
           );
           set({
-            kakitangans: response.data.data,
-            totalPage: response.data.last_page,
-            totalItems: response.data.total,
+            kakitangans: response.data,
           });
-          return response.data.data; // provide updated fetching for delete and handleAddsuccess
         } catch (error) {
           console.error("Ralat dalam mengambil maklumat kakitangan:", error);
         }
       },
     
-    // create kakitangan
+    // CREATE KAKITANGAN
     createKakitangan: async (kakitanganInput, handleCloseCreateKakitangan) => {
         try {
           const response = await axiosCustom.post(
@@ -50,7 +45,7 @@ const useKakitanganStore = create((set) => ({
         }
       },
 
-    // update kakitangan
+    // UPDATE KAKITANGAN
     updateKakitangan: async (
         kakitanganId,
         kakitanganInput,
@@ -67,7 +62,7 @@ const useKakitanganStore = create((set) => ({
             Swal.fire({
               icon: "success",
               title: "Berjaya",
-              text: response.data.success, // Access the message from the backend response
+              text: response.data.success, 
             });
             console.log("Kakitangan berjaya dikemaskini");
             handleCloseEditKakitangan();
@@ -82,7 +77,7 @@ const useKakitanganStore = create((set) => ({
         }
       },
 
-    // delete kakitangan
+    // DELETE KAKITANGAN
     deleteKakitangan: async (kakitanganId) => {
         try {
           const response = await axiosCustom.delete(
@@ -110,26 +105,6 @@ const useKakitanganStore = create((set) => ({
           });
         }
       },
-
-      // search kakitangan
-  searchKakitangans: async (kakitanganInput) => {
-    try {
-      const payload = { kakitanganInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-kakitangan`,
-        payload
-      );
-      set({
-        kakitangans: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat kakitangan:", error);
-      }
-    }
-  },
 }));
 
 export default useKakitanganStore;

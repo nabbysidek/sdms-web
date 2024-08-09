@@ -1,106 +1,135 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateWilayah from "./Create";
 import EditWilayah from "./Edit";
+import SearchWilayah from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useWilayahStore from "../../../store/wilayah-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowWilayahList() {
-  const { wilayahs, totalPage, totalItems, fetchWilayahs, deleteWilayah } = useWilayahStore();
+  // USE OF WILAYAH STORE
+  const { wilayahs, fetchWilayahs, deleteWilayah } = useWilayahStore();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  // fetch wilayahs
+  // FETCH FROM STORE: WILAYAH
   useEffect(() => {
-    fetchWilayahs(currentPage);
-  }, [currentPage, fetchWilayahs]);
+    fetchWilayahs();
+  }, [fetchWilayahs]);
 
-  // handle delete wilayahs
-  const handleDeleteWilayah = async (wilayahId) => {
+  // HANDLE DELETE OF WILAYAH
+  const handleDeleteWilayah = useCallback(async (wilayahId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteWilayah(wilayahId);
-
-      // fetch the total number of items after deletion
-      const updatedWilayahs = await fetchWilayahs(currentPage);
-
-      // If the current page is empty and not the first page, go to the previous page
-      if (updatedWilayahs.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchWilayahs(newPage);
-      }
     }
-  };
+  }, [deleteWilayah, fetchWilayahs]);
 
-  // handle page reload
-  const handleAddSuccess = async () => {
-    await fetchWilayahs(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => wilayahs, [wilayahs]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Nama Wilayah",
+      accessorKey: "namaWilayah",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditWilayah wilayah={row.original} onUpdateSuccess={fetchWilayahs} />
+          <Button onClick={() => handleDeleteWilayah(row.original.id)} className="delete-btn">Padam</Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchWilayahs(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchWilayahs(totalPage);
-    }
-  };
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter:filtering, },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <Container fluid>
+      <SearchWilayah filterValue={filtering} onFilterChange={setFiltering} />
       <div className="table-section">
         <Row>
           <div className="col-md-10">
             <h3 className="table-title">Senarai Wilayah</h3>
           </div>
           <div className="col-md-2">
-            <CreateWilayah onAddSuccess={handleAddSuccess} />
+            <CreateWilayah onAddSuccess={fetchWilayahs} />
           </div>
         </Row>
       </div>
       <hr />
       <Table responsive>
         <thead>
-          <tr>
-            <th>Bil</th>
-            <th>Nama Wilayah</th>
-            <th>Tindakan</th>
-          </tr>
+        {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: " 🔼", desc: " 🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody>
-          {wilayahs.length > 0 &&
-            wilayahs.map((wilayahsData, key) => (
-              <tr key={key}>
-                <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                <td>{wilayahsData.namaWilayah}</td>
-                <td>
-                  <EditWilayah wilayah={wilayahsData} onUpdateSuccess={() => fetchWilayahs(currentPage)} />
-                  <Button
-                    onClick={() => handleDeleteWilayah(wilayahsData.id)}
-                    className="delete-btn"
-                  >
-                    Padam
-                  </Button>
+        {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
-              </tr>
-            ))}
+              ))}
+            </tr>
+          ))}
         </tbody>
       </Table>
+      {/* PAGINATION */}
+      <Pagination table={table}/>
 
-      <PaginationTable
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onPageChange={setCurrentPage}
-      />
-
+      {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />

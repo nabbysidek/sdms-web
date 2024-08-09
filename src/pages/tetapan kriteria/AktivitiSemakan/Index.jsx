@@ -1,6 +1,5 @@
 import React from 'react';
 import "../../../assets/styles/styles_tetapan_kriteria.css";
-import SearchAktivitiSemakan from './Search';
 import ShowAktivitiSemakanList from './Show';
 
 function IndexAktivitSemakan() {
@@ -13,7 +12,6 @@ function IndexAktivitSemakan() {
       </div>
 
       <div className='page-content'>
-        <SearchAktivitiSemakan/>
         <ShowAktivitiSemakanList/>
       </div>
     </div>

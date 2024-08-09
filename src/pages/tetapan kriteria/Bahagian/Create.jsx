@@ -4,17 +4,17 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useBahagianStore from "../../../store/bahagian-store";
 
 function CreateBahagian({ onAddSuccess }) {
-  // ----------FE----------
-  // `Create` modal
+  // INITIALIZE CREATE BAHAGIAN MODAL
   const [showCreateBahagian, setShowCreateBahagian] = useState(false);
 
+  // HANDLE DISPLAY OF CREATE BAHAGIAN MODAL
   const handleShowCreateBahagian = () => setShowCreateBahagian(true);
   const handleCloseCreateBahagian = () => {
     setShowCreateBahagian(false);
     reset();
   };
 
-  // Form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,13 +22,13 @@ function CreateBahagian({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // handle create bahagian
+  // USE OF BAHAGIAN STORE
   const createBahagian = useBahagianStore((state) => state.createBahagian);
 
+  //  HANDLE CREATE A NEW OF BAHAGIAN
   const onSubmit = (data) => {
     createBahagian(data, () => {
       handleCloseCreateBahagian();
-      // reload the table
       if (onAddSuccess) onAddSuccess();
     });
   };
@@ -36,7 +36,7 @@ function CreateBahagian({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateBahagian}>
-        Tambah
+        Tambah bahagian
       </Button>
 
       <Modal
@@ -63,7 +63,7 @@ function CreateBahagian({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan bahagian"
+                    placeholder="Masukkan nama bahagian"
                     autoFocus
                   />
                 )}
@@ -81,7 +81,7 @@ function CreateBahagian({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Bahagian
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

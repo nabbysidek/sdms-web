@@ -1,115 +1,162 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateCawangan from "./Create";
 import EditCawangan from "./Edit";
+import SearchCawangan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useCawanganStore from "../../../store/cawangan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowCawanganList() {
-  // initialize store
+  // USE OF CAWANGAN STORE
   const {
     cawangans,
-    totalPage,
-    totalItems,
     namaWilayahOptions,
     fetchCawangans,
     deleteCawangan,
     fetchWilayahs,
   } = useCawanganStore();
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  // fetch cawangans
+  // FETCH FROM STORE: CAWANGAN & WILAYAH
   useEffect(() => {
-    fetchCawangans(currentPage);
+    fetchCawangans();
     fetchWilayahs();
-  }, [currentPage, fetchCawangans, fetchWilayahs]);
+  }, [fetchCawangans, fetchWilayahs]);
 
-  // handle delete cawangans
-  const handleDeleteCawangan = async (cawanganId) => {
-    const confirmResult = await showConfirmationDialog();
+  // HANDLE DELETE OF CAWANGAN
+  const handleDeleteCawangan = useCallback(
+    async (cawanganId) => {
+      const confirmResult = await showConfirmationDialog();
 
-    if (confirmResult.isConfirmed) {
-      await deleteCawangan(cawanganId);
-
-      const updateCawangans = await fetchCawangans(currentPage);
-
-      if (updateCawangans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchCawangans(newPage);
+      if (confirmResult.isConfirmed) {
+        await deleteCawangan(cawanganId);
       }
-    }
-  };
+    },
+    [deleteCawangan, fetchCawangans]
+  );
 
-  // handle page reload after storing new data
-  const handleAddSuccess = async () => {
-    await fetchCawangans(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => cawangans, [cawangans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Wilayah",
+      accessorFn: (row) => row.wilayah?.namaWilayah || "N/A",
+    },
+    {
+      header: "Nama Cawangan",
+      accessorKey: "namaCawangan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditCawangan
+            cawangan={row.original}
+            wilayahOptions={namaWilayahOptions}
+            onUpdateSuccess={fetchCawangans}
+          />
+          <Button
+            onClick={() => handleDeleteCawangan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchCawangans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchCawangans(totalPage);
-    }
-  };
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter: filtering },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <>
       <Container fluid>
+        <SearchCawangan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <h3 className="table-title">Senarai Cawangan</h3>
             </div>
-            <div className="col-md-2">
-              <CreateCawangan wilayahOptions={namaWilayahOptions} onAddSuccess={handleAddSuccess} />
+            <div className="col-md-3">
+              <CreateCawangan
+                wilayahOptions={namaWilayahOptions}
+                onAddSuccess={fetchCawangans}
+              />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Wilayah</th>
-              <th>Nama Cawangan</th>
-              <th>Tindakan</th>
-            </tr>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {
+                      { asc: " 🔼", desc: " 🔽" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody>
-            {cawangans.length > 0 &&
-              cawangans.map((cawangansData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{cawangansData.wilayah ? cawangansData.wilayah.namaWilayah : "N/A"}</td>
-                  <td>{cawangansData.namaCawangan}</td>
-                  <td>
-                    <EditCawangan cawangan={cawangansData} wilayahOptions={namaWilayahOptions} onUpdateSuccess={() => fetchCawangans(currentPage)} />
-                    <Button onClick={() => handleDeleteCawangan(cawangansData.id)} className="delete-btn">
-                      Padam
-                    </Button>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
-                </tr>
-              ))}
+                ))}
+              </tr>
+            ))}
           </tbody>
         </Table>
-
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
-
+        {/* PAGINATION */}
+        <Pagination table={table}/>
+        
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

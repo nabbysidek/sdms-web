@@ -4,28 +4,23 @@ import Swal from "sweetalert2";
 
 const useCawanganStore = create((set) => ({
   cawangans: [],
-  totalPage: 1,
-  totalItems: 0,
   namaWilayahOptions: [],
 
-  // fetch cawangan
-  fetchCawangans: async (page = 1) => {
+  // FETCH CAWANGAN
+  fetchCawangans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/cawangan?page=${page}`
+        `tetapan-kriteria/cawangan`
       );
       set({
-        cawangans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        cawangans: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat cawangan:", error);
     }
   },
 
-  // fetch wilayah options
+  // FETCH WILAYAH OPTIONS
   fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
@@ -47,7 +42,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // create cawangan
+  // CREATE CAWANGAN
   createCawangan: async (cawanganInput, handleCloseCreateCawangan) => {
     try {
       const response = await axiosCustom.post(
@@ -73,7 +68,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // update cawangan
+  // UPDATE CAWANGAN
   updateCawangan: async (cawanganId, cawanganInput, handleCloseEditCawangan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -100,7 +95,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // delete cawangan
+  // DELETE CAWANGAN
   deleteCawangan: async (cawanganId) => {
     try {
       const response = await axiosCustom.delete(
@@ -111,7 +106,7 @@ const useCawanganStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
 
         set((state) => ({
@@ -128,27 +123,6 @@ const useCawanganStore = create((set) => ({
       });
     }
   },
-
-  // search cawangan
-  searchCawangans: async (cawanganInput, wilayahId) => {
-    try {
-      const payload = { cawanganInput, wilayahId };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-cawangan`,
-        payload
-      );
-      set({
-        cawangans: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat cawangan:", error);
-      }
-    }
-  },
-
 }));
 
 export default useCawanganStore;

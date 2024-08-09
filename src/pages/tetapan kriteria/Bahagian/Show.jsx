@@ -1,110 +1,136 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Table, Row, Button, Container } from "react-bootstrap";
 import CreateBahagian from "./Create";
 import EditBahagian from "./Edit";
+import SearchBahagian from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import useBahagianStore from "../../../store/bahagian-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowBahagianList() {
-  const { bahagians, totalPage, totalItems, fetchBahagians, deleteBahagian } = useBahagianStore();
+  // USE OF BAHAGIAN STORE
+  const { bahagians, fetchBahagians, deleteBahagian } = useBahagianStore();
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1); // Define currentPage
-  const pageSize = 10;
-
-  // fetch bahagians
+  // FETCH FROM STORE: BAHAGIAN
   useEffect(() => {
-    fetchBahagians(currentPage);
-  }, [currentPage, fetchBahagians]);
+    fetchBahagians();
+  }, [fetchBahagians]);
 
-
-  // handle delete of bahagians
-  const handleDeleteBahagian = async (bahagianId) => {
+  // HANDLE DELETE OF BAHAGIAN
+  const handleDeleteBahagian = useCallback(async (bahagianId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteBahagian(bahagianId);
-      
-      // fetch the total number of items after deletion
-      const updatedBahagians = await fetchBahagians(currentPage);
-
-      // If the current page is empty and not the first page, go to the previous page
-      if (updatedBahagians.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchBahagians(newPage);
-      }
     }
-  };
+  }, [deleteBahagian, fetchBahagians]);
 
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchBahagians(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => bahagians, [bahagians]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Nama Bahagian",
+      accessorKey: "namaBahagian",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditBahagian bahagian={row.original} onUpdateSuccess={fetchBahagians} />
+          <Button onClick={() => handleDeleteBahagian(row.original.id)} className="delete-btn">Padam</Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchBahagians(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchBahagians(totalPage);
-    }
-  };
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter:filtering, },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <>
       <Container fluid>
+        <SearchBahagian filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
             <div className="col-md-10">
               <h3 className="table-title">Senarai Bahagian</h3>
             </div>
             <div className="col-md-2">
-              <CreateBahagian onAddSuccess={handleAddSuccess} />
+              <CreateBahagian onAddSuccess={fetchBahagians} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Bahagian</th>
-              <th>Tindakan</th>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: " 🔼", desc: " 🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
+              ))}
             </tr>
+          ))}
           </thead>
           <tbody>
-            {bahagians.length > 0 &&
-              bahagians.map((bahagiansData, key) => (
-                <tr key={key}>
-                  <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                  <td>{bahagiansData.namaBahagian}</td>
-                  <td>
-                    <EditBahagian bahagian={bahagiansData} onUpdateSuccess={() => fetchBahagians(currentPage)} />
-                    <Button
-                      onClick={() => handleDeleteBahagian(bahagiansData.id)}
-                      className="delete-btn"
-                    >
-                      Padam
-                    </Button>
-                  </td>
-                </tr>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
+            </tr>
+          ))}
           </tbody>
         </Table>
+        {/* PAGINATION */}
+        <Pagination table={table}/>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
-
-        {/* Functional buttons */}
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

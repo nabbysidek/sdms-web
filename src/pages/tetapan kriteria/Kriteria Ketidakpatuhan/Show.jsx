@@ -1,148 +1,166 @@
-import { useState, useEffect, useCallback } from "react";
-import { Table, Button, Row, Col, Container } from "react-bootstrap";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { Table, Button, Row, Container } from "react-bootstrap";
 import CreateKriteriaKetidakpatuhan from "./Create";
 import EditKriteriaKetidakpatuhan from "./Edit";
+import SearchKriteriaKetidakpatuhan from "./Search";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import PaginationTable from "../../../components/page layout/PaginationTable";
+import Pagination from "../../../components/page layout/Pagination";
 import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
 
 function ShowKriteriaKetidakpatuhanList() {
-  // initialize the store
+  // USE OF KRITERIA KETIDAKPATUHAN STORE
   const {
     kriteriaKetidakpatuhans,
-    totalPage,
-    totalItems,
     namaAktivitiSemakanOptions,
     fetchKriteriaKetidakpatuhans,
     fetchAktivitiSemakans,
     deleteKriteriaKetidakpatuhan,
   } = useKriteriaKetidakpatuhanStore();
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  // fetch kriteria ketidakpatuhans
+  // FETCH FROM STORE: KRITERIA KETIDAKPATUHAN & AKTIVITI SEMAKAN
   useEffect(() => {
-    fetchKriteriaKetidakpatuhans(currentPage); 
+    fetchKriteriaKetidakpatuhans(); 
     fetchAktivitiSemakans();
-  }, [currentPage, fetchKriteriaKetidakpatuhans, fetchAktivitiSemakans]);
+  }, [fetchKriteriaKetidakpatuhans, fetchAktivitiSemakans]);
 
 
-  // handle delete of kriteria ketidakpatuhans
-  const handleDeleteKriteriaKetidakpatuhan = async (kriteriaKetidakpatuhanId) => {
-    // Display a confirmation dialog
+  // HANDLE DELETE OF KRITERIA KETIDAKPATUHAN
+  const handleDeleteKriteriaKetidakpatuhan = useCallback(async (kriteriaKetidakpatuhanId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       await deleteKriteriaKetidakpatuhan(kriteriaKetidakpatuhanId);
-      const updateKriteriaKetidakpatuhans = await fetchKriteriaKetidakpatuhans(currentPage);
-
-      if (updateKriteriaKetidakpatuhans.length === 0 && currentPage > 1) {
-        const newPage = currentPage - 1;
-        setCurrentPage(newPage);
-        await fetchKriteriaKetidakpatuhans(newPage);
-      }
     }
-  };
+  },[deleteKriteriaKetidakpatuhan, fetchKriteriaKetidakpatuhans]);
 
-  // handles page reload
-  const handleAddSuccess = async () => {
-    await fetchKriteriaKetidakpatuhans(currentPage);
+  // USE OF TANSTACK TABLE
+  // FETCH DATA AND DECLARE COLUMNS
+  const data = useMemo(() => kriteriaKetidakpatuhans, [kriteriaKetidakpatuhans]);
+  const columns = useMemo(() => [
+    {
+      header: "Bil",
+      accessorFn: (row, i) => i + 1,
+      id: "index",
+    },
+    {
+      header: "Skop Semakan",
+      accessorFn: (row) => row.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+    },
+    {
+      header: "Skop Kriteria Ketidakpatuhan",
+      accessorFn: (row) => row.aktiviti_semakan?.skop_kriteria?.namaSkopKriteria || "N/A",
+    },
+    {
+      header: "Aktiviti Semakan",
+      accessorFn: (row) => row.aktiviti_semakan?.namaAktivitiSemakan || "N/A",
+    },
+    {
+      header: "Nama Kriteria Ketidakpatuhan",
+      accessorKey: "namaKriteriaKetidakpatuhan",
+    },
+    {
+      header: "Tindakan",
+      cell: ({ row }) => (
+        <div>
+          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
+          <EditKriteriaKetidakpatuhan
+            kriteriaKetidakpatuhan={row.original}
+            aktivitiSemakanOptions={namaAktivitiSemakanOptions}
+            onUpdateSuccess={fetchKriteriaKetidakpatuhans}
+          />
+          <Button
+            onClick={() => handleDeleteKriteriaKetidakpatuhan(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
+        </div>
+      ),
+    },
+  ]);
 
-    const totalItemsAfterAdd = totalItems + 1;
-    const newTotalPage = Math.ceil(totalItemsAfterAdd / pageSize);
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
 
-    if (totalItemsAfterAdd > pageSize * totalPage) {
-      setCurrentPage(newTotalPage);
-      await fetchKriteriaKetidakpatuhans(newTotalPage);
-    } else {
-      setCurrentPage(totalPage);
-      await fetchKriteriaKetidakpatuhans(totalPage);
-    }
-  };
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting: sorting, globalFilter: filtering },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering,
+  });
 
   return (
     <>
       <Container fluid>
+      <SearchKriteriaKetidakpatuhan filterValue={filtering} onFilterChange={setFiltering} />
         <div className="table-section">
           <Row>
-            <div className="col-md-10">
+            <div className="col-md-8">
               <h3 className="table-title">Senarai Kriteria Ketidakpatuhan</h3>
             </div>
 
-            <div className="col-md-2">
-              <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} onAddSuccess={handleAddSuccess} />
+            <div className="col-md-4">
+              <CreateKriteriaKetidakpatuhan aktivitiSemakanOptions={namaAktivitiSemakanOptions} onAddSuccess={fetchKriteriaKetidakpatuhans} />
             </div>
           </Row>
         </div>
         <hr />
         <Table responsive>
           <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Skop Semakan</th>
-              <th>Nama Skop Kriteria Ketidakpatuhan</th>
-              <th>Nama Aktiviti Semakan</th>
-              <th>Nama Kriteria Ketidakpatuhan</th>
-              <th>Tindakan</th>
-            </tr>
+          {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {
+                      { asc: " 🔼", desc: " 🔽" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody>
-            {kriteriaKetidakpatuhans.length > 0 &&
-              kriteriaKetidakpatuhans.map(
-                (kriteriaKetidakpatuhansData, key) => (
-                  <tr key={key}>
-                    <td>{(currentPage - 1) * pageSize + key + 1}</td>
-                    <td>
-                      {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
-                        ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria.skop_semakan
-                            .namaSkopSemakan
-                        : "N/A"}
-                        </td>
-                    <td>
-                    {kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria
-                        ? kriteriaKetidakpatuhansData.aktiviti_semakan.skop_kriteria
-                            .namaSkopKriteria
-                        : "N/A"}
-                    </td>
-                    <td>
-                    {kriteriaKetidakpatuhansData.aktiviti_semakan
-                        ? kriteriaKetidakpatuhansData.aktiviti_semakan
-                            .namaAktivitiSemakan
-                        : "N/A"}
-                    </td>
-                    <td>
-                      {kriteriaKetidakpatuhansData.namaKriteriaKetidakpatuhan}
-                    </td>
-                    <td>
-                      <EditKriteriaKetidakpatuhan kriteriaKetidakpatuhan={kriteriaKetidakpatuhansData} aktivitiSemakanOptions={namaAktivitiSemakanOptions} onUpdateSuccess={() => fetchKriteriaKetidakpatuhans(currentPage)} />
-                      <Button
-                        onClick={() =>
-                          handleDeleteKriteriaKetidakpatuhan(
-                            kriteriaKetidakpatuhansData.id
-                          )
-                        }
-                        className="delete-btn"
-                      >
-                        Padam
-                      </Button>
-                    </td>
-                  </tr>
-                )
-              )}
+          {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </Table>
+        {/* PAGINATION */}
+        <Pagination table={table}/>
 
-        <PaginationTable
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPageChange={setCurrentPage}
-        />
-
-        {/* Functional buttons */}
+        {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton />
           <ImportButton />

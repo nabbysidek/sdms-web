@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
 function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
-  // initialize edit modal
+  // INITIALIZE EDIT SKOP KRITERIA MODAL
   const [showEditSkopKriteria, setShowEditSkopKriteria] = useState(false);
 
-  // handle edit modal
+ // HANDLE DISPLAY OF EDIT SKOP KRITERIA MODAL
   const handleCloseEditSkopKriteria = () => setShowEditSkopKriteria(false);
   const handleShowEditSkopKriteria = () => setShowEditSkopKriteria(true);
 
-  // form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  // initialize store
+  // USE OF SKOP KRITERIA STORE
   const { updateSkopKriteria } = useSkopKriteriaStore();
 
-  // handle edit
+  // HANDLE EDIT OF AN SKOP KRITERIA
   const onSubmit = (skopKriteriaInput) => {
     updateSkopKriteria(skopKriteria.id, skopKriteriaInput, handleCloseEditSkopKriteria, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditSkopKriteria) {
+      reset({
+        skopSemakanId: skopKriteria.skopSemakanId,
+        namaSkopKriteria: skopKriteria.namaSkopKriteria,
+      });
+    }
+  }, [showEditSkopKriteria, skopKriteria, reset]);
 
   return (
     <div>
@@ -100,7 +114,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Skop Kriteria
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

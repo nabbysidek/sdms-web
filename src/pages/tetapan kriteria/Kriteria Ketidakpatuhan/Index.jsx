@@ -1,5 +1,4 @@
 import React from "react";
-import SearchKriteriaKetidakpatuhan from "./Search";
 import ShowKriteriaKetidakpatuhanList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
@@ -13,7 +12,6 @@ function IndexKriteriaKetidakpatuhan() {
       </div>
 
       <div className="page-content">
-        <SearchKriteriaKetidakpatuhan />
         <ShowKriteriaKetidakpatuhanList />
       </div>
     </div>

@@ -1,27 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
 function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
-  // initialize edit modal
+  // INITIALIZE EDIT SKOP SEMAKAN MODAL
   const [showEditSkopSemakan, setShowEditSkopSemakan] = useState(false);
 
-  // handle edit modal
+  // HANDLE DISPLAY OF EDIT SKOP SEMAKAN MODAL
   const handleCloseEditSkopSemakan = () => setShowEditSkopSemakan(false);
   const handleShowEditSkopSemakan = () => setShowEditSkopSemakan(true);
 
-  // form validation
-  const { control, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  // FORM VALIDATION FOR MODAL
+  const { control, handleSubmit, reset, formState: {errors} } = useForm();
 
-  // initialize store
+  // USE OF SKOP SEMAKAN STORE
   const { updateSkopSemakan } = useSkopSemakanStore();
 
-  // handle edit of skop semakan
+  // HANDLE EDIT OF AN SKOP SEMAKAN
   const onSubmit = (skopSemakanInput) => {
     updateSkopSemakan(skopSemakan.id, skopSemakanInput, handleCloseEditSkopSemakan, onUpdateSuccess);
   };
+
+  // RESET EDIT FORM DATA WHEN MODAL IS OPENED
+  useEffect(() => {
+    if (showEditSkopSemakan) {
+      reset({
+        namaSkopSemakan: skopSemakan.namaSkopSemakan,
+      });
+    }
+  }, [showEditSkopSemakan, skopSemakan, reset]);
 
   return (
     <div>
@@ -69,7 +77,7 @@ function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini Skop Semakan
+            Kemaskini
           </Button>
         </Modal.Footer>
       </Modal>

@@ -4,17 +4,17 @@ import { Button, Modal, Form } from "react-bootstrap";
 import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
 function CreateSkopSemakan({ onAddSuccess }) {
-  // initialize create modal
+  // INITIALIZE CREATE SKOP SEMAKAN MODAL
   const [showCreateSkopSemakan, setShowCreateSkopSemakan] = useState(false);
 
-  // handle create modal
+  // HANDLE DISPLAY OF CREATE SKOP SEMAKAN MODAL
   const handleShowCreateSkopSemakan = () => setShowCreateSkopSemakan(true);
   const handleCloseCreateSkopSemakan = () => {
     setShowCreateSkopSemakan(false);
     reset();
   };
 
-  // form validation
+  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,14 +22,13 @@ function CreateSkopSemakan({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // initialize store
+  // USE OF SKOP SEMAKAN STORE
   const createSkopSemakan = useSkopSemakanStore((state) => state.createSkopSemakan);
 
-  // handle create skop semakan
+  //  HANDLE CREATE A NEW OF SKOP SEMAKAN
   const onSubmit = (data) => {
     createSkopSemakan(data, () => {
       handleCloseCreateSkopSemakan();
-      // reload the table
       if (onAddSuccess) onAddSuccess();
     });
   };
@@ -37,7 +36,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopSemakan}>
-        Tambah
+        Tambah skop semakan
       </Button>
 
       <Modal
@@ -64,7 +63,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan skop semakan"
+                    placeholder="Masukkan nama skop semakan"
                     autoFocus
                   />
                 )}
@@ -82,7 +81,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah Skop Semakan
+            Tambah
           </Button>
         </Modal.Footer>
       </Modal>

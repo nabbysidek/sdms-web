@@ -4,28 +4,23 @@ import Swal from "sweetalert2";
 
 const useKriteriaKetidakpatuhanStore = create((set) => ({
   kriteriaKetidakpatuhans: [],
-  totalPage: 1,
-  totalItems: 0,
   namaAktivitiSemakanOptions: [],
 
-  // fetch kriteria ketidakpatuhan
-  fetchKriteriaKetidakpatuhans: async (page = 1) => {
+  // FETCH KRITERIA KETIDAKPATUHAN
+  fetchKriteriaKetidakpatuhans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/kriteria-ketidakpatuhan?page=${page}`
+        `tetapan-kriteria/kriteria-ketidakpatuhan`
       );
       set({
-        kriteriaKetidakpatuhans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        kriteriaKetidakpatuhans: response.data,
       });
-      return response.data.data;
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat kriteria ketidakpatuhan:", error);
     }
   },
 
-  // fetch kriteria ketidakpatuhan options
+  // FETCH AKTIVITI SEMAKAN OPTIONS
   fetchAktivitiSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -47,7 +42,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // create kriteria ketidakpatuhan
+  // CREATE KRITERIA KETIDAKPATUHAN
   createKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanInput, handleCloseCreateKriteriaKetidakpatuhan) => {
     try {
       const response = await axiosCustom.post(
@@ -73,7 +68,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // update kriteria ketidakpatuhan
+  // UPDATE KRITERIA KETIDAKPATUHAN
   updateKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanId, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess) => {
     try {
       const response = await axiosCustom.put(
@@ -100,7 +95,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // delete kriteria ketidakpatuhan
+  // DELETE KRITIERIA KETIDAKPATUHAN
   deleteKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanId) => {
     try {
       const response = await axiosCustom.delete(

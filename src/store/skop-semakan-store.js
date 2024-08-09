@@ -4,27 +4,23 @@ import Swal from "sweetalert2";
 
 const useSkopSemakanStore = create((set) => ({
   skopSemakans: [],
-  totalPage: 1,
-  totalItems: 0,
 
-  // fetch skop semakan
-  fetchSkopSemakans: async (page = 1) => {
+  // FETCH SKOP SEMAKAN
+  fetchSkopSemakans: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-semakan?page=${page}`
+        `tetapan-kriteria/skop-semakan`
       );
       set({
-        skopSemakans: response.data.data,
-        totalPage: response.data.last_page,
-        totalItems: response.data.total,
+        skopSemakans: response.data,
       });
-      return response.data.data; // provide updated fetching for delete and handleAddsuccess
+
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat skopSemakan:", error);
     }
   },
 
-  // create skop semakan
+  // CREATE SKOP SEMAKAN
   createSkopSemakan: async (skopSemakanInput, handleCloseCreateSkopSemakan) => {
     try {
       const response = await axiosCustom.post(
@@ -36,7 +32,7 @@ const useSkopSemakanStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("SkopSemakan berjaya ditambah");
         handleCloseCreateSkopSemakan();
@@ -50,7 +46,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // update skop semakan
+  // UPDATE SKOP SEMAKAN
   updateSkopSemakan: async (
     skopSemakanId,
     skopSemakanInput,
@@ -67,7 +63,7 @@ const useSkopSemakanStore = create((set) => ({
         Swal.fire({
           icon: "success",
           title: "Berjaya",
-          text: response.data.success, // Access the message from the backend response
+          text: response.data.success, 
         });
         console.log("SkopSemakan berjaya dikemaskini");
         handleCloseEditSkopSemakan();
@@ -82,7 +78,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // delete skop semakan
+  // DELETE SKOP SEMAKAN
   deleteSkopSemakan: async (skopSemakanId) => {
     try {
       const response = await axiosCustom.delete(
@@ -110,27 +106,6 @@ const useSkopSemakanStore = create((set) => ({
       });
     }
   },
-
-  // search skop semakan
-  searchSkopSemakans: async (skopSemakanInput) => {
-    try {
-      const payload = { skopSemakanInput };
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/carian-skop-semakan`,
-        payload
-      );
-      set({
-        skopSemakans: response.data.data.data,
-        totalPage: response.data.data.last_page,
-        totalItems: response.data.data.total,
-      });
-    } catch (error) {
-      if (error.response && error.response.data) {
-        console.error("Ralat dalam mengambil maklumat skop semakan:", error);
-      }
-    }
-  },
-  
 }));
 
 export default useSkopSemakanStore;

@@ -1,5 +1,4 @@
 import React from "react";
-import SearchWilayah from "./Search";
 import ShowWilayahList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
@@ -13,7 +12,6 @@ function IndexWilayah() {
       </div>
 
       <div className="page-content">
-        <SearchWilayah />
         <ShowWilayahList />
       </div>
     </>

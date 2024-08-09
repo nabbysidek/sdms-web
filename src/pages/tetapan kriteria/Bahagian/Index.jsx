@@ -1,5 +1,4 @@
 import React from "react";
-import SearchBahagian from "./Search";
 import ShowBahagianList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
@@ -13,7 +12,6 @@ function IndexBahagian() {
       </div>
 
       <div className="page-content">
-        <SearchBahagian />
         <ShowBahagianList />
       </div>
     </div>
