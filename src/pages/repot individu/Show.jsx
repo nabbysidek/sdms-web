@@ -100,15 +100,14 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
               </tr>
             </thead>
             <tbody>
-              {senaraiKetidakpatuhanKakitangan.data.length > 0 &&
-                senaraiKetidakpatuhanKakitangan.data.map((audits, key) => (
+              {senaraiKetidakpatuhanKakitangan.map((audits, key) => (
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{audits.tahapRisikoAudit}</td>
                     <td>{audits.kesalahanBerulang}</td>
                     <td>{audits.tarikhAudit}</td>
                     <td>{audits.wilayah.namaWilayah}</td>
-                    {/* <td>{audits.cawangan.namaCawangan}</td> */}
+                    <td>{audits.cawangan.namaCawangan}</td>
                     <td>{audits.jawatanKakitangan}</td>
                     <td>{audits.bahagian.namaBahagian}</td>
                     <td>{audits.jabatan.namaJabatan}</td>
