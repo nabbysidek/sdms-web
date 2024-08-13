@@ -415,7 +415,7 @@ function EditKetidakpatuhan() {
                           render={({ field }) => (
                             <>
                               <Form.Control
-                                type="text"
+                                type="date"
                                 placeholder="Tarikh audit"
                                 {...field}
                                 isInvalid={!!errors.tarikhAudit}
