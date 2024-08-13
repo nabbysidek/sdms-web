@@ -271,12 +271,3 @@ font-size: 12px;
 .mobile-nav-links .sub-nav-link:hover {
 color: #000;
 }
-
-
-/* ****************************************** */
-/* *************** PAGINATION  ************* */
-/* **************************************** */
-
-.pagination-btn button {
-  margin-right: 1px;
-}

@@ -1,21 +1,144 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import useRepotIndividuStore from "../../store/repot-individu-store";
+import Pagination from "../../components/page layout/Pagination";
 import "../../assets/styles/styles_repot_individu.css";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+} from "@tanstack/react-table";
 
 function SearchResultUntukRepotIndividu({ searchResults }) {
-  /* Destructuring assignment to extract maklumatKakitangan & 
-  senaraiKetidakpatuhanKakitangan from searchResults object */
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
-  /* Destructuring assignment to extract 
-  handleDeleteRepotIndividu from the useRepotIndividuStore hook */
   const { handleDeleteRepotIndividu } = useRepotIndividuStore();
+
+  const data = useMemo(
+    () => senaraiKetidakpatuhanKakitangan,
+    [senaraiKetidakpatuhanKakitangan]
+  );
+  const columns = useMemo(
+    () => [
+      {
+        header: "Bil",
+        accessorFn: (row, i) => i + 1,
+        id: "index",
+      },
+      {
+        header: "Risiko",
+        accessorKey: "tahapRisikoAudit",
+      },
+      {
+        header: "Kesalahan Berulang",
+        accessorKey: "kesalahanBerulang",
+      },
+      {
+        header: "Tahun",
+        accessorKey: "tarikhAudit",
+      },
+      {
+        header: "Wilayah",
+        accessorKey: "wilayah.namaWilayah",
+      },
+      {
+        header: "Cawangan",
+        accessorKey: "cawangan.namaCawangan",
+      },
+      {
+        header: "Jawatan",
+        accessorKey: "jawatanKakitangan",
+      },
+      {
+        header: "Bahagian",
+        accessorKey: "bahagian.namaBahagian",
+      },
+      {
+        header: "Jabatan",
+        accessorKey: "jabatan.namaJabatan",
+      },
+      {
+        header: "Unit",
+        accessorKey: "unit.namaUnit",
+      },
+      {
+        header: "Jenis Audit",
+        accessorKey: "jenis_audit.namaJenisAudit",
+      },
+      {
+        header: "Skop Semakan",
+        accessorKey: "skop_semakan.namaSkopSemakan",
+      },
+      {
+        header: "Skop Kriteria",
+        accessorKey: "skop_kriteria.namaSkopKriteria",
+      },
+      {
+        header: "Aktiviti Semakan",
+        accessorKey: "aktiviti_semakan.namaAktivitiSemakan",
+      },
+      {
+        header: "Kriteria Ketidakpatuhan",
+        accessorKey: "kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan",
+      },
+      {
+        header: "Catatan",
+        accessorKey: "catatanAudit",
+      },
+      {
+        header: "Tindakan",
+        cell: ({ row }) => (
+          <>
+            <Link
+              to="/editketidakpatuhan"
+              state={{
+                id: maklumatKakitangan.id,
+                namaKakitangan: maklumatKakitangan.namaKakitangan,
+                idKakitangan: maklumatKakitangan.idKakitangan,
+                audits: row.original,
+              }}
+            >
+              <Button className="edit-ketidakpatuhan-btn">Edit</Button>
+            </Link>
+            <Button
+              onClick={() => handleDeleteRepotIndividu(row.original.id)}
+              className="delete-btn"
+            >
+              Padam
+            </Button>
+          </>
+        ),
+      },
+    ],
+    [
+      handleDeleteRepotIndividu,
+      maklumatKakitangan.id,
+      maklumatKakitangan.namaKakitangan,
+      maklumatKakitangan.idKakitangan,
+    ]
+  );
+
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+
+  // TABLE DECLARATION
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: { sorting: sorting  },
+    onSortingChange: setSorting,
+  });
 
   return (
     <>
-    {/* BAHAGIAN MAKLUMAT KAKITANGAN */}
+      {/* BAHAGIAN MAKLUMAT KAKITANGAN */}
       <div className="kakitangan-info-container">
         <div className="page-title">
           <h3>Maklumat Kakitangan</h3>
@@ -58,7 +181,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
               </h3>
             </Col>
             <Col md={4}>
-            {/* ACTION: TAMBAH KETIDAKPATUHAN KAKITANGAN */}
+              {/* ACTION: TAMBAH KETIDAKPATUHAN KAKITANGAN */}
               <Link
                 to="/tambahketidakpatuhan"
                 state={{
@@ -79,70 +202,49 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
           {/* JADUAL AUDIT KETIDAKPATUHAN KAKITANGAN */}
           <Table responsive>
             <thead>
-              <tr>
-                <th>Bil</th>
-                <th>Risiko</th>
-                <th>Kesalahan Berulang</th>
-                <th>Tahun</th>
-                <th>Wilayah</th>
-                <th>Cawangan</th>
-                <th>Jawatan</th>
-                <th>Bahagian</th>
-                <th>Jabatan</th>
-                <th>Unit</th>
-                <th>Jenis Audit</th>
-                <th>Skop Semakan</th>
-                <th>Skop Kriteria</th>
-                <th>Aktiviti Semakan</th>
-                <th>Kriteria Ketidakpatuhan</th>
-                <th>Catatan</th>
-                <th>Tindakan</th>
-              </tr>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {
+                        { asc: " 🔼", desc: " 🔽" }[
+                          header.column.getIsSorted() ?? null
+                        ]
+                      }
+                    </th>
+                  ))}
+                </tr>
+              ))}
             </thead>
             <tbody>
-              {senaraiKetidakpatuhanKakitangan.map((audits, key) => (
-                  <tr key={key}>
-                    <td>{key + 1}</td>
-                    <td>{audits.tahapRisikoAudit}</td>
-                    <td>{audits.kesalahanBerulang}</td>
-                    <td>{audits.tarikhAudit}</td>
-                    <td>{audits.wilayah.namaWilayah}</td>
-                    <td>{audits.cawangan.namaCawangan}</td>
-                    <td>{audits.jawatanKakitangan}</td>
-                    <td>{audits.bahagian.namaBahagian}</td>
-                    <td>{audits.jabatan.namaJabatan}</td>
-                    <td>{audits.unit.namaUnit}</td>
-                    <td>{audits.jenis_audit.namaJenisAudit}</td>
-                    <td>{audits.skop_semakan.namaSkopSemakan}</td>
-                    <td>{audits.skop_kriteria.namaSkopKriteria}</td>
-                    <td>{audits.aktiviti_semakan.namaAktivitiSemakan}</td>
-                    <td>
-                      {audits.kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan}
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </td>
-                    <td>{audits.catatanAudit}</td>
-                    <td>
-                      {/* ACTION: EDIT KETIDAKPATUHAN KAKITANGAN */}
-                      <Link
-                        to="/editketidakpatuhan"
-                        state={{
-                          id: maklumatKakitangan.id,
-                          namaKakitangan: maklumatKakitangan.namaKakitangan,
-                          idKakitangan: maklumatKakitangan.idKakitangan,
-                          audits: audits,
-                        }}
-                      >
-                        <Button className="edit-ketidakpatuhan-btn">
-                          Edit
-                        </Button>
-                      </Link>
-                      {/* ACTION: PADAM KETIDAKPATUHAN KAKITANGAN */}
-                      <Button onClick={() => handleDeleteRepotIndividu(audits.id)} className="delete-btn">Padam</Button>
-                    </td>
-                  </tr>
-                ))}
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </Table>
         </div>
+
+        {/* PAGINATION */}
+        <div className="pagination">
+          <Pagination table={table}/> 
+        </div>
+
         {/* IMPORT DAN EKSPORT */}
         <div className="functional-btns-container">
           <ExportButton />
