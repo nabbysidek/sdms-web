@@ -38,7 +38,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
         accessorKey: "kesalahanBerulang",
       },
       {
-        header: "Tahun",
+        header: "Tarikh Audit",
         accessorKey: "tarikhAudit",
       },
       {
