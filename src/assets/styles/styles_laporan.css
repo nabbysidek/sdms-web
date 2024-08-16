@@ -13,8 +13,10 @@
 
 .laporan-search-container {
   border-radius: 10px;
-  padding-top: 10px;
-  padding-bottom: 15px;
+  padding: 20px 15px 25px 15px;
+  /* padding-top: 10px;
+  padding-bottom: 15px; */
+  margin-bottom: 15px;
   background-color: var(--darkgray);
 }
 

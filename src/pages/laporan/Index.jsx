@@ -1,4 +1,4 @@
-import SearchLaporan from "./Search";
+import SearchResultLaporan from "./SearchResult";
 import "../../assets/styles/styles_laporan.css";
 
 function Laporan() {
@@ -11,7 +11,7 @@ function Laporan() {
       </div>
 
       <div className="page-content">
-        <SearchLaporan />
+        <SearchResultLaporan />
       </div>
     </>
   );
