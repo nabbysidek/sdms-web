@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Container, Table } from "react-bootstrap";
+import { Container, Table, Form, Row, Col } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import Pagination from "../../components/page layout/Pagination";
@@ -15,11 +15,12 @@ import {
 import { rankItem } from "@tanstack/match-sorter-utils";
 import "../../assets/styles/styles_laporan.css";
 
-// Filter component to handle different types of filters
+// FILTER COMPONENTS TO ALLOW DIFFERENT WAYS OF FILTERING
 function Filter({ column }) {
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
 
+  // DROPDOWN FILTER FOR TAHAP RISIKO
   if (column.id === "index" || column.id === "tarikhAudit") {
     return null;
   }
@@ -40,7 +41,7 @@ function Filter({ column }) {
       type="text"
       value={columnFilterValue || ""}
       onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`Cari`}
+      placeholder={`Tapis`}
       className="filter-bar"
     />
   );
@@ -55,6 +56,20 @@ function SearchResultLaporan() {
     fetchAudits();
   }, [fetchAudits]);
 
+  // FILTER BY START DATE AND END DATE
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
+  const filteredData = useMemo(() => {
+    return audits.filter((row) => {
+      const date = new Date(row.tarikhAudit);
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
+
+      return (!start || date >= start) && (!end || date <= end);
+    });
+  }, [audits, startDate, endDate]);
+
   // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => audits, [audits]);
 
@@ -64,7 +79,7 @@ function SearchResultLaporan() {
 
   // TABLE DECLARATION
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -82,10 +97,41 @@ function SearchResultLaporan() {
 
   return (
     <Container fluid>
-      <h4 className="page-title">Senarai Laporan Ketidakpatuhan Kakitangan</h4>
-      <hr />
+      <div className="laporan-search-container">
+        <Form>
+          <Row>
+            <Col xs={12} xl={6}>
+            <Form.Group>
+            <Form.Label className="laporan-filter-header">
+              Tarikh Mula
+            </Form.Label>
+            <Form.Control
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            ></Form.Control>
+            </Form.Group>
+            </Col>
+            <Col xs={12} xl={6}>
+            <Form.Group>
+            <Form.Label className="laporan-filter-header">
+              Tarikh Tamat
+            </Form.Label>
+            <Form.Control
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            ></Form.Control>
+            </Form.Group>
+            </Col>
+          </Row>
+        </Form>
+      </div>
       <div className="dates-container">
-        <p>Hasil Carian: DD/MM/YYYY - DD/MM/YYYY</p>
+        <p>
+          Hasil Carian: {startDate ? startDate : "DD/MM/YYYY"} -{" "}
+          {endDate ? endDate : "DD/MM/YYYY"}
+        </p>
       </div>
       <Table responsive>
         <thead>
@@ -145,9 +191,9 @@ function SearchResultLaporan() {
         </tbody>
       </Table>
       <div className="pagination">
-          <Pagination table={table}/> 
-        </div>
-        
+        <Pagination table={table} />
+      </div>
+
       <div className="functional-btns-container">
         <ExportButton />
         <ImportButton />
