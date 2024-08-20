@@ -7,41 +7,18 @@ import { useOptionStore } from "../../store/option-store";
 import useRepotIndividuStore from "../../store/repot-individu-store";
 
 function EditKetidakpatuhan() {
-  // ------- FE -------------
-  // Retrieve maklumat kakitangan & the audit
   const location = useLocation();
   const { namaKakitangan, idKakitangan, audits } = location.state || {};
-
-  /* Destructuring assignment to extract 
-  handleEditRepotIndividu from the useRepotIndividuStore hook */ 
   const { handleEditRepotIndividu } = useRepotIndividuStore();
-
-  // Form validation
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue,
-  } = useForm();
-
-  const onSubmit = (data) => {
-    handleEditRepotIndividu(data, audits.id);
-  };
-  
-    // To navigate to the previous page
+  const { handleSubmit, control, formState: { errors }, setValue } = useForm();
   const navigate = useNavigate();
 
-  const handleCancel = () => {
-    navigate(-1);
-  };
-
-  // ___________________________________ Backend __________________________________
-  // Display options
   const {
     wilayahOptions,
     displayWilayahs,
-    cawanganOptions,
     displayCawangans,
+    filteredCawanganOptions,
+    filterCawangansByWilayah,
 
     bahagianOptions,
     displayBahagians,
@@ -49,9 +26,14 @@ function EditKetidakpatuhan() {
     displayJabatans,
     unitOptions,
     displayUnits,
+    filteredJabatanOptions,
+    filterJabatansByBahagian,
+    filteredUnitOptions,
+    filterUnitsByJabatan,
 
     jenisAuditOptions,
     displayJenisAudits,
+
     skopSemakanOptions,
     displaySkopSemakans,
     skopKriteriaOptions,
@@ -60,11 +42,20 @@ function EditKetidakpatuhan() {
     displayAktivitiSemakans,
     kriteriaKetidakpatuhanOptions,
     displayKriteriaKetidakpatuhans,
+    filteredSkopKriteriaOptions,
+    filterSkopKriteriasBySkopSemakan,
+    filteredAktivitiSemakanOptions,
+    filterAktivitiSemakansBySkopKriteria,
+    filteredKriteriaKetidakpatuhanOptions,
+    filterKriteriaKetidakpatuhansByAktivitiSemakan,
+
+    
   } = useOptionStore((state) => ({
     wilayahOptions: state.wilayahOptions,
     displayWilayahs: state.displayWilayahs,
-    cawanganOptions: state.cawanganOptions,
     displayCawangans: state.displayCawangans,
+    filteredCawanganOptions: state.filteredCawanganOptions,
+    filterCawangansByWilayah: state.filterCawangansByWilayah,
 
     bahagianOptions: state.bahagianOptions,
     displayBahagians: state.displayBahagians,
@@ -72,9 +63,14 @@ function EditKetidakpatuhan() {
     displayJabatans: state.displayJabatans,
     unitOptions: state.unitOptions,
     displayUnits: state.displayUnits,
+    filteredJabatanOptions: state.filteredJabatanOptions,
+    filterJabatansByBahagian: state.filterJabatansByBahagian,
+    filteredUnitOptions: state.filteredUnitOptions,
+    filterUnitsByJabatan: state.filterUnitsByJabatan,
 
     jenisAuditOptions: state.jenisAuditOptions,
     displayJenisAudits: state.displayJenisAudits,
+
     skopSemakanOptions: state.skopSemakanOptions,
     displaySkopSemakans: state.displaySkopSemakans,
     skopKriteriaOptions: state.skopKriteriaOptions,
@@ -83,51 +79,102 @@ function EditKetidakpatuhan() {
     displayAktivitiSemakans: state.displayAktivitiSemakans,
     kriteriaKetidakpatuhanOptions: state.kriteriaKetidakpatuhanOptions,
     displayKriteriaKetidakpatuhans: state.displayKriteriaKetidakpatuhans,
+    filteredSkopKriteriaOptions: state.filteredSkopKriteriaOptions,
+    filterSkopKriteriasBySkopSemakan: state.filterSkopKriteriasBySkopSemakan,
+    filteredAktivitiSemakanOptions: state.filteredAktivitiSemakanOptions,
+    filterAktivitiSemakansBySkopKriteria: state.filterAktivitiSemakansBySkopKriteria,
+    filteredKriteriaKetidakpatuhanOptions: state.filteredKriteriaKetidakpatuhanOptions,
+    filterKriteriaKetidakpatuhansByAktivitiSemakan: state.filterKriteriaKetidakpatuhansByAktivitiSemakan,
   }));
 
-  useEffect(() => {
-    if (audits) {
-      displayWilayahs();
-      displayCawangans(audits.wilayah?.id);
-      displayBahagians();
-      displayJabatans(audits.bahagian?.id);
-      displayUnits(audits.jabatan?.id);
-      displayJenisAudits();
-      displaySkopSemakans();
-      displaySkopKriterias(audits.skop_semakan?.id);
-      displayAktivitiSemakans(audits.skop_kriteria?.id);
-      displayKriteriaKetidakpatuhans(audits.aktiviti_semakan?.id);
+  const onSubmit = (data) => {
+    handleEditRepotIndividu(data, audits.id);
+  };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    displayWilayahs();
+    displayCawangans();
+
+    displayBahagians();
+    displayJabatans();
+    displayUnits();
+
+    displayJenisAudits();
+    displaySkopSemakans();
+    displaySkopKriterias();
+    displayAktivitiSemakans();
+    displayKriteriaKetidakpatuhans();
+  
+    if (audits) {
       setValue("wilayahId", audits.wilayah?.id);
       setValue("cawanganId", audits.cawangan?.id);
+      filterCawangansByWilayah(audits.wilayah?.id);
+
       setValue("bahagianId", audits.bahagian?.id);
       setValue("jabatanId", audits.jabatan?.id);
       setValue("unitId", audits.unit?.id);
-      setValue("jenisAuditId", audits.jenis_audit?.id);
+      filterJabatansByBahagian(audits.bahagian?.id);
+      filterUnitsByJabatan(audits.jabatan?.id);
+
       setValue("skopSemakanId", audits.skop_semakan?.id);
       setValue("skopKriteriaId", audits.skop_kriteria?.id);
       setValue("aktivitiSemakanId", audits.aktiviti_semakan?.id);
       setValue("kriteriaKetidakpatuhanId", audits.kriteria_ketidakpatuhan?.id);
+      
+      filterSkopKriteriasBySkopSemakan(audits.skop_semakan?.id);
+      filterAktivitiSemakansBySkopKriteria(audits.skop_kriteria?.id);
+      filterKriteriaKetidakpatuhansByAktivitiSemakan(audits.aktiviti_semakan?.id);
+
+      setValue("jenisAuditId", audits.jenis_audit?.id);
       setValue("jawatanKakitangan", audits.jawatanKakitangan);
       setValue("tarikhAudit", audits.tarikhAudit);
       setValue("catatanAudit", audits.catatanAudit);
       setValue("tahapRisikoAudit", audits.tahapRisikoAudit);
       setValue("kesalahanBerulang", audits.kesalahanBerulang);
+
     }
-  }, [
-    displayWilayahs,
-    displayCawangans,
-    audits,
-    displayBahagians,
-    displayJabatans,
-    displayUnits,
-    displayJenisAudits,
-    displaySkopSemakans,
-    displaySkopKriterias,
-    displayAktivitiSemakans,
-    displayKriteriaKetidakpatuhans,
-    setValue,
-  ]);
+  }, [audits, setValue, displayWilayahs, displayCawangans, filterCawangansByWilayah, displayBahagians, displayJabatans, displayUnits, filterJabatansByBahagian, filterUnitsByJabatan, displaySkopSemakans, filterSkopKriteriasBySkopSemakan, filterAktivitiSemakansBySkopKriteria, filterKriteriaKetidakpatuhansByAktivitiSemakan]);
+  
+  const handleWilayahChange = (e) => {
+    const selectedWilayahId = e.target.value;
+    setValue("wilayahId", selectedWilayahId);
+    filterCawangansByWilayah(selectedWilayahId);
+  };
+
+  const handleBahagianChange = (e) => {
+    const selectedBahagianId = e.target.value;
+    setValue("bahagianId", selectedBahagianId);
+    filterJabatansByBahagian(selectedBahagianId);
+  };
+
+  const handleJabatanChange = (e) => {
+    const selectedJabatanId = e.target.value;
+    setValue("jabatanId", selectedJabatanId);
+    filterUnitsByJabatan(selectedJabatanId);
+  };
+
+  const handleSkopSemakanChange = (e) => {
+    const selectedSkopSemakanId = e.target.value;
+    setValue("skopSemakanId", selectedSkopSemakanId);
+    filterSkopKriteriasBySkopSemakan(selectedSkopSemakanId);
+  };
+  
+  const handleSkopKriteriaChange = (e) => {
+    const selectedSkopKriteriaId = e.target.value;
+    setValue("skopKriteriaId", selectedSkopKriteriaId);
+    filterAktivitiSemakansBySkopKriteria(selectedSkopKriteriaId);
+  };
+  
+  const handleAktivitiSemakanChange = (e) => {
+    const selectedAktivitiSemakanId = e.target.value;
+    setValue("aktivitiSemakanId", selectedAktivitiSemakanId);
+    filterKriteriaKetidakpatuhansByAktivitiSemakan(selectedAktivitiSemakanId);
+  };
+  
 
   return (
     <>
@@ -164,7 +211,7 @@ function EditKetidakpatuhan() {
             <h4>Lokasi</h4>
             <hr />
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Row>
+            <Row>
                 <Col xs={12} xl={6}>
                   <Form.Group>
                     <Form.Label>Wilayah</Form.Label>
@@ -178,7 +225,7 @@ function EditKetidakpatuhan() {
                           <Form.Select
                             onChange={(e) => {
                               onChange(e);
-                              setValue("wilayahId", e.target.value);
+                              handleWilayahChange(e);
                             }}
                             value={value}
                           >
@@ -221,7 +268,7 @@ function EditKetidakpatuhan() {
                             value={value}
                           >
                             <option value="">Pilih cawangan</option>
-                            {cawanganOptions
+                            {filteredCawanganOptions
                               .sort((a, b) =>
                                 a.namaCawangan.localeCompare(b.namaCawangan)
                               )
@@ -288,7 +335,7 @@ function EditKetidakpatuhan() {
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setValue("bahagianId", e.target.value);
+                                  handleBahagianChange(e);
                                 }}
                                 value={value}
                               >
@@ -331,12 +378,12 @@ function EditKetidakpatuhan() {
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setValue("jabatanId", e.target.value);
+                                  handleJabatanChange(e);
                                 }}
                                 value={value}
                               >
                                 <option value="">Pilih jabatan</option>
-                                {jabatanOptions
+                                {filteredJabatanOptions
                                   .sort((a, b) =>
                                     a.namaJabatan.localeCompare(b.namaJabatan)
                                   )
@@ -374,7 +421,7 @@ function EditKetidakpatuhan() {
                                 value={value}
                               >
                                 <option value="">Pilih unit</option>
-                                {unitOptions
+                                {filteredUnitOptions
                                   .sort((a, b) =>
                                     a.namaUnit.localeCompare(b.namaUnit)
                                   )
@@ -401,7 +448,7 @@ function EditKetidakpatuhan() {
                 <h4>Perincian Audit</h4>
                 <hr />
                 <div>
-                  <Row>
+                <Row>
                     <Col>
                       <Form.Group>
                         <Form.Label>Tahun Diaudit</Form.Label>
@@ -473,7 +520,6 @@ function EditKetidakpatuhan() {
                       </Form.Group>
                     </Col>
                   </Row>
-
                   <Row>
                     <Col>
                       <Form.Group>
@@ -488,7 +534,7 @@ function EditKetidakpatuhan() {
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setValue("skopSemakanId", e.target.value);
+                                  handleSkopSemakanChange(e);
                                 }}
                                 value={value}
                               >
@@ -531,12 +577,12 @@ function EditKetidakpatuhan() {
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setValue("skopKriteriaId", e.target.value);
+                                  handleSkopKriteriaChange(e);
                                 }}
                                 value={value}
                               >
                                 <option value="">Pilih skop kriteria</option>
-                                {skopKriteriaOptions
+                                {filteredSkopKriteriaOptions
                                   .sort((a, b) =>
                                     a.namaSkopKriteria.localeCompare(
                                       b.namaSkopKriteria
@@ -574,12 +620,12 @@ function EditKetidakpatuhan() {
                               <Form.Select
                                 onChange={(e) => {
                                   onChange(e);
-                                  setValue("aktivitiSemakanId", e.target.value);
+                                  handleAktivitiSemakanChange(e);
                                 }}
                                 value={value}
                               >
                                 <option value="">Pilih aktiviti semakan</option>
-                                {aktivitiSemakanOptions
+                                {filteredAktivitiSemakanOptions
                                   .sort((a, b) =>
                                     a.namaAktivitiSemakan.localeCompare(
                                       b.namaAktivitiSemakan
@@ -630,7 +676,7 @@ function EditKetidakpatuhan() {
                               <option value="">
                                 Pilih kriteria ketidakpatuhan
                               </option>
-                              {kriteriaKetidakpatuhanOptions
+                              {filteredKriteriaKetidakpatuhanOptions
                                 .sort((a, b) =>
                                   a.namaKriteriaKetidakpatuhan.localeCompare(
                                     b.namaKriteriaKetidakpatuhan
@@ -764,7 +810,6 @@ function EditKetidakpatuhan() {
                     </Form.Group>
                   </Row>
                   <Row>
-                    {/* Note: Catatan is not a required field */}
                     <Form.Group>
                       <Form.Label>Catatan</Form.Label>
                       <Controller
