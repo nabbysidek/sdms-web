@@ -41,6 +41,10 @@ const useLaporanStore = create((set) => ({
           accessorKey: "skop_semakan.namaSkopSemakan",
         },
         {
+          header: "Skop Kriteria",
+          accessorKey: "skop_kriteria.namaSkopKriteria",
+        },
+        {
           header: "Aktiviti Semakan",
           accessorKey: "aktiviti_semakan.namaAktivitiSemakan",
         },
