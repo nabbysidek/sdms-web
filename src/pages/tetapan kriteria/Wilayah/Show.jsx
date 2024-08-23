@@ -1,21 +1,13 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { Table, Button, Row, Container } from "react-bootstrap";
+import { Button, Row, Container } from "react-bootstrap";
 import CreateWilayah from "./Create";
 import EditWilayah from "./Edit";
 import SearchWilayah from "./Search";
+import TableComponent from "../../../components/TableComponent";
 import showConfirmationDialog from "../showConfirmationDialog";
-import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useWilayahStore from "../../../store/wilayah-store";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-} from "@tanstack/react-table";
 
 function ShowWilayahList() {
   // USE OF WILAYAH STORE
@@ -64,19 +56,6 @@ function ShowWilayahList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
-  // TABLE DECLARATION
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: { sorting: sorting, globalFilter:filtering, },
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setFiltering,
-  });
-
   return (
     <Container fluid>
       <SearchWilayah filterValue={filtering} onFilterChange={setFiltering} />
@@ -91,43 +70,14 @@ function ShowWilayahList() {
         </Row>
       </div>
       <hr />
-      <Table responsive>
-        <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  {
-                    { asc: " 🔼", desc: " 🔽" }[
-                      header.column.getIsSorted() ?? null
-                    ]
-                  }
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-        {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      {/* PAGINATION */}
-      <Pagination table={table}/>
+      <TableComponent
+        data={data}
+        columns={columns}
+        sorting={sorting}
+        setSorting={setSorting}
+        filtering={filtering}
+        setFiltering={setFiltering}
+      />
 
       {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
