@@ -1,21 +1,13 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { Table, Row, Button, Container } from "react-bootstrap";
+import { Row, Button, Container } from "react-bootstrap";
 import CreateBahagian from "./Create";
 import EditBahagian from "./Edit";
 import SearchBahagian from "./Search";
+import TableComponent from "../../../components/TableComponent";
 import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import Pagination from "../../../components/page layout/Pagination";
 import useBahagianStore from "../../../store/bahagian-store";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-} from "@tanstack/react-table";
 
 function ShowBahagianList() {
   // USE OF BAHAGIAN STORE
@@ -64,19 +56,6 @@ function ShowBahagianList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
-  // TABLE DECLARATION
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: { sorting: sorting, globalFilter:filtering, },
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setFiltering,
-  });
-
   return (
     <>
       <Container fluid>
@@ -92,43 +71,14 @@ function ShowBahagianList() {
           </Row>
         </div>
         <hr />
-        <Table responsive>
-          <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  {
-                    { asc: " 🔼", desc: " 🔽" }[
-                      header.column.getIsSorted() ?? null
-                    ]
-                  }
-                </th>
-              ))}
-            </tr>
-          ))}
-          </thead>
-          <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-          </tbody>
-        </Table>
-        {/* PAGINATION */}
-        <Pagination table={table}/>
+        <TableComponent
+          data={data}
+          columns={columns}
+          sorting={sorting}
+          setSorting={setSorting}
+          filtering={filtering}
+          setFiltering={setFiltering}
+        />
 
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
