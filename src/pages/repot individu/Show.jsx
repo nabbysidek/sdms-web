@@ -1,18 +1,11 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Table, Row, Col, Form, Button, Container } from "react-bootstrap";
+import { Row, Col, Form, Button, Container } from "react-bootstrap";
+import TableComponent from "../../components/TableComponent";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import useRepotIndividuStore from "../../store/repot-individu-store";
-import Pagination from "../../components/page layout/Pagination";
 import "../../assets/styles/styles_repot_individu.css";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-  getSortedRowModel,
-} from "@tanstack/react-table";
 
 function SearchResultUntukRepotIndividu({ searchResults }) {
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
@@ -125,17 +118,6 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
   // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
 
-  // TABLE DECLARATION
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    state: { sorting: sorting  },
-    onSortingChange: setSorting,
-  });
-
   return (
     <>
       {/* BAHAGIAN MAKLUMAT KAKITANGAN */}
@@ -200,49 +182,12 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
         <hr />
         <div>
           {/* JADUAL AUDIT KETIDAKPATUHAN KAKITANGAN */}
-          <Table responsive>
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      onClick={header.column.getToggleSortingHandler()}
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                      {
-                        { asc: " 🔼", desc: " 🔽" }[
-                          header.column.getIsSorted() ?? null
-                        ]
-                      }
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-
-        {/* PAGINATION */}
-        <div className="pagination">
-          <Pagination table={table}/> 
+          <TableComponent
+          data={data}
+          columns={columns}
+          sorting={sorting}
+          setSorting={setSorting}
+        />
         </div>
 
         {/* IMPORT DAN EKSPORT */}
