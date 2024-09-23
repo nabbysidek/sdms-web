@@ -75,7 +75,7 @@ function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId }) {
               className="btn-secondary"
               onClick={handleCloseModalAllowAccess}
             >
-              Tutup
+              Batal
             </Button>
             <Button
               className="btn-primary"

@@ -77,7 +77,7 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId }) {
               className="btn-secondary"
               onClick={handleCloseModalTerminateAccessSenaraiPengguna}
             >
-              Tutup
+              Batal
             </Button>
             <Button
               className="btn-primary"

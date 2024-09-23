@@ -71,7 +71,7 @@ function ModalRejectAccessPermohonanPengguna({ userId }) {
               className="btn-secondary"
               onClick={handleCloseModalRejectAccess}
             >
-              Tutup
+              Batal
             </Button>
             <Button
               className="btn-primary"

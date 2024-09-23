@@ -89,16 +89,14 @@ function IndexTetapanPengguna() {
           title: "Berjaya",
           text: response.data.success, 
         });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: error.response.data.error,
-        });
-      }
+      } 
     } catch (error) {
       console.log(error);
-      alert("Terdapat ralat semasa mengemaskini peranan pengguna.");
+      Swal.fire({
+        icon: "error",
+          title: "Gagal",
+          text: error.response.data.error,
+      });
     }
   };
 

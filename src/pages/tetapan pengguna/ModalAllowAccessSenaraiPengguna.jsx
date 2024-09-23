@@ -80,7 +80,7 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
               className="btn-secondary"
               onClick={handleCloseModalAllowAccessSenaraiPengguna}
             >
-              Tutup
+              Batal
             </Button>
             <Button
               className="btn-primary"
