@@ -14,6 +14,8 @@ import {
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import "../../assets/styles/styles_laporan.css";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 // FILTER COMPONENTS TO ALLOW DIFFERENT WAYS OF FILTERING
 function Filter({ column }) {
@@ -94,6 +96,37 @@ function SearchResultLaporan() {
       },
     },
   });
+
+  // HANDLE EXPORT LAPORAN
+  const handleExportLaporan = () => {
+    // PREPARE CSV DATA
+    const csvData = filteredData.map((laporan, index) => ({
+      Bil: index + 1,
+      "TARIKH AUDIT": laporan.tarikhAudit,
+      "TAHAP RISIKO": laporan.tahapRisikoAudit,
+      "WILAYAH": laporan.wilayah?.namaWilayah,
+      "CAWANGAN": laporan.cawangan?.namaCawangan,
+      "KESALAHAN BERULANG": laporan.kesalahanBerulang,
+      "JENIS AUDIT": laporan.jenis_audit?.namaJenisAudit,
+      "SKOP SEMAKAN": laporan.skop_semakan?.namaSkopSemakan,
+      "SKOP KRITERIA": laporan.skop_kriteria?.namaSkopKriteria,
+      "AKTIVITI SEMAKAN": laporan.aktiviti_semakan?.namaAktivitiSemakan,
+      "KRITERIA KETIDAKPATUHAN": laporan.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan,
+      "ID KAKITANGAN": laporan.kakitangan?.idKakitangan,
+      "NAMA KAKITANGAN": laporan.kakitangan?.namaKakitangan,
+      "JAWATAN KAKITANGAN": laporan.jawatanKakitangan,
+      "BAHAGIAN": laporan.bahagian?.namaBahagian,
+      "JABATAN": laporan.jabatan?.namaJabatan,
+      "UNIT": laporan.unit?.namaUnit,
+    }));
+
+    // CONVERT TO CSV FORMAT
+    const csv = Papa.unparse(csvData);
+
+    // CREATE A BLOB AND SAVE AS CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "LAPORAN KETIDAKPATUHAN.csv");
+  };
 
   return (
     <Container fluid>
@@ -195,7 +228,7 @@ function SearchResultLaporan() {
       </div>
 
       <div className="functional-btns-container">
-        <ExportButton />
+        <ExportButton onClick={handleExportLaporan} />
         <ImportButton />
       </div>
     </Container>
