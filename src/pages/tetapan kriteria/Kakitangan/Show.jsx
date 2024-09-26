@@ -9,6 +9,8 @@ import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useKakitanganStore from "../../../store/kakitangan-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowKakitanganList() {
   // USE OF KAKITANGAN STORE
@@ -65,6 +67,23 @@ function ShowKakitanganList() {
   // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
+  
+  // HANDLE EXPORT KAKITANGAN
+  const handleExportKakitangan = () => {
+    // Prepare CSV data
+    const csvData = data.map((kakitangan, index) => ({
+      Bil: index + 1,
+      "ID KAKITANGAN": kakitangan.idKakitangan,
+      "NAMA KAKITANGAN": kakitangan.namaKakitangan,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI KAKITANGAN.csv");
+  };
 
   return (
     <Container fluid>
@@ -91,7 +110,7 @@ function ShowKakitanganList() {
 
       {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
-        <ExportButton />
+        <ExportButton onClick={handleExportKakitangan}/>
         <ImportButton />
       </div>
     </Container>

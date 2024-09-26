@@ -8,6 +8,8 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useKriteriaKetidakpatuhanStore from "../../../store/kriteria-ketidakpatuhan-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowKriteriaKetidakpatuhanList() {
   // USE OF KRITERIA KETIDAKPATUHAN STORE
@@ -85,6 +87,25 @@ function ShowKriteriaKetidakpatuhanList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT AKTIVITI SEMAKAN
+  const handleExportKriteriaKetidakpatuhan = () => {
+    // Prepare CSV data
+    const csvData = data.map((kriteriaKetidakpatuhan, index) => ({
+      Bil: index + 1,
+      "SKOP SEMAKAN": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+      "SKOP KRITERIA KETIDAKPATUHAN": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.namaSkopKriteria || "N/A",
+      "AKTIVITI SEMAKAN": kriteriaKetidakpatuhan.aktiviti_semakan?.namaAktivitiSemakan || "N/A",
+      "NAMA KRITERIA KETIDAKPATUHAN": kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI KRITERIA KETIDAKPATUHAN.csv");
+  };
+
   return (
     <>
       <Container fluid>
@@ -112,7 +133,7 @@ function ShowKriteriaKetidakpatuhanList() {
 
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportKriteriaKetidakpatuhan}/>
           <ImportButton />
         </div>
       </Container>

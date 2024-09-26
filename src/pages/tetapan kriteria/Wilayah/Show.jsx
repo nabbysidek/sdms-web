@@ -8,6 +8,8 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useWilayahStore from "../../../store/wilayah-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowWilayahList() {
   // USE OF WILAYAH STORE
@@ -56,6 +58,22 @@ function ShowWilayahList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT WILAYAH
+  const handleExportWilayah = () => {
+    // Prepare CSV data
+    const csvData = data.map((wilayah, index) => ({
+      Bil: index + 1,
+      "NAMA WILAYAH": wilayah.namaWilayah,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI WILAYAH.csv");
+  };
+
   return (
     <Container fluid>
       <SearchWilayah filterValue={filtering} onFilterChange={setFiltering} />
@@ -81,7 +99,7 @@ function ShowWilayahList() {
 
       {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
-        <ExportButton />
+        <ExportButton onClick={handleExportWilayah}/>
         <ImportButton />
       </div>
     </Container>

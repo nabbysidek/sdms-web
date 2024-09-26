@@ -8,6 +8,8 @@ import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useCawanganStore from "../../../store/cawangan-store";
 import TableComponent from "../../../components/TableComponent";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowCawanganList() {
   // USE OF CAWANGAN STORE
@@ -79,6 +81,23 @@ function ShowCawanganList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT CAWANGAN
+  const handleExportCawangan = () => {
+    // Prepare CSV data
+    const csvData = data.map((cawangan, index) => ({
+      Bil: index + 1,
+      "WILAYAH": cawangan.wilayah?.namaWilayah || "N/A",
+      "NAMA CAWANGAN": cawangan.namaCawangan,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI CAWANGAN.csv");
+  };
+
   return (
     <>
       <Container fluid>
@@ -108,7 +127,7 @@ function ShowCawanganList() {
         
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportCawangan} />
           <ImportButton />
         </div>
       </Container>

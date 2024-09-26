@@ -8,6 +8,8 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useBahagianStore from "../../../store/bahagian-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowBahagianList() {
   // USE OF BAHAGIAN STORE
@@ -56,6 +58,22 @@ function ShowBahagianList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT BAHAGIAN
+  const handleExportBahagian = () => {
+    // Prepare CSV data
+    const csvData = data.map((bahagian, index) => ({
+      Bil: index + 1,
+      "NAMA BAHAGIAN": bahagian.namaBahagian,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI BAHAGIAN.csv");
+  };
+
   return (
     <>
       <Container fluid>
@@ -82,7 +100,7 @@ function ShowBahagianList() {
 
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportBahagian} />
           <ImportButton />
         </div>
       </Container>

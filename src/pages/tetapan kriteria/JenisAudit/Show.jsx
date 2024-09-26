@@ -8,6 +8,8 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useJenisAuditStore from "../../../store/jenis-audit-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowJenisAuditList() {
   // USE OF JENIS AUDIT STORE
@@ -52,9 +54,25 @@ function ShowJenisAuditList() {
     },
   ]);
 
-    // SORTING AND FILTERING
-    const [sorting, setSorting] = useState([]);
-    const [filtering, setFiltering] = useState("");
+  // SORTING AND FILTERING
+  const [sorting, setSorting] = useState([]);
+  const [filtering, setFiltering] = useState("");
+
+  // HANDLE EXPORT KAKITANGAN
+  const handleExportJenisAudit = () => {
+    // Prepare CSV data
+    const csvData = data.map((jenisAudit, index) => ({
+      Bil: index + 1,
+      "NAMA JENIS AUDIT": jenisAudit.namaJenisAudit,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI JENIS AUDIT.csv");
+  };
 
   return (
     <>
@@ -82,7 +100,7 @@ function ShowJenisAuditList() {
         
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportJenisAudit}/>
           <ImportButton />
         </div>
       </Container>

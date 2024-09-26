@@ -9,6 +9,8 @@ import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useSkopSemakanStore from "../../../store/skop-semakan-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowSkopSemakanList() {
   // USE OF SKOP SEMAKAN STORE
@@ -57,6 +59,22 @@ function ShowSkopSemakanList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT KAKITANGAN
+  const handleExportSkopSemakan = () => {
+    // Prepare CSV data
+    const csvData = data.map((skopSemakan, index) => ({
+      Bil: index + 1,
+      "NAMA SKOP SEMAKAN": skopSemakan.namaSkopSemakan,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI SKOP SEMAKAN.csv");
+  };
+
   return (
     <>
       <Container fluid>
@@ -83,7 +101,7 @@ function ShowSkopSemakanList() {
         
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportSkopSemakan} />
           <ImportButton />
         </div>
       </Container>

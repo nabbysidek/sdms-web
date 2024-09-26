@@ -9,6 +9,8 @@ import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useUnitStore from "../../../store/unit-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowUnitList() {
   // USE OF UNIT STORE
@@ -81,6 +83,24 @@ function ShowUnitList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT UNIT
+  const handleExportUnit = () => {
+    // Prepare CSV data
+    const csvData = data.map((unit, index) => ({
+      Bil: index + 1,
+      "BAHAGIAN": unit.jabatan?.bahagian?.namaBahagian || "N/A",
+      "JABATAN": unit.jabatan?.namaJabatan || "N/A",
+      "NAMA UNIT": unit.namaUnit,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI UNIT.csv");
+  };
+
   return (
     <>
       <Container fluid>
@@ -107,7 +127,7 @@ function ShowUnitList() {
         
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportUnit} />
           <ImportButton />
         </div>
       </Container>

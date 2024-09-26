@@ -9,6 +9,8 @@ import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import Pagination from "../../../components/page layout/Pagination";
 import useAktivitiSemakanStore from "../../../store/aktiviti-semakan-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function ShowAktivitiSemakanList() {
   // USE OF AKTIVITI SEMAKAN STORE
@@ -77,10 +79,27 @@ function ShowAktivitiSemakanList() {
     },
   ]);
 
-  
   // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
+
+  // HANDLE EXPORT AKTIVITI SEMAKAN
+  const handleExportAktivitiSemakan = () => {
+    // Prepare CSV data
+    const csvData = data.map((aktivitiSemakan, index) => ({
+      Bil: index + 1,
+      "SKOP SEMAKAN": aktivitiSemakan.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+      "SKOP KRITERIA KETIDAKPATUHAN": aktivitiSemakan.skop_kriteria?.namaSkopKriteria || "N/A",
+      "NAMA AKTIVITI SEMAKAN": aktivitiSemakan.namaAktivitiSemakan,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI AKTIVITI SEMAKAN.csv");
+  };
 
   return (
     <>
@@ -108,7 +127,7 @@ function ShowAktivitiSemakanList() {
 
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportAktivitiSemakan} />
           <ImportButton />
         </div>
       </Container>

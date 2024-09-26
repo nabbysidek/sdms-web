@@ -8,6 +8,8 @@ import showConfirmationDialog from "../showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useJabatanStore from "../../../store/jabatan-store";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function Show() {
   // USE OF JABATAN STORE
@@ -76,6 +78,23 @@ function Show() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
+  // HANDLE EXPORT JABATAN
+  const handleExportJabatan = () => {
+    // Prepare CSV data
+    const csvData = data.map((jabatan, index) => ({
+      Bil: index + 1,
+      "BAHAGIAN": jabatan.bahagian?.namaBahagian || "N/A",
+      "NAMA JABATAN": jabatan.namaJabatan,
+    }));
+
+    // Convert to CSV format
+    const csv = Papa.unparse(csvData);
+
+    // Create a Blob and save as CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI JABATAN.csv");
+  };
+
   return (
     <Container fluid>
       <SearchJabatan filterValue={filtering} onFilterChange={setFiltering} />
@@ -101,7 +120,7 @@ function Show() {
       
       {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
-        <ExportButton />
+        <ExportButton onClick={handleExportJabatan}/>
         <ImportButton />
       </div>
     </Container>
