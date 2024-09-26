@@ -6,6 +6,8 @@ import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import useRepotIndividuStore from "../../store/repot-individu-store";
 import "../../assets/styles/styles_repot_individu.css";
+import * as FileSaver from "file-saver";
+import * as Papa from "papaparse";
 
 function SearchResultUntukRepotIndividu({ searchResults }) {
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
@@ -118,6 +120,36 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
   // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
 
+  // HANDLE EXPORT UNIT
+  const handleExportReportIndividu = () => {
+    // PREPARE CSV DATA
+    const csvData = data.map((reportIndividu, index) => ({
+      Bil: index + 1,
+      Risiko: reportIndividu.tahapRisikoAudit,
+      "Kesalahan Berulang": reportIndividu.kesalahanBerulang,
+      "Tarikh Audit": reportIndividu.tarikhAudit,
+      "Wilayah": reportIndividu.wilayah?.namaWilayah || "",
+      "Cawangan": reportIndividu.cawangan?.namaCawangan || "",
+      "Jawatan": reportIndividu.jawatanKakitangan,
+      "Bahagian": reportIndividu.bahagian?.namaBahagian || "",
+      "Jabatan": reportIndividu.jabatan?.namaJabatan || "",
+      "Unit": reportIndividu.unit?.namaUnit || "",
+      "Jenis Audit": reportIndividu.jenis_audit?.namaJenisAudit || "",
+      "Skop Semakan": reportIndividu.skop_semakan?.namaSkopSemakan || "",
+      "Skop Kriteria": reportIndividu.skop_kriteria?.namaSkopKriteria || "",
+      "Aktiviti Semakan": reportIndividu.aktiviti_semakan?.namaAktivitiSemakan || "",
+      "Kriteria Ketidakpatuhan": reportIndividu.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan || "",
+      "Catatan": reportIndividu.catatanAudit,
+    }));
+
+    // CONVERT TO CSV FORMAT
+    const csv = Papa.unparse(csvData);
+
+    // CREATE A BLOB & SAVE AS CSV
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    FileSaver.saveAs(blob, "SENARAI KETIDAKPATUHAN KAKITANGAN.csv");
+  };
+
   return (
     <>
       {/* BAHAGIAN MAKLUMAT KAKITANGAN */}
@@ -192,7 +224,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
 
         {/* IMPORT DAN EKSPORT */}
         <div className="functional-btns-container">
-          <ExportButton />
+          <ExportButton onClick={handleExportReportIndividu}/>
           <ImportButton />
         </div>
       </Container>
