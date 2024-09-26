@@ -89,7 +89,7 @@ function ShowKriteriaKetidakpatuhanList() {
 
   // HANDLE EXPORT AKTIVITI SEMAKAN
   const handleExportKriteriaKetidakpatuhan = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((kriteriaKetidakpatuhan, index) => ({
       Bil: index + 1,
       "SKOP SEMAKAN": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
@@ -98,10 +98,10 @@ function ShowKriteriaKetidakpatuhanList() {
       "NAMA KRITERIA KETIDAKPATUHAN": kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI KRITERIA KETIDAKPATUHAN.csv");
   };

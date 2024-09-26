@@ -83,17 +83,17 @@ function ShowCawanganList() {
 
   // HANDLE EXPORT CAWANGAN
   const handleExportCawangan = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((cawangan, index) => ({
       Bil: index + 1,
       "WILAYAH": cawangan.wilayah?.namaWilayah || "N/A",
       "NAMA CAWANGAN": cawangan.namaCawangan,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI CAWANGAN.csv");
   };

@@ -60,16 +60,16 @@ function ShowBahagianList() {
 
   // HANDLE EXPORT BAHAGIAN
   const handleExportBahagian = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((bahagian, index) => ({
       Bil: index + 1,
       "NAMA BAHAGIAN": bahagian.namaBahagian,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI BAHAGIAN.csv");
   };

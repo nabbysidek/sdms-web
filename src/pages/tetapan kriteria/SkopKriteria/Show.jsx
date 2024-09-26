@@ -81,17 +81,17 @@ function ShowSkopKriteriaList() {
 
   // HANDLE EXPORT KAKITANGAN
   const handleExportSkopKriteria = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((skopKriteria, index) => ({
       Bil: index + 1,
       "SKOP SEMAKAN": skopKriteria.skop_semakan?.namaSkopSemakan || "N/A",
       "NAMA SKOP KRITERIA KETIDAKPATUHAN": skopKriteria.namaSkopKriteria,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI SKOP KRITERIA.csv");
   };

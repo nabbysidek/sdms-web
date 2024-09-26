@@ -21,13 +21,16 @@ function ShowWilayahList() {
   }, [fetchWilayahs]);
 
   // HANDLE DELETE OF WILAYAH
-  const handleDeleteWilayah = useCallback(async (wilayahId) => {
-    const confirmResult = await showConfirmationDialog();
+  const handleDeleteWilayah = useCallback(
+    async (wilayahId) => {
+      const confirmResult = await showConfirmationDialog();
 
-    if (confirmResult.isConfirmed) {
-      await deleteWilayah(wilayahId);
-    }
-  }, [deleteWilayah, fetchWilayahs]);
+      if (confirmResult.isConfirmed) {
+        await deleteWilayah(wilayahId);
+      }
+    },
+    [deleteWilayah, fetchWilayahs]
+  );
 
   // USE OF TANSTACK TABLE
   // FETCH DATA AND DECLARE COLUMNS
@@ -48,7 +51,12 @@ function ShowWilayahList() {
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditWilayah wilayah={row.original} onUpdateSuccess={fetchWilayahs} />
-          <Button onClick={() => handleDeleteWilayah(row.original.id)} className="delete-btn">Padam</Button>
+          <Button
+            onClick={() => handleDeleteWilayah(row.original.id)}
+            className="delete-btn"
+          >
+            Padam
+          </Button>
         </div>
       ),
     },
@@ -60,16 +68,16 @@ function ShowWilayahList() {
 
   // HANDLE EXPORT WILAYAH
   const handleExportWilayah = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((wilayah, index) => ({
       Bil: index + 1,
       "NAMA WILAYAH": wilayah.namaWilayah,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI WILAYAH.csv");
   };
@@ -99,7 +107,7 @@ function ShowWilayahList() {
 
       {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
-        <ExportButton onClick={handleExportWilayah}/>
+        <ExportButton onClick={handleExportWilayah} />
         <ImportButton />
       </div>
     </Container>

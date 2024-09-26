@@ -85,7 +85,7 @@ function ShowAktivitiSemakanList() {
 
   // HANDLE EXPORT AKTIVITI SEMAKAN
   const handleExportAktivitiSemakan = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((aktivitiSemakan, index) => ({
       Bil: index + 1,
       "SKOP SEMAKAN": aktivitiSemakan.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
@@ -93,10 +93,10 @@ function ShowAktivitiSemakanList() {
       "NAMA AKTIVITI SEMAKAN": aktivitiSemakan.namaAktivitiSemakan,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI AKTIVITI SEMAKAN.csv");
   };

@@ -61,16 +61,16 @@ function ShowSkopSemakanList() {
 
   // HANDLE EXPORT KAKITANGAN
   const handleExportSkopSemakan = () => {
-    // Prepare CSV data
+    // PREPARE CSV DATA
     const csvData = data.map((skopSemakan, index) => ({
       Bil: index + 1,
       "NAMA SKOP SEMAKAN": skopSemakan.namaSkopSemakan,
     }));
 
-    // Convert to CSV format
+    // CONVERT TO CSV FORMAT
     const csv = Papa.unparse(csvData);
 
-    // Create a Blob and save as CSV
+    // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     FileSaver.saveAs(blob, "SENARAI SKOP SEMAKAN.csv");
   };
