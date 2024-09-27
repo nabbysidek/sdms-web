@@ -5,7 +5,7 @@ import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
-import axios from "axios";
+import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
 function SignUp() {
@@ -28,27 +28,24 @@ function SignUp() {
   // Sign up user
   const handleSignUp = async (signUpInput) => {
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/api/auth/sign-up`,
-        signUpInput,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          }
-        }
-      );
-  
+      const response = await axiosCustom.post(
+        `auth/sign-up`, 
+        signUpInput, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
       if (response.status >= 200 && response.status < 300) {
         Swal.fire({
           icon: "success",
           title: "Permohonan akses diterima. Log masuk selepas diberi akses.",
           text: response.data.success,
         });
-
       } else {
-        console.log('Unexpected response status:', response.status);
-        console.log('Response data:', response.data);
+        console.log("Unexpected response status:", response.status);
+        console.log("Response data:", response.data);
       }
     } catch (error) {
       Swal.fire({
@@ -58,13 +55,13 @@ function SignUp() {
       });
 
       if (error.response) {
-        console.log('Server response status:', error.response.status);
-        console.log('Server response data:', error.response.data);
+        console.log("Server response status:", error.response.status);
+        console.log("Server response data:", error.response.data);
       }
-      console.log('Error:', error);
+      console.log("Error:", error);
     }
   };
-  
+
   return (
     <div className="pg-container">
       <Form
@@ -188,7 +185,8 @@ function SignUp() {
                   )}
                   {errors.kataLaluanAuditor?.type === "pattern" && (
                     <p role="alert" className="error-message">
-                      Mesti ada huruf besar, huruf kecil, nombor, dan simbol khas
+                      Mesti ada huruf besar, huruf kecil, nombor, dan simbol
+                      khas
                     </p>
                   )}
                 </Form.Group>
