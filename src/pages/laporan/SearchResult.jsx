@@ -33,10 +33,10 @@ function Filter({ column }) {
       onChange={(e) => column.setFilterValue(e.target.value)}
       value={columnFilterValue || ""}
     >
-      <option value="">Tiada Risiko</option>
-      <option value="BIASA">Biasa</option>
-      <option value="SERAH DOKUMEN">Serah Dokumen</option>
-      <option value="PENIPUAN">Penipuan</option>
+      <option value="">Pilihj Risiko</option>
+      <option value="RENDAH">Rendah</option>
+      <option value="SEDERHANA">Sederhana</option>
+      <option value="TINGGI">Tinggi</option>
     </select>
   ) : (
     <input
@@ -59,8 +59,8 @@ function SearchResultLaporan() {
   }, [fetchAudits]);
 
   // FILTER BY START DATE AND END DATE
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const filteredData = useMemo(() => {
     return audits.filter((row) => {
@@ -104,20 +104,21 @@ function SearchResultLaporan() {
       Bil: index + 1,
       "TARIKH AUDIT": laporan.tarikhAudit,
       "TAHAP RISIKO": laporan.tahapRisikoAudit,
-      "WILAYAH": laporan.wilayah?.namaWilayah,
-      "CAWANGAN": laporan.cawangan?.namaCawangan,
+      WILAYAH: laporan.wilayah?.namaWilayah,
+      CAWANGAN: laporan.cawangan?.namaCawangan,
       "KESALAHAN BERULANG": laporan.kesalahanBerulang,
       "JENIS AUDIT": laporan.jenis_audit?.namaJenisAudit,
       "SKOP SEMAKAN": laporan.skop_semakan?.namaSkopSemakan,
       "SKOP KRITERIA": laporan.skop_kriteria?.namaSkopKriteria,
       "AKTIVITI SEMAKAN": laporan.aktiviti_semakan?.namaAktivitiSemakan,
-      "KRITERIA KETIDAKPATUHAN": laporan.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan,
+      "KRITERIA KETIDAKPATUHAN":
+        laporan.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan,
       "ID KAKITANGAN": laporan.kakitangan?.idKakitangan,
       "NAMA KAKITANGAN": laporan.kakitangan?.namaKakitangan,
       "JAWATAN KAKITANGAN": laporan.jawatanKakitangan,
-      "BAHAGIAN": laporan.bahagian?.namaBahagian,
-      "JABATAN": laporan.jabatan?.namaJabatan,
-      "UNIT": laporan.unit?.namaUnit,
+      BAHAGIAN: laporan.bahagian?.namaBahagian,
+      JABATAN: laporan.jabatan?.namaJabatan,
+      UNIT: laporan.unit?.namaUnit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -134,28 +135,28 @@ function SearchResultLaporan() {
         <Form>
           <Row>
             <Col xs={12} xl={6}>
-            <Form.Group>
-            <Form.Label className="laporan-filter-header">
-              Tarikh Mula
-            </Form.Label>
-            <Form.Control
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            ></Form.Control>
-            </Form.Group>
+              <Form.Group>
+                <Form.Label className="laporan-filter-header">
+                  Tarikh Mula
+                </Form.Label>
+                <Form.Control
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
             </Col>
             <Col xs={12} xl={6}>
-            <Form.Group>
-            <Form.Label className="laporan-filter-header">
-              Tarikh Tamat
-            </Form.Label>
-            <Form.Control
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            ></Form.Control>
-            </Form.Group>
+              <Form.Group>
+                <Form.Label className="laporan-filter-header">
+                  Tarikh Tamat
+                </Form.Label>
+                <Form.Control
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
             </Col>
           </Row>
         </Form>

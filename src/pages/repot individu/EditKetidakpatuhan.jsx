@@ -10,7 +10,12 @@ function EditKetidakpatuhan() {
   const location = useLocation();
   const { namaKakitangan, idKakitangan, audits } = location.state || {};
   const { handleEditRepotIndividu } = useRepotIndividuStore();
-  const { handleSubmit, control, formState: { errors }, setValue } = useForm();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+  } = useForm();
   const navigate = useNavigate();
 
   const {
@@ -48,8 +53,6 @@ function EditKetidakpatuhan() {
     filterAktivitiSemakansBySkopKriteria,
     filteredKriteriaKetidakpatuhanOptions,
     filterKriteriaKetidakpatuhansByAktivitiSemakan,
-
-    
   } = useOptionStore((state) => ({
     wilayahOptions: state.wilayahOptions,
     displayWilayahs: state.displayWilayahs,
@@ -82,9 +85,12 @@ function EditKetidakpatuhan() {
     filteredSkopKriteriaOptions: state.filteredSkopKriteriaOptions,
     filterSkopKriteriasBySkopSemakan: state.filterSkopKriteriasBySkopSemakan,
     filteredAktivitiSemakanOptions: state.filteredAktivitiSemakanOptions,
-    filterAktivitiSemakansBySkopKriteria: state.filterAktivitiSemakansBySkopKriteria,
-    filteredKriteriaKetidakpatuhanOptions: state.filteredKriteriaKetidakpatuhanOptions,
-    filterKriteriaKetidakpatuhansByAktivitiSemakan: state.filterKriteriaKetidakpatuhansByAktivitiSemakan,
+    filterAktivitiSemakansBySkopKriteria:
+      state.filterAktivitiSemakansBySkopKriteria,
+    filteredKriteriaKetidakpatuhanOptions:
+      state.filteredKriteriaKetidakpatuhanOptions,
+    filterKriteriaKetidakpatuhansByAktivitiSemakan:
+      state.filterKriteriaKetidakpatuhansByAktivitiSemakan,
   }));
 
   const onSubmit = (data) => {
@@ -108,7 +114,7 @@ function EditKetidakpatuhan() {
     displaySkopKriterias();
     displayAktivitiSemakans();
     displayKriteriaKetidakpatuhans();
-  
+
     if (audits) {
       setValue("wilayahId", audits.wilayah?.id);
       setValue("cawanganId", audits.cawangan?.id);
@@ -124,10 +130,12 @@ function EditKetidakpatuhan() {
       setValue("skopKriteriaId", audits.skop_kriteria?.id);
       setValue("aktivitiSemakanId", audits.aktiviti_semakan?.id);
       setValue("kriteriaKetidakpatuhanId", audits.kriteria_ketidakpatuhan?.id);
-      
+
       filterSkopKriteriasBySkopSemakan(audits.skop_semakan?.id);
       filterAktivitiSemakansBySkopKriteria(audits.skop_kriteria?.id);
-      filterKriteriaKetidakpatuhansByAktivitiSemakan(audits.aktiviti_semakan?.id);
+      filterKriteriaKetidakpatuhansByAktivitiSemakan(
+        audits.aktiviti_semakan?.id
+      );
 
       setValue("jenisAuditId", audits.jenis_audit?.id);
       setValue("jawatanKakitangan", audits.jawatanKakitangan);
@@ -135,10 +143,24 @@ function EditKetidakpatuhan() {
       setValue("catatanAudit", audits.catatanAudit);
       setValue("tahapRisikoAudit", audits.tahapRisikoAudit);
       setValue("kesalahanBerulang", audits.kesalahanBerulang);
-
     }
-  }, [audits, setValue, displayWilayahs, displayCawangans, filterCawangansByWilayah, displayBahagians, displayJabatans, displayUnits, filterJabatansByBahagian, filterUnitsByJabatan, displaySkopSemakans, filterSkopKriteriasBySkopSemakan, filterAktivitiSemakansBySkopKriteria, filterKriteriaKetidakpatuhansByAktivitiSemakan]);
-  
+  }, [
+    audits,
+    setValue,
+    displayWilayahs,
+    displayCawangans,
+    filterCawangansByWilayah,
+    displayBahagians,
+    displayJabatans,
+    displayUnits,
+    filterJabatansByBahagian,
+    filterUnitsByJabatan,
+    displaySkopSemakans,
+    filterSkopKriteriasBySkopSemakan,
+    filterAktivitiSemakansBySkopKriteria,
+    filterKriteriaKetidakpatuhansByAktivitiSemakan,
+  ]);
+
   const handleWilayahChange = (e) => {
     const selectedWilayahId = e.target.value;
     setValue("wilayahId", selectedWilayahId);
@@ -162,19 +184,18 @@ function EditKetidakpatuhan() {
     setValue("skopSemakanId", selectedSkopSemakanId);
     filterSkopKriteriasBySkopSemakan(selectedSkopSemakanId);
   };
-  
+
   const handleSkopKriteriaChange = (e) => {
     const selectedSkopKriteriaId = e.target.value;
     setValue("skopKriteriaId", selectedSkopKriteriaId);
     filterAktivitiSemakansBySkopKriteria(selectedSkopKriteriaId);
   };
-  
+
   const handleAktivitiSemakanChange = (e) => {
     const selectedAktivitiSemakanId = e.target.value;
     setValue("aktivitiSemakanId", selectedAktivitiSemakanId);
     filterKriteriaKetidakpatuhansByAktivitiSemakan(selectedAktivitiSemakanId);
   };
-  
 
   return (
     <>
@@ -211,7 +232,7 @@ function EditKetidakpatuhan() {
             <h4>Lokasi</h4>
             <hr />
             <Form onSubmit={handleSubmit(onSubmit)}>
-            <Row>
+              <Row>
                 <Col xs={12} xl={6}>
                   <Form.Group>
                     <Form.Label>Wilayah</Form.Label>
@@ -448,7 +469,7 @@ function EditKetidakpatuhan() {
                 <h4>Perincian Audit</h4>
                 <hr />
                 <div>
-                <Row>
+                  <Row>
                     <Col>
                       <Form.Group>
                         <Form.Label>Tahun Diaudit</Form.Label>
@@ -717,10 +738,10 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Penipuan"
-                                  value="PENIPUAN"
-                                  id="radioFraud"
-                                  checked={field.value === "PENIPUAN"}
+                                  label="Tinggi"
+                                  value="TINGGI"
+                                  id="radioHigh"
+                                  checked={field.value === "TINGGI"}
                                 />
                               )}
                             />
@@ -734,10 +755,10 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Serah Dokumen"
-                                  value="SERAH DOKUMEN"
-                                  id="radioSerahDoc"
-                                  checked={field.value === "SERAH DOKUMEN"}
+                                  label="Sederhana"
+                                  value="SEDERHANA"
+                                  id="radioMid"
+                                  checked={field.value === "SEDERHANA"}
                                 />
                               )}
                             />
@@ -751,10 +772,10 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Biasa"
-                                  value="BIASA"
-                                  id="radioBiasa"
-                                  checked={field.value === "BIASA"}
+                                  label="Rendah"
+                                  value="RENDAH"
+                                  id="radioLow"
+                                  checked={field.value === "RENDAH"}
                                 />
                               )}
                             />
@@ -772,21 +793,21 @@ function EditKetidakpatuhan() {
                       <div>
                         <Row className="radio-kesalahan-berulang">
                           <Col>
-                          <Controller
-                          name="kesalahanBerulang"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Form.Check
-                              {...field}
-                              type="radio"
-                              label="Ya"
-                              value="YA"
-                              id="radioYa"
-                              checked={field.value === "YA"}
+                            <Controller
+                              name="kesalahanBerulang"
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Form.Check
+                                  {...field}
+                                  type="radio"
+                                  label="Ya"
+                                  value="YA"
+                                  id="radioYa"
+                                  checked={field.value === "YA"}
+                                />
+                              )}
                             />
-                          )}
-                        />
                           </Col>
                           <Col>
                             <Controller
@@ -829,10 +850,7 @@ function EditKetidakpatuhan() {
                     </Form.Group>
                   </Row>
                   <div className="edit-ketidakpatuhan-actions">
-                    <Button
-                      type="submit"
-                      className="tambah-ketidakpatuhan-btn"
-                    >
+                    <Button type="submit" className="tambah-ketidakpatuhan-btn">
                       Simpan
                     </Button>{" "}
                     <Button onClick={handleCancel} className="cancel-btn">

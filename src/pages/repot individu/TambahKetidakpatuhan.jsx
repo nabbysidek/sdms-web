@@ -732,10 +732,10 @@ function TambahKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Penipuan"
-                                  value="PENIPUAN"
-                                  id="radioFraud"
-                                  checked={field.value === "PENIPUAN"}
+                                  label="Tinggi"
+                                  value="TINGGI"
+                                  id="radioHigh"
+                                  checked={field.value === "TINGGI"}
                                 />
                               )}
                             />
@@ -749,10 +749,10 @@ function TambahKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Serah Dokumen"
-                                  value="SERAH DOKUMEN"
-                                  id="radioSerahDoc"
-                                  checked={field.value === "SERAH DOKUMEN"}
+                                  label="Sederhana"
+                                  value="SEDERHANA"
+                                  id="radioMid"
+                                  checked={field.value === "SEDERHANA"}
                                 />
                               )}
                             />
@@ -766,10 +766,10 @@ function TambahKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Biasa"
-                                  value="BIASA"
-                                  id="radioBiasa"
-                                  checked={field.value === "BIASA"}
+                                  label="Rendah"
+                                  value="RENDAH"
+                                  id="radioLow"
+                                  checked={field.value === "RENDAH"}
                                 />
                               )}
                             />
