@@ -22,7 +22,7 @@ function TambahKetidakpatuhan() {
 
   const onSubmit = (data) => {
     handleCreateRepotIndividu(data);
-  }
+  };
 
   // navigate to the previous page
   const navigate = useNavigate();
@@ -196,10 +196,7 @@ function TambahKetidakpatuhan() {
           <div>
             <h4>Lokasi</h4>
             <hr />
-            <Form
-              onSubmit={handleSubmit(onSubmit)}
-              onReset={reset}
-            >
+            <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
               <Row>
                 <Col xs={12} xl={6}>
                   <Form.Group>
@@ -620,50 +617,50 @@ function TambahKetidakpatuhan() {
                         />
                       </Form.Group>
                     </Col>
-                    <Row>
-                      <Form.Group>
-                        <Form.Label>Aktiviti Semakan</Form.Label>
-                        <Controller
-                          id="aktivitiSemakanId"
-                          name="aktivitiSemakanId"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: "Sila pilih aktiviti semakan" }}
-                          render={({ field: { onChange, value } }) => (
-                            <>
-                              <Form.Select
-                                onChange={(e) => {
-                                  onChange(e);
-                                  setSelectedAktivitiSemakan(e.target.value);
-                                }}
-                                value={value}
-                              >
-                                <option value="">Pilih aktiviti semakan</option>
-                                {aktivitiSemakanOptions
-                                  .filter(
-                                    (aktivitiSemakan) =>
-                                      aktivitiSemakan.skopKriteriaId ===
-                                      parseInt(selectedSkopKriteria)
-                                  )
-                                  .map((aktivitiSemakan) => (
-                                    <option
-                                      key={aktivitiSemakan.id}
-                                      value={aktivitiSemakan.id}
-                                    >
-                                      {aktivitiSemakan.namaAktivitiSemakan}
-                                    </option>
-                                  ))}
-                              </Form.Select>
-                              {errors.aktivitiSemakanId && (
-                                <span className="error-message">
-                                  {errors.aktivitiSemakanId.message}
-                                </span>
-                              )}
-                            </>
-                          )}
-                        />
-                      </Form.Group>
-                    </Row>
+                  </Row>
+                  <Row>
+                    <Form.Group>
+                      <Form.Label>Aktiviti Semakan</Form.Label>
+                      <Controller
+                        id="aktivitiSemakanId"
+                        name="aktivitiSemakanId"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: "Sila pilih aktiviti semakan" }}
+                        render={({ field: { onChange, value } }) => (
+                          <>
+                            <Form.Select
+                              onChange={(e) => {
+                                onChange(e);
+                                setSelectedAktivitiSemakan(e.target.value);
+                              }}
+                              value={value}
+                            >
+                              <option value="">Pilih aktiviti semakan</option>
+                              {aktivitiSemakanOptions
+                                .filter(
+                                  (aktivitiSemakan) =>
+                                    aktivitiSemakan.skopKriteriaId ===
+                                    parseInt(selectedSkopKriteria)
+                                )
+                                .map((aktivitiSemakan) => (
+                                  <option
+                                    key={aktivitiSemakan.id}
+                                    value={aktivitiSemakan.id}
+                                  >
+                                    {aktivitiSemakan.namaAktivitiSemakan}
+                                  </option>
+                                ))}
+                            </Form.Select>
+                            {errors.aktivitiSemakanId && (
+                              <span className="error-message">
+                                {errors.aktivitiSemakanId.message}
+                              </span>
+                            )}
+                          </>
+                        )}
+                      />
+                    </Form.Group>
                   </Row>
                   <Row>
                     <Form.Group>
@@ -844,10 +841,7 @@ function TambahKetidakpatuhan() {
                     </Form.Group>
                   </Row>
                   <div className="tambah-ketidakpatuhan-actions">
-                    <Button
-                      type="submit"
-                      className="tambah-ketidakpatuhan-btn"
-                    >
+                    <Button type="submit" className="tambah-ketidakpatuhan-btn">
                       Simpan
                     </Button>{" "}
                     <Button onClick={handleCancel} className="cancel-btn">
