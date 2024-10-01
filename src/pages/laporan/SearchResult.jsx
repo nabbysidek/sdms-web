@@ -33,7 +33,7 @@ function Filter({ column }) {
       onChange={(e) => column.setFilterValue(e.target.value)}
       value={columnFilterValue || ""}
     >
-      <option value="">Pilihj Risiko</option>
+      <option value="">Pilih Risiko</option>
       <option value="RENDAH">Rendah</option>
       <option value="SEDERHANA">Sederhana</option>
       <option value="TINGGI">Tinggi</option>
