@@ -8,16 +8,28 @@ import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import { useNavigate } from "react-router-dom";
 import axiosCustom from "../../axios";
-
+import Swal from "sweetalert2";
 
 // NEW
-const ControlledInput = ({ name, label, control, rules, type, placeholder, togglePassword, handleToggle }) => {
+const ControlledInput = ({
+  name,
+  label,
+  control,
+  rules,
+  type,
+  placeholder,
+  togglePassword,
+  handleToggle,
+}) => {
   const {
     field,
     fieldState: { error },
   } = useController({ name, control, rules });
 
-  const inputStyle = name === "idAuditor" ? { borderTopRightRadius: '5px', borderBottomRightRadius: '5px' } : {};
+  const inputStyle =
+    name === "idAuditor"
+      ? { borderTopRightRadius: "5px", borderBottomRightRadius: "5px" }
+      : {};
 
   return (
     <Form.Group controlId={name} className="mb-3">
@@ -31,7 +43,10 @@ const ControlledInput = ({ name, label, control, rules, type, placeholder, toggl
           style={inputStyle}
         />
         {togglePassword && (
-          <InputGroup.Text onClick={handleToggle} style={{ cursor: 'pointer', borderRadius: '0 5px 5px 0' }}>
+          <InputGroup.Text
+            onClick={handleToggle}
+            style={{ cursor: "pointer", borderRadius: "0 5px 5px 0" }}
+          >
             {type === "password" ? <FaEye /> : <FaEyeSlash />}
           </InputGroup.Text>
         )}
@@ -42,7 +57,6 @@ const ControlledInput = ({ name, label, control, rules, type, placeholder, toggl
     </Form.Group>
   );
 };
-
 
 function SignIn() {
   // -------------------- FE ---------------------------
@@ -84,9 +98,19 @@ function SignIn() {
 
         navigate("/dashboard");
       } else {
+        Swal.fire({
+          icon: "error",
+          title: "Log masuk gagal",
+          text: error.response.data.error,
+        });
         console.log(response.data);
       }
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Log masuk gagal",
+        text: error.response.data.error,
+      });
       console.log(error); // Error related to API response or client side
     }
   };
