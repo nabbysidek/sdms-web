@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId }) {
+function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId, refetchSenaraiPengguna }) {
   const [showModalTerminateAccessSenaraiPengguna, setShowModalTerminateAccessSenaraiPengguna] =
     useState(false);
 
@@ -31,6 +31,11 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId }) {
           title: "Berjaya",
           text: response.data.success, // Access the message from the backend response
         });
+
+        // Refetch permohonan akses after success
+        if (refetchSenaraiPengguna) {
+          refetchSenaraiPengguna();
+        }
 
         handleCloseModalTerminateAccessSenaraiPengguna();
       } else {

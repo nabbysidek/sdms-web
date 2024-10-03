@@ -4,7 +4,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId }) {
+function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId, refetchPermohonanAkses, refetchSenaraiPengguna }) {
   // -------------------- FE ---------------------------
   const [showModalAllowAccess, setShowModalAllowAccess] = useState(false);
 
@@ -29,6 +29,16 @@ function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId }) {
           title: "Berjaya",
           text: response.data.success, // Access the message from the backend response
         });
+
+        // Refetch permohonan akses after success
+        if (refetchPermohonanAkses) {
+          refetchPermohonanAkses();
+        }
+
+        // Refetch permohonan akses after success
+        if (refetchSenaraiPengguna) {
+          refetchSenaraiPengguna();
+        }
 
         handleCloseModalAllowAccess();
       } else {

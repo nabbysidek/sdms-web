@@ -4,7 +4,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
+function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId, refetchSenaraiPengguna }) {
   // -------------------- FE ---------------------------
   const [
     showModalAllowAccessSenaraiPengguna,
@@ -34,6 +34,11 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId }) {
           title: "Berjaya",
           text: response.data.success, // Access the message from the backend response
         });
+
+        // Refetch permohonan akses after success
+        if (refetchSenaraiPengguna) {
+          refetchSenaraiPengguna();
+        }
 
         handleCloseModalAllowAccessSenaraiPengguna();
       } else {

@@ -67,7 +67,7 @@ function IndexTetapanPengguna() {
   // Helper function to get the namaPeranan for a given perananId
   const getPerananLabel = (perananId) => {
     const peranan = perananOptions.find((p) => p.value === perananId);
-    return peranan ? peranan.label : 'Ralat';
+    return peranan ? peranan.label : 'Tiada Peranan';
   };
 
   // Handle change in peranan
@@ -134,8 +134,8 @@ function IndexTetapanPengguna() {
                   <td>{permohonanAksesData.namaAuditor}</td>
                   <td>{permohonanAksesData.emelAuditor}</td>
                   <td>
-                    <ModalAllowAccessPermohonanPengguna userId={permohonanAksesData.id} />
-                    <ModalRejectAccessPermohonanPengguna userId={permohonanAksesData.id} />
+                    <ModalAllowAccessPermohonanPengguna userId={permohonanAksesData.id} refetchPermohonanAkses={fetchPermohonanAkses} refetchSenaraiPengguna = {fetchSenaraiPengguna}  />
+                    <ModalRejectAccessPermohonanPengguna userId={permohonanAksesData.id} refetchPermohonanAkses={fetchPermohonanAkses} />
                   </td>
                 </tr>
               ))
@@ -193,11 +193,11 @@ function IndexTetapanPengguna() {
                   <td>
                     <ModalAllowAccessSenaraiPengguna
                       disableButtonBenar={senaraiPenggunaData.statusAuditor === "BENAR"}
-                      userId={senaraiPenggunaData.id}
+                      userId={senaraiPenggunaData.id} refetchSenaraiPengguna = {fetchSenaraiPengguna}
                     />
                     <ModalTerminateAccessSenaraiPengguna
                       disableButtonSekat={senaraiPenggunaData.statusAuditor === "SEKAT"}
-                      userId={senaraiPenggunaData.id}
+                      userId={senaraiPenggunaData.id} refetchSenaraiPengguna = {fetchSenaraiPengguna}
                     />
                   </td>
                 </tr>
