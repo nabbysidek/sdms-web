@@ -16,6 +16,7 @@ function IndexTetapanPengguna() {
       const response = await axiosCustom.get(`/tetapan-pengguna/tetapan-akses-pengguna/permohonan-akses`);
       if (response.status >= 200 && response.status < 300) {
         setPermohonanAkses(response.data);
+        console.log("Updated state:", response.data);
       } else {
         console.log(response);
       }
