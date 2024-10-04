@@ -12,6 +12,7 @@ function SetPassword() {
     formState: { errors },
     handleSubmit,
     watch,
+    reset,
   } = useForm();
 
   // State to manage password visibility
@@ -34,6 +35,7 @@ function SetPassword() {
           title: "Berjaya",
           text: response.data.success, 
         });
+        reset();
       } else {
         Swal.fire({
           icon: "error",
