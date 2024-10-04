@@ -472,13 +472,13 @@ function EditKetidakpatuhan() {
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Tahun Diaudit</Form.Label>
+                        <Form.Label>Tarikh Mesyuarat Penutup</Form.Label>
                         <Controller
                           name="tarikhAudit"
                           control={control}
                           defaultValue=""
                           rules={{
-                            required: "Sila sertakan tarikh audit",
+                            required: "Sila sertakan tarikh mesyuarat penutup",
                           }}
                           render={({ field }) => (
                             <>

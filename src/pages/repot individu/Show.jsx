@@ -33,7 +33,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
         accessorKey: "kesalahanBerulang",
       },
       {
-        header: "Tarikh Audit",
+        header: "Tarikh Mesyuarat Penutup",
         accessorKey: "tarikhAudit",
       },
       {
@@ -127,7 +127,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
       Bil: index + 1,
       Risiko: reportIndividu.tahapRisikoAudit,
       "Kesalahan Berulang": reportIndividu.kesalahanBerulang,
-      "Tarikh Audit": reportIndividu.tarikhAudit,
+      "Tarikh Mesyuarat Penutup": reportIndividu.tarikhAudit,
       "Wilayah": reportIndividu.wilayah?.namaWilayah || "",
       "Cawangan": reportIndividu.cawangan?.namaCawangan || "",
       "Jawatan": reportIndividu.jawatanKakitangan,

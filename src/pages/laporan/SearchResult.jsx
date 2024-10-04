@@ -102,7 +102,7 @@ function SearchResultLaporan() {
     // PREPARE CSV DATA
     const csvData = filteredData.map((laporan, index) => ({
       Bil: index + 1,
-      "TARIKH AUDIT": laporan.tarikhAudit,
+      "TARIKH MESYUARAT PENUTUP": laporan.tarikhAudit,
       "TAHAP RISIKO": laporan.tahapRisikoAudit,
       WILAYAH: laporan.wilayah?.namaWilayah,
       CAWANGAN: laporan.cawangan?.namaCawangan,

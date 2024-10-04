@@ -10,7 +10,7 @@ const useLaporanStore = create((set) => ({
           id: "index",
         },
         {
-          header: "Tarikh Audit",
+          header: "Tarikh Mesyuarat Penutup",
           accessorKey: "tarikhAudit",
         },
         {

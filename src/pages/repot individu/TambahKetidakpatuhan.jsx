@@ -451,14 +451,14 @@ function TambahKetidakpatuhan() {
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Tahun Diaudit</Form.Label>
+                        <Form.Label>Tarikh Mesyuarat Penutup</Form.Label>
                         <Controller
                           id="tarikhAudit"
                           name="tarikhAudit"
                           control={control}
                           defaultValue=""
                           rules={{
-                            required: "Sila sertakan tahun staff diaudit",
+                            required: "Sila sertakan tarikh mesyuarat penutup",
                           }}
                           render={({ field: { onChange, value } }) => (
                             <>
