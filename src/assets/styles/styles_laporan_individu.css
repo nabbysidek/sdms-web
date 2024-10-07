@@ -2,13 +2,13 @@
 /*******************SEARCH BAR ***********************/
 /*****************************************************/
 
-.repot-search-container {
+.laporan-individu-search-container {
     border-radius: 10px;
     padding-top: 10px;
     background-color: var(--darkgray);
   }
 
-.repot-search-btn {
+.laporan-individu-search-btn {
   width: 100%;
   font-weight: 700;
   font-size: 1.2em;
@@ -51,12 +51,12 @@
 /***************TABLE KETIDAKPATUHAN ********************/
 /********************************************************/
 
-.repot-table {
+.laporan-individu-table {
   width: 100%;
   margin-top: 4%;
 }
 
-.repot-table-title {
+.laporan-individu-table-title {
   text-align: left;
 }
 

@@ -5,8 +5,8 @@ import { FaTools } from "react-icons/fa";
 
 const SideBarMenu = [
   {
-    title: "Repot Individu",
-    path: "/repot-individu",
+    title: "Laporan Individu",
+    path: "/laporan-individu",
     icon: (
       <FaSearch size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),

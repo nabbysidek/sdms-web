@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import useRepotIndividuStore from "../../store/repot-individu-store";
+import useLaporanIndividuStore from "../../store/laporan-individu-store";
 import { useOptionStore } from "../../store/option-store";
-import "../../assets/styles/styles_repot_individu.css";
+import "../../assets/styles/styles_laporan_individu.css";
 
 function TambahKetidakpatuhan() {
   // ------- FE -------------
@@ -18,10 +18,10 @@ function TambahKetidakpatuhan() {
   } = useForm();
 
   // handle create of ketidakpatuhan kakitangan
-  const { handleCreateRepotIndividu } = useRepotIndividuStore();
+  const { handleCreateLaporanIndividu } = useLaporanIndividuStore();
 
   const onSubmit = (data) => {
-    handleCreateRepotIndividu(data);
+    handleCreateLaporanIndividu(data);
   };
 
   // navigate to the previous page
@@ -138,11 +138,11 @@ function TambahKetidakpatuhan() {
     selectedAktivitiSemakan,
   ]);
 
-  // const createRepotIndividu = async (repotIndividuInput) => {
+  // const createLaporanIndividu = async (laporanIndividuInput) => {
   //   try {
   //     const response = await axiosCustom.post(
-  //       `repot-individu/ketidakpatuhan-kakitangan`,
-  //       repotIndividuInput
+  //       `laporan-individu/ketidakpatuhan-kakitangan`,
+  //       laporanIndividuInput
   //     );
 
   //     if (response.status === 200) {
@@ -165,7 +165,7 @@ function TambahKetidakpatuhan() {
   return (
     <>
       <div className="page-title">
-        <h2>Repot Individu</h2>
+        <h2>Laporan Individu</h2>
         <hr />
         <h3>Tambah Ketidakpatuhan Kakitangan</h3>
       </div>

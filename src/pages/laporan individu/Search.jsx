@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
 import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
-import SearchResultUntukRepotIndividu from "./Show";
-import "../../assets/styles/styles_repot_individu.css";
+import SearchResultUntukLaporanIndividu from "./Show";
+import "../../assets/styles/styles_laporan_individu.css";
 import axiosCustom from "../../axios";
 
-function SearchUntukRepotIndividu() {
+function SearchUntukLaporanIndividu() {
   // manage visibility of the search result
   const [linkClicked, setLinkClicked] = useState(false);
 
@@ -41,7 +41,7 @@ function SearchUntukRepotIndividu() {
       setValidationErrors(null);
       if (Object.keys(errors).length === 0) {
         try {
-          const response = await axiosCustom.post('repot-individu/carian-repot-individu', {
+          const response = await axiosCustom.post('laporan-individu/carian-laporan-individu', {
             searchKakitanganInput: data.searchKakitanganInput
           });
           setSearchResults(response.data);
@@ -61,7 +61,7 @@ function SearchUntukRepotIndividu() {
 
   return (
     <>
-      <Container fluid className="repot-search-container">
+      <Container fluid className="laporan-individu-search-container">
         <Row>
           <Col xs={12} md={7} xl={7}>
             <Form>
@@ -84,7 +84,7 @@ function SearchUntukRepotIndividu() {
           </Col>
           <Col xs={12} md={2} xl={2} className="remove-padding">
             <Button
-              className="repot-search-btn"
+              className="laporan-individu-search-btn"
               onClick={() => {
                 handleSubmit((data) => onSubmit(data))();
               }}
@@ -105,10 +105,10 @@ function SearchUntukRepotIndividu() {
       )}
 
       <div className="pelaporan-search-result">
-        {linkClicked && <SearchResultUntukRepotIndividu searchResults={searchResults} />}
+        {linkClicked && <SearchResultUntukLaporanIndividu searchResults={searchResults} />}
       </div>
     </>
   );
 }
 
-export default SearchUntukRepotIndividu;
+export default SearchUntukLaporanIndividu;

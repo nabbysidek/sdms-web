@@ -4,14 +4,14 @@ import { Row, Col, Form, Button, Container } from "react-bootstrap";
 import TableComponent from "../../components/TableComponent";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
-import useRepotIndividuStore from "../../store/repot-individu-store";
-import "../../assets/styles/styles_repot_individu.css";
+import useLaporanIndividuStore from "../../store/laporan-individu-store";
+import "../../assets/styles/styles_laporan_individu.css";
 import * as FileSaver from "file-saver";
 import * as Papa from "papaparse";
 
-function SearchResultUntukRepotIndividu({ searchResults }) {
+function SearchResultUntukLaporanIndividu({ searchResults }) {
   const { maklumatKakitangan, senaraiKetidakpatuhanKakitangan } = searchResults;
-  const { handleDeleteRepotIndividu } = useRepotIndividuStore();
+  const { handleDeleteLaporanIndividu } = useLaporanIndividuStore();
 
   const data = useMemo(
     () => senaraiKetidakpatuhanKakitangan,
@@ -100,7 +100,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
               <Button className="edit-ketidakpatuhan-btn">Edit</Button>
             </Link>
             <Button
-              onClick={() => handleDeleteRepotIndividu(row.original.id)}
+              onClick={() => handleDeleteLaporanIndividu(row.original.id)}
               className="delete-btn"
             >
               Padam
@@ -110,7 +110,7 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
       },
     ],
     [
-      handleDeleteRepotIndividu,
+      handleDeleteLaporanIndividu,
       maklumatKakitangan.id,
       maklumatKakitangan.namaKakitangan,
       maklumatKakitangan.idKakitangan,
@@ -128,18 +128,21 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
       Risiko: reportIndividu.tahapRisikoAudit,
       "Kesalahan Berulang": reportIndividu.kesalahanBerulang,
       "Tarikh Mesyuarat Penutup": reportIndividu.tarikhAudit,
-      "Wilayah": reportIndividu.wilayah?.namaWilayah || "",
-      "Cawangan": reportIndividu.cawangan?.namaCawangan || "",
-      "Jawatan": reportIndividu.jawatanKakitangan,
-      "Bahagian": reportIndividu.bahagian?.namaBahagian || "",
-      "Jabatan": reportIndividu.jabatan?.namaJabatan || "",
-      "Unit": reportIndividu.unit?.namaUnit || "",
+      Wilayah: reportIndividu.wilayah?.namaWilayah || "",
+      Cawangan: reportIndividu.cawangan?.namaCawangan || "",
+      Jawatan: reportIndividu.jawatanKakitangan,
+      Bahagian: reportIndividu.bahagian?.namaBahagian || "",
+      Jabatan: reportIndividu.jabatan?.namaJabatan || "",
+      Unit: reportIndividu.unit?.namaUnit || "",
       "Jenis Audit": reportIndividu.jenis_audit?.namaJenisAudit || "",
       "Skop Semakan": reportIndividu.skop_semakan?.namaSkopSemakan || "",
       "Skop Kriteria": reportIndividu.skop_kriteria?.namaSkopKriteria || "",
-      "Aktiviti Semakan": reportIndividu.aktiviti_semakan?.namaAktivitiSemakan || "",
-      "Kriteria Ketidakpatuhan": reportIndividu.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan || "",
-      "Catatan": reportIndividu.catatanAudit,
+      "Aktiviti Semakan":
+        reportIndividu.aktiviti_semakan?.namaAktivitiSemakan || "",
+      "Kriteria Ketidakpatuhan":
+        reportIndividu.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan ||
+        "",
+      Catatan: reportIndividu.catatanAudit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -187,10 +190,10 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
       </div>
       {/* BAHAGIAN JADUAL AUDIT KETIDAKPATUHAN KAKITANGAN */}
       <Container fluid>
-        <div className="repot-table">
+        <div className="laporan-individu-table">
           <Row>
             <Col md={8}>
-              <h3 className="repot-table-title">
+              <h3 className="laporan-individu-table-title">
                 Senarai Ketidakpatuhan Kakitangan
               </h3>
             </Col>
@@ -215,16 +218,16 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
         <div>
           {/* JADUAL AUDIT KETIDAKPATUHAN KAKITANGAN */}
           <TableComponent
-          data={data}
-          columns={columns}
-          sorting={sorting}
-          setSorting={setSorting}
-        />
+            data={data}
+            columns={columns}
+            sorting={sorting}
+            setSorting={setSorting}
+          />
         </div>
 
         {/* IMPORT DAN EKSPORT */}
         <div className="functional-btns-container">
-          <ExportButton onClick={handleExportReportIndividu}/>
+          <ExportButton onClick={handleExportReportIndividu} />
           <ImportButton />
         </div>
       </Container>
@@ -232,4 +235,4 @@ function SearchResultUntukRepotIndividu({ searchResults }) {
   );
 }
 
-export default SearchResultUntukRepotIndividu;
+export default SearchResultUntukLaporanIndividu;

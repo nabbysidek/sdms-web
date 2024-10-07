@@ -3,7 +3,7 @@ import showConfirmationDialog from "../pages/tetapan kriteria/showConfirmationDi
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useRepotIndividuStore = create((set) => ({
+const useLaporanIndividuStore = create((set) => ({
 
   // search
   linkClicked: false,
@@ -14,10 +14,10 @@ const useRepotIndividuStore = create((set) => ({
   setSearchResults: (results) => set({ searchResults: results }),
 
   // handle create
-  handleCreateRepotIndividu: async (data) => {
+  handleCreateLaporanIndividu: async (data) => {
     try {
       const response = await axiosCustom.post(
-        `repot-individu/ketidakpatuhan-kakitangan`,
+        `laporan-individu/ketidakpatuhan-kakitangan`,
         data
       );
 
@@ -39,11 +39,11 @@ const useRepotIndividuStore = create((set) => ({
   },
 
   // handle edit
-  handleEditRepotIndividu: async (repotIndividuInput, auditsId) => {
+  handleEditLaporanIndividu: async (laporanIndividuInput, auditsId) => {
     try {
       const response = await axiosCustom.put(
-        `repot-individu/ketidakpatuhan-kakitangan/${auditsId}`,
-        repotIndividuInput
+        `laporan-individu/ketidakpatuhan-kakitangan/${auditsId}`,
+        laporanIndividuInput
       );
       if (response.status === 200) {
         Swal.fire({
@@ -63,13 +63,13 @@ const useRepotIndividuStore = create((set) => ({
   },
 
   // handle delete
-  handleDeleteRepotIndividu: async (auditId) => {
+  handleDeleteLaporanIndividu: async (auditId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       try {
         const response = await axiosCustom.delete(
-          `repot-individu/ketidakpatuhan-kakitangan/${auditId}`
+          `laporan-individu/ketidakpatuhan-kakitangan/${auditId}`
         );
 
         if (response.status === 200) {
@@ -90,4 +90,4 @@ const useRepotIndividuStore = create((set) => ({
   },
 }));
 
-export default useRepotIndividuStore;
+export default useLaporanIndividuStore;

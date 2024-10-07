@@ -82,7 +82,7 @@ const useLaporanKumulatifStore = create((set) => ({
     fetchAudits: async () => {
         try {
             const response = await axiosCustom.get(
-                `/laporan-kumulatif/repot-individu`
+                `/laporan-kumulatif/laporan-individu`
             );
             set({
                 audits: response.data,

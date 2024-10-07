@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import "../../assets/styles/styles_repot_individu.css";
+import "../../assets/styles/styles_laporan_individu.css";
 import { useOptionStore } from "../../store/option-store";
-import useRepotIndividuStore from "../../store/repot-individu-store";
+import useLaporanIndividuStore from "../../store/laporan-individu-store";
 
 function EditKetidakpatuhan() {
   const location = useLocation();
   const { namaKakitangan, idKakitangan, audits } = location.state || {};
-  const { handleEditRepotIndividu } = useRepotIndividuStore();
+  const { handleEditLaporanIndividu } = useLaporanIndividuStore();
   const {
     handleSubmit,
     control,
@@ -94,7 +94,7 @@ function EditKetidakpatuhan() {
   }));
 
   const onSubmit = (data) => {
-    handleEditRepotIndividu(data, audits.id);
+    handleEditLaporanIndividu(data, audits.id);
   };
 
   const handleCancel = () => {
@@ -200,7 +200,7 @@ function EditKetidakpatuhan() {
   return (
     <>
       <div className="page-title">
-        <h2>Repot Individu</h2>
+        <h2>Laporan Individu</h2>
         <hr />
         <h3>Edit Ketidakpatuhan Kakitangan</h3>
       </div>
