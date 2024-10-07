@@ -194,7 +194,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
           <Row>
             <Col md={8}>
               <h3 className="laporan-individu-table-title">
-                Senarai Ketidakpatuhan Kakitangan
+                Senarai Laporan Ketidakpatuhan Kakitangan
               </h3>
             </Col>
             <Col md={4}>

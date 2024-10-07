@@ -8,7 +8,7 @@ function LaporanIndividu() {
       <div className="page-title">
         <h2>Laporan Individu</h2>
         <hr />
-        <h3>Cari Kakitangan</h3>
+        <h3>Cari Laporan Individu Kakitangan</h3>
       </div>
 
       <div className="page-content">
