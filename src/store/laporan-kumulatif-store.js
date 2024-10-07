@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axiosCustom from "../axios";
 
-const useLaporanStore = create((set) => ({
+const useLaporanKumulatifStore = create((set) => ({
     audits: [],
     columns: [
         {
@@ -82,7 +82,7 @@ const useLaporanStore = create((set) => ({
     fetchAudits: async () => {
         try {
             const response = await axiosCustom.get(
-                `/laporan/repot-individu`
+                `/laporan-kumulatif/repot-individu`
             );
             set({
                 audits: response.data,
@@ -94,4 +94,4 @@ const useLaporanStore = create((set) => ({
 
 }));
 
-export default useLaporanStore;
+export default useLaporanKumulatifStore;

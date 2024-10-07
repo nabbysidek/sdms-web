@@ -11,7 +11,7 @@ import Dashboard from "./pages/dashboard/Index";
 import RepotIndividu from "./pages/repot individu/Index";
 import TambahKetidakpatuhan from "./pages/repot individu/TambahKetidakpatuhan";
 import EditKetidakpatuhan from "./pages/repot individu/EditKetidakpatuhan";
-import Laporan from "./pages/laporan/Index";
+import LaporanKumulatif from "./pages/laporan kumulatif/Index";
 import IndexKriteriaKetidakpatuhan from "./pages/tetapan kriteria/Kriteria Ketidakpatuhan/Index";
 import IndexKakitangan from "./pages/tetapan kriteria/Kakitangan/Index";
 import IndexJenisAudit from "./pages/tetapan kriteria/JenisAudit/Index";
@@ -52,7 +52,7 @@ function App() {
             />
 
             {/* ROUTE LAPORAN */}
-            <Route path="/laporan" element={<Laporan />} />
+            <Route path="/laporan-kumulatif" element={<LaporanKumulatif />} />
 
             {/* TETAPAN SELENGGARA AUDIT */}
             <Route

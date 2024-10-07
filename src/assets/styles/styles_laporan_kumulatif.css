@@ -11,7 +11,7 @@
 /*******************SEARCH BAR ***********************/
 /*****************************************************/
 
-.laporan-search-container {
+.laporan-kumulatif-search-container {
   border-radius: 10px;
   padding: 20px 15px 25px 15px;
   /* padding-top: 10px;
@@ -20,40 +20,40 @@
   background-color: var(--darkgray);
 }
 
-.laporan-filter-header {
+.laporan-kumulatif-filter-header {
   margin-top: 10px;
   font-weight: bold;
   padding-bottom: 2px;
 }
 
-.laporan-filter-sub-header {
+/* .laporan-kumulatif-filter-sub-header {
   font-size: 14px;
   font-weight: 700;
-}
+} */
 
-.sc-filter-row-end {
+/* .sc-filter-row-end {
   padding-bottom: 15px;
-}
+} */
 
-.laporan-filter-btn-container {
+/* .laporan-kumulatif-filter-btn-container {
   margin-top: 10px;
   float: right;
-}
+} */
 
-.laporan-filter-btn {
+/* .laporan-kumulatif-filter-btn {
   font-weight: 700;
   border-color: var(--darkblue);
   background-color: var(--darkblue);
   margin-bottom: 5px;
-}
+} */
 
-.laporan-filter-result {
+/* .laporan-kumulatif-filter-result {
     margin-top: 40px;
-  }
+  } */
 
-.alert-display {
+/* .alert-display {
   margin-top: 5px;
-}
+} */
 
 .dates-container {
   background-color: var(--white);
@@ -93,13 +93,13 @@
 /************************************************************/
 
 @media (max-width: 767px) {
-  .laporan-filter-btn {
+  /* .laporan-kumulatif-filter-btn {
     margin-bottom: 2px;
-  }
+  } */
 
-  .margin-for-mobile {
+  /* .margin-for-mobile {
     margin-top: 5px;
-  }
+  } */
 
   .col-md-3 {
     padding-top: 0 !important;

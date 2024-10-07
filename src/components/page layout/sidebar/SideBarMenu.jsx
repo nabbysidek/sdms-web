@@ -13,8 +13,8 @@ const SideBarMenu = [
   },
 
   {
-    title: "Laporan",
-    path: "/laporan",
+    title: "Laporan Kumulatif",
+    path: "/laporan-kumulatif",
     icon: (
       <FaChartLine
         size={15}
