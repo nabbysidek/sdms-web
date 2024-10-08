@@ -11,7 +11,7 @@
 .content {
   background-color: var(--backgroundwhite);
   width: 100%;
-  min-height: 100vh; /* to fix the issue with stuttering page */
+  min-height: 110vh;
   overflow: hidden;
 }
 
