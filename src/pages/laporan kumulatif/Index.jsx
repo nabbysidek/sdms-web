@@ -7,7 +7,7 @@ function LaporanKumulatif() {
       <div className="page-title">
         <h2>Laporan Kumulatif</h2>
         <hr />
-        <h3>Tapis Carian Laporan Kumulatif Ketidakpatuhan</h3>
+        <h3>Tapis Laporan Kumulatif</h3>
       </div>
 
       <div className="page-content">

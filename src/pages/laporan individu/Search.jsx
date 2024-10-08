@@ -73,7 +73,7 @@ function SearchUntukLaporanIndividu() {
                     <Form.Control
                       {...field}
                       type="text"
-                      placeholder="ID kakitangan"
+                      placeholder="Cari laporan individu melalui ID kakitangan"
                       value={searchKakitanganInputValue} // to fix unctrolled to controlled input
                       isInvalid={!!validationErrors?.searchKakitanganInput}
                     />
