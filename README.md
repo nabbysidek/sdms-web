@@ -69,10 +69,6 @@ Some of the key features of the project:
 
 ## Further information
 
-- Project Link (Front-end): [GitHub Repository](https://github.com/nabbysidek/jadhistory-web)
-- Project Link (Back-end): [GitHub Repository](https://github.com/nabbysidek/jadhistory)
-- Live Project Link: [GitHub Repository](http://jad.aim.gov.my/)
-
 ## Acknowledgements
 
 Here you can give credit to people, libraries, or resources that helped you create the project.
