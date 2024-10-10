@@ -1,10 +1,10 @@
-# JAD
+# .aud
 
-JAD (Jabatan Audit) History Tracking is a system developed to monitor and track instances of non-compliance among AIM staff. It provides a streamlined process for recording, analyzing, and managing staff compliance issues, ensuring accountability and promoting adherence to organizational standards.
+.aud is a system developed to monitor and track instances of non-compliance within a company. It provides a streamlined process for recording, analyzing, and managing staff compliance issues, ensuring accountability and promoting adherence to organizational standards.
 
 ## Table of Contents
 
-- [JAD](#jad)
+- [.aud](#aud)
   - [Table of Contents](#table-of-contents)
   - [About the Project](#about-the-project)
     - [Built With](#built-with)
@@ -16,9 +16,7 @@ JAD (Jabatan Audit) History Tracking is a system developed to monitor and track 
 
 ## About the Project
 
-The JAD (Jabatan Audit) History Tracking System is a comprehensive platform designed to monitor and manage non-compliance incidents among AIM staff. This system aims to streamline the process of tracking staff activities, identifying non-compliance issues, and documenting them for auditing and future reference. By providing a clear, organized record of non-compliance cases, it helps ensure that staff adhere to organizational policies and regulations, enhancing accountability across the board.
-
-The system is built to improve transparency in compliance monitoring, allowing for detailed analysis of non-compliance patterns and facilitating proactive corrective actions. With real-time reporting capabilities and a centralized repository of data, it empowers auditors and management to track and manage staff compliance more efficiently.
+.aud is a comprehensive platform designed to monitor and manage non-compliance incidents in a company. This system aims to streamline the process of tracking staff activities, identifying non-compliance issues, and documenting them for auditing and future reference. By providing a clear, organized record of non-compliance cases, it helps ensure that staff adhere to organizational policies and regulations, enhancing accountability across the board.
 
 ### Built With
 
@@ -29,36 +27,28 @@ The system is built to improve transparency in compliance monitoring, allowing f
 - [Tanstack Table v8](https://tanstack.com/table/latest)
 - [Zustand ^4.5.2](https://zustand.docs.pmnd.rs/)
 - [Vite ^v4.4.5](https://react.dev/)
-
 - [React Bootstrap ^2.9.1](https://react-bootstrap.netlify.app/)
 
 ## Features
 
 Some of the key features of the project:
-- Non-Compliance Tracking: Record and manage incidents of non-compliance among AIM staff in a systematic way.
-- Data Centralization: Provide a single platform to store and access all non-compliance data, streamlining audit processes.
-- Cumulative Records with Filters: Complete history of incidents with filtering options for quick analysis and reporting.
+- Record and manage incidents of non-compliance among staff in a systematic way.
+- Provide a single platform to store and access all non-compliance data, streamlining audit processes.
+- Complete history of incidents with filtering options for quick analysis and reporting.
 
 ## Installation
 
-1. For ease of access, download [GitHub Desktop](https://desktop.github.com/download/)
-
-2. Clone the repository:
-   - Click the `Code` dropdown button
-   - Click `Open with GitHub Desktop`
-   - Follow through with the next steps
-   
-3. Navigate to the project directory:
-   - You can open the repository on your VS Code
+1. Clone this repository:
+   ```bash
+   git clone "https://github.com/nabbysidek/audits-web.git"
    
 4. Install dependencies:
-   - Open the terminal on your VS Code
-   - Run:
+   - Run on terminal:
    ```sh
    npm install
    
 5. Start the project:
-   - Run:
+   - Run on terminal:
    ```sh
    npm run dev
 
@@ -71,5 +61,5 @@ Some of the key features of the project:
 
 ## Acknowledgements
 
-Here you can give credit to people, libraries, or resources that helped you create the project.
+I would like to express my sincere gratitude to Azlin Liana for her invaluable contributions and collaboration on this project. Her expertise in backend development and unwavering dedication played a crucial role in bringing this project to life. I greatly appreciated their patience and problem-solving skills throughout our work together. It was a pleasure to collaborate, and I look forward to the possibility of future projects together.
 
