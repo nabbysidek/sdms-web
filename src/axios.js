@@ -2,9 +2,7 @@ import axios from "axios";
 
 // Axios instance
 const axiosCustom = axios.create({
-  baseURL: "http://jad.aim.gov.my:8080/api/",
-  // baseURL: "http://localhost:5173/",
-  // timeout: 5000, // Request timeout in milliseconds
+  baseURL: "http://localhost:5173/",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
