@@ -16,7 +16,7 @@
 
 ## About the Project
 
-.aud is a comprehensive platform designed to monitor and manage non-compliance incidents in a company. This system aims to streamline the process of tracking staff activities, identifying non-compliance issues, and documenting them for auditing and future reference. By providing a clear, organized record of non-compliance cases, it helps ensure that staff adhere to organizational policies and regulations, enhancing accountability across the board.
+.aud is a comprehensive platform designed to monitor and manage non-compliance incidents in a company. It aims to streamline the process of tracking staff activities, identifying non-compliance issues, and documenting them for auditing and future reference.
 
 ### Built With
 
