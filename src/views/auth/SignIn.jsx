@@ -118,11 +118,11 @@ function SignIn() {
         {/*  NEW */}
         <ControlledInput
           name="idAuditor"
-          label="Username"
+          label="Staff ID"
           control={control}
-          rules={{ required: "Your username is required" }}
+          rules={{ required: "Your staff ID is required" }}
           type="text"
-          placeholder="Your username..."
+          placeholder="Your staff ID..."
         />
 
         <ControlledInput
