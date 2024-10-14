@@ -3,7 +3,7 @@
 /***************************/ 
 
 .search-bar-section {
-  background-color: var(--darkgray);
+  background-color: var(--NEUTRALGRAY);
   width: 100%;
   border-radius: 10px;
 }
@@ -29,8 +29,8 @@
   width: 100%;
   font-size: 1.15em;
   font-weight: 700;
-  border-color: var(--darkblue);
-  background-color: var(--darkblue);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
   margin-bottom: 10px;
 }
   
@@ -60,8 +60,8 @@
   width: 100%;
   font-size: 1.2em;
   font-weight: 700;
-  border-color: var(--darkblue);
-  background-color: var(--darkblue);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
   margin-bottom: 10px;
 }
   
@@ -73,8 +73,8 @@
 .edit-tetapan-btn {
   font-size: 0.75em;
   font-weight: 700;
-  border-color: var(--edit_yellow);
-  background-color: var(--edit_yellow);
+  border-color: var(--PROMPTEDIT);
+  background-color: var(--PROMPTEDIT);
   margin-bottom: 10px;
   margin-right: 5px;
 }
@@ -95,7 +95,7 @@
 .delete-btn {
   font-size: 0.75em;
   font-weight: 700;
-  border-color: var(--delete_red);
-  background-color: var(--delete_red);
+  border-color: var(--PROMPTERROR);
+  background-color: var(--PROMPTERROR);
   margin-bottom: 10px;
 }

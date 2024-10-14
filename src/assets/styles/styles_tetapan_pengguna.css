@@ -5,16 +5,16 @@
 .delete-btn {
     font-size: 0.75em;
     font-weight: 700;
-    border-color: var(--delete_red);
-    background-color: var(--delete_red);
+    border-color: var(--PROMPTERROR);
+    background-color: var(--PROMPTERROR);
     margin-bottom: 10px;
   }
 
 .allow-btn {
   font-size: 0.75em;
   font-weight: 700;
-  border-color: var(--allowgreen);
-  background-color: var(--allowgreen);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
   margin-right: 5px;
   margin-bottom: 10px;
 }
@@ -26,8 +26,8 @@
 }
 
 .user-level-btn {
-  border-color: var(--darkblue);
-  background-color: var(--darkblue);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
   font-size: 0.75em;
   font-weight: 700;
 }
