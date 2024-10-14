@@ -4,7 +4,7 @@
 
 .functional-btn {
     font-weight: 700;
-    border-color: var(--lightgray);
-    background-color: var(--lightgray);
+    border-color: var(--NEUTRALGRAY);
+    background-color: var(--NEUTRALGRAY);
     margin-left: 4px;
 }

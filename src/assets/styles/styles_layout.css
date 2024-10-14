@@ -9,7 +9,7 @@
 }
   
 .content {
-  background-color: var(--backgroundwhite);
+  background-color: var(--BGWHITE);
   width: 100%;
   min-height: 110vh;
   overflow: hidden;
@@ -20,11 +20,11 @@
 /* ********************************* */
 
 .main-navbar {
-    background-color: var(--darkblue);
+    background-color: var(--PRIMARY);
 }
 
 .navbar-user-icon {
-    color: var(--white);
+    color: var(--NEUTRALWHITE);
     margin-left: 5px;
     margin-bottom: 10px;
     font-size: 12px;
@@ -35,7 +35,7 @@
     margin: 10px 0 auto 10px;
     font-weight: bold;
     font-size: 16px;
-    color: var(--white);
+    color: var(--NEUTRALWHITE);
 }
 
 /* ************************************* */
@@ -45,7 +45,7 @@
 
   /* for mobile navbar collapse */
 .custom-collapse {
-  color: var(--white);
+  color: var(--NEUTRALWHITE);
 }
 
 .navbar-user-icon:hover {
@@ -54,12 +54,12 @@
 
 .navbar-text a {
     background-color: transparent;
-    color: var(--white);
+    color: var(--NEUTRALWHITE);
 }
 
 .navbar-text a:hover {
     background-color: transparent;
-    color: var(--white);
+    color: var(--NEUTRALWHITE);
     text-decoration: underline;
 }
 
@@ -75,7 +75,7 @@
 /* ******************************************* */
 
 .user-icon-container {
-  color: var(--white);
+  color: var(--NEUTRALWHITE);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -92,7 +92,7 @@
 }
   
 .mini-menu-content {
-  color: var(--lightgray);
+  color: var(--NEUTRALGRAY);
   padding: 0 auto;
   margin-bottom: 0;
   height: 20px;
@@ -102,16 +102,16 @@
   width:175px;
   height:30px;
   margin-left: 15px;
-  color: var(--white);
-  background-color: var(--darkblue);
-  border: 1px solid var(--darkblue);
+  color: var(--NEUTRALWHITE);
+  background-color: var(--PRIMARY);
+  border: 1px solid var(--PRIMARY);
   border-radius: 5px;
 }
 
 .btn-update-profile:hover {
-  color: var(--black);
-  background-color: var(--white);
-  border: 1px solid var(--black);
+  color: var(--PRIMARY);
+  background-color: var(--NEUTRALWHITE);
+  border: 1px solid var(--PRIMARY);
 }
 
 
@@ -198,16 +198,16 @@
 
 @media (max-width: 767px) {
     .list-group-item {
-        background-color: var(--darkblue);
+        background-color: var(--PRIMARY);
         padding: 0;
         margin: 0;
         width: 250px;
         border: none;
-        color: var(--white);
+        color: var(--NEUTRALWHITE);
     }
 
     .tetapan-kriteria-group:hover {
-        color: var(--black);
+        color: var(--PRIMARY);
         text-decoration: underline;
     }
 
@@ -257,8 +257,8 @@ ul {
 
 @media (max-width: 767px) {
 .sub-sidebar {
-  background-color: var(--darkblue);
-  border-left: 1px solid var(--darkblue); 
+  background-color: var(--PRIMARY);
+  border-left: 1px solid var(--PRIMARY); 
 }
 }
 

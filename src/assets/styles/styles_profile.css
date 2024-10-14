@@ -28,7 +28,7 @@
 
 .set-password-btn {
     float: right;
-    background-color: var(--darkblue);
+    background-color: var(--PRIMARY);
     margin: 10px 0;
 }
 

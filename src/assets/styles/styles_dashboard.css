@@ -5,8 +5,8 @@
 .clock-container {
     width: 50%;
     margin: 5% auto;
-    border: 5px solid var(--darkgray);
-    background-color: var(--white);
+    border: 5px solid var(--NEUTRALGRAY);
+    background-color: var(--NEUTRALWHITE);
     text-align: center;
 }
 

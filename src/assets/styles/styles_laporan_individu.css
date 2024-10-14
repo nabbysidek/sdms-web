@@ -5,15 +5,15 @@
 .laporan-individu-search-container {
     border-radius: 10px;
     padding-top: 10px;
-    background-color: var(--darkgray);
+    background-color: var(--NEUTRALGRAY);
   }
 
 .laporan-individu-search-btn {
   width: 100%;
   font-weight: 700;
   font-size: 1.2em;
-  border-color: var(--darkblue);
-  background-color: var(--darkblue);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
   margin-bottom: 5px;
 }
 
@@ -39,7 +39,7 @@
 
 .kakitangan-info {
   margin: 0 auto;
-  background-color: var(--white);
+  background-color: var(--NEUTRALWHITE);
   border-radius: 10px;
   padding: 10px 10px 20px 10px;
   text-transform: uppercase;
@@ -65,16 +65,16 @@
     font-family: "Open Sans", sans-serif;
     font-size: 1.25em;
     font-weight: 700;
-    border-color: var(--darkblue);
-    background-color: var(--darkblue);
+    border-color: var(--PRIMARY);
+    background-color: var(--PRIMARY);
     margin-bottom: 10px;
 }
 
 .edit-ketidakpatuhan-btn {
   font-size: 0.75em;
   font-weight: 700;
-  border-color: var(--edit_yellow);
-  background-color: var(--edit_yellow);
+  border-color: var(--PROMPTEDIT);
+  background-color: var(--PROMPTEDIT);
   margin-bottom: 10px;
   margin-right: 5px;
 }
@@ -85,7 +85,7 @@
 /*******************************************************/
 
 .tambah-ketidakpatuhan-form-container, .edit-ketidakpatuhan-form-container {
-  background-color: var(--white);
+  background-color: var(--NEUTRALWHITE);
   width: 98%;
   margin: 20px auto 0 auto;
   border-radius: 10px;
@@ -114,20 +114,20 @@
 
 .tambah-ketidakpatuhan-btn {
   font-weight: 700;
-  border-color: var(--darkblue);
-  background-color: var(--darkblue);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
 }
 
 .edit-ketidakpatuhan-btn {
   font-weight: 700;
-  border-color: var(--edit_yellow);
-  background-color: var(--edit_yellow);
+  border-color: var(--PROMPTEDIT);
+  background-color: var(--PROMPTEDIT);
 }
 
 .cancel-btn {
   font-weight: 700;
-  border-color: var(--lightgray);
-  background-color: var(--lightgray);
+  border-color: var(--NEUTRALGRAY);
+  background-color: var(--NEUTRALGRAY);
   margin-left: 4px;
 }
 

@@ -3,7 +3,7 @@
 /* ********************************** */
 
 .pg-container {
-  background-image: url("../../assets/images/aim-background-img.png");
+  background-image: url("../../assets/images/auditee-bg-image.png");
   background-size: cover;
   background-position: center center;
   height: 100vh;
@@ -19,14 +19,31 @@
 
 .form-header {
     align-items: center;
-    text-align: center;
-    color: var(--white);
+    text-align: left;
+    color: var(--NEUTRALWHITE);
+}
+
+.form-header h1 {
+  font-weight: 700;
+}
+
+.form-header p {
+  font-size: smaller;
+  margin-top: -5px;
+}
+
+.span-form-header {
+  font-family: "Leckerli One", cursive;
+  font-weight: 400;
+  font-size: x-large;
+  font-style: normal;
 }
 
 .form-container {
-  background-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   font-size: 12px;
-  color: var(--white);
+  color: var(--NEUTRALWHITE);
 }
 
 .form-container h1 {
@@ -66,7 +83,7 @@
 /* ********************************** */
 
 .auth-link {
-  color: var(--white);
+  color: var(--NEUTRALWHITE);
 }
 
 .auth-btn {
@@ -74,19 +91,19 @@
   font-size: 1.15em;
   font-weight: 700;
   margin-top: 5px;
-  border-color: var(--darkblue);
-  background-color: var(--darkblue);
+  border-color: var(--PRIMARY);
+  background-color: var(--PRIMARY);
 }
 
 .auth-btn:hover {
-  color: var(--darkblue);
-  background-color: var(--white);
+  color: var(--PRIMARY);
+  background-color: var(--NEUTRALWHITE);
 }
 
 .create-acc {
   margin-top: 12px;
   text-align: center;
-  color: var(--white);
+  color: var(--NEUTRALWHITE);
 }
 
 .forgot-password {
