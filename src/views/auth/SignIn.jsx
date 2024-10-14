@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
-import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import { useNavigate } from "react-router-dom";
 import axiosCustom from "../../axios";
@@ -73,16 +72,6 @@ function SignIn() {
     setShowModal(false);
   };
 
-  // Form validation and submission
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   handleSubmit,
-  // } = useForm();
-
-  // const [staffId,setstaffId]= useState("");
-  // const [staffPassword,setstaffPassword]= useState("");
-
   // -------------------- BE ---------------------------
   const navigate = useNavigate();
 
@@ -100,7 +89,7 @@ function SignIn() {
       } else {
         Swal.fire({
           icon: "error",
-          title: "Log masuk gagal",
+          title: "Invalid login attempt. Try again.",
           text: error.response.data.error,
         });
         console.log(response.data);
@@ -108,10 +97,10 @@ function SignIn() {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Log masuk gagal",
+        title: "Invalid login attempt. Try again.",
         text: error.response.data.error,
       });
-      console.log(error); // Error related to API response or client side
+      console.log(error); 
     }
   };
 
@@ -122,99 +111,61 @@ function SignIn() {
         onSubmit={handleSubmit(handleSignIn)}
       >
         <div className="form-header">
-          <img className="aim-logo" src={aimLogo} alt="aim-logo" />
-          <h1>Sistem Jabatan Audit Dalaman</h1>
-          <p>Masukkan maklumat log masuk anda</p>
+          <h1>Sign in to <span className="span-form-header">auditee</span></h1>
+          <p>auditee for reputable.org</p>
         </div>
 
         {/*  NEW */}
         <ControlledInput
           name="idAuditor"
-          label="Id Kakitangan"
+          label="Username"
           control={control}
-          rules={{ required: "ID kakitangan diperlukan" }}
+          rules={{ required: "Your username is required" }}
           type="text"
-          placeholder="ID kakitangan anda"
+          placeholder="Your username..."
         />
 
         <ControlledInput
           name="kataLaluanAuditor"
-          label="Kata Laluan"
+          label="Password"
           control={control}
           rules={{
-            required: "Kata laluan diperlukan",
+            required: "Your password is required",
             minLength: {
               value: 8,
-              message: "Minima 8 karakter",
+              message: "Minimum 8 characters required",
             },
             pattern: {
               value:
                 /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
               message:
-                "Kata laluan mesti mengandungi sekurang-kurangnya satu huruf, satu nombor, dan satu simbol khas",
+                "Password must contain at least one alphabet, one number and one special character",
             },
           }}
           type={showPassword ? "text" : "password"}
-          placeholder="Kata laluan anda"
+          placeholder="Your password..."
           togglePassword
           handleToggle={() => setShowPassword(!showPassword)}
         />
 
-        {/* <Form.Group controlId="idAuditor" className="mb-3">
-          <Form.Label className="form-label">Id Kakitangan</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("idAuditor", { required: true })}
-            aria-invalid={errors.idAuditor ? "true" : "false"}
-            placeholder="ID kakitangan anda"
-            onChange={(e) => setstaffId(e.target.value)}
-          />
-          {errors.idAuditor?.type === "required" && (
-            <p role="alert" className="error-message">
-              ID kakitangan diperlukan
-            </p>
-          )}
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="kataLaluanAuditor">
-          <Form.Label className="form-label">Kata Laluan</Form.Label>
-          <Form.Control
-            type="password"
-            {...register("kataLaluanAuditor", { required: true, minLength: 8 })}
-            aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
-            placeholder="Kata laluan anda"
-            onChange={(e) => setstaffPassword(e.target.value)}
-          />
-          {errors.kataLaluanAuditor?.type === "required" && (
-            <p role="alert" className="error-message">
-              Kata laluan diperlukan
-            </p>
-          )}
-          {errors.kataLaluanAuditor?.type === "minLength" && (
-            <p role="alert" className="error-message">
-              Minima 8 karakter
-            </p>
-          )}
-        </Form.Group> */}
-
         <div className="forgot-password">
           <Link to="" className="auth-link" onClick={openModal}>
-            Lupa Kata Laluan?
+            Forgot password?
           </Link>
           {showModal && <ForgotPasswordModal onClose={closeModal} />}
         </div>
 
         <Button className="auth-btn" type="submit">
           {" "}
-          Log Masuk{" "}
+          Sign in{" "}
         </Button>
 
         <div className="create-acc">
           <p>
-            Bagi pengguna baru, sila{" "}
+            Sign up{" "}
             {
               <Link to="/signup" className="auth-link">
-                tekan di sini
+                here.
               </Link>
             }
           </p>

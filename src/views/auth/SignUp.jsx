@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import aimLogo from "../../assets/images/aim-logo.svg";
 import "../../assets/styles/styles_auth.css";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
@@ -40,7 +39,7 @@ function SignUp() {
       if (response.status >= 200 && response.status < 300) {
         Swal.fire({
           icon: "success",
-          title: "Permohonan akses diterima. Log masuk selepas diberi akses.",
+          title: "Sign up application received. Sign in once given authorization.",
           text: response.data.success,
         });
       } else {
@@ -50,7 +49,7 @@ function SignUp() {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Permohonan akses gagal",
+        title: "Sign up application not received. Try again.",
         text: error.response.data.error,
       });
 
@@ -69,22 +68,22 @@ function SignUp() {
         onSubmit={handleSubmit(handleSignUp)}
       >
         <div className="form-header">
-          <img className="aim-logo" src={aimLogo} alt="aim-logo" />
-          <p>Isi ruangan di bawah untuk bina akaun baharu</p>
+        <h1>Sign up to <span className="span-form-header">auditee</span></h1>
+        <p>auditee for reputable.org</p>
         </div>
 
         <div>
           <Form.Group className="mb-3" controlId="namaAuditor">
-            <Form.Label className="form-label">Nama Kakitangan</Form.Label>
+            <Form.Label className="form-label">Name</Form.Label>
             <Form.Control
               type="text"
               {...register("namaAuditor", { required: true })}
               aria-invalid={errors.namaAuditor ? "true" : "false"}
-              placeholder="Nama anda"
+              placeholder="Your name..."
             />
             {errors.namaAuditor?.type === "required" && (
               <p role="alert" className="error-message">
-                Nama anda diperlukan
+                A name is required
               </p>
             )}
           </Form.Group>
@@ -93,18 +92,18 @@ function SignUp() {
             <Row>
               <Col xs={6}>
                 <Form.Group className="mb-3" controlId="idAuditor">
-                  <Form.Label className="form-label">Id Kakitangan</Form.Label>
+                  <Form.Label className="form-label">Your Staff ID</Form.Label>
                   <Form.Control
                     type="text"
                     {...register("idAuditor", {
                       required: true,
                     })}
                     aria-invalid={errors.idAuditor ? "true" : "false"}
-                    placeholder="ID kakitangan anda"
+                    placeholder="Your staff ID"
                   />
                   {errors.idAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
-                      ID kakitangan diperlukan
+                      Your staff ID is required
                     </p>
                   )}
                 </Form.Group>
@@ -112,7 +111,7 @@ function SignUp() {
               <Col xs={6}>
                 <Form.Group className="mb-3" controlId="emelAuditor">
                   <Form.Label className="form-label">
-                    Emel Kakitangan
+                    Your Email
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -120,11 +119,11 @@ function SignUp() {
                       required: true,
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Emel tidak sah.",
+                        message: "Email is not valid",
                       },
                     })}
                     aria-invalid={errors.emelAuditor ? "true" : "false"}
-                    placeholder="Emel kakitangan anda"
+                    placeholder="Your work email..."
                   />
                   {errors.emelAuditor && (
                     <p role="alert" className="error-message">
@@ -133,7 +132,7 @@ function SignUp() {
                   )}
                   {errors.emelAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
-                      Emel kakitangan diperlukan
+                      Your email is required
                     </p>
                   )}
                 </Form.Group>
@@ -145,25 +144,25 @@ function SignUp() {
             <Row>
               <Col xs={6}>
                 <Form.Group controlId="kataLaluanAuditor">
-                  <Form.Label className="form-label">Kata Laluan</Form.Label>
+                  <Form.Label className="form-label">Password</Form.Label>
                   <InputGroup>
                     <Form.Control
                       type={showNewPassword ? "text" : "password"}
                       {...register("kataLaluanAuditor", {
-                        required: "Kata laluan diperlukan",
+                        required: "Password is required",
                         minLength: {
                           value: 8,
-                          message: "Minima 8 karakter",
+                          message: "Minimum 8 characters required",
                         },
                         pattern: {
                           value:
                             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\$@\$!%*?&])[A-Za-z\d\$@\$!%*?&]{8,}$/,
                           message:
-                            "Mesti ada huruf besar, huruf kecil, nombor, dan simbol khas",
+                            "Password must contain at least one alphabet, one number and one special character",
                         },
                       })}
                       aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
-                      placeholder="Kata laluan anda"
+                      placeholder="Your password..."
                     />
                     <Button
                       className="sign-up-show-password"
@@ -175,18 +174,17 @@ function SignUp() {
                   </InputGroup>
                   {errors.kataLaluanAuditor?.type === "required" && (
                     <p role="alert" className="error-message">
-                      Kata laluan diperlukan
+                      Password is required
                     </p>
                   )}
                   {errors.kataLaluanAuditor?.type === "minLength" && (
                     <p role="alert" className="error-message">
-                      Minima 8 karakter
+                      Minimum 8 characters required
                     </p>
                   )}
                   {errors.kataLaluanAuditor?.type === "pattern" && (
                     <p role="alert" className="error-message">
-                      Mesti ada huruf besar, huruf kecil, nombor, dan simbol
-                      khas
+                      Password must contain at least one alphabet, one number and one special character
                     </p>
                   )}
                 </Form.Group>
@@ -194,7 +192,7 @@ function SignUp() {
               <Col xs={6}>
                 <Form.Group controlId="kataLaluanAuditor_confirmation">
                   <Form.Label className="form-label">
-                    Ulang Kata Laluan
+                    Confirm Password
                   </Form.Label>
                   <Form.Control
                     type="password"
@@ -202,17 +200,17 @@ function SignUp() {
                       required: true,
                       validate: (value) =>
                         value === watch("kataLaluanAuditor") ||
-                        "Kata laluan tidak padan",
+                        "Password is required",
                     })}
                     aria-invalid={
                       errors.kataLaluanAuditor_confirmation ? "true" : "false"
                     }
-                    placeholder="Kata laluan anda"
+                    placeholder="Repeat your password..."
                   />
                   {errors.kataLaluanAuditor_confirmation?.type ===
                     "required" && (
                     <p role="alert" className="error-message">
-                      Kata laluan diperlukan
+                      Password is required
                     </p>
                   )}
                   {errors.kataLaluanAuditor_confirmation && (
@@ -226,17 +224,15 @@ function SignUp() {
           </div>
 
           <Button className="auth-btn" type="submit">
-            {" "}
-            Mohon Akses{" "}
+            Sign up
           </Button>
         </div>
 
         <div className="create-acc">
           <p>
-            Jika ingin log masuk semula{" "}
             {
               <Link to="/" className="auth-link">
-                tekan di sini
+                Return to sign in page
               </Link>
             }
           </p>
