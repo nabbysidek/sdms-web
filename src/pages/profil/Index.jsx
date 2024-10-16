@@ -32,7 +32,7 @@ function Profile() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Profil Pengguna</h2>
+        <h2>View Profile</h2>
       </div>
       <hr />
 

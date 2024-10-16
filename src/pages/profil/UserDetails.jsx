@@ -7,7 +7,7 @@ function UserDetails({ userInfo }) {
       <Row>
         <Col xs={12}>
           <Form.Group>
-            <Form.Label>Nama</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control type="text" defaultValue={userInfo?.namaAuditor} disabled />
           </Form.Group>
         </Col>
@@ -15,7 +15,7 @@ function UserDetails({ userInfo }) {
       <Row>
         <Col xs={12}>
           <Form.Group>
-            <Form.Label>ID Kakitangan</Form.Label>
+            <Form.Label>Staff ID</Form.Label>
             <Form.Control type="text" defaultValue={userInfo?.emelAuditor} disabled />
           </Form.Group>
         </Col>

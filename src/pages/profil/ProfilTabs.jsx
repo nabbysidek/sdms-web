@@ -10,12 +10,12 @@ function ProfilTabs({ userInfo }) {
   return (
     <>
       <Tabs id="profile-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
-        <Tab eventKey="user-details" title="Maklumat Pengguna">
+        <Tab eventKey="user-details" title="Your information">
           <UserDetails 
             userInfo={userInfo} 
           />
         </Tab>
-        <Tab eventKey="change-password" title="Set Kata Laluan">
+        <Tab eventKey="change-password" title="Set New Password">
           <SetPassword 
             userInfo={userInfo} 
           />
