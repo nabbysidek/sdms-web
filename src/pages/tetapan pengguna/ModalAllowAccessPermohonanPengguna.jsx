@@ -4,7 +4,12 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId, refetchPermohonanAkses, refetchSenaraiPengguna }) {
+function ModalAllowAccessPermohonanPengguna({
+  disableButtonBenar,
+  userId,
+  refetchPermohonanAkses,
+  refetchSenaraiPengguna,
+}) {
   // -------------------- FE ---------------------------
   const [showModalAllowAccess, setShowModalAllowAccess] = useState(false);
 
@@ -26,7 +31,7 @@ function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId, refetc
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success, // Access the message from the backend response
         });
 
@@ -44,14 +49,14 @@ function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId, refetc
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal",
+          title: "Error",
           text: response.data.error, // Access the message from the backend response
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error, // Access the message from the backend response
       });
     }
@@ -64,7 +69,7 @@ function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId, refetc
         onClick={handleShowModalAllowAccess}
         disabled={disableButtonBenar}
       >
-        Benar Akses
+        Grant Access
       </Button>
 
       <Modal
@@ -74,24 +79,24 @@ function ModalAllowAccessPermohonanPengguna({ disableButtonBenar, userId, refetc
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Benarkan Akses?</Modal.Title>
+          <Modal.Title>Grant Access?</Modal.Title>
         </Modal.Header>
         <Form>
           <Modal.Body>
-            Adakah anda pasti ingin memberi akses kepada pengguna ini?
+            Are you sure you want to grant access for this requester?
           </Modal.Body>
           <Modal.Footer>
             <Button
               className="btn-secondary"
               onClick={handleCloseModalAllowAccess}
             >
-              Batal
+              Cancel
             </Button>
             <Button
               className="btn-primary"
               onClick={handleSubmit(updateBenarPermohonanAkses)}
             >
-              Benar Akses
+              Grant Access
             </Button>
           </Modal.Footer>
         </Form>

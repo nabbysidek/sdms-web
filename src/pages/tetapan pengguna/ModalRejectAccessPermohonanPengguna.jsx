@@ -4,7 +4,10 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalRejectAccessPermohonanPengguna({ userId, refetchPermohonanAkses }) {
+function ModalRejectAccessPermohonanPengguna({
+  userId,
+  refetchPermohonanAkses,
+}) {
   // -------------------- FE ---------------------------
   const [showModalRejectAccess, setShowModalRejectAccess] = useState(false);
 
@@ -26,7 +29,7 @@ function ModalRejectAccessPermohonanPengguna({ userId, refetchPermohonanAkses })
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success, // Access the message from the backend response
         });
 
@@ -39,14 +42,14 @@ function ModalRejectAccessPermohonanPengguna({ userId, refetchPermohonanAkses })
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal",
+          title: "Error",
           text: response.data.error, // Access the message from the backend response
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error, // Access the message from the backend response
       });
     }
@@ -55,7 +58,7 @@ function ModalRejectAccessPermohonanPengguna({ userId, refetchPermohonanAkses })
   return (
     <>
       <Button className="delete-btn" onClick={handleShowModalRejectAccess}>
-        Tolak Akses
+        Reject Access
       </Button>
 
       <Modal
@@ -65,24 +68,24 @@ function ModalRejectAccessPermohonanPengguna({ userId, refetchPermohonanAkses })
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tolak Permintaan Akses?</Modal.Title>
+          <Modal.Title>Reject Access?</Modal.Title>
         </Modal.Header>
         <Form>
           <Modal.Body>
-            Adakah anda pasti ingin menolak permintaan akses pengguna ini?
+            Are you sure you want to reject this access request from this requester?
           </Modal.Body>
           <Modal.Footer>
             <Button
               className="btn-secondary"
               onClick={handleCloseModalRejectAccess}
             >
-              Batal
+              Cancel
             </Button>
             <Button
               className="btn-primary"
               onClick={handleSubmit(updateTolakPermohonanAkses)}
             >
-              Tolak Akses
+              Reject Access
             </Button>
           </Modal.Footer>
         </Form>

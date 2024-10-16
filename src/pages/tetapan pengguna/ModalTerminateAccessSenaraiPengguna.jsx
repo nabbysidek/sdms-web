@@ -4,21 +4,27 @@ import { useForm } from "react-hook-form";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId, refetchSenaraiPengguna }) {
-  const [showModalTerminateAccessSenaraiPengguna, setShowModalTerminateAccessSenaraiPengguna] =
-    useState(false);
+function ModalTerminateAccessSenaraiPengguna({
+  disableButtonSekat,
+  userId,
+  refetchSenaraiPengguna,
+}) {
+  const [
+    showModalTerminateAccessSenaraiPengguna,
+    setShowModalTerminateAccessSenaraiPengguna,
+  ] = useState(false);
 
   const handleCloseModalTerminateAccessSenaraiPengguna = () =>
     setShowModalTerminateAccessSenaraiPengguna(false);
   const handleShowModalTerminateAccessSenaraiPengguna = () =>
     setShowModalTerminateAccessSenaraiPengguna(true);
 
-    // Form validation
-    const { handleSubmit, formState } = useForm();
-    const { errors } = formState;
+  // Form validation
+  const { handleSubmit, formState } = useForm();
+  const { errors } = formState;
 
-    // -------------------- BE ---------------------------
-    // Handle update tamatkan akses
+  // -------------------- BE ---------------------------
+  // Handle update tamatkan akses
   const updateTamatkanAkses = async () => {
     try {
       const response = await axiosCustom.put(
@@ -28,7 +34,7 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId, refet
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success, // Access the message from the backend response
         });
 
@@ -41,14 +47,14 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId, refet
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal",
+          title: "Error",
           text: response.data.error, // Access the message from the backend response
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error, // Access the message from the backend response
       });
     }
@@ -61,7 +67,7 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId, refet
         onClick={handleShowModalTerminateAccessSenaraiPengguna}
         disabled={disableButtonSekat}
       >
-        Sekat Akses
+        Block Access
       </Button>
 
       <Modal
@@ -71,24 +77,24 @@ function ModalTerminateAccessSenaraiPengguna({ disableButtonSekat, userId, refet
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tamatkan Akses Pengguna?</Modal.Title>
+          <Modal.Title>Block Access?</Modal.Title>
         </Modal.Header>
         <Form>
           <Modal.Body>
-            Adakah anda pasti ingin menamatkan akses pengguna ini?
+            Are you sure you want to block this auditor's access?
           </Modal.Body>
           <Modal.Footer>
             <Button
               className="btn-secondary"
               onClick={handleCloseModalTerminateAccessSenaraiPengguna}
             >
-              Batal
+              Cancel
             </Button>
             <Button
               className="btn-primary"
               onClick={handleSubmit(updateTamatkanAkses)}
             >
-              Tamatkan Akses
+              Block Access
             </Button>
           </Modal.Footer>
         </Form>

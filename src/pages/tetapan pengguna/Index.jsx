@@ -69,7 +69,7 @@ function IndexTetapanPengguna() {
   // Helper function to get the namaPeranan for a given perananId
   const getPerananLabel = (perananId) => {
     const peranan = perananOptions.find((p) => p.value === perananId);
-    return peranan ? peranan.label : 'Tiada Peranan';
+    return peranan ? peranan.label : 'Unassigned Role';
   };
 
   // Handle change in peranan
@@ -88,7 +88,7 @@ function IndexTetapanPengguna() {
         );
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success, 
         });
       } 
@@ -96,7 +96,7 @@ function IndexTetapanPengguna() {
       console.log(error);
       Swal.fire({
         icon: "error",
-          title: "Gagal",
+          title: "Error",
           text: error.response.data.error,
       });
     }
@@ -105,27 +105,27 @@ function IndexTetapanPengguna() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Akses Pengguna</h2>
+        <h2>Manage Users</h2>
         <hr />
-        <h3>Permohonan Akses</h3>
+        <h3>List of Access Request</h3>
       </div>
       <Container fluid>
         <hr />
         <Table responsive>
           <thead>
             <tr>
-              <th>Bil</th>
-              <th>ID Kakitangan</th>
-              <th>Nama Kakitangan</th>
-              <th>Emel Kakitangan</th>
-              <th>Tindakan</th>
+              <th>Num</th>
+              <th>Staff ID</th>
+              <th>Requester's Name</th>
+              <th>Requester's Email</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {permohonanAkses.length === 0 ? (
               <tr>
                 <td colSpan="5">
-                  <center>Tiada rekod.</center>
+                  <center>There are no new access request.</center>
                 </td>
               </tr>
             ) : (
@@ -145,25 +145,25 @@ function IndexTetapanPengguna() {
           </tbody>
         </Table>
 
-        <h4 className="page-title">Senarai Pengguna</h4>
+        <h4 className="page-title">List of Registered Auditors</h4>
         <hr />
         <Table responsive>
           <thead>
             <tr>
-              <th>Bil</th>
-              <th>ID Kakitangan</th>
-              <th>Nama Kakitangan</th>
-              <th>Emel Kakitangan</th>
-              <th>Status Auditor</th>
-              <th>Tahap Pengguna</th>
-              <th>Tindakan</th>
+              <th>Num</th>
+              <th>Staff ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Role</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {senaraiPengguna.length === 0 ? (
               <tr>
                 <td colSpan="7">
-                  <center>Tiada rekod.</center>
+                  <center>There are no registered auditors.</center>
                 </td>
               </tr>
             ) : (

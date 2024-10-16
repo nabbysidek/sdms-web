@@ -4,7 +4,11 @@ import { Modal, Button, Form } from "react-bootstrap";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId, refetchSenaraiPengguna }) {
+function ModalAllowAccessSenaraiPengguna({
+  disableButtonBenar,
+  userId,
+  refetchSenaraiPengguna,
+}) {
   // -------------------- FE ---------------------------
   const [
     showModalAllowAccessSenaraiPengguna,
@@ -31,7 +35,7 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId, refetchSe
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success, // Access the message from the backend response
         });
 
@@ -44,14 +48,14 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId, refetchSe
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal",
+          title: "Error",
           text: response.data.error, // Access the message from the backend response
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error, // Access the message from the backend response
       });
     }
@@ -64,7 +68,7 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId, refetchSe
         onClick={handleShowModalAllowAccessSenaraiPengguna}
         disabled={disableButtonBenar}
       >
-        Benar Akses
+        Restore Access
       </Button>
 
       <Modal
@@ -74,24 +78,24 @@ function ModalAllowAccessSenaraiPengguna({ disableButtonBenar, userId, refetchSe
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Benarkan Akses?</Modal.Title>
+          <Modal.Title>Restore Access?</Modal.Title>
         </Modal.Header>
         <Form>
           <Modal.Body>
-            Adakah anda pasti ingin memberi akses kepada pengguna ini?
+            Are you sure you'd like to restore this auditor's access?
           </Modal.Body>
           <Modal.Footer>
             <Button
               className="btn-secondary"
               onClick={handleCloseModalAllowAccessSenaraiPengguna}
             >
-              Batal
+              Cancel
             </Button>
             <Button
               className="btn-primary"
               onClick={handleSubmit(updateBenarPermohonanAksesSenaraiPengguna)}
             >
-              Benar Akses
+              Restore Access
             </Button>
           </Modal.Footer>
         </Form>
