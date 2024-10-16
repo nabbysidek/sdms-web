@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useSkopKriteriaStore from "../../../store/skop-kriteria-store";
 
-function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
+function CreateSkopKriteria({ skopSemakanOptions, onAddSuccess }) {
   // INITIALIZE CREATE AKTIVITI SEMAKAN MODAL
   const [showCreateSkopKriteria, setShowCreateSkopKriteria] = useState(false);
 
@@ -23,7 +23,9 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
   } = useForm();
 
   // USE OF AKTIVITI SEMAKAN STORE
-  const createSkopKriteria = useSkopKriteriaStore((state) => state.createSkopKriteria);
+  const createSkopKriteria = useSkopKriteriaStore(
+    (state) => state.createSkopKriteria
+  );
 
   //  HANDLE CREATE A NEW OF AKTIVITI SEMAKAN
   const onSubmit = (data) => {
@@ -36,7 +38,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopKriteria}>
-        Tambah skop kriteria
+        Add Noncompliance Scope
       </Button>
 
       <Modal
@@ -44,25 +46,30 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
         onHide={handleCloseCreateSkopKriteria}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Skop Kriteria</Modal.Title>
+          <Modal.Title>Add Noncompliance Scope</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Skop Semakan</Form.Label>
+              <Form.Label>Review Scope</Form.Label>
               <Controller
                 id="skopSemakanId"
                 name="skopSemakanId"
                 control={control}
-                rules={{ required: "Sila pilih skop semakan" }}
+                rules={{ required: "A review scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select aria-label="skopSemakanSelect" onChange={onChange} value={value}>
-                      <option value="">
-                        Pilih Skop Semakan
-                      </option>
+                    <Form.Select
+                      aria-label="skopSemakanSelect"
+                      onChange={onChange}
+                      value={value}
+                    >
+                      <option value="">Select a Review Scope</option>
                       {skopSemakanOptions.map((skopSemakan) => (
-                        <option key={skopSemakan.value} value={skopSemakan.value}>
+                        <option
+                          key={skopSemakan.value}
+                          value={skopSemakan.value}
+                        >
                           {skopSemakan.label}
                         </option>
                       ))}
@@ -77,19 +84,19 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Nama Skop Kriteria</Form.Label>
+              <Form.Label>Noncompliance Scope</Form.Label>
               <Controller
                 name="namaSkopKriteria"
                 id="namaSkopKriteria"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Skop kriteria baru diperlukan" }}
+                rules={{ required: "A noncompliance scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan nama skop kriteria ketidakpatuhan"
+                    placeholder="Enter noncompliance scope . . ."
                     autoFocus
                   />
                 )}
@@ -107,7 +114,7 @@ function CreateSkopKriteria({skopSemakanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

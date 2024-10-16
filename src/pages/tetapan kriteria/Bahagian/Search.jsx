@@ -10,7 +10,7 @@ function SearchBahagian({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama bahagian"
+                placeholder="Search for divisions . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

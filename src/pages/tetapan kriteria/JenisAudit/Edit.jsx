@@ -34,7 +34,7 @@ function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditJenisAudit}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -44,25 +44,25 @@ function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Jenis Audit</Modal.Title>
+          <Modal.Title>Edit Type of Audit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
-              <Form.Label>Nama Jenis Audit</Form.Label>
+              <Form.Label>Type of Audit</Form.Label>
               <Controller
                 name="namaJenisAudit"
                 id="namaJenisAudit"
                 control={control}
                 defaultValue={jenisAudit.namaJenisAudit}
-                rules={{ required: "Nama jenis audit baru diperlukan" }}
+                rules={{ required: "A type of audit is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Jenis audit"
+                      placeholder="Enter type of audit . . ."
                     />
                     {errors?.namaJenisAudit && (
                       <span className="error-message">
@@ -77,7 +77,7 @@ function EditJenisAudit({jenisAudit, onUpdateSuccess }) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

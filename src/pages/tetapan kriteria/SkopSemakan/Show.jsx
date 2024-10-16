@@ -14,7 +14,8 @@ import * as Papa from "papaparse";
 
 function ShowSkopSemakanList() {
   // USE OF SKOP SEMAKAN STORE
-  const { skopSemakans, fetchSkopSemakans, deleteSkopSemakan } = useSkopSemakanStore();
+  const { skopSemakans, fetchSkopSemakans, deleteSkopSemakan } =
+    useSkopSemakanStore();
 
   // FETCH FROM STORE: SKOP SEMAKAN
   useEffect(() => {
@@ -22,34 +23,45 @@ function ShowSkopSemakanList() {
   }, [fetchSkopSemakans]);
 
   // HANDLE DELETE OF SKOP SEMAKAN
-  const handleDeleteSkopSemakan = useCallback( async (skopSemakanId) => {
-    const confirmResult = await showConfirmationDialog();
+  const handleDeleteSkopSemakan = useCallback(
+    async (skopSemakanId) => {
+      const confirmResult = await showConfirmationDialog();
 
-    if (confirmResult.isConfirmed) {
-      await deleteSkopSemakan(skopSemakanId);
-    }
-  }, [deleteSkopSemakan, fetchSkopSemakans]);
+      if (confirmResult.isConfirmed) {
+        await deleteSkopSemakan(skopSemakanId);
+      }
+    },
+    [deleteSkopSemakan, fetchSkopSemakans]
+  );
 
   // USE OF TANSTACK TABLE
   // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => skopSemakans, [skopSemakans]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Nama Skop Semakan",
+      header: "Review Scopes",
       accessorKey: "namaSkopSemakan",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
-          <EditSkopSemakan skopSemakan={row.original} onUpdateSuccess={fetchSkopSemakans} />
-          <Button onClick={() => handleDeleteSkopSemakan(row.original.id)} className="delete-btn">Padam</Button>
+          <EditSkopSemakan
+            skopSemakan={row.original}
+            onUpdateSuccess={fetchSkopSemakans}
+          />
+          <Button
+            onClick={() => handleDeleteSkopSemakan(row.original.id)}
+            className="delete-btn"
+          >
+            Delete
+          </Button>
         </div>
       ),
     },
@@ -64,7 +76,7 @@ function ShowSkopSemakanList() {
     // PREPARE CSV DATA
     const csvData = data.map((skopSemakan, index) => ({
       Bil: index + 1,
-      "NAMA SKOP SEMAKAN": skopSemakan.namaSkopSemakan,
+      "SCOPES OF REVIEW": skopSemakan.namaSkopSemakan,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -72,17 +84,20 @@ function ShowSkopSemakanList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI SKOP SEMAKAN.csv");
+    FileSaver.saveAs(blob, "LIST OF SCOPES OF REVIEW.csv");
   };
 
   return (
     <>
       <Container fluid>
-      <SearchSkopSemakan filterValue={filtering} onFilterChange={setFiltering} />
+        <SearchSkopSemakan
+          filterValue={filtering}
+          onFilterChange={setFiltering}
+        />
         <div className="table-section">
           <Row>
             <div className="col-md-9">
-              <h3 className="table-title">Senarai Skop Semakan</h3>
+              <h3 className="table-title">List of Review Scopes</h3>
             </div>
             <div className="col-md-3">
               <CreateSkopSemakan onAddSuccess={fetchSkopSemakans} />
@@ -98,7 +113,7 @@ function ShowSkopSemakanList() {
           filtering={filtering}
           setFiltering={setFiltering}
         />
-        
+
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
           <ExportButton onClick={handleExportSkopSemakan} />

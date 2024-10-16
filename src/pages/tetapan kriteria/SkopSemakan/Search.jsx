@@ -10,7 +10,7 @@ function SearchSkopSemakan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama skop semakan"
+                placeholder="Search for Review Scopes . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

@@ -6,9 +6,9 @@ function IndexJenisAudit() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Jenis Audit</h2>
+        <h2>Types of Audit</h2>
         <hr />
-        <h3>Cari Jenis Audit</h3>
+        <h3>Search Types of Audit Records</h3>
       </div>
 
       <div className="page-content">

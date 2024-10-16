@@ -37,16 +37,16 @@ function ShowWilayahList() {
   const data = useMemo(() => wilayahs, [wilayahs]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Nama Wilayah",
+      header: "State",
       accessorKey: "namaWilayah",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -55,7 +55,7 @@ function ShowWilayahList() {
             onClick={() => handleDeleteWilayah(row.original.id)}
             className="delete-btn"
           >
-            Padam
+            Delete
           </Button>
         </div>
       ),
@@ -71,7 +71,7 @@ function ShowWilayahList() {
     // PREPARE CSV DATA
     const csvData = data.map((wilayah, index) => ({
       Bil: index + 1,
-      "NAMA WILAYAH": wilayah.namaWilayah,
+      "STATES": wilayah.namaWilayah,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -79,7 +79,7 @@ function ShowWilayahList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI WILAYAH.csv");
+    FileSaver.saveAs(blob, "LIST OF STATES.csv");
   };
 
   return (
@@ -88,7 +88,7 @@ function ShowWilayahList() {
       <div className="table-section">
         <Row>
           <div className="col-md-10">
-            <h3 className="table-title">Senarai Wilayah</h3>
+            <h3 className="table-title">List of States</h3>
           </div>
           <div className="col-md-2">
             <CreateWilayah onAddSuccess={fetchWilayahs} />

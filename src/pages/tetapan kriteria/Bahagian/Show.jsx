@@ -34,16 +34,16 @@ function ShowBahagianList() {
   const data = useMemo(() => bahagians, [bahagians]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Nama Bahagian",
+      header: "Divisions",
       accessorKey: "namaBahagian",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -63,7 +63,7 @@ function ShowBahagianList() {
     // PREPARE CSV DATA
     const csvData = data.map((bahagian, index) => ({
       Bil: index + 1,
-      "NAMA BAHAGIAN": bahagian.namaBahagian,
+      "DIVISIONS": bahagian.namaBahagian,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -71,7 +71,7 @@ function ShowBahagianList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI BAHAGIAN.csv");
+    FileSaver.saveAs(blob, "LIST OF DIVISIONS.csv");
   };
 
   return (
@@ -81,7 +81,7 @@ function ShowBahagianList() {
         <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h3 className="table-title">Senarai Bahagian</h3>
+              <h3 className="table-title">List of Divisions</h3>
             </div>
             <div className="col-md-2">
               <CreateBahagian onAddSuccess={fetchBahagians} />

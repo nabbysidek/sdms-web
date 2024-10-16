@@ -36,7 +36,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateUnit}>
-        Tambah unit
+        Add Unit
       </Button>
 
       <Modal
@@ -46,22 +46,22 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Unit</Modal.Title>
+          <Modal.Title>Add Unit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Jabatan</Form.Label>
+              <Form.Label>Department</Form.Label>
               <Controller
                 id="jabatanId"
                 name="jabatanId"
                 control={control}
-                rules={{ required: "Sila pilih jabatan" }}
+                rules={{ required: "A department is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select onChange={onChange} value={value}>
                       <option value="">
-                        Pilih Jabatan
+                        Select a Department
                       </option>
                       {jabatanOptions.map((jabatan) => (
                         <option key={jabatan.value} value={jabatan.value}>
@@ -80,20 +80,20 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Unit</Form.Label>
+              <Form.Label>Unit</Form.Label>
               <Controller
                 id="namaUnit"
                 name="namaUnit"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Nama unit baru diperlukan" }}
+                rules={{ required: "A unit is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <FormControl
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan nama unit"
+                      placeholder="Enter unit . . ."
                       autoFocus
                     />
                     {errors.namaUnit && (
@@ -112,7 +112,7 @@ function CreateUnit({jabatanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

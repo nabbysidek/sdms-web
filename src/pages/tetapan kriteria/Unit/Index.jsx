@@ -6,9 +6,9 @@ function IndexUnit() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Unit</h2>
+        <h2>Units</h2>
         <hr />
-        <h3>Cari Unit</h3>
+        <h3>Search Units</h3>
       </div>
 
       <div className="page-content">

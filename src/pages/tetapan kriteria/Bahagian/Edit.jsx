@@ -40,7 +40,7 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditBahagian}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,25 +50,25 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Bahagian</Modal.Title>
+          <Modal.Title>Edit Division</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Nama Bahagian</Form.Label>
+              <Form.Label>Division</Form.Label>
               <Controller
                 name="namaBahagian"
                 id="namaBahagian"
                 control={control}
                 defaultValue={bahagian.namaBahagian}
-                rules={{ required: "Nama bahagian baru diperlukan" }}
+                rules={{ required: "A division is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Bahagian"
+                      placeholder="Enter division . . ."
                     />
                     {errors?.namaBahagian && (
                       <span className="error-message">
@@ -83,7 +83,7 @@ function EditBahagian({bahagian, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

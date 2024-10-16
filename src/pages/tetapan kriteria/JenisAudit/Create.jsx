@@ -36,7 +36,7 @@ function CreateJenisAudit({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJenisAudit}>
-        Tambah jenis audit
+        Add Type of Audit
       </Button>
 
       <Modal
@@ -46,24 +46,24 @@ function CreateJenisAudit({ onAddSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Jenis Audit</Modal.Title>
+          <Modal.Title>Add Type of Audit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Nama Jenis Audit</Form.Label>
+              <Form.Label>Type of Audit</Form.Label>
               <Controller
                 name="namaJenisAudit"
                 id="namaJenisAudit"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Jenis audit baru diperlukan" }}
+                rules={{ required: "A type of audit is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan jenis audit baru"
+                    placeholder="Enter type of audit . . ."
                     autoFocus
                   />
                 )}
@@ -81,7 +81,7 @@ function CreateJenisAudit({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

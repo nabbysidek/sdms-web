@@ -27,35 +27,38 @@ function ShowSkopKriteriaList() {
     fetchSkopKriterias();
     fetchSkopSemakans();
   }, [fetchSkopKriterias, fetchSkopSemakans]);
-  
-  // HANDLE DELETE OF SKOP KRITERIA
-  const handleDeleteSkopKriteria = useCallback(async (skopKriteriaId) => {
-    const confirmResult = await showConfirmationDialog();
 
-    if (confirmResult.isConfirmed) {
-      await deleteSkopKriteria(skopKriteriaId);
-    }
-  },[deleteSkopKriteria, fetchSkopKriterias]);
+  // HANDLE DELETE OF SKOP KRITERIA
+  const handleDeleteSkopKriteria = useCallback(
+    async (skopKriteriaId) => {
+      const confirmResult = await showConfirmationDialog();
+
+      if (confirmResult.isConfirmed) {
+        await deleteSkopKriteria(skopKriteriaId);
+      }
+    },
+    [deleteSkopKriteria, fetchSkopKriterias]
+  );
 
   // USE OF TANSTACK TABLE
   // FETCH DATA AND DECLARE COLUMNS
   const data = useMemo(() => skopKriterias, [skopKriterias]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Skop Semakan",
+      header: "Review Scopes",
       accessorFn: (row) => row.skop_semakan?.namaSkopSemakan || "N/A",
     },
     {
-      header: "Nama Skop Kriteria Ketidakpatuhan",
+      header: "Noncompliance Scopes",
       accessorKey: "namaSkopKriteria",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -68,13 +71,13 @@ function ShowSkopKriteriaList() {
             onClick={() => handleDeleteSkopKriteria(row.original.id)}
             className="delete-btn"
           >
-            Padam
+            Delete
           </Button>
         </div>
       ),
     },
   ]);
-  
+
   // SORTING AND FILTERING
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
@@ -84,8 +87,8 @@ function ShowSkopKriteriaList() {
     // PREPARE CSV DATA
     const csvData = data.map((skopKriteria, index) => ({
       Bil: index + 1,
-      "SKOP SEMAKAN": skopKriteria.skop_semakan?.namaSkopSemakan || "N/A",
-      "NAMA SKOP KRITERIA KETIDAKPATUHAN": skopKriteria.namaSkopKriteria,
+      "REVIEW SCOPES": skopKriteria.skop_semakan?.namaSkopSemakan || "N/A",
+      "NONCOMPLIANCE SCOPES": skopKriteria.namaSkopKriteria,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -93,22 +96,26 @@ function ShowSkopKriteriaList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI SKOP KRITERIA.csv");
+    FileSaver.saveAs(blob, "LIST OF NONCOMPLIANCE SCOPES.csv");
   };
 
   return (
     <>
       <Container fluid>
-      <SearchSkopKriteria filterValue={filtering} onFilterChange={setFiltering} />
+        <SearchSkopKriteria
+          filterValue={filtering}
+          onFilterChange={setFiltering}
+        />
         <div className="table-section">
           <Row>
             <div className="col-md-9">
-              <h3 className="table-title">
-                Senarai Skop Kriteria
-              </h3>
+              <h3 className="table-title">List of Noncompliance Scopes</h3>
             </div>
             <div className="col-md-3">
-              <CreateSkopKriteria skopSemakanOptions={namaSkopSemakanOptions} onAddSuccess={fetchSkopKriterias} />
+              <CreateSkopKriteria
+                skopSemakanOptions={namaSkopSemakanOptions}
+                onAddSuccess={fetchSkopKriterias}
+              />
             </div>
           </Row>
         </div>
@@ -124,7 +131,7 @@ function ShowSkopKriteriaList() {
 
         {/* IMPORT AND EXPORT */}
         <div className="functional-btns-container">
-          <ExportButton onClick={handleExportSkopKriteria}/>
+          <ExportButton onClick={handleExportSkopKriteria} />
           <ImportButton />
         </div>
       </Container>

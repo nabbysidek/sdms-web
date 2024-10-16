@@ -10,7 +10,7 @@ function SearchUnit({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama unit, jabatan atau bahagian"
+                placeholder="Search for units . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

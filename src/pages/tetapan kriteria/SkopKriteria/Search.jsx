@@ -10,7 +10,7 @@ function SearchSkopKriteria({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama skop kriteria atau skop semakan"
+                placeholder="Search for noncompliance scopes . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

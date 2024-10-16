@@ -40,7 +40,7 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditCawangan}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,18 +50,18 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Cawangan</Modal.Title>
+          <Modal.Title>Edit Branch</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Wilayah</Form.Label>
+              <Form.Label>State</Form.Label>
               <Controller
                 id="wilayahId"
                 name="wilayahId"
                 control={control}
                 defaultValue={cawangan.wilayahId}
-                rules={{ required: "Sila pilih wilayah" }}
+                rules={{ required: "A state is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
@@ -69,7 +69,7 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
                       onChange={onChange}
                       value={value}
                     >
-                      <option value="" disabled>Pilih Wilayah</option>
+                      <option value="" disabled>Select a State</option>
                       {wilayahOptions.map((wilayah) => (
                         <option key={wilayah.value} value={wilayah.value}>
                           {wilayah.label}
@@ -87,19 +87,19 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Cawangan</Form.Label>
+              <Form.Label>Branch</Form.Label>
               <Controller
                 name="namaCawangan"
                 control={control}
                 defaultValue={cawangan.namaCawangan}
-                rules={{ required: "Nama cawangan baru diperlukan" }}
+                rules={{ required: "A branch is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Cawangan"
+                      placeholder="Enter branch . . ."
                     />
                     {errors?.namaCawangan && (
                       <span className="error-message">
@@ -114,7 +114,7 @@ function EditCawangan({cawangan, wilayahOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

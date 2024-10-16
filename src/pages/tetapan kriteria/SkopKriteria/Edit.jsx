@@ -40,7 +40,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditSkopKriteria}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,18 +50,18 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Skop Kriteria</Modal.Title>
+          <Modal.Title>Edit Noncompliance Scope</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Skop Semakan</Form.Label>
+              <Form.Label>Review Scope</Form.Label>
               <Controller
                 id="skopSemakanId"
                 name="skopSemakanId"
                 control={control}
                 defaultValue={skopKriteria.skopSemakanId}
-                rules={{ required: "Sila pilih skop semakan" }}
+                rules={{ required: "A review scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
@@ -69,7 +69,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
                       onChange={onChange}
                       value={value}
                     >
-                      <option value="" disabled>Pilih Skop Semakan</option>
+                      <option value="" disabled>Select a Review Scope</option>
                       {skopSemakanOptions.map((skopSemakan) => (
                         <option key={skopSemakan.value} value={skopSemakan.value}>
                           {skopSemakan.label}
@@ -87,19 +87,19 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Skop Kriteria</Form.Label>
+              <Form.Label>Noncompliance Scope</Form.Label>
               <Controller
                 name="namaSkopKriteria"
                 control={control}
                 defaultValue={skopKriteria.namaSkopKriteria}
-                rules={{ required: "Skop kriteria baru diperlukan" }}
+                rules={{ required: "A noncompliance scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Skop kriteria"
+                      placeholder="Enter noncompliance scope . . ."
                     />
                     {errors?.namaSkopKriteria && (
                       <span className="error-message">
@@ -114,7 +114,7 @@ function EditSkopKriteria({skopKriteria, skopSemakanOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

@@ -36,7 +36,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateKriteriaKetidakpatuhan}>
-        Tambah kriteria ketidakpatuhan
+        Add Noncompliance
       </Button> 
 
       <Modal
@@ -46,7 +46,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Kriteria Ketidakpatuhan</Modal.Title>
+          <Modal.Title>Add Noncompliance</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form
@@ -54,17 +54,17 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
             onReset={reset}
           >
             <Form.Group>
-              <Form.Label>Aktiviti Semakan</Form.Label>
+              <Form.Label>Activitiy Review</Form.Label>
               <Controller
                 id="aktivitiSemakanId"
                 name="aktivitiSemakanId"
                 control={control}
-                rules={{ required: "Sila pilih aktiviti semakan" }}
+                rules={{ required: "An activity review is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select aria-label="aktivitiSemakanSelect" onChange={onChange} value={value}>
                       <option value="">
-                        Pilih Skop Semakan
+                        Select an Activity Review
                       </option>
                       {aktivitiSemakanOptions.map((aktivitiSemakan) => (
                         <option key={aktivitiSemakan.value} value={aktivitiSemakan.value}>
@@ -82,14 +82,14 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Nama Kriteria Ketidakpatuhan</Form.Label>
+              <Form.Label>Noncompliance</Form.Label>
               <Controller
                 id="namaKriteriaKetidakpatuhan"
                 name="namaKriteriaKetidakpatuhan"
                 defaultValue=""
                 control={control}
                 rules={{
-                  required: "Nama kriteria ketidakpatuhan baru diperlukan",
+                  required: "A noncompliance is required",
                 }}
                 render={({ field: { onChange, value } }) => (
                   <>
@@ -97,7 +97,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan nama kriteria ketidakpatuhan"
+                      placeholder="Enter noncompliance . . ."
                       autoFocus
                     />
                     {errors.namaKriteriaKetidakpatuhan && (
@@ -116,7 +116,7 @@ function CreateKriteriaKetidakpatuhan({aktivitiSemakanOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

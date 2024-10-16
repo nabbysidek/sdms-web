@@ -42,24 +42,24 @@ function ShowAktivitiSemakanList() {
   const data = useMemo(() => aktivitiSemakans, [aktivitiSemakans]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Skop Semakan",
+      header: "Review Scopes",
       accessorFn: (row) => row.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
     },
     {
-      header: "Skop Kriteria Ketidakpatuhan",
+      header: "Noncompliance Scopes",
       accessorFn: (row) => row.skop_kriteria?.namaSkopKriteria || "N/A",
     },
     {
-      header: "Nama Aktiviti Semakan",
+      header: "Activity Reviews",
       accessorKey: "namaAktivitiSemakan",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -88,9 +88,9 @@ function ShowAktivitiSemakanList() {
     // PREPARE CSV DATA
     const csvData = data.map((aktivitiSemakan, index) => ({
       Bil: index + 1,
-      "SKOP SEMAKAN": aktivitiSemakan.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
-      "SKOP KRITERIA KETIDAKPATUHAN": aktivitiSemakan.skop_kriteria?.namaSkopKriteria || "N/A",
-      "NAMA AKTIVITI SEMAKAN": aktivitiSemakan.namaAktivitiSemakan,
+      "REVIEW SCOPES": aktivitiSemakan.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+      "NONCOMPLIANCE SCOPES": aktivitiSemakan.skop_kriteria?.namaSkopKriteria || "N/A",
+      "ACTIVITY REVIEWS": aktivitiSemakan.namaAktivitiSemakan,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -98,7 +98,7 @@ function ShowAktivitiSemakanList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI AKTIVITI SEMAKAN.csv");
+    FileSaver.saveAs(blob, "LIST OF ACTIVITY REVIEWS.csv");
   };
 
   return (
@@ -108,7 +108,7 @@ function ShowAktivitiSemakanList() {
         <div className="table-section">
           <Row>
             <div className="col-md-9">
-              <h3 className="table-title">Senarai Aktiviti Semakan</h3>
+              <h3 className="table-title">List of Activity Reviews</h3>
             </div>
             <div className="col-md-3">
               <CreateAktivitiSemakan skopKriteriaOptions={namaSkopKriteriaOptions} onAddSuccess={fetchAktivitiSemakans} />

@@ -6,9 +6,9 @@ function IndexSkopKriteria() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Skop Kriteria</h2>
+        <h2>Noncompliance Scopes</h2>
         <hr />
-        <h3>Cari Skop Kriteria</h3>
+        <h3>Search Noncompliance Scopes</h3>
       </div>
 
       <div className="page-content">

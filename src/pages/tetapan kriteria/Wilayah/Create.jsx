@@ -36,7 +36,7 @@ function CreateWilayah({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateWilayah}>
-        Tambah wilayah
+        Add State
       </Button>
 
       <Modal
@@ -46,24 +46,24 @@ function CreateWilayah({ onAddSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Wilayah</Modal.Title>
+          <Modal.Title>Add State</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Nama Wilayah</Form.Label>
+              <Form.Label>State</Form.Label>
               <Controller
                 name="namaWilayah"
                 id="namaWilayah"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Wilayah baru diperlukan" }}
+                rules={{ required: "A state is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan nama wilayah"
+                    placeholder="Enter state . . ."
                     autoFocus
                   />
                 )}
@@ -81,7 +81,7 @@ function CreateWilayah({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

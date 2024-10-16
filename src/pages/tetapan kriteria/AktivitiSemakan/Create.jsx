@@ -37,7 +37,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateAktivitiSemakan}>
-        Tambah aktiviti semakan
+        Add Activity Review
       </Button>
 
       <Modal
@@ -47,22 +47,22 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Aktiviti Semakan</Modal.Title>
+          <Modal.Title>Add Activity Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Skop Kriteria</Form.Label>
+              <Form.Label>Noncompliance Scope</Form.Label>
               <Controller
                 id="skopKriteriaId"
                 name="skopKriteriaId"
                 control={control}
-                rules={{ required: "Sila pilih skop kriteria" }}
+                rules={{ required: "A noncompliance scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select onChange={onChange} value={value}>
                       <option value="">
-                        Pilih Skop Kriteria
+                        Select a Noncompliance Scope
                       </option>
                       {skopKriteriaOptions.map((skopKriteria) => (
                         <option key={skopKriteria.value} value={skopKriteria.value}>
@@ -80,19 +80,19 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Nama Aktiviti Semakan</Form.Label>
+              <Form.Label>Activity Review</Form.Label>
               <Controller
                 id="namaAktivitiSemakan"
                 name="namaAktivitiSemakan"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Aktiviti semakan baru diperlukan" }}
+                rules={{ required: "An activity review is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan nama aktiviti semakan"
+                    placeholder="Enter activity review . . ."
                     autoFocus
                   />
                 )}
@@ -110,7 +110,7 @@ function CreateAktivitiSemakan({skopKriteriaOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

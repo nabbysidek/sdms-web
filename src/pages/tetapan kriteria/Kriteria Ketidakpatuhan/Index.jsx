@@ -6,9 +6,9 @@ function IndexKriteriaKetidakpatuhan() {
   return (
     <div>
       <div className="page-title">
-        <h2>Tetapan Kriteria Ketidakpatuhan</h2>
+        <h2>Noncompliances</h2>
         <hr />
-        <h3>Cari Kriteria Ketidakpatuhan</h3>
+        <h3>Search Noncompliances</h3>
       </div>
 
       <div className="page-content">

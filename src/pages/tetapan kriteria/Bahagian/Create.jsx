@@ -36,7 +36,7 @@ function CreateBahagian({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateBahagian}>
-        Tambah bahagian
+        Add Division
       </Button>
 
       <Modal
@@ -46,24 +46,24 @@ function CreateBahagian({ onAddSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Bahagian</Modal.Title>
+          <Modal.Title>Add Division</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Nama Bahagian</Form.Label>
+              <Form.Label>Division</Form.Label>
               <Controller
                 name="namaBahagian"
                 id="namaBahagian"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Bahagian baru diperlukan" }}
+                rules={{ required: "A division is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan nama bahagian"
+                    placeholder="Enter division . . ."
                     autoFocus
                   />
                 )}
@@ -81,7 +81,7 @@ function CreateBahagian({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

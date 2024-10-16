@@ -6,9 +6,9 @@ function IndexKakitangan() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Kakitangan</h2>
+        <h2>Audited Staff</h2>
         <hr />
-        <h3>Cari Kakitangan</h3>
+        <h3>Search Audited Staff Records</h3>
       </div>
 
       <div className="page-content">

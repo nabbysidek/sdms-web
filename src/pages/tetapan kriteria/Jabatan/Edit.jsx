@@ -40,7 +40,7 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditJabatan}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,18 +50,18 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Jabatan</Modal.Title>
+          <Modal.Title>Edit Department</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Bahagian</Form.Label>
+              <Form.Label>Division</Form.Label>
               <Controller
                 name="bahagianId"
                 id="bahagianId"
                 control={control}
                 defaultValue={jabatan.bahagianId}
-                rules={{ required: "Sila pilih bahagian" }}
+                rules={{ required: "A division is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
@@ -69,7 +69,7 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
                       onChange={onChange}
                       value={value}
                     >
-                      <option value="" disabled>Pilih Bahagian</option>
+                      <option value="" disabled>Select a Division</option>
                       {bahagianOptions.map((bahagian) => (
                         <option key={bahagian.value} value={bahagian.value}>
                           {bahagian.label}
@@ -87,19 +87,19 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Jabatan</Form.Label>
+              <Form.Label>Department</Form.Label>
               <Controller
                 name="namaJabatan"
                 control={control}
                 defaultValue={jabatan.namaJabatan}
-                rules={{ required: "Nama jabatan baru diperlukan" }}
+                rules={{ required: "A department is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Jabatan"
+                      placeholder="Enter department . . ."
                     />
                     {errors?.namaJabatan && (
                       <span className="error-message">
@@ -114,7 +114,7 @@ function EditJabatan({jabatan, bahagianOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

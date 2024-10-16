@@ -36,7 +36,7 @@ function CreateKakitangan({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateKakitangan}>
-        Tambah kakitangan
+        Add Audited Staff
       </Button>
 
       <Modal
@@ -46,19 +46,19 @@ function CreateKakitangan({ onAddSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Kakitangan</Modal.Title>
+          <Modal.Title>Add Audited Staff</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>ID Kakitangan</Form.Label>
+              <Form.Label>Staff ID</Form.Label>
               <Controller
                 id="idKakitangan"
                 name="idKakitangan"
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "ID kakitangan baru diperlukan",
+                  required: "A staff ID is required",
                 }}
                 render={({ field: { onChange, value } }) => (
                   <>
@@ -66,7 +66,7 @@ function CreateKakitangan({ onAddSuccess }) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan ID kakitangan"
+                      placeholder="Enter audited staff ID . . ."
                       autoFocus
                     />
                     {errors.idKakitangan && (
@@ -79,14 +79,14 @@ function CreateKakitangan({ onAddSuccess }) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Nama Kakitangan</Form.Label>
+              <Form.Label>Audited Staff Name</Form.Label>
               <Controller
                 id="namaKakitangan"
                 name="namaKakitangan"
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "Nama kakitangan baru diperlukan",
+                  required: "An audited staff name is required",
                 }}
                 render={({ field: { onChange, value } }) => (
                   <>
@@ -94,7 +94,7 @@ function CreateKakitangan({ onAddSuccess }) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan nama kakitangan"
+                      placeholder="Enter audited staff name . . ."
                     />
                     {errors.namaKakitangan && (
                       <span className="error-message">
@@ -112,7 +112,7 @@ function CreateKakitangan({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

@@ -6,9 +6,9 @@ function IndexBahagian() {
   return (
     <div>
       <div className="page-title">
-        <h2>Tetapan Bahagian</h2>
+        <h2>Divisions</h2>
         <hr />
-        <h3>Tambah Bahagian</h3>
+        <h3>Search Divisions</h3>
       </div>
 
       <div className="page-content">

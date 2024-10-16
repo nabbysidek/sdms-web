@@ -6,9 +6,9 @@ function IndexAktivitSemakan() {
   return (
     <div>
       <div className='page-title'>
-        <h2>Tetapan Aktiviti Semakan</h2>
+        <h2>Activitiy Reviews</h2>
         <hr />
-        <h3>Tambah Aktiviti Semakan</h3>
+        <h3>Search Activity Reviews</h3>
       </div>
 
       <div className='page-content'>

@@ -11,7 +11,7 @@ function SearchKakitangan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui ID atau nama kakitangan"
+                placeholder="Search audited staff using their staff ID or name . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

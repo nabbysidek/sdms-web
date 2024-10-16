@@ -6,9 +6,9 @@ function IndexWilayah() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Wilayah</h2>
+        <h2>States</h2>
         <hr />
-        <h3>Tambah Wilayah</h3>
+        <h3>Search States</h3>
       </div>
 
       <div className="page-content">

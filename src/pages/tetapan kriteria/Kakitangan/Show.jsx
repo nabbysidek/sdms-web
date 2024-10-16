@@ -35,20 +35,20 @@ function ShowKakitanganList() {
   const data = useMemo(() => kakitangans, [kakitangans]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "ID Kakitangan",
+      header: "Staff ID",
       accessorKey: "idKakitangan",
     },
     {
-      header: "Nama Kakitangan",
+      header: "Audited Staff Name",
       accessorKey: "namaKakitangan",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -57,7 +57,7 @@ function ShowKakitanganList() {
             onClick={() => handleDeleteKakitangan(row.original.id)}
             className="delete-btn"
           >
-            Padam
+            Delete
           </Button>
         </div>
       ),
@@ -73,8 +73,8 @@ function ShowKakitanganList() {
     // PREPARE CSV DATA
     const csvData = data.map((kakitangan, index) => ({
       Bil: index + 1,
-      "ID KAKITANGAN": kakitangan.idKakitangan,
-      "NAMA KAKITANGAN": kakitangan.namaKakitangan,
+      "STAFF ID": kakitangan.idKakitangan,
+      "AUDITED STAFF NAME": kakitangan.namaKakitangan,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -82,7 +82,7 @@ function ShowKakitanganList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI KAKITANGAN.csv");
+    FileSaver.saveAs(blob, "LIST OF AUDITED STAFF.csv");
   };
 
   return (
@@ -91,7 +91,7 @@ function ShowKakitanganList() {
       <div className="table-section">
         <Row>
           <div className="col-md-9">
-            <h3 className="table-title">Senarai Kakitangan</h3>
+            <h3 className="table-title">List of Audited Staff</h3>
           </div>
           <div className="col-md-3">
             <CreateKakitangan onAddSuccess={fetchKakitangans} /> 

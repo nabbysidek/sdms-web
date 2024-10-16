@@ -5,9 +5,9 @@ function IndexJabatan() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Jabatan</h2>
+        <h2>Departments</h2>
         <hr />
-        <h3>Cari Jabatan</h3>
+        <h3>Search Departments</h3>
       </div>
 
       <div className="page-content">

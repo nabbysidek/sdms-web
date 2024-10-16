@@ -6,9 +6,9 @@ function IndexSkopSemakan() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Skop Semakan</h2>
+        <h2>Review Scopes</h2>
         <hr />
-        <h3>Cari Skop Semakan</h3>
+        <h3>Search Review Scopes</h3>
       </div>
 
       <div className="page-content">

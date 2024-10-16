@@ -6,9 +6,9 @@ function IndexCawangan() {
   return (
     <>
       <div className="page-title">
-        <h2>Tetapan Cawangan</h2>
+        <h2>Branches</h2>
         <hr />
-        <h3>Cari Cawangan</h3>
+        <h3>Search Branches</h3>
       </div>
 
       <div className="page-content">

@@ -40,7 +40,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditKriteriaKetidakpatuhan}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,18 +50,18 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Kriteria Ketidakpatuhan</Modal.Title>
+          <Modal.Title>Edit Noncompliance</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Aktiviti Semakan</Form.Label>
+              <Form.Label>Activity Review</Form.Label>
               <Controller
                 name="aktivitiSemakanId"
                 id="aktivitiSemakanId"
                 control={control}
                 defaultValue={kriteriaKetidakpatuhan.aktivitiSemakanId}
-                rules={{ required: "Sila pilih aktiviti semakan" }}
+                rules={{ required: "An activity review is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
@@ -69,7 +69,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
                       onChange={onChange}
                       value={value}
                     >
-                      <option value="" disabled>Pilih Aktiviti Semakan</option>
+                      <option value="" disabled>Select an Activity Review</option>
                       {aktivitiSemakanOptions.map((aktivitiSemakan) => (
                         <option key={aktivitiSemakan.value} value={aktivitiSemakan.value}>
                           {aktivitiSemakan.label}
@@ -87,19 +87,19 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Kriteria Ketidakpatuhan</Form.Label>
+              <Form.Label>Noncompliance</Form.Label>
               <Controller
                 name="namaKriteriaKetidakpatuhan"
                 control={control}
                 defaultValue={kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan}
-                rules={{ required: "Nama kriteria ketidakpatuhan baru diperlukan" }}
+                rules={{ required: "A noncompliance is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Nama kriteria ketidakpatuhan"
+                      placeholder="Enter noncompliance . . ."
                     />
                     {errors?.namaKriteriaKetidakpatuhan && (
                       <span className="error-message">
@@ -114,7 +114,7 @@ function EditKriteriaKetidakpatuhan({kriteriaKetidakpatuhan, aktivitiSemakanOpti
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

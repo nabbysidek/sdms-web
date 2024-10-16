@@ -42,28 +42,28 @@ function ShowKriteriaKetidakpatuhanList() {
   const data = useMemo(() => kriteriaKetidakpatuhans, [kriteriaKetidakpatuhans]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Skop Semakan",
+      header: "Review Scopes",
       accessorFn: (row) => row.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
     },
     {
-      header: "Skop Kriteria Ketidakpatuhan",
+      header: "Noncompliance Scopes",
       accessorFn: (row) => row.aktiviti_semakan?.skop_kriteria?.namaSkopKriteria || "N/A",
     },
     {
-      header: "Aktiviti Semakan",
+      header: "Activity Reviews",
       accessorFn: (row) => row.aktiviti_semakan?.namaAktivitiSemakan || "N/A",
     },
     {
-      header: "Nama Kriteria Ketidakpatuhan",
+      header: "Noncompliances",
       accessorKey: "namaKriteriaKetidakpatuhan",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -76,7 +76,7 @@ function ShowKriteriaKetidakpatuhanList() {
             onClick={() => handleDeleteKriteriaKetidakpatuhan(row.original.id)}
             className="delete-btn"
           >
-            Padam
+            Delete
           </Button>
         </div>
       ),
@@ -92,10 +92,10 @@ function ShowKriteriaKetidakpatuhanList() {
     // PREPARE CSV DATA
     const csvData = data.map((kriteriaKetidakpatuhan, index) => ({
       Bil: index + 1,
-      "SKOP SEMAKAN": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
-      "SKOP KRITERIA KETIDAKPATUHAN": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.namaSkopKriteria || "N/A",
-      "AKTIVITI SEMAKAN": kriteriaKetidakpatuhan.aktiviti_semakan?.namaAktivitiSemakan || "N/A",
-      "NAMA KRITERIA KETIDAKPATUHAN": kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan,
+      "REVIEW SCOPES": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.skop_semakan?.namaSkopSemakan || "N/A",
+      "NONCOMPLIANCE SCOPES": kriteriaKetidakpatuhan.aktiviti_semakan?.skop_kriteria?.namaSkopKriteria || "N/A",
+      "ACTIVITY REVIEWS": kriteriaKetidakpatuhan.aktiviti_semakan?.namaAktivitiSemakan || "N/A",
+      "NONCOMPLIANCES": kriteriaKetidakpatuhan.namaKriteriaKetidakpatuhan,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -103,7 +103,7 @@ function ShowKriteriaKetidakpatuhanList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI KRITERIA KETIDAKPATUHAN.csv");
+    FileSaver.saveAs(blob, "LIST OF NONCOMPLIANCES.csv");
   };
 
   return (
@@ -113,7 +113,7 @@ function ShowKriteriaKetidakpatuhanList() {
         <div className="table-section">
           <Row>
             <div className="col-md-8">
-              <h3 className="table-title">Senarai Kriteria Ketidakpatuhan</h3>
+              <h3 className="table-title">List of Noncompliances</h3>
             </div>
 
             <div className="col-md-4">

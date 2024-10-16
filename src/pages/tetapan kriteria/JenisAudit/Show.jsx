@@ -34,21 +34,21 @@ function ShowJenisAuditList() {
   const data = useMemo(() => jenisAudits, [jenisAudits]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Nama Jenis Audit",
+      header: "Types of Audit",
       accessorKey: "namaJenisAudit",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
           <EditJenisAudit jenisAudit={row.original} onUpdateSuccess={fetchJenisAudits} />
-          <Button onClick={() => handleDeleteJenisAudit(row.original.id)} className="delete-btn">Padam</Button>
+          <Button onClick={() => handleDeleteJenisAudit(row.original.id)} className="delete-btn">Delete</Button>
         </div>
       ),
     },
@@ -63,7 +63,7 @@ function ShowJenisAuditList() {
     // PREPARE CSV DATA
     const csvData = data.map((jenisAudit, index) => ({
       Bil: index + 1,
-      "NAMA JENIS AUDIT": jenisAudit.namaJenisAudit,
+      "TYPES OF AUDIT": jenisAudit.namaJenisAudit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -71,7 +71,7 @@ function ShowJenisAuditList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI JENIS AUDIT.csv");
+    FileSaver.saveAs(blob, "LIST OF TYPES OF AUDIT.csv");
   };
 
   return (
@@ -81,7 +81,7 @@ function ShowJenisAuditList() {
         <div className="table-section">
           <Row>
             <div className="col-md-9">
-              <h3 className="table-title">Senarai Jenis Audit</h3>
+              <h3 className="table-title">List of Types of Audit</h3>
             </div>
             <div className="col-md-3">
               <CreateJenisAudit onAddSuccess={fetchJenisAudits} />

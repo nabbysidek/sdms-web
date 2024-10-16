@@ -40,7 +40,7 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditUnit}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,18 +50,18 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Unit</Modal.Title>
+          <Modal.Title>Edit Unit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Jabatan</Form.Label>
+              <Form.Label>Department</Form.Label>
               <Controller
                 name="jabatanId"
                 id="jabatanId"
                 control={control}
                 defaultValue={unit.jabatanId}
-                rules={{ required: "Sila pilih jabatan" }}
+                rules={{ required: "A department is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select
@@ -69,7 +69,7 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
                       onChange={onChange}
                       value={value}
                     >
-                      <option value="" disabled>Pilih Jabatan</option>
+                      <option value="" disabled>Select a Department</option>
                       {jabatanOptions.map((jabatan) => (
                         <option key={jabatan.value} value={jabatan.value}>
                           {jabatan.label}
@@ -87,20 +87,20 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Unit</Form.Label>
+              <Form.Label>Unit</Form.Label>
               <Controller
                 name="namaUnit"
                 id="namaUnit"
                 control={control}
                 defaultValue={unit.namaUnit}
-                rules={{ required: "Unit baru diperlukan" }}
+                rules={{ required: "A unit is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Unit"
+                      placeholder="Enter unit . . ."
                     />
                     {errors?.namaUnit && (
                       <span className="error-message">
@@ -115,7 +115,7 @@ function EditUnit({unit, jabatanOptions, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

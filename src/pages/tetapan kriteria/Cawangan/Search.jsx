@@ -10,7 +10,7 @@ function SearchCawangan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama cawangan atau wilayah"
+                placeholder="Search for branches . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

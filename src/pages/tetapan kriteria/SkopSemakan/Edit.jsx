@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
 import useSkopSemakanStore from "../../../store/skop-semakan-store";
 
-function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
+function EditSkopSemakan({ skopSemakan, onUpdateSuccess }) {
   // INITIALIZE EDIT SKOP SEMAKAN MODAL
   const [showEditSkopSemakan, setShowEditSkopSemakan] = useState(false);
 
@@ -12,14 +12,24 @@ function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
   const handleShowEditSkopSemakan = () => setShowEditSkopSemakan(true);
 
   // FORM VALIDATION FOR MODAL
-  const { control, handleSubmit, reset, formState: {errors} } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // USE OF SKOP SEMAKAN STORE
   const { updateSkopSemakan } = useSkopSemakanStore();
 
   // HANDLE EDIT OF AN SKOP SEMAKAN
   const onSubmit = (skopSemakanInput) => {
-    updateSkopSemakan(skopSemakan.id, skopSemakanInput, handleCloseEditSkopSemakan, onUpdateSuccess);
+    updateSkopSemakan(
+      skopSemakan.id,
+      skopSemakanInput,
+      handleCloseEditSkopSemakan,
+      onUpdateSuccess
+    );
   };
 
   // RESET EDIT FORM DATA WHEN MODAL IS OPENED
@@ -34,7 +44,7 @@ function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditSkopSemakan}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -44,25 +54,25 @@ function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Skop Semakan</Modal.Title>
+          <Modal.Title>Edit Review Scope</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Nama Skop Semakan</Form.Label>
+              <Form.Label>Review Scope</Form.Label>
               <Controller
                 name="namaSkopSemakan"
                 id="namaSkopSemakan"
                 control={control}
                 defaultValue={skopSemakan.namaSkopSemakan}
-                rules={{ required: "Skop semakan baru diperlukan" }}
+                rules={{ required: "A review scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Skop semakan"
+                      placeholder="Enter a review scope . . ."
                     />
                     {errors?.namaSkopSemakan && (
                       <span className="error-message">
@@ -77,7 +87,7 @@ function EditSkopSemakan({skopSemakan, onUpdateSuccess }) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

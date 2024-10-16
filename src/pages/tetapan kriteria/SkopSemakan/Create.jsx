@@ -23,7 +23,9 @@ function CreateSkopSemakan({ onAddSuccess }) {
   } = useForm();
 
   // USE OF SKOP SEMAKAN STORE
-  const createSkopSemakan = useSkopSemakanStore((state) => state.createSkopSemakan);
+  const createSkopSemakan = useSkopSemakanStore(
+    (state) => state.createSkopSemakan
+  );
 
   //  HANDLE CREATE A NEW OF SKOP SEMAKAN
   const onSubmit = (data) => {
@@ -36,7 +38,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateSkopSemakan}>
-        Tambah skop semakan
+        Add Review Scope
       </Button>
 
       <Modal
@@ -46,24 +48,24 @@ function CreateSkopSemakan({ onAddSuccess }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Skop Semakan</Modal.Title>
+          <Modal.Title>Add Review Scope</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Nama Skop Semakan</Form.Label>
+              <Form.Label>Review Scope</Form.Label>
               <Controller
                 name="namaSkopSemakan"
                 id="namaSkopSemakan"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Skop semakan baru diperlukan" }}
+                rules={{ required: "A review scope is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Masukkan nama skop semakan"
+                    placeholder="Enter a review scope . . ."
                     autoFocus
                   />
                 )}
@@ -81,7 +83,7 @@ function CreateSkopSemakan({ onAddSuccess }) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

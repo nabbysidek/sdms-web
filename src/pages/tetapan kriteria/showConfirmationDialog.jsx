@@ -2,14 +2,16 @@ import Swal from "sweetalert2";
 
 const showConfirmationDialog = async () => {
   return await Swal.fire({
-    title: "Adakah anda pasti?",
-    text: "Data yang dipadam tidak boleh dikembalikan!",
+    title: "Warning",
+    text: "Deleted data cannot be retrieved after deletion.",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#204198",
-    cancelButtonColor: "#D9D9D9",
-    confirmButtonText: "Ya, Padam!",
-    cancelButtonText: "Batal",
+    // var(--PRIMARY)
+    confirmButtonColor: "#00674F",
+    // var (--NEUTRALGRAY)
+    cancelButtonColor: "#A3A3A3",
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
   });
 };
 

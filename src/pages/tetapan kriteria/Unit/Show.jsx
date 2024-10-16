@@ -42,24 +42,24 @@ function ShowUnitList() {
   const data = useMemo(() => units, [units]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Bahagian",
+      header: "Divisions",
       accessorFn: (row) => row.jabatan?.bahagian?.namaBahagian || "N/A",
     },
     {
-      header: "Jabatan",
+      header: "Departments",
       accessorFn: (row) => row.jabatan?.namaJabatan || "N/A",
     },
     {
-      header: "Nama Unit",
+      header: "Units",
       accessorKey: "namaUnit",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -72,7 +72,7 @@ function ShowUnitList() {
             onClick={() => handleDeleteUnit(row.original.id)}
             className="delete-btn"
           >
-            Padam
+            Delete
           </Button>
         </div>
       ),
@@ -88,9 +88,9 @@ function ShowUnitList() {
     // PREPARE CSV DATA
     const csvData = data.map((unit, index) => ({
       Bil: index + 1,
-      "BAHAGIAN": unit.jabatan?.bahagian?.namaBahagian || "N/A",
-      "JABATAN": unit.jabatan?.namaJabatan || "N/A",
-      "NAMA UNIT": unit.namaUnit,
+      "DIVISIONS": unit.jabatan?.bahagian?.namaBahagian || "N/A",
+      "DEPARTMENTS": unit.jabatan?.namaJabatan || "N/A",
+      "UNITS": unit.namaUnit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -98,7 +98,7 @@ function ShowUnitList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI UNIT.csv");
+    FileSaver.saveAs(blob, "LIST OF UNITS.csv");
   };
 
   return (
@@ -108,7 +108,7 @@ function ShowUnitList() {
         <div className="table-section">
           <Row>
             <div className="col-md-10">
-              <h3 className="table-title">Senarai Unit</h3>
+              <h3 className="table-title">List of Units</h3>
             </div>
             <div className="col-md-2">
               <CreateUnit jabatanOptions={namaJabatanOptions} onAddSuccess={fetchUnits} />

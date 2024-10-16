@@ -36,7 +36,7 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateJabatan}>
-        Tambah jabatan
+        Add Department
       </Button>
 
       <Modal
@@ -46,22 +46,22 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Jabatan</Modal.Title>
+          <Modal.Title>Add Department</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Bahagian</Form.Label>
+              <Form.Label>Division</Form.Label>
               <Controller
                 id="bahagianId"
                 name="bahagianId"
                 control={control}
-                rules={{ required: "Sila pilih bahagian" }}
+                rules={{ required: "A division is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select onChange={onChange} value={value}>
                       <option value="">
-                        Pilih Bahagian
+                        Select a Division
                       </option>
                       {bahagianOptions.map((bahagian) => (
                         <option key={bahagian.value} value={bahagian.value}>
@@ -80,14 +80,14 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Nama Jabatan</Form.Label>
+              <Form.Label>Department</Form.Label>
               <Controller
                 id="namaJabatan"
                 name="namaJabatan"
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "Nama jabatan baru diperlukan",
+                  required: "A department is required",
                 }}
                 render={({ field: { onChange, value } }) => (
                   <>
@@ -95,7 +95,7 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan nama jabatan"
+                      placeholder="Enter department . . ."
                       autoFocus
                     />
                     {errors.namaJabatan && (
@@ -114,7 +114,7 @@ function CreateJabatan({bahagianOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

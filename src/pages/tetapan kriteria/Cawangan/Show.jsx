@@ -44,20 +44,20 @@ function ShowCawanganList() {
   const data = useMemo(() => cawangans, [cawangans]);
   const columns = useMemo(() => [
     {
-      header: "Bil",
+      header: "Num",
       accessorFn: (row, i) => i + 1,
       id: "index",
     },
     {
-      header: "Wilayah",
+      header: "States",
       accessorFn: (row) => row.wilayah?.namaWilayah || "N/A",
     },
     {
-      header: "Nama Cawangan",
+      header: "Branches",
       accessorKey: "namaCawangan",
     },
     {
-      header: "Tindakan",
+      header: "Actions",
       cell: ({ row }) => (
         <div>
           {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
@@ -70,7 +70,7 @@ function ShowCawanganList() {
             onClick={() => handleDeleteCawangan(row.original.id)}
             className="delete-btn"
           >
-            Padam
+            Delete
           </Button>
         </div>
       ),
@@ -86,8 +86,8 @@ function ShowCawanganList() {
     // PREPARE CSV DATA
     const csvData = data.map((cawangan, index) => ({
       Bil: index + 1,
-      "WILAYAH": cawangan.wilayah?.namaWilayah || "N/A",
-      "NAMA CAWANGAN": cawangan.namaCawangan,
+      "STATES": cawangan.wilayah?.namaWilayah || "N/A",
+      "BRANCHES": cawangan.namaCawangan,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -95,7 +95,7 @@ function ShowCawanganList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI CAWANGAN.csv");
+    FileSaver.saveAs(blob, "LIST OF BRANCHES.csv");
   };
 
   return (
@@ -105,7 +105,7 @@ function ShowCawanganList() {
         <div className="table-section">
           <Row>
             <div className="col-md-9">
-              <h3 className="table-title">Senarai Cawangan</h3>
+              <h3 className="table-title">List of Branches</h3>
             </div>
             <div className="col-md-3">
               <CreateCawangan

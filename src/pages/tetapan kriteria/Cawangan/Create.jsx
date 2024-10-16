@@ -36,7 +36,7 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
   return (
     <div>
       <Button className="create-new-btn" onClick={handleShowCreateCawangan}>
-        Tambah cawangan
+        Add Branch
       </Button>
 
       <Modal
@@ -46,22 +46,22 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Cawangan</Modal.Title>
+          <Modal.Title>Add Branch</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(createCawangan)} onReset={reset}>
             <Form.Group>
-              <Form.Label>Wilayah</Form.Label>
+              <Form.Label>State</Form.Label>
               <Controller
                 id="wilayahId"
                 name="wilayahId"
                 control={control}
-                rules={{ required: "Sila pilih wilayah" }}
+                rules={{ required: "A state is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Select aria-label="wilayahSelect" onChange={onChange} value={value}>
                       <option value="">
-                        Pilih Wilayah
+                        Select a State
                       </option>
                       {wilayahOptions.map((wilayah) => (
                         <option key={wilayah.value} value={wilayah.value}>
@@ -79,14 +79,14 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Nama Cawangan</Form.Label>
+              <Form.Label>Branch</Form.Label>
               <Controller
                 id="namaCawangan"
                 name="namaCawangan"
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "Nama cawangan baru diperlukan",
+                  required: "A branch is required",
                 }}
                 render={({ field: { onChange, value } }) => (
                   <>
@@ -94,7 +94,7 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Masukkan nama cawangan"
+                      placeholder="Enter branch . . ."
                       autoFocus
                     />
                     {errors.namaCawangan && (
@@ -113,7 +113,7 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
             className="create-new-modal-btn"
             onClick={handleSubmit(onSubmit)}
           >
-            Tambah
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

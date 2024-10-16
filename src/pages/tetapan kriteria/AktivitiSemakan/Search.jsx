@@ -10,7 +10,7 @@ function SearchAktivitiSemakan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama aktiviti semakan atau skop kriteria ketidakpatuhan."
+                placeholder="Search for activity reviews . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />

@@ -40,7 +40,7 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
   return (
     <div>
       <Button className="edit-tetapan-btn" onClick={handleShowEditWilayah}>
-        Kemaskini
+        Edit
       </Button>
 
       <Modal
@@ -50,25 +50,25 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Kemaskini Wilayah</Modal.Title>
+          <Modal.Title>Edit State</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Nama Wilayah</Form.Label>
+              <Form.Label>State</Form.Label>
               <Controller
                 name="namaWilayah"
                 id="namaWilayah"
                 control={control}
                 defaultValue={wilayah.namaWilayah}
-                rules={{ required: "Wilayah baru diperlukan" }}
+                rules={{ required: "A state is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Wilayah"
+                      placeholder="Enter state . . ."
                     />
                     {errors?.namaWilayah && (
                       <span className="error-message">
@@ -83,7 +83,7 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
         </Modal.Body>
         <Modal.Footer>
           <Button className="edit-modal-btn" onClick={handleSubmit(onSubmit)}>
-            Kemaskini
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

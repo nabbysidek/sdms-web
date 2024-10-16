@@ -10,7 +10,7 @@ function SearchWilayah({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Cari melalui nama wilayah"
+                placeholder="Search for states . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />
