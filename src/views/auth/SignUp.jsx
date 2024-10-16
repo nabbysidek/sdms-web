@@ -79,7 +79,7 @@ function SignUp() {
               type="text"
               {...register("namaAuditor", { required: true })}
               aria-invalid={errors.namaAuditor ? "true" : "false"}
-              placeholder="Your name..."
+              placeholder="Your name . . ."
             />
             {errors.namaAuditor?.type === "required" && (
               <p role="alert" className="error-message">
@@ -111,7 +111,7 @@ function SignUp() {
               <Col xs={6}>
                 <Form.Group className="mb-3" controlId="emelAuditor">
                   <Form.Label className="form-label">
-                    Your Email
+                    Your Staff Email
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -123,7 +123,7 @@ function SignUp() {
                       },
                     })}
                     aria-invalid={errors.emelAuditor ? "true" : "false"}
-                    placeholder="Your work email..."
+                    placeholder="Your work email . . ."
                   />
                   {errors.emelAuditor && (
                     <p role="alert" className="error-message">
@@ -162,7 +162,7 @@ function SignUp() {
                         },
                       })}
                       aria-invalid={errors.kataLaluanAuditor ? "true" : "false"}
-                      placeholder="Your password..."
+                      placeholder="Your password . . ."
                     />
                     <Button
                       className="sign-up-show-password"
@@ -205,7 +205,7 @@ function SignUp() {
                     aria-invalid={
                       errors.kataLaluanAuditor_confirmation ? "true" : "false"
                     }
-                    placeholder="Repeat your password..."
+                    placeholder="Repeat your password . . ."
                   />
                   {errors.kataLaluanAuditor_confirmation?.type ===
                     "required" && (
@@ -224,7 +224,7 @@ function SignUp() {
           </div>
 
           <Button className="auth-btn" type="submit">
-            Sign up
+            Request Access
           </Button>
         </div>
 

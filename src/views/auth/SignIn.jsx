@@ -122,7 +122,7 @@ function SignIn() {
           control={control}
           rules={{ required: "Your staff ID is required" }}
           type="text"
-          placeholder="Your staff ID..."
+          placeholder="Your staff ID . . ."
         />
 
         <ControlledInput
@@ -143,7 +143,7 @@ function SignIn() {
             },
           }}
           type={showPassword ? "text" : "password"}
-          placeholder="Your password..."
+          placeholder="Your password . . ."
           togglePassword
           handleToggle={() => setShowPassword(!showPassword)}
         />

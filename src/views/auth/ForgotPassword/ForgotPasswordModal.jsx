@@ -44,22 +44,21 @@ function ForgotPasswordModal({ onClose }) {
     <Modal show={true} onHide={onClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>
-          {step === 1 && "Sahkan Emel Kakitangan Anda"}
-          {step === 2 && "Masukkan Kod Pengesahan"}
-          {step === 3 && "Set Kata Laluan Baharu"}
-          {step === 4 && "Kata Laluan Baharu Berjaya Diset"}
+          {step === 1 && "Verify Your Email"}
+          {step === 2 && "Change Your Password"}
+          {step === 3 && "Password Successfully Changed"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {step === 1 && (
           <div>
             <p>
-              Sila berikan kami e-mel kakitangan anda untuk tujuan pengesahan.
+              Enter your email address
             </p>
             <input
               type="email"
               className="forgot-password-input"
-              placeholder="Emel kakitangan"
+              placeholder="Your staff email . . ."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -67,46 +66,19 @@ function ForgotPasswordModal({ onClose }) {
               className="forgot-password-btn btn-primary"
               onClick={handleSubmitEmail}
             >
-              Seterusnya
+              Submit
             </Button>
           </div>
         )}
+
 
         {step === 2 && (
           <div>
-            <p>
-              Kod pengesahan baru sahaja dihantar ke e-mel kakitangan anda. Sila
-              masukkan kod di sini.
-            </p>
-            <input
-              type="text"
-              className="forgot-password-input"
-              placeholder="Kod Pengesahan"
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-            />
-            <Button
-              className="forgot-password-btn btn-primary"
-              onClick={handleSubmitVerificationCode}
-            >
-              Seterusnya
-            </Button>
-            <Button
-              className="forgot-password-btn btn-secondary"
-              onClick={handlePreviousStep}
-            >
-              Kembali
-            </Button>
-          </div>
-        )}
-
-        {step === 3 && (
-          <div>
-            <p>Sila tetapkan kata laluan baharu anda</p>
+            <p>Change your password</p>
             <input
               type="password"
               className="forgot-password-input"
-              placeholder="Kata Laluan Baharu"
+              placeholder="Change Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -114,21 +86,21 @@ function ForgotPasswordModal({ onClose }) {
               className="forgot-password-btn btn-primary"
               onClick={handleSubmitNewPassword}
             >
-              Seterusnya
+              Change
             </Button>
             <Button
               className="forgot-password-btn btn-secondary"
               onClick={handlePreviousStep}
             >
-              Kembali
+              Back
             </Button>
           </div>
         )}
 
-        {step === 4 && (
+        {step === 3 && (
           <div>
             <p>
-              Kata laluan anda telah diset semula. Cuba log masuk sekali lagi
+              Your password has been changed. Try signing in once more.
             </p>
           </div>
         )}
