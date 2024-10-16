@@ -11,120 +11,120 @@ function SubSideBar() {
       <ul className="mobile-nav-links">
         <li>
           <NavLink to="/kakitangan" className="sub-nav-link">
-            Kakitangan
+            Audited Staff
           </NavLink>
         </li>
         <li>
           <NavLink to="/jenisaudit" className="sub-nav-link">
-            Jenis Audit
+            Types of Audit
           </NavLink>
         </li>
         <li>
           <NavLink to="/skopsemakan" className="sub-nav-link">
-            Skop Semakan
+            Review Scopes
           </NavLink>
         </li>
         <li>
           <NavLink to="/skopkriteria" className="sub-nav-link">
-            Skop Kriteria Ketidakpatuhan
+            Noncompliance Scopes
           </NavLink>
         </li>
         <li>
           <NavLink to="/aktivitisemakan" className="sub-nav-link">
-            Aktiviti Semakan
+            Activity Reviews
           </NavLink>
         </li>
         <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Kriteria Ketidakpatuhan
+            Noncompliances
           </NavLink>
         </li>
         <li>
           <NavLink to="/wilayah" className="sub-nav-link">
-            Wilayah
+            States
           </NavLink>
         </li>
         <li>
           <NavLink to="/cawangan" className="sub-nav-link">
-            Cawangan
+            Branches
           </NavLink>
         </li>
         <li>
           <NavLink to="/bahagian" className="sub-nav-link">
-            Bahagian
+            Divisions
           </NavLink>
         </li>
         <li>
           <NavLink to="/jabatan" className="sub-nav-link">
-            Jabatan
+            Departments
           </NavLink>
         </li>
         <li>
           <NavLink to="/unit" className="sub-nav-link">
-            Unit
+            Units
           </NavLink>
         </li>
       </ul>
     );
   }
 
-  // For larger screens
+  // For desktop viewport
   return (
     <div className="sub-sidebar">
       <ul>
-      <li>
+        <li>
           <NavLink to="/kakitangan" className="sub-nav-link">
-            Kakitangan
+            Audited Staff
           </NavLink>
         </li>
         <li>
           <NavLink to="/jenisaudit" className="sub-nav-link">
-            Jenis Audit
+            Types of Audit
           </NavLink>
         </li>
         <li>
           <NavLink to="/skopsemakan" className="sub-nav-link">
-            Skop Semakan
+            Review Scopes
           </NavLink>
         </li>
         <li>
           <NavLink to="/skopkriteria" className="sub-nav-link">
-            Skop Kriteria Ketidakpatuhan
+            Noncompliance Scopes
           </NavLink>
         </li>
         <li>
           <NavLink to="/aktivitisemakan" className="sub-nav-link">
-            Aktiviti Semakan
+            Activity Reviews
           </NavLink>
         </li>
         <li>
           <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Kriteria Ketidakpatuhan
+            Noncompliances
           </NavLink>
         </li>
         <li>
           <NavLink to="/wilayah" className="sub-nav-link">
-            Wilayah
+            States
           </NavLink>
         </li>
         <li>
           <NavLink to="/cawangan" className="sub-nav-link">
-            Cawangan
+            Branches
           </NavLink>
         </li>
         <li>
           <NavLink to="/bahagian" className="sub-nav-link">
-            Bahagian
+            Divisions
           </NavLink>
         </li>
         <li>
           <NavLink to="/jabatan" className="sub-nav-link">
-            Jabatan
+            Departments
           </NavLink>
         </li>
         <li>
           <NavLink to="/unit" className="sub-nav-link">
-            Unit
+            Units
           </NavLink>
         </li>
       </ul>

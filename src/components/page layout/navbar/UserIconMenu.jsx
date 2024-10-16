@@ -92,7 +92,7 @@ const UserIconMenu = ({ closeMobileNav }) => {
             alt="user-icon"
             size={30}
           />
-          {isMobileView && <span className="navbar-user">Profil Pengguna</span>}
+          {isMobileView && <span className="navbar-user">View Profile</span>}
         </div>
       </div>
 
@@ -121,7 +121,7 @@ const UserIconMenu = ({ closeMobileNav }) => {
               className="btn-update-profile"
               eventKey="updateProfile"
             >
-              Kemaskini Profil
+              Edit Profile
             </Dropdown.Toggle>
           </div>
         </Dropdown.Menu>

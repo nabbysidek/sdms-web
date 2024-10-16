@@ -5,7 +5,7 @@ import { FaTools } from "react-icons/fa";
 
 const SideBarMenu = [
   {
-    title: "Laporan Individu",
+    title: "Audits",
     path: "/laporan-individu",
     icon: (
       <FaSearch size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
@@ -13,7 +13,7 @@ const SideBarMenu = [
   },
 
   {
-    title: "Laporan Kumulatif",
+    title: "Reports",
     path: "/laporan-kumulatif",
     icon: (
       <FaChartLine
@@ -23,14 +23,14 @@ const SideBarMenu = [
     ),
   },
   {
-    title: "Tetapan Pengguna",
+    title: "Manage Users",
     path: "/tetapanpengguna",
     icon: (
       <FaUsers size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),
   },
   {
-    title: "Tetapan Kriteria",
+    title: "Manage Data",
     path: "/kriteriaketidakpatuhan",
     icon: (
       <FaTools size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />

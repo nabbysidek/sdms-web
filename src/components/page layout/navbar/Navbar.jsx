@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { Container, Nav, Navbar, Image } from "react-bootstrap";
 import SideBar from "../sidebar/SideBar";
@@ -53,24 +54,18 @@ function NavBar() {
         expanded={mobileNavExpanded}
       >
         <Container fluid>
-          <Navbar.Brand onClick={clickAimLogo}>
-            <Image
-              src={aimLogo}
-              alt="logo-aim"
-              height={40}
-              className="d-inline-block align-top"
-            />
-            {""}
-            <h5 className="navbar-title">Jabatan Audit Dalaman</h5>
-          </Navbar.Brand>
+          <Link to="/dashboard" className="navbar-title">
+            auditee
+          </Link>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             onClick={handleMobileNavToggle}
           />
+          {/* Handle navbar collapse on mobile viewport */}
           <Navbar.Collapse
             id="basic-navbar-nav"
             className="justify-content-end custom-collapse"
-            onSelect={handleNavLinkClick} // Close mobile nav on nav link click
+            onSelect={handleNavLinkClick}
           >
             <Nav>
               <Navbar.Text className="hamburger-nav">

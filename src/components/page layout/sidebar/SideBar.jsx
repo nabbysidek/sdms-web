@@ -160,7 +160,7 @@ function SideBar({ onNavLinkClick }) {
               style={{ marginRight: "10px", marginLeft: "3px" }}
             />
             {isSideBarOpen && ( // Check if the sidebar is open
-              <span>Log Keluar</span>
+              <span>Sign Out</span>
             )}
           </NavLink>
         </ListGroup.Item>
