@@ -64,10 +64,11 @@
   background-color: var(--PRIMARY);
   margin-bottom: 10px;
 }
-  
+
+/* MODALS USE var(--PRIMARY) */
 .create-new-modal-btn, .edit-modal-btn {
-  border-color: #204198;
-  background-color: #204198;
+  border-color: #00674F;
+  background-color: #00674F;
 }
 
 .edit-tetapan-btn {

@@ -6,7 +6,6 @@
   font-weight: 400;
   margin: 0;
   text-decoration: none;
-
   font-family: "Poppins", sans-serif;
 }
 
@@ -23,18 +22,6 @@
   --TERTIARY: #A3A3A3;
   --PROMPTERROR: #FF6F61;
   --PROMPTEDIT: #FFC857;
-  
-  /* --NEUTRALWHITE: #FFFFFF; */
-  /* --PRIMARY: #00674F; */
-  /* --secondary: */
-  /* --PRIMARY: #204198; */
-  /* --NEUTRALGRAY: #D9D9D9; */
-  /* --NEUTRALGRAY: #858181; */
-  /* --BGWHITE: #F1F3F4; */
-  /* --PRIMARY: #008000; */
-  /* --rederror: #ff9494; */
-  /* --PROMPTERROR: #FF0000; */
-  /* --PROMPTEDIT: #FFAE42; */
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -104,16 +91,6 @@ margin: 10px 10px auto 10px;
   background-color: var(--SECONDARY);
   border-color: var(--SECONDARY);
   margin-right: 2px;
-}
-
-/***************************************/
-/* ***** ERROR HANDLING ************** */
-/**************************************/
-
-.error-message {
-  font-size: .75rem;
-  color: #ff9494;
-  margin-bottom: 0;
 }
 
 /* ****************************************** */
