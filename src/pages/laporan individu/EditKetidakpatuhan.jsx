@@ -200,20 +200,20 @@ function EditKetidakpatuhan() {
   return (
     <>
       <div className="page-title">
-        <h2>Laporan Individu</h2>
+        <h2>Audits</h2>
         <hr />
-        <h3>Edit Ketidakpatuhan Kakitangan</h3>
+        <h3>Edit Staff Audit Record</h3>
       </div>
       <div className="edit-ketidakpatuhan-form-container">
         <Container>
           <div>
-            <h4>Maklumat Kakitangan</h4>
+            <h4>Staff Basic Information</h4>
             <hr />
             <div className="kakitangan-info">
               <Row>
                 <Col xs={12}>
                   <Form.Group>
-                    <Form.Label>Nama</Form.Label>
+                    <Form.Label>Staff Name</Form.Label>
                     <Form.Control type="text" value={namaKakitangan} disabled />
                   </Form.Group>
                 </Col>
@@ -221,7 +221,7 @@ function EditKetidakpatuhan() {
               <Row>
                 <Col xs={12}>
                   <Form.Group>
-                    <Form.Label>ID Kakitangan</Form.Label>
+                    <Form.Label>Staff ID</Form.Label>
                     <Form.Control type="text" value={idKakitangan} disabled />
                   </Form.Group>
                 </Col>
@@ -229,18 +229,18 @@ function EditKetidakpatuhan() {
             </div>
           </div>
           <div>
-            <h4>Lokasi</h4>
+            <h4>Location</h4>
             <hr />
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Row>
                 <Col xs={12} xl={6}>
                   <Form.Group>
-                    <Form.Label>Wilayah</Form.Label>
+                    <Form.Label>State</Form.Label>
                     <Controller
                       id="wilayahId"
                       name="wilayahId"
                       control={control}
-                      rules={{ required: "Sila pilih wilayah" }}
+                      rules={{ required: "A state is required" }}
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
@@ -250,7 +250,7 @@ function EditKetidakpatuhan() {
                             }}
                             value={value}
                           >
-                            <option value="">Pilih wilayah</option>
+                            <option value="">Select a State</option>
                             {wilayahOptions
                               .sort((a, b) =>
                                 a.namaWilayah.localeCompare(b.namaWilayah)
@@ -273,12 +273,12 @@ function EditKetidakpatuhan() {
                 </Col>
                 <Col xs={12} xl={6}>
                   <Form.Group>
-                    <Form.Label>Cawangan</Form.Label>
+                    <Form.Label>Branch</Form.Label>
                     <Controller
                       id="cawanganId"
                       name="cawanganId"
                       control={control}
-                      rules={{ required: "Sila pilih cawangan" }}
+                      rules={{ required: "A branch is required" }}
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
@@ -288,7 +288,7 @@ function EditKetidakpatuhan() {
                             }}
                             value={value}
                           >
-                            <option value="">Pilih cawangan</option>
+                            <option value="">Select a Branch</option>
                             {filteredCawanganOptions
                               .sort((a, b) =>
                                 a.namaCawangan.localeCompare(b.namaCawangan)
@@ -311,26 +311,26 @@ function EditKetidakpatuhan() {
                 </Col>
               </Row>
               <div className="maklumat-terperinci-container">
-                <h4>Maklumat Kakitangan Terperinci</h4>
+                <h4>Detailed Staff Information</h4>
                 <hr />
                 <div>
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Jawatan Kakitangan Waktu Audit</Form.Label>
+                        <Form.Label>Staff Position</Form.Label>
                         <Controller
                           name="jawatanKakitangan"
                           control={control}
                           defaultValue=""
                           rules={{
                             required:
-                              "Sila sertakan jawatan kakitangan sewaktu diaudit",
+                              "A staff position is required",
                           }}
                           render={({ field }) => (
                             <>
                               <Form.Control
                                 type="text"
-                                placeholder="Jawatan kakitangan"
+                                placeholder="Enter staff position . . ."
                                 {...field}
                                 isInvalid={!!errors.jawatanKakitangan}
                               />
@@ -345,12 +345,12 @@ function EditKetidakpatuhan() {
                     </Col>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Bahagian</Form.Label>
+                        <Form.Label>Division</Form.Label>
                         <Controller
                           id="bahagianId"
                           name="bahagianId"
                           control={control}
-                          rules={{ required: "Sila pilih bahagian" }}
+                          rules={{ required: "A division is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -360,7 +360,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih bahagian</option>
+                                <option value="">Select a Division</option>
                                 {bahagianOptions
                                   .sort((a, b) =>
                                     a.namaBahagian.localeCompare(b.namaBahagian)
@@ -388,12 +388,12 @@ function EditKetidakpatuhan() {
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Jabatan</Form.Label>
+                        <Form.Label>Department</Form.Label>
                         <Controller
                           id="jabatanId"
                           name="jabatanId"
                           control={control}
-                          rules={{ required: "Sila pilih jabatan" }}
+                          rules={{ required: "A department is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -403,7 +403,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih jabatan</option>
+                                <option value="">Select a Department</option>
                                 {filteredJabatanOptions
                                   .sort((a, b) =>
                                     a.namaJabatan.localeCompare(b.namaJabatan)
@@ -431,7 +431,7 @@ function EditKetidakpatuhan() {
                           id="unitId"
                           name="unitId"
                           control={control}
-                          rules={{ required: "Sila pilih unit" }}
+                          rules={{ required: "A unit is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -441,7 +441,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih unit</option>
+                                <option value="">Select a Unit</option>
                                 {filteredUnitOptions
                                   .sort((a, b) =>
                                     a.namaUnit.localeCompare(b.namaUnit)
@@ -466,25 +466,25 @@ function EditKetidakpatuhan() {
                 </div>
               </div>
               <div className="audit-terperinci-container">
-                <h4>Perincian Audit</h4>
+                <h4>Audit Details</h4>
                 <hr />
                 <div>
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Tarikh Mesyuarat Penutup</Form.Label>
+                        <Form.Label>Date of Audit</Form.Label>
                         <Controller
                           name="tarikhAudit"
                           control={control}
                           defaultValue=""
                           rules={{
-                            required: "Sila sertakan tarikh mesyuarat penutup",
+                            required: "A date is required",
                           }}
                           render={({ field }) => (
                             <>
                               <Form.Control
                                 type="date"
-                                placeholder="Tarikh audit"
+                                placeholder="Select a date. . ."
                                 {...field}
                                 isInvalid={!!errors.tarikhAudit}
                               />
@@ -499,12 +499,12 @@ function EditKetidakpatuhan() {
                     </Col>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Jenis Audit</Form.Label>
+                        <Form.Label>Type of Audit</Form.Label>
                         <Controller
                           id="jenisAuditId"
                           name="jenisAuditId"
                           control={control}
-                          rules={{ required: "Sila pilih jenisAudit" }}
+                          rules={{ required: "A type of audit is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -514,7 +514,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih jenis audit</option>
+                                <option value="">Select a Type of Audit</option>
                                 {jenisAuditOptions
                                   .sort((a, b) =>
                                     a.namaJenisAudit.localeCompare(
@@ -544,12 +544,12 @@ function EditKetidakpatuhan() {
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Skop Semakan</Form.Label>
+                        <Form.Label>Review Scope</Form.Label>
                         <Controller
                           id="skopSemakanId"
                           name="skopSemakanId"
                           control={control}
-                          rules={{ required: "Sila pilih skop semakan" }}
+                          rules={{ required: "A review scope is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -559,7 +559,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih skop semakan</option>
+                                <option value="">Select a Review Scope</option>
                                 {skopSemakanOptions
                                   .sort((a, b) =>
                                     a.namaSkopSemakan.localeCompare(
@@ -587,12 +587,12 @@ function EditKetidakpatuhan() {
                     </Col>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Skop Kriteria Ketidakpatuhan</Form.Label>
+                        <Form.Label>Noncompliance Scope</Form.Label>
                         <Controller
                           id="skopKriteriaId"
                           name="skopKriteriaId"
                           control={control}
-                          rules={{ required: "Sila pilih skop kriteria" }}
+                          rules={{ required: "A noncompliance scope is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -602,7 +602,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih skop kriteria</option>
+                                <option value="">Select a Noncompliance Scope</option>
                                 {filteredSkopKriteriaOptions
                                   .sort((a, b) =>
                                     a.namaSkopKriteria.localeCompare(
@@ -630,12 +630,12 @@ function EditKetidakpatuhan() {
                     </Col>
                     <Row>
                       <Form.Group>
-                        <Form.Label>Aktiviti Semakan</Form.Label>
+                        <Form.Label>Activity Review</Form.Label>
                         <Controller
                           id="aktivitiSemakanId"
                           name="aktivitiSemakanId"
                           control={control}
-                          rules={{ required: "Sila pilih aktiviti semakan" }}
+                          rules={{ required: "An activity review is required" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -645,7 +645,7 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Pilih aktiviti semakan</option>
+                                <option value="">Select an Activity Review</option>
                                 {filteredAktivitiSemakanOptions
                                   .sort((a, b) =>
                                     a.namaAktivitiSemakan.localeCompare(
@@ -674,13 +674,13 @@ function EditKetidakpatuhan() {
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Kriteria Ketidakpatuhan</Form.Label>
+                      <Form.Label>Noncompliance</Form.Label>
                       <Controller
                         id="kriteriaKetidakpatuhanId"
                         name="kriteriaKetidakpatuhanId"
                         control={control}
                         rules={{
-                          required: "Sila pilih kriteria ketidakpatuhan",
+                          required: "A noncompliance is required",
                         }}
                         render={({ field: { onChange, value } }) => (
                           <>
@@ -695,7 +695,7 @@ function EditKetidakpatuhan() {
                               value={value}
                             >
                               <option value="">
-                                Pilih kriteria ketidakpatuhan
+                              Select a Noncompliance
                               </option>
                               {filteredKriteriaKetidakpatuhanOptions
                                 .sort((a, b) =>
@@ -726,7 +726,7 @@ function EditKetidakpatuhan() {
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Tahap Risiko</Form.Label>
+                      <Form.Label>Level of Risk</Form.Label>
                       <div>
                         <Row className="radio-edit-ketidakpatuhan">
                           <Col>
@@ -738,7 +738,7 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Tinggi"
+                                  label="High"
                                   value="TINGGI"
                                   id="radioHigh"
                                   checked={field.value === "TINGGI"}
@@ -755,7 +755,7 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Sederhana"
+                                  label="Intermediate"
                                   value="SEDERHANA"
                                   id="radioMid"
                                   checked={field.value === "SEDERHANA"}
@@ -772,7 +772,7 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Rendah"
+                                  label="Low"
                                   value="RENDAH"
                                   id="radioLow"
                                   checked={field.value === "RENDAH"}
@@ -782,14 +782,14 @@ function EditKetidakpatuhan() {
                           </Col>
                         </Row>
                         {errors.tahapRisikoAudit && (
-                          <p>Tahap Risiko diperlukan</p>
+                          <p>A level of risk is required</p>
                         )}
                       </div>
                     </Form.Group>
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Kesalahan Berulang</Form.Label>
+                      <Form.Label>Repeated Offence?</Form.Label>
                       <div>
                         <Row className="radio-kesalahan-berulang">
                           <Col>
@@ -801,7 +801,7 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Ya"
+                                  label="Yes"
                                   value="YA"
                                   id="radioYa"
                                   checked={field.value === "YA"}
@@ -818,7 +818,7 @@ function EditKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Tidak"
+                                  label="No"
                                   value="TIDAK"
                                   id="radioTidak"
                                   checked={field.value === "TIDAK"}
@@ -832,7 +832,7 @@ function EditKetidakpatuhan() {
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Catatan</Form.Label>
+                      <Form.Label>Additional Notes</Form.Label>
                       <Controller
                         name="catatanAudit"
                         control={control}
@@ -841,7 +841,7 @@ function EditKetidakpatuhan() {
                           <>
                             <Form.Control
                               as="textarea"
-                              placeholder="Catatan audit"
+                              placeholder="Enter any additional notes . . ."
                               {...field}
                             />
                           </>
@@ -851,10 +851,10 @@ function EditKetidakpatuhan() {
                   </Row>
                   <div className="edit-ketidakpatuhan-actions">
                     <Button type="submit" className="tambah-ketidakpatuhan-btn">
-                      Simpan
+                      Save
                     </Button>{" "}
                     <Button onClick={handleCancel} className="cancel-btn">
-                      Kembali
+                      Cancel
                     </Button>{" "}
                   </div>
                 </div>

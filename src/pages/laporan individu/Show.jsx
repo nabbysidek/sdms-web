@@ -20,72 +20,72 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
   const columns = useMemo(
     () => [
       {
-        header: "Bil",
+        header: "Num",
         accessorFn: (row, i) => i + 1,
         id: "index",
       },
       {
-        header: "Risiko",
+        header: "Levels of Risk",
         accessorKey: "tahapRisikoAudit",
       },
       {
-        header: "Kesalahan Berulang",
+        header: "Repeated Offence?",
         accessorKey: "kesalahanBerulang",
       },
       {
-        header: "Tarikh Mesyuarat Penutup",
+        header: "Dates of Audit",
         accessorKey: "tarikhAudit",
       },
       {
-        header: "Wilayah",
+        header: "States",
         accessorKey: "wilayah.namaWilayah",
       },
       {
-        header: "Cawangan",
+        header: "Branches",
         accessorKey: "cawangan.namaCawangan",
       },
       {
-        header: "Jawatan",
+        header: "Positions",
         accessorKey: "jawatanKakitangan",
       },
       {
-        header: "Bahagian",
+        header: "Divisions",
         accessorKey: "bahagian.namaBahagian",
       },
       {
-        header: "Jabatan",
+        header: "Departments",
         accessorKey: "jabatan.namaJabatan",
       },
       {
-        header: "Unit",
+        header: "Units",
         accessorKey: "unit.namaUnit",
       },
       {
-        header: "Jenis Audit",
+        header: "Types of Audit",
         accessorKey: "jenis_audit.namaJenisAudit",
       },
       {
-        header: "Skop Semakan",
+        header: "Review Scopes",
         accessorKey: "skop_semakan.namaSkopSemakan",
       },
       {
-        header: "Skop Kriteria",
+        header: "Noncompliance Scopes",
         accessorKey: "skop_kriteria.namaSkopKriteria",
       },
       {
-        header: "Aktiviti Semakan",
+        header: "Activity Reviews",
         accessorKey: "aktiviti_semakan.namaAktivitiSemakan",
       },
       {
-        header: "Kriteria Ketidakpatuhan",
+        header: "Noncompliances",
         accessorKey: "kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan",
       },
       {
-        header: "Catatan",
+        header: "Additional Notes",
         accessorKey: "catatanAudit",
       },
       {
-        header: "Tindakan",
+        header: "Actions",
         cell: ({ row }) => (
           <>
             <Link
@@ -103,7 +103,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
               onClick={() => handleDeleteLaporanIndividu(row.original.id)}
               className="delete-btn"
             >
-              Padam
+              Delete
             </Button>
           </>
         ),
@@ -124,25 +124,25 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
   const handleExportReportIndividu = () => {
     // PREPARE CSV DATA
     const csvData = data.map((reportIndividu, index) => ({
-      Bil: index + 1,
-      Risiko: reportIndividu.tahapRisikoAudit,
-      "Kesalahan Berulang": reportIndividu.kesalahanBerulang,
-      "Tarikh Mesyuarat Penutup": reportIndividu.tarikhAudit,
-      Wilayah: reportIndividu.wilayah?.namaWilayah || "",
-      Cawangan: reportIndividu.cawangan?.namaCawangan || "",
-      Jawatan: reportIndividu.jawatanKakitangan,
-      Bahagian: reportIndividu.bahagian?.namaBahagian || "",
-      Jabatan: reportIndividu.jabatan?.namaJabatan || "",
-      Unit: reportIndividu.unit?.namaUnit || "",
-      "Jenis Audit": reportIndividu.jenis_audit?.namaJenisAudit || "",
-      "Skop Semakan": reportIndividu.skop_semakan?.namaSkopSemakan || "",
-      "Skop Kriteria": reportIndividu.skop_kriteria?.namaSkopKriteria || "",
-      "Aktiviti Semakan":
+      BIL: index + 1,
+      "LEVELS OF RISK": reportIndividu.tahapRisikoAudit,
+      "REPEATED OFFENCE": reportIndividu.kesalahanBerulang,
+      "DATES OF AUDIT": reportIndividu.tarikhAudit,
+      STATES: reportIndividu.wilayah?.namaWilayah || "",
+      DIVISIONS: reportIndividu.cawangan?.namaCawangan || "",
+      POSITIONS: reportIndividu.jawatanKakitangan,
+      DIVISIONS: reportIndividu.bahagian?.namaBahagian || "",
+      DEPARTMENTS: reportIndividu.jabatan?.namaJabatan || "",
+      UNITS: reportIndividu.unit?.namaUnit || "",
+      "TYPES OF AUDIT": reportIndividu.jenis_audit?.namaJenisAudit || "",
+      "REVIEW SCOPES": reportIndividu.skop_semakan?.namaSkopSemakan || "",
+      "NONCOMPLIANCE SCOPES": reportIndividu.skop_kriteria?.namaSkopKriteria || "",
+      "ACTIVITY REVIEWS":
         reportIndividu.aktiviti_semakan?.namaAktivitiSemakan || "",
-      "Kriteria Ketidakpatuhan":
+      "NONCOMPLIANCES":
         reportIndividu.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan ||
         "",
-      Catatan: reportIndividu.catatanAudit,
+      "ADDITIONAL NOTES": reportIndividu.catatanAudit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -150,7 +150,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
 
     // CREATE A BLOB & SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "SENARAI KETIDAKPATUHAN KAKITANGAN.csv");
+    FileSaver.saveAs(blob, "LIST OF STAFF AUDIT RECORDS.csv");
   };
 
   return (
@@ -158,14 +158,14 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
       {/* BAHAGIAN MAKLUMAT KAKITANGAN */}
       <div className="kakitangan-info-container">
         <div className="page-title">
-          <h3>Maklumat Kakitangan</h3>
+          <h3>Staff Basic Information</h3>
           <hr />
         </div>
         <div className="kakitangan-info">
           <Row>
             <Col xs={12}>
               <Form.Group>
-                <Form.Label>Nama Kakitangan</Form.Label>
+                <Form.Label>Staff Name</Form.Label>
                 <Form.Control
                   type="text"
                   value={maklumatKakitangan.namaKakitangan}
@@ -177,7 +177,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
           <Row>
             <Col xs={12}>
               <Form.Group>
-                <Form.Label>ID Kakitangan</Form.Label>
+                <Form.Label>Staff ID</Form.Label>
                 <Form.Control
                   type="text"
                   value={maklumatKakitangan.idKakitangan}
@@ -194,7 +194,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
           <Row>
             <Col md={8}>
               <h3 className="laporan-individu-table-title">
-                Senarai Laporan Ketidakpatuhan Kakitangan
+                List of Staff Audit Records
               </h3>
             </Col>
             <Col md={4}>
@@ -208,7 +208,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
                 }}
               >
                 <Button className="to-page-tambah-ketidakpatuhan-btn">
-                  Tambah Ketidakpatuhan
+                  Add New Audit
                 </Button>
               </Link>
             </Col>

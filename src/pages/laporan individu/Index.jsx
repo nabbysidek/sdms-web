@@ -6,9 +6,9 @@ function LaporanIndividu() {
   return (
     <>
       <div className="page-title">
-        <h2>Laporan Individu</h2>
+        <h2>Audits</h2>
         <hr />
-        <h3>Cari Laporan Individu Kakitangan</h3>
+        <h3>Find Staff's Audit Records</h3>
       </div>
 
       <div className="page-content">

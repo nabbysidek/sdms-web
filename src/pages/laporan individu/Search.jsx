@@ -35,7 +35,7 @@ function SearchUntukLaporanIndividu() {
   const onSubmit = async (data) => {
     if (!data.searchKakitanganInput) {
       setValidationErrors({
-        searchKakitanganInput: { message: "ID kakitangan diperlukan " },
+        searchKakitanganInput: { message: "Staff ID is required " },
       });
     } else {
       setValidationErrors(null);
@@ -49,7 +49,7 @@ function SearchUntukLaporanIndividu() {
         } catch (error) {
           console.error('Error fetching search results', error);
           setValidationErrors({
-            searchKakitanganInput: { message: "Ralat dalam mencari ID kakitangan" },
+            searchKakitanganInput: { message: "Error finding staff's audit records" },
           });
           console.error('Error fetching search results', error);
         }
@@ -73,7 +73,7 @@ function SearchUntukLaporanIndividu() {
                     <Form.Control
                       {...field}
                       type="text"
-                      placeholder="Cari laporan individu melalui ID kakitangan"
+                      placeholder="Search staff audit records with their staff ID . . ."
                       value={searchKakitanganInputValue} // to fix unctrolled to controlled input
                       isInvalid={!!validationErrors?.searchKakitanganInput}
                     />
@@ -89,7 +89,7 @@ function SearchUntukLaporanIndividu() {
                 handleSubmit((data) => onSubmit(data))();
               }}
             >
-              Cari
+              Search
             </Button>
           </Col>
           <Col xs={12} md={3} xl={3} className="remove-padding">
