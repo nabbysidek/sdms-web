@@ -5,9 +5,9 @@ function LaporanKumulatif() {
   return (
     <>
       <div className="page-title">
-        <h2>Laporan Kumulatif</h2>
+        <h2>Reports</h2>
         <hr />
-        <h3>Tapis Laporan Kumulatif</h3>
+        <h3>Filter Reports</h3>
       </div>
 
       <div className="page-content">

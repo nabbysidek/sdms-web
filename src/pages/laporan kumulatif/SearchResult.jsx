@@ -33,17 +33,17 @@ function Filter({ column }) {
       onChange={(e) => column.setFilterValue(e.target.value)}
       value={columnFilterValue || ""}
     >
-      <option value="">Pilih Risiko</option>
-      <option value="RENDAH">Rendah</option>
-      <option value="SEDERHANA">Sederhana</option>
-      <option value="TINGGI">Tinggi</option>
+      <option value="">Select Risk Level</option>
+      <option value="RENDAH">Low</option>
+      <option value="SEDERHANA">Intermediate</option>
+      <option value="TINGGI">High</option>
     </select>
   ) : (
     <input
       type="text"
       value={columnFilterValue || ""}
       onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`Tapis`}
+      placeholder={`Filter by name . . .`}
       className="filter-bar"
     />
   );
@@ -102,23 +102,23 @@ function SearchResultLaporanKumulatif() {
     // PREPARE CSV DATA
     const csvData = filteredData.map((laporan, index) => ({
       Bil: index + 1,
-      "TARIKH MESYUARAT PENUTUP": laporan.tarikhAudit,
-      "TAHAP RISIKO": laporan.tahapRisikoAudit,
-      WILAYAH: laporan.wilayah?.namaWilayah,
-      CAWANGAN: laporan.cawangan?.namaCawangan,
-      "KESALAHAN BERULANG": laporan.kesalahanBerulang,
-      "JENIS AUDIT": laporan.jenis_audit?.namaJenisAudit,
-      "SKOP SEMAKAN": laporan.skop_semakan?.namaSkopSemakan,
-      "SKOP KRITERIA": laporan.skop_kriteria?.namaSkopKriteria,
-      "AKTIVITI SEMAKAN": laporan.aktiviti_semakan?.namaAktivitiSemakan,
-      "KRITERIA KETIDAKPATUHAN":
+      "DATES OF AUDIT": laporan.tarikhAudit,
+      "LEVELS OF RISK": laporan.tahapRisikoAudit,
+      STATES: laporan.wilayah?.namaWilayah,
+      BRANCHES: laporan.cawangan?.namaCawangan,
+      "REPEATED OFFENCE?": laporan.kesalahanBerulang,
+      "TYPES OF AUDIT": laporan.jenis_audit?.namaJenisAudit,
+      "REVIEW SCOPES": laporan.skop_semakan?.namaSkopSemakan,
+      "NONCOMPLIANCE SCOPES": laporan.skop_kriteria?.namaSkopKriteria,
+      "ACTIVITY REVIEWS": laporan.aktiviti_semakan?.namaAktivitiSemakan,
+      "NONCOMPLIANCES":
         laporan.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan,
-      "ID KAKITANGAN": laporan.kakitangan?.idKakitangan,
-      "NAMA KAKITANGAN": laporan.kakitangan?.namaKakitangan,
-      "JAWATAN KAKITANGAN": laporan.jawatanKakitangan,
-      BAHAGIAN: laporan.bahagian?.namaBahagian,
-      JABATAN: laporan.jabatan?.namaJabatan,
-      UNIT: laporan.unit?.namaUnit,
+      "STAFF ID": laporan.kakitangan?.idKakitangan,
+      "STAFF NAME": laporan.kakitangan?.namaKakitangan,
+      "POSITION": laporan.jawatanKakitangan,
+      DIVISONS: laporan.bahagian?.namaBahagian,
+      DEPARTMENTS: laporan.jabatan?.namaJabatan,
+      UNITS: laporan.unit?.namaUnit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -126,7 +126,7 @@ function SearchResultLaporanKumulatif() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "LAPORAN KETIDAKPATUHAN.csv");
+    FileSaver.saveAs(blob, "REPORTS OF NONCOMPLIANCES.csv");
   };
 
   return (
@@ -137,7 +137,7 @@ function SearchResultLaporanKumulatif() {
             <Col xs={12} xl={6}>
               <Form.Group>
                 <Form.Label className="laporan-kumulatif-filter-header">
-                  Tarikh Mula
+                  Start Date
                 </Form.Label>
                 <Form.Control
                   type="date"
@@ -149,7 +149,7 @@ function SearchResultLaporanKumulatif() {
             <Col xs={12} xl={6}>
               <Form.Group>
                 <Form.Label className="laporan-kumulatif-filter-header">
-                  Tarikh Tamat
+                  End Date
                 </Form.Label>
                 <Form.Control
                   type="date"
@@ -163,7 +163,7 @@ function SearchResultLaporanKumulatif() {
       </div>
       <div className="dates-container">
         <p>
-          Hasil Carian: {startDate ? startDate : "DD/MM/YYYY"} -{" "}
+          Search Results of Reports: {startDate ? startDate : "DD/MM/YYYY"} -{" "}
           {endDate ? endDate : "DD/MM/YYYY"}
         </p>
       </div>

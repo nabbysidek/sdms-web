@@ -5,75 +5,75 @@ const useLaporanKumulatifStore = create((set) => ({
     audits: [],
     columns: [
         {
-          header: "Bil",
+          header: "Num",
           accessorFn: (row, i) => i + 1,
           id: "index",
         },
         {
-          header: "Tarikh Mesyuarat Penutup",
+          header: "Dates of Audit",
           accessorKey: "tarikhAudit",
         },
         {
-          header: "Tahap Risiko",
+          header: "Levels of Risk",
           accessorKey: "tahapRisikoAudit",
           meta: {
             filterVariant: "select",
           },
         },
         {
-          header: "Wilayah",
+          header: "States",
           accessorKey: "wilayah.namaWilayah",
         },
         {
-          header: "Cawangan",
+          header: "Branches",
           accessorKey: "cawangan.namaCawangan",
         },
         {
-          header: "Kesalahan Berulang",
+          header: "Repeated Offence?",
           accessorKey: "kesalahanBerulang",
         },
         {
-          header: "Jenis Audit",
+          header: "Types of Audit",
           accessorKey: "jenis_audit.namaJenisAudit",
         },
         {
-          header: "Skop Semakan",
+          header: "Review Scopes",
           accessorKey: "skop_semakan.namaSkopSemakan",
         },
         {
-          header: "Skop Kriteria",
+          header: "Noncompliance Scopes",
           accessorKey: "skop_kriteria.namaSkopKriteria",
         },
         {
-          header: "Aktiviti Semakan",
+          header: "Activity Reviews",
           accessorKey: "aktiviti_semakan.namaAktivitiSemakan",
         },
         {
-          header: "Kriteria Ketidakpatuhan",
+          header: "Noncompliances",
           accessorKey: "kriteria_ketidakpatuhan.namaKriteriaKetidakpatuhan",
         },
         {
-          header: "ID Kakitangan",
+          header: "Staff ID",
           accessorKey: "kakitangan.idKakitangan",
         },
         {
-          header: "Nama Kakitangan",
+          header: "Staff Name",
           accessorKey: "kakitangan.namaKakitangan",
         },
         {
-          header: "Jawatan Kakitangan",
+          header: "Position",
           accessorKey: "jawatanKakitangan",
         },
         {
-          header: "Bahagian",
+          header: "Divisions",
           accessorKey: "bahagian.namaBahagian",
         },
         {
-          header: "Jabatan",
+          header: "Departments",
           accessorKey: "jabatan.namaJabatan",
         },
         {
-          header: "Unit",
+          header: "Units",
           accessorKey: "unit.namaUnit",
         },
       ],
@@ -88,7 +88,7 @@ const useLaporanKumulatifStore = create((set) => ({
                 audits: response.data,
             });
           } catch (error) {
-            console.error("Ralat dalam mengambil maklumat audit:", error);
+            console.error("Error in retrieving data:", error);
           }
     },
 
