@@ -146,17 +146,17 @@ function TambahKetidakpatuhan() {
   //     );
 
   //     if (response.status === 200) {
-  //       console.log('Berjaya')
+  //       console.log('Success')
   //       Swal.fire({
   //         icon: "success",
-  //         title: "Berjaya",
+  //         title: "Success",
   //         text: response.data.success,
   //       });
   //     }
   //   } catch (error) {
   //     Swal.fire({
   //       icon: "error",
-  //       title: "Gagal",
+  //       title: "Error",
   //       text: error.response.data.error,
   //     });
   //   }

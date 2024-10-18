@@ -44,7 +44,10 @@ const useAktivitiSemakanStore = create((set) => ({
   },
 
   // CREATE AKTIVITI SEMAKAN
-  createAktivitiSemakan: async (aktivitiSemakanInput, handleCloseCreateAktivitiSemakan) => {
+  createAktivitiSemakan: async (
+    aktivitiSemakanInput,
+    handleCloseCreateAktivitiSemakan
+  ) => {
     try {
       const response = await axiosCustom.post(
         `tetapan-kriteria/aktiviti-semakan`,
@@ -54,7 +57,7 @@ const useAktivitiSemakanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Aktiviti semakan berjaya ditambah");
@@ -63,14 +66,19 @@ const useAktivitiSemakanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
   },
 
   // UPDATE AKTIVITI SEMAKAN
-  updateAktivitiSemakan: async (aktivitiSemakanId, aktivitiSemakanInput, handleCloseEditAktivitiSemakan, onUpdateSuccess) => {
+  updateAktivitiSemakan: async (
+    aktivitiSemakanId,
+    aktivitiSemakanInput,
+    handleCloseEditAktivitiSemakan,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/aktiviti-semakan/${aktivitiSemakanId}`,
@@ -80,7 +88,7 @@ const useAktivitiSemakanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Aktiviti semakan berjaya dikemaskini");
@@ -90,7 +98,7 @@ const useAktivitiSemakanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -106,18 +114,20 @@ const useAktivitiSemakanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
 
         set((state) => ({
-          aktivitiSemakans: state.aktivitiSemakans.filter((aktivitiSemakan) => aktivitiSemakan.id !== aktivitiSemakanId),
+          aktivitiSemakans: state.aktivitiSemakans.filter(
+            (aktivitiSemakan) => aktivitiSemakan.id !== aktivitiSemakanId
+          ),
         }));
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

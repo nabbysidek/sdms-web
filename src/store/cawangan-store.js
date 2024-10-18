@@ -9,9 +9,7 @@ const useCawanganStore = create((set) => ({
   // FETCH CAWANGAN
   fetchCawangans: async () => {
     try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/cawangan`
-      );
+      const response = await axiosCustom.get(`tetapan-kriteria/cawangan`);
       set({
         cawangans: response.data,
       });
@@ -53,7 +51,7 @@ const useCawanganStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Cawangan berjaya ditambah");
@@ -62,14 +60,19 @@ const useCawanganStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
   },
 
   // UPDATE CAWANGAN
-  updateCawangan: async (cawanganId, cawanganInput, handleCloseEditCawangan, onUpdateSuccess) => {
+  updateCawangan: async (
+    cawanganId,
+    cawanganInput,
+    handleCloseEditCawangan,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/cawangan/${cawanganId}`,
@@ -79,7 +82,7 @@ const useCawanganStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Cawangan berjaya dikemaskini");
@@ -89,7 +92,7 @@ const useCawanganStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -105,8 +108,8 @@ const useCawanganStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
+          title: "Success",
+          text: response.data.success,
         });
 
         set((state) => ({
@@ -118,7 +121,7 @@ const useCawanganStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

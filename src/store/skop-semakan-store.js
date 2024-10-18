@@ -8,13 +8,10 @@ const useSkopSemakanStore = create((set) => ({
   // FETCH SKOP SEMAKAN
   fetchSkopSemakans: async () => {
     try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-semakan`
-      );
+      const response = await axiosCustom.get(`tetapan-kriteria/skop-semakan`);
       set({
         skopSemakans: response.data,
       });
-
     } catch (error) {
       console.error("Ralat dalam mengambil maklumat skopSemakan:", error);
     }
@@ -31,8 +28,8 @@ const useSkopSemakanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
+          title: "Success",
+          text: response.data.success,
         });
         console.log("SkopSemakan berjaya ditambah");
         handleCloseCreateSkopSemakan();
@@ -40,7 +37,7 @@ const useSkopSemakanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -62,8 +59,8 @@ const useSkopSemakanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
+          title: "Success",
+          text: response.data.success,
         });
         console.log("SkopSemakan berjaya dikemaskini");
         handleCloseEditSkopSemakan();
@@ -72,7 +69,7 @@ const useSkopSemakanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -88,7 +85,7 @@ const useSkopSemakanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
 
@@ -101,7 +98,7 @@ const useSkopSemakanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

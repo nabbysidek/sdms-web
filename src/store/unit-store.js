@@ -9,9 +9,7 @@ const useUnitStore = create((set) => ({
   // FETCH UNIT
   fetchUnits: async () => {
     try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/unit`
-      );
+      const response = await axiosCustom.get(`tetapan-kriteria/unit`);
       set({
         units: response.data,
       });
@@ -53,7 +51,7 @@ const useUnitStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Unit berjaya ditambah");
@@ -62,14 +60,19 @@ const useUnitStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
   },
 
   // UPDATE UNIT
-  updateUnit: async (unitId, unitInput, handleCloseEditUnit, onUpdateSuccess) => {
+  updateUnit: async (
+    unitId,
+    unitInput,
+    handleCloseEditUnit,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/unit/${unitId}`,
@@ -79,7 +82,7 @@ const useUnitStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Unit berjaya dikemaskini");
@@ -89,7 +92,7 @@ const useUnitStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -105,7 +108,7 @@ const useUnitStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
 
@@ -116,7 +119,7 @@ const useUnitStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

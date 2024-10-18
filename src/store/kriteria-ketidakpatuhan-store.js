@@ -16,7 +16,10 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
         kriteriaKetidakpatuhans: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat kriteria ketidakpatuhan:", error);
+      console.error(
+        "Ralat dalam mengambil maklumat kriteria ketidakpatuhan:",
+        error
+      );
     }
   },
 
@@ -43,7 +46,10 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
   },
 
   // CREATE KRITERIA KETIDAKPATUHAN
-  createKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanInput, handleCloseCreateKriteriaKetidakpatuhan) => {
+  createKriteriaKetidakpatuhan: async (
+    kriteriaKetidakpatuhanInput,
+    handleCloseCreateKriteriaKetidakpatuhan
+  ) => {
     try {
       const response = await axiosCustom.post(
         `tetapan-kriteria/kriteria-ketidakpatuhan`,
@@ -53,7 +59,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Kriteria ketidakpatuhan berjaya ditambah");
@@ -62,14 +68,19 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
   },
 
   // UPDATE KRITERIA KETIDAKPATUHAN
-  updateKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanId, kriteriaKetidakpatuhanInput, handleCloseEditKriteriaKetidakpatuhan, onUpdateSuccess) => {
+  updateKriteriaKetidakpatuhan: async (
+    kriteriaKetidakpatuhanId,
+    kriteriaKetidakpatuhanInput,
+    handleCloseEditKriteriaKetidakpatuhan,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/kriteria-ketidakpatuhan/${kriteriaKetidakpatuhanId}`,
@@ -79,7 +90,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Kriteria Ketidakpatuhan berjaya dikemaskini");
@@ -89,7 +100,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -105,18 +116,21 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
 
         set((state) => ({
-          kriteriaKetidakpatuhans: state.kriteriaKetidakpatuhans.filter((kriteriaKetidakpatuhan) => kriteriaKetidakpatuhan.id !== kriteriaKetidakpatuhanId),
+          kriteriaKetidakpatuhans: state.kriteriaKetidakpatuhans.filter(
+            (kriteriaKetidakpatuhan) =>
+              kriteriaKetidakpatuhan.id !== kriteriaKetidakpatuhanId
+          ),
         }));
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

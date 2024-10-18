@@ -9,9 +9,7 @@ const useSkopKriteriaStore = create((set) => ({
   // FETCH SKOP KRITERIA
   fetchSkopKriterias: async () => {
     try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-kriteria`
-      );
+      const response = await axiosCustom.get(`tetapan-kriteria/skop-kriteria`);
       set({
         skopKriterias: response.data,
       });
@@ -43,7 +41,10 @@ const useSkopKriteriaStore = create((set) => ({
   },
 
   // CREATE SKOP KRITERIA
-  createSkopKriteria: async (skopKriteriaInput, handleCloseCreateSkopKriteria) => {
+  createSkopKriteria: async (
+    skopKriteriaInput,
+    handleCloseCreateSkopKriteria
+  ) => {
     try {
       const response = await axiosCustom.post(
         `tetapan-kriteria/skop-kriteria`,
@@ -53,7 +54,7 @@ const useSkopKriteriaStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Skop kriteria berjaya ditambah");
@@ -62,14 +63,19 @@ const useSkopKriteriaStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
   },
 
   // UPDATE SKOP KRITIERIA
-  updateSkopKriteria: async (skopKriteriaId, skopKriteriaInput, handleCloseEditSkopKriteria, onUpdateSuccess) => {
+  updateSkopKriteria: async (
+    skopKriteriaId,
+    skopKriteriaInput,
+    handleCloseEditSkopKriteria,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/skop-kriteria/${skopKriteriaId}`,
@@ -79,7 +85,7 @@ const useSkopKriteriaStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Skop kriteria berjaya dikemaskini");
@@ -89,7 +95,7 @@ const useSkopKriteriaStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -105,8 +111,8 @@ const useSkopKriteriaStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
+          title: "Success",
+          text: response.data.success,
         });
 
         set((state) => ({
@@ -118,7 +124,7 @@ const useSkopKriteriaStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

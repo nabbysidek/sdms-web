@@ -3,46 +3,44 @@ import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
 const useJabatanStore = create((set) => ({
-    jabatans: [],
-    namaBahagianOptions: [],
+  jabatans: [],
+  namaBahagianOptions: [],
 
-    // FETCH JABATAN
-    fetchJabatans: async () => {
-        try {
-          const response = await axiosCustom.get(
-            `tetapan-kriteria/jabatan`
-          );
-          set({
-            jabatans: response.data,
-          });
-        } catch (error) {
-          console.error("Ralat dalam mengambil maklumat jabatan:", error);
-        }
-      },
+  // FETCH JABATAN
+  fetchJabatans: async () => {
+    try {
+      const response = await axiosCustom.get(`tetapan-kriteria/jabatan`);
+      set({
+        jabatans: response.data,
+      });
+    } catch (error) {
+      console.error("Ralat dalam mengambil maklumat jabatan:", error);
+    }
+  },
 
-    //  FETCH BAHAGIAN OPTIONS
-    fetchBahagians: async () => {
-        try {
-            const response = await axiosCustom.get(
-              `tetapan-kriteria/bahagian/display-bahagian`
-            );
-      
-            if (Array.isArray(response.data)) {
-              set({
-                namaBahagianOptions: response.data.map((bahagian) => ({
-                  value: bahagian.id,
-                  label: bahagian.namaBahagian,
-                })),
-              });
-            } else {
-              console.log(response.data);
-            }
-          } catch (error) {
-            console.log(error);
-          }
-    },
+  //  FETCH BAHAGIAN OPTIONS
+  fetchBahagians: async () => {
+    try {
+      const response = await axiosCustom.get(
+        `tetapan-kriteria/bahagian/display-bahagian`
+      );
 
-    // CREATE JABATAN
+      if (Array.isArray(response.data)) {
+        set({
+          namaBahagianOptions: response.data.map((bahagian) => ({
+            value: bahagian.id,
+            label: bahagian.namaBahagian,
+          })),
+        });
+      } else {
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  // CREATE JABATAN
   createJabatan: async (jabatanInput, handleCloseCreateJabatan) => {
     try {
       const response = await axiosCustom.post(
@@ -53,7 +51,7 @@ const useJabatanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Jabatan berjaya ditambah");
@@ -62,14 +60,19 @@ const useJabatanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
   },
 
   //   UPDATE JABATAN
-  updateJabatan: async (jabatanId, jabatanInput, handleCloseEditJabatan, onUpdateSuccess) => {
+  updateJabatan: async (
+    jabatanId,
+    jabatanInput,
+    handleCloseEditJabatan,
+    onUpdateSuccess
+  ) => {
     try {
       const response = await axiosCustom.put(
         `tetapan-kriteria/jabatan/${jabatanId}`,
@@ -79,7 +82,7 @@ const useJabatanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
         console.log("Jabatan berjaya dikemaskini");
@@ -89,7 +92,7 @@ const useJabatanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -105,8 +108,8 @@ const useJabatanStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
-          text: response.data.success, 
+          title: "Success",
+          text: response.data.success,
         });
 
         set((state) => ({
@@ -118,7 +121,7 @@ const useJabatanStore = create((set) => ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }

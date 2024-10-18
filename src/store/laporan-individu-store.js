@@ -4,7 +4,6 @@ import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
 const useLaporanIndividuStore = create((set) => ({
-
   // search
   linkClicked: false,
   setLinkClicked: (value) => set({ linkClicked: value }),
@@ -22,17 +21,17 @@ const useLaporanIndividuStore = create((set) => ({
       );
 
       if (response.status === 200) {
-        console.log('Berjaya')
+        console.log("Success");
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
+        title: "Error",
         text: error.response.data.error,
       });
     }
@@ -48,15 +47,15 @@ const useLaporanIndividuStore = create((set) => ({
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Berjaya",
+          title: "Success",
           text: response.data.success,
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Gagal",
-        text: error.response.data.error
+        title: "Error",
+        text: error.response.data.error,
       });
       console.log(error);
     }
@@ -75,14 +74,14 @@ const useLaporanIndividuStore = create((set) => ({
         if (response.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "Berjaya",
+            title: "Success",
             text: response.data.success,
           });
         }
       } catch (error) {
         Swal.fire({
           icon: "error",
-          title: "Gagal",
+          title: "Error",
           text: error.response.data.error,
         });
       }
