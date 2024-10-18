@@ -107,16 +107,27 @@ function SideBar({ onNavLinkClick }) {
           >
             <div>
               <div className="tetapan-kriteria-group">
-                {item.path === "/kriteriaketidakpatuhan" && isMobileView ? (
+                {item.isSignOut ? (
+                  <div className="nav-link" onClick={handleSignOut}>
+                    {isSideBarOpen || isMobileView ? (
+                      <>
+                        <span className="icon">{item.icon}</span>
+                        <span className="title">{item.title}</span>
+                      </>
+                    ) : (
+                      item.icon
+                    )}
+                  </div>
+                ) : item.path === "/kriteriaketidakpatuhan" && isMobileView ? (
                   <NavDropdown
                     title={
                       isSideBarOpen || isMobileView ? (
                         <>
-                          <span>{tetapanKriteriaItem.icon}</span>
-                          <span>{tetapanKriteriaItem.title}</span>
+                          <span>{item.icon}</span>
+                          <span>{item.title}</span>
                         </>
                       ) : (
-                        tetapanKriteriaItem.icon
+                        item.icon
                       )
                     }
                     id="basic-nav-dropdown"
@@ -151,19 +162,6 @@ function SideBar({ onNavLinkClick }) {
             </div>
           </ListGroup.Item>
         ))}
-
-        {/* Independent Log Keluar link */}
-        <ListGroup.Item className="list-group-item">
-          <NavLink className="nav-link" onClick={handleSignOut}>
-            <FaSignOutAlt
-              size={15}
-              style={{ marginRight: "10px", marginLeft: "3px" }}
-            />
-            {isSideBarOpen && ( // Check if the sidebar is open
-              <span>Sign Out</span>
-            )}
-          </NavLink>
-        </ListGroup.Item>
       </ListGroup>
     </div>
   );

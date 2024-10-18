@@ -32,9 +32,12 @@
 
 .navbar-title {
     float: right;
-    margin: 10px 0 auto 10px;
-    font-weight: bold;
-    font-size: 16px;
+    margin: 0px 0 auto 10px;
+    font-family: "Leckerli One", cursive;
+    font-weight: 400;
+    font-size: xx-large;
+    font-style: normal;
+    text-decoration: none;
     color: var(--NEUTRALWHITE);
 }
 
@@ -65,8 +68,11 @@
 
 @media (max-width: 768px) {
     .navbar-title {
-        margin-top: 12px;
-        font-size: 12px;
+        font-family: "Leckerli One", cursive;
+        font-weight: 400;
+        font-size: xx-large;
+        font-style: normal;
+        text-decoration: none;
     }
 }
 
@@ -178,6 +184,14 @@
     text-decoration: underline;
 }
 
+.list-group-item.sign-out-mobile {
+  color: #ffffff !important;
+}
+
+.list-group-item.sign-out:hover {
+  cursor: pointer;
+}
+
 /* ******************************************* */
 /* **************** SIDEBAR ****************** */
 /* **************TOGGLE SIDEBAR ************** */
@@ -220,6 +234,11 @@
     .nav-link {
         margin: 15px 15px 15px 5px;
         font-size: 12px;
+        color: #ffffff;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
     }
 }
 

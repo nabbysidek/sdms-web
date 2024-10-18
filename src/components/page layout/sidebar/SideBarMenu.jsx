@@ -1,7 +1,4 @@
-import { FaSearch } from "react-icons/fa";
-import { FaChartLine } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa";
-import { FaTools } from "react-icons/fa";
+import { FaSearch, FaChartLine, FaUsers, FaTools, FaSignOutAlt } from "react-icons/fa";
 
 const SideBarMenu = [
   {
@@ -34,6 +31,13 @@ const SideBarMenu = [
     path: "/kriteriaketidakpatuhan",
     icon: (
       <FaTools size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
+    ),
+  },
+  {
+    title: "Sign Out",
+    isSignOut: true,
+    icon: (
+      <FaSignOutAlt size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),
   },
 ];
