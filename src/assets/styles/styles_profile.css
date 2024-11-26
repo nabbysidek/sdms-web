@@ -21,6 +21,14 @@
 /********************* TABS ***********************/
 /**************************************************/
 
+#profile-tabs-tab-change-password.nav-link, #profile-tabs-tab-user-details.nav-link {
+    color: var(--NEUTRALBLACK);
+}
+
+#profile-tabs-tab-change-password.nav-link:hover, #profile-tabs-tab-user-details.nav-link:hover {
+    color: var(--PRIMARY);
+}
+
 .tabs-container {
     font-size: 14px;
     margin-top: 20px;

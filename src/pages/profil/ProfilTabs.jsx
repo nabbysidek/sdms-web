@@ -9,7 +9,7 @@ function ProfilTabs({ userInfo }) {
 
   return (
     <>
-      <Tabs id="profile-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
+      <Tabs id="profile-tabs" className="tabs-container" activeKey={key} onSelect={(k) => setKey(k)}>
         <Tab eventKey="user-details" title="Your information">
           <UserDetails 
             userInfo={userInfo} 

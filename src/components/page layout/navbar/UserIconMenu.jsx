@@ -90,7 +90,7 @@ const UserIconMenu = ({ closeMobileNav }) => {
           <FaUserCircle
             className="navbar-user-icon"
             alt="user-icon"
-            size={30}
+            size={35}
           />
           {isMobileView && <span className="navbar-user">View Profile</span>}
         </div>
