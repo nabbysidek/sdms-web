@@ -33,7 +33,7 @@ function App() {
         <Routes>
           {/* ROUTE AUTHENTICATION */}
           <Route index element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/sign-up" element={<SignUp />} />
 
           {/* ROUTE PROFIL */}
           <Route path="/" element={<Layout />}>
@@ -43,11 +43,11 @@ function App() {
             {/* ROUTE PELAPORAN */}
             <Route path="/laporan-individu" element={<LaporanIndividuIndividu />} />
             <Route
-              path="/tambahketidakpatuhan"
+              path="/tambah-ketidakpatuhan"
               element={<TambahKetidakpatuhan />}
             />
             <Route
-              path="/editketidakpatuhan"
+              path="/edit-ketidakpatuhan"
               element={<EditKetidakpatuhan />}
             />
 
@@ -56,14 +56,14 @@ function App() {
 
             {/* TETAPAN SELENGGARA AUDIT */}
             <Route
-              path="/kriteriaketidakpatuhan"
+              path="/kriteria-ketidakpatuhan"
               element={<IndexKriteriaKetidakpatuhan />}
             />
             <Route path="/kakitangan" element={<IndexKakitangan />} />
-            <Route path="/jenisaudit" element={<IndexJenisAudit />} />
-            <Route path="/aktivitisemakan" element={<IndexAktivitSemakan />}/>
-            <Route path="/skopkriteria" element={<IndexSkopKriteria />} />
-            <Route path="/skopsemakan" element={<IndexSkopSemakan />} />
+            <Route path="/jenis-audit" element={<IndexJenisAudit />} />
+            <Route path="/aktiviti-semakan" element={<IndexAktivitSemakan />}/>
+            <Route path="/skop-kriteria" element={<IndexSkopKriteria />} />
+            <Route path="/skop-semakan" element={<IndexSkopSemakan />} />
 
             {/* TETAPAN JAWATAN */}
             <Route path="/bahagian" element={<IndexBahagian />} />
@@ -75,7 +75,7 @@ function App() {
             <Route path="/cawangan" element={<IndexCawangan />} />
 
             {/*  TETAPAN PENGGUNA ROUTE */}
-            <Route path="/tetapanpengguna" element={<IndexTetapanPengguna />} />
+            <Route path="/tetapan-pengguna" element={<IndexTetapanPengguna />} />
             <Route path="/listStaff" element={<ListStaff />} />
           </Route>
 
