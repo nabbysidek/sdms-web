@@ -722,9 +722,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="High"
-                                  value="TINGGI"
+                                  value="HIGH"
                                   id="radioHigh"
-                                  checked={field.value === "TINGGI"}
+                                  checked={field.value === "HIGH"}
                                 />
                               )}
                             />
@@ -739,9 +739,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Medium"
-                                  value="SEDERHANA"
+                                  value="MEDIUM"
                                   id="radioMid"
-                                  checked={field.value === "SEDERHANA"}
+                                  checked={field.value === "MEDIUM"}
                                 />
                               )}
                             />
@@ -756,9 +756,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Low"
-                                  value="RENDAH"
+                                  value="LOW"
                                   id="radioLow"
-                                  checked={field.value === "RENDAH"}
+                                  checked={field.value === "LOW"}
                                 />
                               )}
                             />
@@ -786,9 +786,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="Yes"
-                                  value="YA"
+                                  value="YES"
                                   id="radioYa"
-                                  checked={field.value === "YA"}
+                                  checked={field.value === "YES"}
                                 />
                               )}
                             />
@@ -803,9 +803,9 @@ function TambahKetidakpatuhan() {
                                   {...field}
                                   type="radio"
                                   label="No"
-                                  value="TIDAK"
+                                  value="NO"
                                   id="radioTidak"
-                                  checked={field.value === "TIDAK"}
+                                  checked={field.value === "NO"}
                                 />
                               )}
                             />

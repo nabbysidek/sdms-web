@@ -200,7 +200,7 @@ function SearchResultUntukLaporanIndividu({ searchResults }) {
             <Col md={4}>
               {/* ACTION: TAMBAH KETIDAKPATUHAN KAKITANGAN */}
               <Link
-                to="/tambahketidakpatuhan"
+                to="/tambah-ketidakpatuhan"
                 state={{
                   id: maklumatKakitangan.id,
                   namaKakitangan: maklumatKakitangan.namaKakitangan,
