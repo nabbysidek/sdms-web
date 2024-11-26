@@ -101,41 +101,33 @@ function EditKetidakpatuhan() {
     navigate(-1);
   };
 
+  // Fetch initial display data
   useEffect(() => {
     displayWilayahs();
-    displayCawangans();
-
     displayBahagians();
-    displayJabatans();
-    displayUnits();
-
     displayJenisAudits();
     displaySkopSemakans();
-    displaySkopKriterias();
-    displayAktivitiSemakans();
-    displayKriteriaKetidakpatuhans();
+  }, [
+    displayWilayahs,
+    displayBahagians,
+    displayJenisAudits,
+    displaySkopSemakans,
+  ]);
 
+  // Fetch dependent data when `audits` is provided
+  useEffect(() => {
     if (audits) {
+      // Set values for the fields
       setValue("wilayahId", audits.wilayah?.id);
       setValue("cawanganId", audits.cawangan?.id);
-      filterCawangansByWilayah(audits.wilayah?.id);
-
       setValue("bahagianId", audits.bahagian?.id);
       setValue("jabatanId", audits.jabatan?.id);
       setValue("unitId", audits.unit?.id);
-      filterJabatansByBahagian(audits.bahagian?.id);
-      filterUnitsByJabatan(audits.jabatan?.id);
 
       setValue("skopSemakanId", audits.skop_semakan?.id);
       setValue("skopKriteriaId", audits.skop_kriteria?.id);
       setValue("aktivitiSemakanId", audits.aktiviti_semakan?.id);
       setValue("kriteriaKetidakpatuhanId", audits.kriteria_ketidakpatuhan?.id);
-
-      filterSkopKriteriasBySkopSemakan(audits.skop_semakan?.id);
-      filterAktivitiSemakansBySkopKriteria(audits.skop_kriteria?.id);
-      filterKriteriaKetidakpatuhansByAktivitiSemakan(
-        audits.aktiviti_semakan?.id
-      );
 
       setValue("jenisAuditId", audits.jenis_audit?.id);
       setValue("jawatanKakitangan", audits.jawatanKakitangan);
@@ -143,23 +135,70 @@ function EditKetidakpatuhan() {
       setValue("catatanAudit", audits.catatanAudit);
       setValue("tahapRisikoAudit", audits.tahapRisikoAudit);
       setValue("kesalahanBerulang", audits.kesalahanBerulang);
+
+      // Trigger dependent data fetching
+      filterCawangansByWilayah(audits.wilayah?.id);
+      filterJabatansByBahagian(audits.bahagian?.id);
+      filterUnitsByJabatan(audits.jabatan?.id);
+
+      filterSkopKriteriasBySkopSemakan(audits.skop_semakan?.id);
+      filterAktivitiSemakansBySkopKriteria(audits.skop_kriteria?.id);
+      filterKriteriaKetidakpatuhansByAktivitiSemakan(
+        audits.aktiviti_semakan?.id
+      );
     }
   }, [
     audits,
     setValue,
-    displayWilayahs,
-    displayCawangans,
     filterCawangansByWilayah,
-    displayBahagians,
-    displayJabatans,
-    displayUnits,
     filterJabatansByBahagian,
     filterUnitsByJabatan,
-    displaySkopSemakans,
     filterSkopKriteriasBySkopSemakan,
     filterAktivitiSemakansBySkopKriteria,
     filterKriteriaKetidakpatuhansByAktivitiSemakan,
   ]);
+
+  // Fetch dependent options for `Cawangans` when `audits.wilayah?.id` changes
+  useEffect(() => {
+    if (audits?.wilayah?.id) {
+      displayCawangans(audits.wilayah.id);
+    }
+  }, [audits?.wilayah?.id, displayCawangans]);
+
+  // Fetch dependent options for `Jabatans` when `audits.bahagian?.id` changes
+  useEffect(() => {
+    if (audits?.bahagian?.id) {
+      displayJabatans(audits.bahagian.id);
+    }
+  }, [audits?.bahagian?.id, displayJabatans]);
+
+  // Fetch dependent options for `Units` when `audits.jabatan?.id` changes
+  useEffect(() => {
+    if (audits?.jabatan?.id) {
+      displayUnits(audits.jabatan.id);
+    }
+  }, [audits?.jabatan?.id, displayUnits]);
+
+  // Fetch dependent options for `SkopKriterias` when `audits.skop_semakan?.id` changes
+  useEffect(() => {
+    if (audits?.skop_semakan?.id) {
+      displaySkopKriterias(audits.skop_semakan.id);
+    }
+  }, [audits?.skop_semakan?.id, displaySkopKriterias]);
+
+  // Fetch dependent options for `AktivitiSemakans` when `audits.skop_kriteria?.id` changes
+  useEffect(() => {
+    if (audits?.skop_kriteria?.id) {
+      displayAktivitiSemakans(audits.skop_kriteria.id);
+    }
+  }, [audits?.skop_kriteria?.id, displayAktivitiSemakans]);
+
+  // Fetch dependent options for `KriteriaKetidakpatuhans` when `audits.aktiviti_semakan?.id` changes
+  useEffect(() => {
+    if (audits?.aktiviti_semakan?.id) {
+      displayKriteriaKetidakpatuhans(audits.aktiviti_semakan.id);
+    }
+  }, [audits?.aktiviti_semakan?.id, displayKriteriaKetidakpatuhans]);
 
   const handleWilayahChange = (e) => {
     const selectedWilayahId = e.target.value;
@@ -323,8 +362,7 @@ function EditKetidakpatuhan() {
                           control={control}
                           defaultValue=""
                           rules={{
-                            required:
-                              "A staff position is required",
+                            required: "A staff position is required",
                           }}
                           render={({ field }) => (
                             <>
@@ -592,7 +630,9 @@ function EditKetidakpatuhan() {
                           id="skopKriteriaId"
                           name="skopKriteriaId"
                           control={control}
-                          rules={{ required: "A noncompliance scope is required" }}
+                          rules={{
+                            required: "A noncompliance scope is required",
+                          }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -602,7 +642,9 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select a Noncompliance Scope</option>
+                                <option value="">
+                                  Select a Noncompliance Scope
+                                </option>
                                 {filteredSkopKriteriaOptions
                                   .sort((a, b) =>
                                     a.namaSkopKriteria.localeCompare(
@@ -645,7 +687,9 @@ function EditKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select an Activity Review</option>
+                                <option value="">
+                                  Select an Activity Review
+                                </option>
                                 {filteredAktivitiSemakanOptions
                                   .sort((a, b) =>
                                     a.namaAktivitiSemakan.localeCompare(
@@ -694,9 +738,7 @@ function EditKetidakpatuhan() {
                               }}
                               value={value}
                             >
-                              <option value="">
-                              Select a Noncompliance
-                              </option>
+                              <option value="">Select a Noncompliance</option>
                               {filteredKriteriaKetidakpatuhanOptions
                                 .sort((a, b) =>
                                   a.namaKriteriaKetidakpatuhan.localeCompare(

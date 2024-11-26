@@ -105,80 +105,72 @@ function TambahKetidakpatuhan() {
   }));
 
   useEffect(() => {
+    // Fetch options based on `selectedWilayah`
+    if (selectedWilayah) {
+      displayCawangans(selectedWilayah);
+    }
     displayWilayahs();
-    displayCawangans(selectedWilayah);
+  }, [selectedWilayah, displayWilayahs, displayCawangans]);
 
+  useEffect(() => {
+    // Fetch options based on `selectedBahagian`
+    if (selectedBahagian) {
+      displayJabatans(selectedBahagian);
+    }
     displayBahagians();
-    displayJabatans(selectedBahagian);
-    displayUnits(selectedJabatan);
+  }, [selectedBahagian, displayBahagians, displayJabatans]);
 
+  useEffect(() => {
+    // Fetch options based on `selectedJabatan`
+    if (selectedJabatan) {
+      displayUnits(selectedJabatan);
+    }
+  }, [selectedJabatan, displayUnits]);
+
+  // Fetch `JenisAudits` and `SkopSemakans` - These do not depend on user selections.
+  useEffect(() => {
     displayJenisAudits();
     displaySkopSemakans();
-    displaySkopKriterias(selectedSkopSemakan);
-    displayAktivitiSemakans(selectedSkopKriteria);
-    displayKriteriaKetidakpatuhans(selectedAktivitiSemakan);
-  }, [
-    displayWilayahs,
-    displayCawangans,
-    selectedWilayah,
+  }, [displayJenisAudits, displaySkopSemakans]);
 
-    displayBahagians,
-    displayJabatans,
-    selectedBahagian,
-    displayUnits,
-    selectedJabatan,
+  // Fetch `SkopKriterias` when `selectedSkopSemakan` changes.
+  useEffect(() => {
+    if (selectedSkopSemakan) {
+      displaySkopKriterias(selectedSkopSemakan);
+    }
+  }, [selectedSkopSemakan, displaySkopKriterias]);
 
-    displayJenisAudits,
-    displaySkopSemakans,
-    displaySkopKriterias,
-    selectedSkopSemakan,
-    displayAktivitiSemakans,
-    selectedSkopKriteria,
-    displayKriteriaKetidakpatuhans,
-    selectedAktivitiSemakan,
-  ]);
+  // Fetch `AktivitiSemakans` when `selectedSkopKriteria` changes.
+  useEffect(() => {
+    if (selectedSkopKriteria) {
+      displayAktivitiSemakans(selectedSkopKriteria);
+    }
+  }, [selectedSkopKriteria, displayAktivitiSemakans]);
 
-  // const createLaporanIndividu = async (laporanIndividuInput) => {
-  //   try {
-  //     const response = await axiosCustom.post(
-  //       `laporan-individu/ketidakpatuhan-kakitangan`,
-  //       laporanIndividuInput
-  //     );
-
-  //     if (response.status === 200) {
-  //       console.log('Success')
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Success",
-  //         text: response.data.success,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error",
-  //       text: error.response.data.error,
-  //     });
-  //   }
-  // };
+  // Fetch `KriteriaKetidakpatuhans` when `selectedAktivitiSemakan` changes.
+  useEffect(() => {
+    if (selectedAktivitiSemakan) {
+      displayKriteriaKetidakpatuhans(selectedAktivitiSemakan);
+    }
+  }, [selectedAktivitiSemakan, displayKriteriaKetidakpatuhans]);
 
   return (
     <>
       <div className="page-title">
         <h2>Audits</h2>
         <hr />
-        <h3>Add New Audit Record</h3>
+        <h3>Record Audit</h3>
       </div>
       <div className="tambah-ketidakpatuhan-form-container">
         <Container>
           <div>
-            <h4>Staff Basic Information</h4>
+            <h4>Staff Information</h4>
             <hr />
             <div className="kakitangan-info">
               <Row>
                 <Col xs={12}>
                   <Form.Group>
-                    <Form.Label>Staff Name</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control type="text" value={namaKakitangan} disabled />
                   </Form.Group>
                 </Col>
@@ -205,7 +197,7 @@ function TambahKetidakpatuhan() {
                       id="wilayahId"
                       name="wilayahId"
                       control={control}
-                      rules={{ required: "A state is required" }}
+                      rules={{ required: "Select a state" }}
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
@@ -215,7 +207,7 @@ function TambahKetidakpatuhan() {
                             }}
                             value={value}
                           >
-                            <option value="">Select a State</option>
+                            <option value="">Select State</option>
                             {wilayahOptions
                               .sort((a, b) =>
                                 a.namaWilayah.localeCompare(b.namaWilayah)
@@ -244,7 +236,7 @@ function TambahKetidakpatuhan() {
                       name="cawanganId"
                       control={control}
                       defaultValue=""
-                      rules={{ required: "A branch is required" }}
+                      rules={{ required: "Select a branch" }}
                       render={({ field: { onChange, value } }) => (
                         <>
                           <Form.Select
@@ -255,7 +247,7 @@ function TambahKetidakpatuhan() {
                             value={value}
                           >
                             <option value="" disabled>
-                              Select a Branch
+                              Select Branch
                             </option>
                             {cawanganOptions
                               .filter(
@@ -295,7 +287,7 @@ function TambahKetidakpatuhan() {
                           defaultValue=""
                           rules={{
                             required:
-                              "A staff position is required",
+                              "Enter a position",
                           }}
                           render={({ field: { onChange, value } }) => (
                             <>
@@ -303,7 +295,7 @@ function TambahKetidakpatuhan() {
                                 type="text"
                                 onChange={onChange}
                                 value={value}
-                                placeholder="Enter staff position . . ."
+                                placeholder="Jawatan kakitangan"
                               />
                               {errors.jawatanKakitangan && (
                                 <span className="error-message">
@@ -317,13 +309,13 @@ function TambahKetidakpatuhan() {
                     </Col>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Division</Form.Label>
+                        <Form.Label>Divison</Form.Label>
                         <Controller
                           id="bahagianId"
                           name="bahagianId"
                           control={control}
                           defaultValue=""
-                          rules={{ required: "A division is required" }}
+                          rules={{ required: "Select a division" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -333,7 +325,7 @@ function TambahKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select a Division</option>
+                                <option value="">Select Division</option>
                                 {bahagianOptions
                                   .sort((a, b) =>
                                     a.namaBahagian.localeCompare(b.namaBahagian)
@@ -367,7 +359,7 @@ function TambahKetidakpatuhan() {
                           name="jabatanId"
                           control={control}
                           defaultValue=""
-                          rules={{ required: "A department is required" }}
+                          rules={{ required: "Select a department" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -377,7 +369,7 @@ function TambahKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select a Department</option>
+                                <option value="">Select Department</option>
                                 {jabatanOptions
                                   .filter(
                                     (jabatan) =>
@@ -408,7 +400,7 @@ function TambahKetidakpatuhan() {
                           name="unitId"
                           control={control}
                           defaultValue=""
-                          rules={{ required: "A unit is required" }}
+                          rules={{ required: "Select a unit" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -418,7 +410,7 @@ function TambahKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select a Unit</option>
+                                <option value="">Select Unit</option>
                                 {unitOptions
                                   .filter(
                                     (unit) =>
@@ -451,14 +443,14 @@ function TambahKetidakpatuhan() {
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Date of Audit</Form.Label>
+                        <Form.Label>Audit Date</Form.Label>
                         <Controller
                           id="tarikhAudit"
                           name="tarikhAudit"
                           control={control}
                           defaultValue=""
                           rules={{
-                            required: "A date is required",
+                            required: "Enter an audit date",
                           }}
                           render={({ field: { onChange, value } }) => (
                             <>
@@ -466,7 +458,7 @@ function TambahKetidakpatuhan() {
                                 type="date"
                                 onChange={onChange}
                                 value={value}
-                                placeholder="Select a date. . ."
+                                placeholder="Date"
                               />
                               {errors.tarikhAudit && (
                                 <span className="error-message">
@@ -480,13 +472,13 @@ function TambahKetidakpatuhan() {
                     </Col>
                     <Col>
                       <Form.Group>
-                        <Form.Label>Type of Audit</Form.Label>
+                        <Form.Label>Types of Audit</Form.Label>
                         <Controller
                           id="jenisAuditId"
                           name="jenisAuditId"
                           control={control}
                           defaultValue=""
-                          rules={{ required: "A type of audit is required" }}
+                          rules={{ required: "Select a type of audit" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -496,7 +488,7 @@ function TambahKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select a Type of Audit</option>
+                                <option value="">Select Type of Audit</option>
                                 {jenisAuditOptions
                                   .sort((a, b) =>
                                     a.namaJenisAudit.localeCompare(
@@ -533,7 +525,7 @@ function TambahKetidakpatuhan() {
                           name="skopSemakanId"
                           control={control}
                           defaultValue=""
-                          rules={{ required: "A review scope is required" }}
+                          rules={{ required: "Select a review scope" }}
                           render={({ field: { onChange, value } }) => (
                             <>
                               <Form.Select
@@ -543,7 +535,7 @@ function TambahKetidakpatuhan() {
                                 }}
                                 value={value}
                               >
-                                <option value="">Select a Review Scope</option>
+                                <option value="">Select Review Scope</option>
                                 {skopSemakanOptions
                                   .sort((a, b) =>
                                     a.namaSkopSemakan.localeCompare(
@@ -578,7 +570,7 @@ function TambahKetidakpatuhan() {
                           control={control}
                           defaultValue=""
                           rules={{
-                            required: "A noncompliance scope is required",
+                            required: "Select a noncompliance scope",
                           }}
                           render={({ field: { onChange, value } }) => (
                             <>
@@ -590,7 +582,7 @@ function TambahKetidakpatuhan() {
                                 value={value}
                               >
                                 <option value="">
-                                  Select a Noncompliance Scope
+                                  Select Noncompliance Scope
                                 </option>
                                 {skopKriteriaOptions
                                   .filter(
@@ -626,7 +618,7 @@ function TambahKetidakpatuhan() {
                         name="aktivitiSemakanId"
                         control={control}
                         defaultValue=""
-                        rules={{ required: "An activity review is required" }}
+                        rules={{ required: "Select an activity review" }}
                         render={({ field: { onChange, value } }) => (
                           <>
                             <Form.Select
@@ -636,7 +628,7 @@ function TambahKetidakpatuhan() {
                               }}
                               value={value}
                             >
-                              <option value="">Select an Activity Review</option>
+                              <option value="">Select Activity Review</option>
                               {aktivitiSemakanOptions
                                 .filter(
                                   (aktivitiSemakan) =>
@@ -671,7 +663,7 @@ function TambahKetidakpatuhan() {
                         control={control}
                         defaultValue=""
                         rules={{
-                          required: "A noncompliance is required",
+                          required: "Select a noncompliance",
                         }}
                         render={({ field: { onChange, value } }) => (
                           <>
@@ -685,7 +677,7 @@ function TambahKetidakpatuhan() {
                               value={value}
                             >
                               <option value="">
-                                Select a Noncompliance
+                                Select Noncompliance
                               </option>
                               {kriteriaKetidakpatuhanOptions
                                 .filter(
@@ -716,7 +708,7 @@ function TambahKetidakpatuhan() {
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Level of Risk</Form.Label>
+                      <Form.Label>Risk Level</Form.Label>
                       <div>
                         <Row className="radio-tambah-ketidakpatuhan">
                           <Col>
@@ -724,6 +716,7 @@ function TambahKetidakpatuhan() {
                               name="tahapRisikoAudit"
                               control={control}
                               rules={{ required: true }}
+                              defaultValue="Low"
                               render={({ field }) => (
                                 <Form.Check
                                   {...field}
@@ -745,7 +738,7 @@ function TambahKetidakpatuhan() {
                                 <Form.Check
                                   {...field}
                                   type="radio"
-                                  label="Intermediate"
+                                  label="Medium"
                                   value="SEDERHANA"
                                   id="radioMid"
                                   checked={field.value === "SEDERHANA"}
@@ -772,20 +765,21 @@ function TambahKetidakpatuhan() {
                           </Col>
                         </Row>
                         {errors.tahapRisikoAudit && (
-                          <p>A level of risk is required</p>
+                          <p>Risk level is required</p>
                         )}
                       </div>
                     </Form.Group>
                   </Row>
                   <Row>
                     <Form.Group>
-                      <Form.Label>Repeated Offence?</Form.Label>
+                      <Form.Label>Repeated Offense?</Form.Label>
                       <div>
                         <Row className="radio-kesalahan-berulang">
                           <Col>
                             <Controller
                               name="kesalahanBerulang"
                               control={control}
+                              defaultValue="No"
                               rules={{ required: true }}
                               render={({ field }) => (
                                 <Form.Check
