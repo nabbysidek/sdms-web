@@ -17,12 +17,12 @@ import "../../assets/styles/styles_laporan_kumulatif.css";
 import * as FileSaver from "file-saver";
 import * as Papa from "papaparse";
 
-// FILTER COMPONENTS TO ALLOW DIFFERENT WAYS OF FILTERING
+// Filter components to allow different ways of filtering 
 function Filter({ column }) {
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
 
-  // DROPDOWN FILTER FOR TAHAP RISIKO
+  // Dropdown filter for Tahap Risiko 
   if (column.id === "index" || column.id === "tarikhAudit") {
     return null;
   }
@@ -35,7 +35,7 @@ function Filter({ column }) {
     >
       <option value="">Select Risk Level</option>
       <option value="RENDAH">Low</option>
-      <option value="SEDERHANA">Intermediate</option>
+      <option value="SEDERHANA">Medium</option>
       <option value="TINGGI">High</option>
     </select>
   ) : (
@@ -43,22 +43,22 @@ function Filter({ column }) {
       type="text"
       value={columnFilterValue || ""}
       onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`Filter by name . . .`}
+      placeholder={`Tapis`}
       className="filter-bar"
     />
   );
 }
 
 function SearchResultLaporanKumulatif() {
-  // USE OF LAPORAN STORE
+  // Use of Laporan store
   const { audits, fetchAudits, columns } = useLaporanKumulatifStore();
 
-  // FETCH FROM STORE: AUDIT
+  // Fetch from store for Audits
   useEffect(() => {
     fetchAudits();
   }, [fetchAudits]);
 
-  // FILTER BY START DATE AND END DATE
+  // Filter reports by a date range
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -72,14 +72,14 @@ function SearchResultLaporanKumulatif() {
     });
   }, [audits, startDate, endDate]);
 
-  // FETCH DATA AND DECLARE COLUMNS
+  // Fetch data and declare columns
   const data = useMemo(() => audits, [audits]);
 
-  // SORTING AND FILTERING
+  // Sorting and Filtering
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  // TABLE DECLARATION
+  // Table declaration
   const table = useReactTable({
     data: filteredData,
     columns,
@@ -97,28 +97,28 @@ function SearchResultLaporanKumulatif() {
     },
   });
 
-  // HANDLE EXPORT LAPORAN
+  // Handle Export Reports
   const handleExportLaporan = () => {
     // PREPARE CSV DATA
     const csvData = filteredData.map((laporan, index) => ({
       Bil: index + 1,
-      "DATES OF AUDIT": laporan.tarikhAudit,
-      "LEVELS OF RISK": laporan.tahapRisikoAudit,
-      STATES: laporan.wilayah?.namaWilayah,
-      BRANCHES: laporan.cawangan?.namaCawangan,
-      "REPEATED OFFENCE?": laporan.kesalahanBerulang,
+      "AUDIT DATE": laporan.tarikhAudit,
+      "LEVEL OF RISK": laporan.tahapRisikoAudit,
+      "STATE": laporan.wilayah?.namaWilayah,
+      "BRANCH": laporan.cawangan?.namaCawangan,
+      "REPEATED OFFENSE?": laporan.kesalahanBerulang,
       "TYPES OF AUDIT": laporan.jenis_audit?.namaJenisAudit,
-      "REVIEW SCOPES": laporan.skop_semakan?.namaSkopSemakan,
-      "NONCOMPLIANCE SCOPES": laporan.skop_kriteria?.namaSkopKriteria,
-      "ACTIVITY REVIEWS": laporan.aktiviti_semakan?.namaAktivitiSemakan,
-      "NONCOMPLIANCES":
+      "REVIEW SCOPE": laporan.skop_semakan?.namaSkopSemakan,
+      "NONCOMPLIANCE SCOPE": laporan.skop_kriteria?.namaSkopKriteria,
+      "ACTIVITY REVIEW": laporan.aktiviti_semakan?.namaAktivitiSemakan,
+      "NONCOMPLIANCE":
         laporan.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan,
       "STAFF ID": laporan.kakitangan?.idKakitangan,
       "STAFF NAME": laporan.kakitangan?.namaKakitangan,
-      "POSITION": laporan.jawatanKakitangan,
-      DIVISONS: laporan.bahagian?.namaBahagian,
-      DEPARTMENTS: laporan.jabatan?.namaJabatan,
-      UNITS: laporan.unit?.namaUnit,
+      "STAFF POSITION": laporan.jawatanKakitangan,
+      "DIVISION": laporan.bahagian?.namaBahagian,
+      "DEPARTMENT": laporan.jabatan?.namaJabatan,
+      "UNIT": laporan.unit?.namaUnit,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -126,7 +126,7 @@ function SearchResultLaporanKumulatif() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "REPORTS OF NONCOMPLIANCES.csv");
+    FileSaver.saveAs(blob, "NONCOMPLIANCE REPORTS.csv");
   };
 
   return (
@@ -163,7 +163,7 @@ function SearchResultLaporanKumulatif() {
       </div>
       <div className="dates-container">
         <p>
-          Search Results of Reports: {startDate ? startDate : "DD/MM/YYYY"} -{" "}
+          Search Results for Time Range: {startDate ? startDate : "DD/MM/YYYY"} -{" "}
           {endDate ? endDate : "DD/MM/YYYY"}
         </p>
       </div>
@@ -230,7 +230,7 @@ function SearchResultLaporanKumulatif() {
 
       <div className="functional-btns-container">
         <ExportButton onClick={handleExportLaporan} />
-        <ImportButton />
+        <ImportButton disabled={true} />
       </div>
     </Container>
   );
