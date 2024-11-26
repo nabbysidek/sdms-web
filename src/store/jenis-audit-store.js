@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useJenisAuditStore = create((set) => ({
   jenisAudits: [],
 
-  // FETCH JENIS AUDIT
+  // Fetch Types of Audits
   fetchJenisAudits: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/jenis-audit`);
@@ -14,11 +14,11 @@ const useJenisAuditStore = create((set) => ({
         jenisAudits: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat jenis audit:", error);
+      console.error("Error in fetching types of audit:", error);
     }
   },
 
-  // CREATE JENIS AUDIT
+  // Create Type of Audit
   createJenisAudit: async (jenisAuditInput, handleCloseCreateJenisAudit) => {
     try {
       const response = await axiosCustom.post(
@@ -32,7 +32,7 @@ const useJenisAuditStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Jenis audit berjaya ditambah");
+        console.log("Successful in creating a type of audit.");
         handleCloseCreateJenisAudit();
       }
     } catch (error) {
@@ -44,7 +44,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // UPDATE JENIS AUDIT
+  // Update Type of Audit
   updateJenisAudit: async (
     jenisAuditId,
     jenisAuditInput,
@@ -63,7 +63,7 @@ const useJenisAuditStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Jenis audit berjaya dikemaskini");
+        console.log("Successful in updating the type of audit.");
         handleCloseEditJenisAudit();
         onUpdateSuccess();
       }
@@ -76,7 +76,7 @@ const useJenisAuditStore = create((set) => ({
     }
   },
 
-  // DELETE JENIS AUDIT
+  // Delete Type of Audit
   deleteJenisAudit: async (jenisAuditId) => {
     try {
       const response = await axiosCustom.delete(

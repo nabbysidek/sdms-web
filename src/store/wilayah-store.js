@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useWilayahStore = create((set) => ({
   wilayahs: [],
 
-  // FETCH WILAYAH
+  // Fetch States
   fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/wilayah`);
@@ -13,11 +13,11 @@ const useWilayahStore = create((set) => ({
         wilayahs: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat wilayah:", error);
+      console.error("Error in fetching states:", error);
     }
   },
 
-  // CREATE WILAYAH
+  // Create State
   createWilayah: async (wilayahInput, handleCloseCreateWilayah) => {
     try {
       const response = await axiosCustom.post(
@@ -31,7 +31,7 @@ const useWilayahStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Wilayah berjaya ditambah");
+        console.log("Successful in creating a state.");
         handleCloseCreateWilayah();
       }
     } catch (error) {
@@ -43,7 +43,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // UPDATE WILAYAH
+  // Update State
   updateWilayah: async (
     wilayahId,
     wilayahInput,
@@ -62,7 +62,7 @@ const useWilayahStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Wilayah berjaya dikemaskini");
+        console.log("Successful in updating the state.");
         handleCloseEditWilayah();
         onUpdateSuccess();
       }
@@ -75,7 +75,7 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // DELETE WILAYAH
+  // Delete State
   deleteWilayah: async (wilayahId) => {
     try {
       const response = await axiosCustom.delete(

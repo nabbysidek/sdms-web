@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useSkopSemakanStore = create((set) => ({
   skopSemakans: [],
 
-  // FETCH SKOP SEMAKAN
+  // Fetch Review Scope
   fetchSkopSemakans: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/skop-semakan`);
@@ -17,7 +17,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // CREATE SKOP SEMAKAN
+  // Create Review Scope
   createSkopSemakan: async (skopSemakanInput, handleCloseCreateSkopSemakan) => {
     try {
       const response = await axiosCustom.post(
@@ -43,7 +43,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // UPDATE SKOP SEMAKAN
+  // Update Review Scope
   updateSkopSemakan: async (
     skopSemakanId,
     skopSemakanInput,
@@ -62,7 +62,7 @@ const useSkopSemakanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("SkopSemakan berjaya dikemaskini");
+        console.log("Successful in updating the review scope.");
         handleCloseEditSkopSemakan();
         onUpdateSuccess();
       }
@@ -75,7 +75,7 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // DELETE SKOP SEMAKAN
+  // Delete Review Scope
   deleteSkopSemakan: async (skopSemakanId) => {
     try {
       const response = await axiosCustom.delete(

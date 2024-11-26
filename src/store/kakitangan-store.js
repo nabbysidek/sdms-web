@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useKakitanganStore = create((set) => ({
   kakitangans: [],
 
-  // FETCH KAKITANGAN
+  // Fetch Staff
   fetchKakitangans: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/kakitangan`);
@@ -13,11 +13,11 @@ const useKakitanganStore = create((set) => ({
         kakitangans: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat kakitangan:", error);
+      console.error("Error in fetching staff:", error);
     }
   },
 
-  // CREATE KAKITANGAN
+  // Create Staff record
   createKakitangan: async (kakitanganInput, handleCloseCreateKakitangan) => {
     try {
       const response = await axiosCustom.post(
@@ -31,7 +31,7 @@ const useKakitanganStore = create((set) => ({
           title: "Success",
           text: response.data.success, // Access the message from the backend response
         });
-        console.log("Kakitangan berjaya ditambah");
+        console.log("Successful in creating a staff record.");
         handleCloseCreateKakitangan();
       }
     } catch (error) {
@@ -43,7 +43,7 @@ const useKakitanganStore = create((set) => ({
     }
   },
 
-  // UPDATE KAKITANGAN
+  // Update Staff record
   updateKakitangan: async (
     kakitanganId,
     kakitanganInput,
@@ -62,7 +62,7 @@ const useKakitanganStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Kakitangan berjaya dikemaskini");
+        console.log("Successful in updating the staff record.");
         handleCloseEditKakitangan();
         onUpdateSuccess();
       }
@@ -75,7 +75,7 @@ const useKakitanganStore = create((set) => ({
     }
   },
 
-  // DELETE KAKITANGAN
+  // Delete Staff record
   deleteKakitangan: async (kakitanganId) => {
     try {
       const response = await axiosCustom.delete(

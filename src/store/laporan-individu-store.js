@@ -4,7 +4,7 @@ import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
 const useLaporanIndividuStore = create((set) => ({
-  // search
+  // Search Audits
   linkClicked: false,
   setLinkClicked: (value) => set({ linkClicked: value }),
   validationErrors: null,
@@ -12,7 +12,7 @@ const useLaporanIndividuStore = create((set) => ({
   searchResults: null,
   setSearchResults: (results) => set({ searchResults: results }),
 
-  // handle create
+  // Create Audit
   handleCreateLaporanIndividu: async (data) => {
     try {
       const response = await axiosCustom.post(
@@ -37,7 +37,7 @@ const useLaporanIndividuStore = create((set) => ({
     }
   },
 
-  // handle edit
+  // Edit Audit
   handleEditLaporanIndividu: async (laporanIndividuInput, auditsId) => {
     try {
       const response = await axiosCustom.put(
@@ -61,7 +61,7 @@ const useLaporanIndividuStore = create((set) => ({
     }
   },
 
-  // handle delete
+  // Delete Audit
   handleDeleteLaporanIndividu: async (auditId) => {
     const confirmResult = await showConfirmationDialog();
 

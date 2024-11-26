@@ -6,7 +6,7 @@ const useCawanganStore = create((set) => ({
   cawangans: [],
   namaWilayahOptions: [],
 
-  // FETCH CAWANGAN
+  // Fetch Branches
   fetchCawangans: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/cawangan`);
@@ -14,11 +14,11 @@ const useCawanganStore = create((set) => ({
         cawangans: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat cawangan:", error);
+      console.error("Error in fetching branches:", error);
     }
   },
 
-  // FETCH WILAYAH OPTIONS
+  // Fetch State Options
   fetchWilayahs: async () => {
     try {
       const response = await axiosCustom.get(
@@ -40,7 +40,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // CREATE CAWANGAN
+  // Create Branch
   createCawangan: async (cawanganInput, handleCloseCreateCawangan) => {
     try {
       const response = await axiosCustom.post(
@@ -54,7 +54,7 @@ const useCawanganStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Cawangan berjaya ditambah");
+        console.log("Successful in creating a branch.");
         handleCloseCreateCawangan();
       }
     } catch (error) {
@@ -66,7 +66,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // UPDATE CAWANGAN
+  // Update Branch
   updateCawangan: async (
     cawanganId,
     cawanganInput,
@@ -85,7 +85,7 @@ const useCawanganStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Cawangan berjaya dikemaskini");
+        console.log("Successful in updating the branch.");
         handleCloseEditCawangan();
         onUpdateSuccess();
       }
@@ -98,7 +98,7 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // DELETE CAWANGAN
+  // Delete Branch
   deleteCawangan: async (cawanganId) => {
     try {
       const response = await axiosCustom.delete(

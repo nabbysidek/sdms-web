@@ -6,7 +6,7 @@ const useAktivitiSemakanStore = create((set) => ({
   aktivitiSemakans: [],
   namaSkopKriteriaOptions: [],
 
-  // FETCH AKTIVITI SEMAKAN
+  // Fetch Activity Reviews
   fetchAktivitiSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -17,11 +17,11 @@ const useAktivitiSemakanStore = create((set) => ({
       });
       return response.data.data;
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat aktiviti semakan:", error);
+      console.error("Error in fetching activity reviews:", error);
     }
   },
 
-  // FETCH SKOP KRITERIA OPTIONS
+  // Fetch Review Scopes Options
   fetchSkopKriterias: async () => {
     try {
       const response = await axiosCustom.get(
@@ -43,7 +43,7 @@ const useAktivitiSemakanStore = create((set) => ({
     }
   },
 
-  // CREATE AKTIVITI SEMAKAN
+  // Create Activity Reviews
   createAktivitiSemakan: async (
     aktivitiSemakanInput,
     handleCloseCreateAktivitiSemakan
@@ -60,7 +60,7 @@ const useAktivitiSemakanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Aktiviti semakan berjaya ditambah");
+        console.log("Successful in creating an activity review.");
         handleCloseCreateAktivitiSemakan();
       }
     } catch (error) {
@@ -72,7 +72,7 @@ const useAktivitiSemakanStore = create((set) => ({
     }
   },
 
-  // UPDATE AKTIVITI SEMAKAN
+  // Update Activity Review
   updateAktivitiSemakan: async (
     aktivitiSemakanId,
     aktivitiSemakanInput,
@@ -91,7 +91,7 @@ const useAktivitiSemakanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Aktiviti semakan berjaya dikemaskini");
+        console.log("Successful in updating the activity review.");
         handleCloseEditAktivitiSemakan();
         onUpdateSuccess();
       }

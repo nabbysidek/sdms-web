@@ -6,7 +6,7 @@ const useJabatanStore = create((set) => ({
   jabatans: [],
   namaBahagianOptions: [],
 
-  // FETCH JABATAN
+  // Fetch Departments
   fetchJabatans: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/jabatan`);
@@ -14,11 +14,11 @@ const useJabatanStore = create((set) => ({
         jabatans: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat jabatan:", error);
+      console.error("Error in fetching departments:", error);
     }
   },
 
-  //  FETCH BAHAGIAN OPTIONS
+  //  Fetch Division Options
   fetchBahagians: async () => {
     try {
       const response = await axiosCustom.get(
@@ -40,7 +40,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  // CREATE JABATAN
+  // Create Departments
   createJabatan: async (jabatanInput, handleCloseCreateJabatan) => {
     try {
       const response = await axiosCustom.post(
@@ -54,7 +54,7 @@ const useJabatanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Jabatan berjaya ditambah");
+        console.log("Successful in creating a department.");
         handleCloseCreateJabatan();
       }
     } catch (error) {
@@ -66,7 +66,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  //   UPDATE JABATAN
+  //   Update Department
   updateJabatan: async (
     jabatanId,
     jabatanInput,
@@ -85,7 +85,7 @@ const useJabatanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Jabatan berjaya dikemaskini");
+        console.log("Successful in updating the department.");
         handleCloseEditJabatan();
         onUpdateSuccess();
       }
@@ -98,7 +98,7 @@ const useJabatanStore = create((set) => ({
     }
   },
 
-  // DELETE JABATAN
+  // Delete Department
   deleteJabatan: async (jabatanId) => {
     try {
       const response = await axiosCustom.delete(

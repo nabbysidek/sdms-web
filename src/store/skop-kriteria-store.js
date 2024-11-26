@@ -6,7 +6,7 @@ const useSkopKriteriaStore = create((set) => ({
   skopKriterias: [],
   namaSkopSemakanOptions: [],
 
-  // FETCH SKOP KRITERIA
+  // Fetch Noncompliance Scopes
   fetchSkopKriterias: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/skop-kriteria`);
@@ -14,11 +14,11 @@ const useSkopKriteriaStore = create((set) => ({
         skopKriterias: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat skop kriteria:", error);
+      console.error("Error in fetching noncompliance scopes:", error);
     }
   },
 
-  // FETCH SKOP SEMAKAN OPTIONS
+  // Fetch Review Scopes options
   fetchSkopSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -40,7 +40,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // CREATE SKOP KRITERIA
+  // Create Noncompliance Scopes
   createSkopKriteria: async (
     skopKriteriaInput,
     handleCloseCreateSkopKriteria
@@ -57,7 +57,7 @@ const useSkopKriteriaStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Skop kriteria berjaya ditambah");
+        console.log("Successful in creating a noncompliance scope.");
         handleCloseCreateSkopKriteria();
       }
     } catch (error) {
@@ -69,7 +69,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // UPDATE SKOP KRITIERIA
+  // Update Noncompliance Scope
   updateSkopKriteria: async (
     skopKriteriaId,
     skopKriteriaInput,
@@ -88,7 +88,7 @@ const useSkopKriteriaStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Skop kriteria berjaya dikemaskini");
+        console.log("Successful in updating the noncompliance scope.");
         handleCloseEditSkopKriteria();
         onUpdateSuccess();
       }
@@ -101,7 +101,7 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // DELETE SKOP KRITERIA
+  // Delete Noncompliance Scope
   deleteSkopKriteria: async (skopKriteriaId) => {
     try {
       const response = await axiosCustom.delete(

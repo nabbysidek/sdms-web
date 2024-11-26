@@ -6,7 +6,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
   kriteriaKetidakpatuhans: [],
   namaAktivitiSemakanOptions: [],
 
-  // FETCH KRITERIA KETIDAKPATUHAN
+  // Fetch Noncompliances
   fetchKriteriaKetidakpatuhans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -17,13 +17,13 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
       });
     } catch (error) {
       console.error(
-        "Ralat dalam mengambil maklumat kriteria ketidakpatuhan:",
+        "Error in fetching noncompliances:",
         error
       );
     }
   },
 
-  // FETCH AKTIVITI SEMAKAN OPTIONS
+  // Fetch Activity Reviews options
   fetchAktivitiSemakans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -45,7 +45,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // CREATE KRITERIA KETIDAKPATUHAN
+  // Create Noncompliances
   createKriteriaKetidakpatuhan: async (
     kriteriaKetidakpatuhanInput,
     handleCloseCreateKriteriaKetidakpatuhan
@@ -62,7 +62,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Kriteria ketidakpatuhan berjaya ditambah");
+        console.log("Successful in creating a noncompliance.");
         handleCloseCreateKriteriaKetidakpatuhan();
       }
     } catch (error) {
@@ -74,7 +74,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // UPDATE KRITERIA KETIDAKPATUHAN
+  // Update Noncompliances
   updateKriteriaKetidakpatuhan: async (
     kriteriaKetidakpatuhanId,
     kriteriaKetidakpatuhanInput,
@@ -93,7 +93,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Kriteria Ketidakpatuhan berjaya dikemaskini");
+        console.log("Successful in updating the noncompliance.");
         handleCloseEditKriteriaKetidakpatuhan();
         onUpdateSuccess();
       }
@@ -106,7 +106,7 @@ const useKriteriaKetidakpatuhanStore = create((set) => ({
     }
   },
 
-  // DELETE KRITIERIA KETIDAKPATUHAN
+  // Delete Noncompliances
   deleteKriteriaKetidakpatuhan: async (kriteriaKetidakpatuhanId) => {
     try {
       const response = await axiosCustom.delete(

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const useBahagianStore = create((set) => ({
   bahagians: [],
 
-  // FETCH BAHAGIAN
+  // Fetch Divisions
   fetchBahagians: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/bahagian`);
@@ -13,11 +13,11 @@ const useBahagianStore = create((set) => ({
         bahagians: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat bahagian:", error);
+      console.error("Error in fetching divisions:", error);
     }
   },
 
-  // CREATE BAHAGIAN
+  // Create Division
   createBahagian: async (bahagianInput, handleCloseCreateBahagian) => {
     try {
       const response = await axiosCustom.post(
@@ -31,7 +31,7 @@ const useBahagianStore = create((set) => ({
           title: "Success",
           text: response.data.success, // Access the message from the backend response
         });
-        console.log("Bahagian berjaya ditambah");
+        console.log("Successful in creating a division.");
         handleCloseCreateBahagian();
       }
     } catch (error) {
@@ -43,7 +43,7 @@ const useBahagianStore = create((set) => ({
     }
   },
 
-  // UPDATE BAHAGIAN
+  // Update Division
   updateBahagian: async (
     bahagianId,
     bahagianInput,
@@ -62,7 +62,7 @@ const useBahagianStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Bahagian berjaya dikemaskini");
+        console.log("Successful in updating the division.");
         handleCloseEditBahagian();
         onUpdateSuccess();
       }

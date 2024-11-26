@@ -78,7 +78,7 @@ const useLaporanKumulatifStore = create((set) => ({
         },
       ],
 
-    // FETCH AUDITS FOR LAPORAN
+    // Fetch Audits
     fetchAudits: async () => {
         try {
             const response = await axiosCustom.get(

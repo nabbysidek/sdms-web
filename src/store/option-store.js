@@ -21,7 +21,7 @@ export const useOptionStore = create((set) => ({
   filteredAktivitiSemakanOptions: [],
   filteredKriteriaKetidakpatuhanOptions: [],
 
-  // WILAYAH AND CAWANGAN
+  // States and Branches
   displayWilayahs: async () => {
     const response = await axiosCustom.get(`/option/get-wilayah`);
     set({ wilayahOptions: response.data });
@@ -41,13 +41,13 @@ export const useOptionStore = create((set) => ({
     });
   },
 
-  // Bahagian
+  // Divisions
   displayBahagians: async () => {
     const response = await axiosCustom.get(`/option/get-bahagian`);
 
     set({ bahagianOptions: response.data });
   },
-  // Jabatan
+  // Departments
   displayJabatans: async () => {
     const response = await axiosCustom.get(`/option/get-jabatan`);
 
@@ -61,7 +61,7 @@ export const useOptionStore = create((set) => ({
       return { filteredJabatanOptions: filtered };
     });
   },
-  // Unit
+  // Units
   displayUnits: async () => {
     const response = await axiosCustom.get(`/option/get-unit`);
 
@@ -77,20 +77,20 @@ export const useOptionStore = create((set) => ({
   },
 
 
-  // Jenis Audit
+  // Types of Audits
   displayJenisAudits: async () => {
     const response = await axiosCustom.get(`/option/get-jenis-audit`);
 
     set({ jenisAuditOptions: response.data });
   },
 
-  // Skop Semakan
+  // Review Scopes
   displaySkopSemakans: async () => {
     const response = await axiosCustom.get(`/option/get-skop-semakan`);
 
     set({ skopSemakanOptions: response.data });
   },
-  // Skop Kriteria
+  // Noncompliance Scopes
   displaySkopKriterias: async () => {
     const response = await axiosCustom.get(`/option/get-skop-kriteria`);
 
@@ -104,7 +104,7 @@ export const useOptionStore = create((set) => ({
       return { filteredSkopKriteriaOptions: filtered };
     });
   },
-  // Aktiviti Semakan
+  // Activity Reviews
   displayAktivitiSemakans: async () => {
     const response = await axiosCustom.get(`/option/get-aktiviti-semakan`);
 
@@ -118,7 +118,7 @@ export const useOptionStore = create((set) => ({
       return { filteredAktivitiSemakanOptions: filtered };
     });
   },
-  // Kriteria Ketidakpatuhan
+  // Noncompliances
   displayKriteriaKetidakpatuhans: async () => {
     const response = await axiosCustom.get(`/option/get-kriteria-ketidakpatuhan`);
 

@@ -6,7 +6,7 @@ const useUnitStore = create((set) => ({
   units: [],
   namaJabatanOptions: [],
 
-  // FETCH UNIT
+  // Fetch Units
   fetchUnits: async () => {
     try {
       const response = await axiosCustom.get(`tetapan-kriteria/unit`);
@@ -14,11 +14,11 @@ const useUnitStore = create((set) => ({
         units: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat unit:", error);
+      console.error("Error in fetching units:", error);
     }
   },
 
-  // FETCH JABATAN OPTIONS
+  // Fetch Department options
   fetchJabatans: async () => {
     try {
       const response = await axiosCustom.get(
@@ -40,7 +40,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // CREATE UNIT
+  // Create Unit
   createUnit: async (unitInput, handleCloseCreateUnit) => {
     try {
       const response = await axiosCustom.post(
@@ -54,7 +54,7 @@ const useUnitStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Unit berjaya ditambah");
+        console.log("Successful in creating a unit.");
         handleCloseCreateUnit();
       }
     } catch (error) {
@@ -66,7 +66,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // UPDATE UNIT
+  // Update Unit
   updateUnit: async (
     unitId,
     unitInput,
@@ -85,7 +85,7 @@ const useUnitStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Unit berjaya dikemaskini");
+        console.log("Successful in updating the unit.");
         handleCloseEditUnit();
         onUpdateSuccess();
       }
@@ -98,7 +98,7 @@ const useUnitStore = create((set) => ({
     }
   },
 
-  // DELETE UNIT
+  // Delete Unit
   deleteUnit: async (unitId) => {
     try {
       const response = await axiosCustom.delete(
