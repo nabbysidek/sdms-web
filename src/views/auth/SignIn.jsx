@@ -111,8 +111,7 @@ function SignIn() {
         onSubmit={handleSubmit(handleSignIn)}
       >
         <div className="form-header">
-          <h1>Sign in to <span className="span-form-header">auditee</span></h1>
-          <p>auditee for reputable.org</p>
+          <h1>Sign in to <span className="span-form-header">SDMS</span></h1>
         </div>
 
         {/*  NEW */}
@@ -164,7 +163,7 @@ function SignIn() {
           <p>
             Sign up{" "}
             {
-              <Link to="/signup" className="auth-link">
+              <Link to="/sign-up" className="auth-link">
                 here.
               </Link>
             }

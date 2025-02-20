@@ -68,13 +68,12 @@ function SignUp() {
         onSubmit={handleSubmit(handleSignUp)}
       >
         <div className="form-header">
-        <h1>Sign up to <span className="span-form-header">auditee</span></h1>
-        <p>auditee for reputable.org</p>
+        <h1>Sign up to <span className="span-form-header">SDMS</span></h1>
         </div>
 
         <div>
           <Form.Group className="mb-3" controlId="namaAuditor">
-            <Form.Label className="form-label">Name</Form.Label>
+            <Form.Label className="form-label">Your Name</Form.Label>
             <Form.Control
               type="text"
               {...register("namaAuditor", { required: true })}
