@@ -5,7 +5,7 @@ import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
 function ModalRejectAccessPermohonanPengguna({
-  userId,
+  id_user,
   refetchPermohonanAkses,
 }) {
   // -------------------- FE ---------------------------
@@ -23,7 +23,7 @@ function ModalRejectAccessPermohonanPengguna({
   const updateTolakPermohonanAkses = async () => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-pengguna/permohonan-akses/tolak-akses/${userId}`
+        `tetapan-pengguna/permohonan-akses/tolak-akses/${id_user}`
       );
 
       if (response.status === 200) {
@@ -72,7 +72,8 @@ function ModalRejectAccessPermohonanPengguna({
         </Modal.Header>
         <Form>
           <Modal.Body>
-            Are you sure you want to reject this access request from this requester?
+            Are you sure you want to reject this access request from this
+            requester?
           </Modal.Body>
           <Modal.Footer>
             <Button

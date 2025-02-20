@@ -29,7 +29,7 @@ export default function VerifyCode({ onClose, onSubmit }) {
               <Form.Group>
                 <Form.Label>Confirmation Code</Form.Label>
                 <Controller
-                  name="verificationCode"
+                  name="verification_code"
                   control={control}
                   defaultValue=""
                   rules={{

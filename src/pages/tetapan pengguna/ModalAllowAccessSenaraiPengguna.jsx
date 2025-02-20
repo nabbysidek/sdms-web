@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 function ModalAllowAccessSenaraiPengguna({
   disableButtonBenar,
-  userId,
+  id_user,
   refetchSenaraiPengguna,
 }) {
   // -------------------- FE ---------------------------
@@ -29,7 +29,7 @@ function ModalAllowAccessSenaraiPengguna({
   const updateBenarPermohonanAksesSenaraiPengguna = async () => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-pengguna/senarai-pengguna/benar-akses/${userId}`
+        `tetapan-pengguna/senarai-pengguna/benar-akses/${id_user}`
       );
 
       if (response.status === 200) {

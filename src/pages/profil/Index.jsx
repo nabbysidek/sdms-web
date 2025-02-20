@@ -37,7 +37,7 @@ function Profile() {
       <div className="profile-content">
         <div className="user-details-container">
           <BsPersonCircle size={100} />
-          {userInfo && <p className="profile-user-email">{userInfo.email}</p>}
+          {userInfo && <p className="profile-user-email">{userInfo.email_user}</p>}
         </div>
 
         {/* Tabs section */}

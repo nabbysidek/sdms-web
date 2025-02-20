@@ -64,55 +64,55 @@ function SignUp() {
         </div>
 
         {/* Name Input */}
-        <Form.Group className="mb-3" controlId="name">
+        <Form.Group className="mb-3" controlId="name_user">
           <Form.Label>Your Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Your name..."
-            {...register("name", { required: "A name is required" })}
-            isInvalid={!!errors.name}
+            {...register("name_user", { required: "A name is required" })}
+            isInvalid={!!errors.name_user}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.name?.message}
+            {errors.name_user?.message}
           </Form.Control.Feedback>
         </Form.Group>
 
         {/* Staff ID & Email Inputs */}
         <Row>
           <Col xs={6}>
-            <Form.Group className="mb-3" controlId="userId">
+            <Form.Group className="mb-3" controlId="id_user">
               <Form.Label>Your Staff ID</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Your staff ID"
-                {...register("userId", {
+                {...register("id_user", {
                   required: "Your staff ID is required",
                 })}
-                isInvalid={!!errors.userId}
+                isInvalid={!!errors.id_user}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.userId?.message}
+                {errors.id_user?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
           <Col xs={6}>
-            <Form.Group className="mb-3" controlId="email">
+            <Form.Group className="mb-3" controlId="email_user">
               <Form.Label>Your Staff Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Your work email..."
-                {...register("email", {
+                {...register("email_user", {
                   required: "Your email is required",
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                     message: "Email is not valid",
                   },
                 })}
-                isInvalid={!!errors.email}
+                isInvalid={!!errors.email_user}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.email?.message}
+                {errors.email_user?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
@@ -121,13 +121,13 @@ function SignUp() {
         {/* Password & Confirm Password Inputs */}
         <Row>
           <Col xs={6}>
-            <Form.Group className="mb-3" controlId="password">
+            <Form.Group className="mb-3" controlId="password_user">
               <Form.Label>Password</Form.Label>
               <InputGroup>
                 <Form.Control
                   type={showNewPassword ? "text" : "password"}
                   placeholder="Your password..."
-                  {...register("password", {
+                  {...register("password_user", {
                     required: "Password is required",
                     minLength: {
                       value: 8,
@@ -140,7 +140,7 @@ function SignUp() {
                         "Must include uppercase, number, and special character",
                     },
                   })}
-                  isInvalid={!!errors.password}
+                  isInvalid={!!errors.password_user}
                 />
                 {/* Button to toggle password visibility */}
                 <Button
@@ -150,27 +150,27 @@ function SignUp() {
                   {showNewPassword ? <FaEyeSlash /> : <FaEye />}
                 </Button>
                 <Form.Control.Feedback type="invalid">
-                  {errors.password?.message}
+                  {errors.password_user?.message}
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
           </Col>
 
           <Col xs={6}>
-            <Form.Group className="mb-3" controlId="confirmPassword">
+            <Form.Group className="mb-3" controlId="password_confirm">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Repeat your password..."
-                {...register("confirmPassword", {
+                {...register("password_confirm", {
                   required: "Confirm password is required",
                   validate: (value) =>
-                    value === watch("password") || "Passwords do not match",
+                    value === watch("password_user") || "Passwords do not match",
                 })}
-                isInvalid={!!errors.confirmPassword}
+                isInvalid={!!errors.password_confirm}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.confirmPassword?.message}
+                {errors.password_confirm?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>

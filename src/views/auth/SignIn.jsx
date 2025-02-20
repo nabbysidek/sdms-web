@@ -29,7 +29,7 @@ const ControlledInput = ({
 
   // Custom styling for specific fields
   const inputStyle =
-    name === "userId"
+    name === "id_user"
       ? { borderTopRightRadius: "5px", borderBottomRightRadius: "5px" }
       : {};
 
@@ -109,7 +109,7 @@ function SignIn() {
 
         {/* Staff ID Input Field */}
         <ControlledInput
-          name="userId"
+          name="id_user"
           label="Staff ID"
           control={control}
           rules={{ required: "Your staff ID is required" }}
@@ -119,7 +119,7 @@ function SignIn() {
 
         {/* Password Input Field */}
         <ControlledInput
-          name="password"
+          name="password_user"
           label="Password"
           control={control}
           rules={{

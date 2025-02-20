@@ -28,7 +28,7 @@ export default function VerifyEmail({ onClose, onSubmit }) {
               <Form.Group>
                 <Form.Label>Staff Email</Form.Label>
                 <Controller
-                  name="staffEmail"
+                  name="email_user"
                   control={control}
                   defaultValue=""
                   rules={{
@@ -48,8 +48,8 @@ export default function VerifyEmail({ onClose, onSubmit }) {
                   )}
                 />
                 {/* Display validation errors */}
-                {errors.staffEmail && (
-                  <p className="text-danger">{errors.staffEmail.message}</p>
+                {errors.email_user && (
+                  <p className="text-danger">{errors.email_user.message}</p>
                 )}
               </Form.Group>
             </Col>

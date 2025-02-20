@@ -31,18 +31,18 @@ export default function ResetPasswordIndex({ onClose }) {
       setResetToken(response.data.resetToken); // Store reset token
 
       Swal.fire({
-        title: "Berjaya",
+        title: "Success",
         text: response.data.message,
         icon: "success",
-        confirmButtonText: "Teruskan",
+        confirmButtonText: "Next",
       });
 
       setStep("verifyCode"); // Move to the next step
     } catch (error) {
       console.error("Error verifying email:", error.response?.data);
       Swal.fire({
-        title: "Gagal",
-        text: error.response?.data?.error || "Ralat. Cuba sekali lagi.",
+        title: "Error",
+        text: error.response?.data?.error || "Error. Try again.",
         icon: "error",
       });
     }
@@ -57,10 +57,10 @@ export default function ResetPasswordIndex({ onClose }) {
       });
 
       Swal.fire({
-        title: "Berjaya",
+        title: "Success",
         text: response.data.message,
         icon: "success",
-        confirmButtonText: "Teruskan",
+        confirmButtonText: "Next",
       });
 
       setVerificationCode(data.verificationCode); // Store the verification code
@@ -68,8 +68,8 @@ export default function ResetPasswordIndex({ onClose }) {
     } catch (error) {
       console.error("Error verifying code:", error.response?.data);
       Swal.fire({
-        title: "Gagal",
-        text: error.response?.data?.error || "Ralat. Cuba sekali lagi.",
+        title: "Error",
+        text: error.response?.data?.error || "Error. Try again.",
         icon: "error",
       });
     }
@@ -89,7 +89,7 @@ export default function ResetPasswordIndex({ onClose }) {
         Swal.fire({
           icon: "success",
           title:
-            "Kata laluan berjaya diset semula. Log masuk dengan kata laluan baharu.",
+            "Password successfully reset. Try signing in again.",
           text: response.data.success,
         });
         onClose(); // Close modal/dialog after success
@@ -98,10 +98,10 @@ export default function ResetPasswordIndex({ onClose }) {
       console.error("Error resetting password:", error.response?.data);
       Swal.fire({
         icon: "error",
-        title: "Set semula kata laluan gagal",
+        title: "Password unsuccessfully reset. Try again.",
         text:
           error.response?.data?.error ||
-          "Ralat tidak dijangka. Sila cuba semula.",
+          "Error. Try again.",
       });
     }
   };

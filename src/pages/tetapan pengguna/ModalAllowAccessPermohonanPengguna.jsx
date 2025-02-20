@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 function ModalAllowAccessPermohonanPengguna({
   disableButtonBenar,
-  userId,
+  id_user,
   refetchPermohonanAkses,
   refetchSenaraiPengguna,
 }) {
@@ -25,7 +25,7 @@ function ModalAllowAccessPermohonanPengguna({
   const updateBenarPermohonanAkses = async () => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-pengguna/permohonan-akses/benar-akses/${userId}`
+        `tetapan-pengguna/permohonan-akses/benar-akses/${id_user}`
       );
 
       if (response.status === 200) {

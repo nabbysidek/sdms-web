@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 function ModalTerminateAccessSenaraiPengguna({
   disableButtonSekat,
-  userId,
+  id_user,
   refetchSenaraiPengguna,
 }) {
   const [
@@ -28,7 +28,7 @@ function ModalTerminateAccessSenaraiPengguna({
   const updateTamatkanAkses = async () => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-pengguna/senarai-pengguna/sekat-akses/${userId}`
+        `tetapan-pengguna/senarai-pengguna/sekat-akses/${id_user}`
       );
 
       if (response.status === 200) {

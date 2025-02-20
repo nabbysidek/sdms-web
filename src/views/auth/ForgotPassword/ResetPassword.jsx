@@ -4,7 +4,6 @@ import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "../../../assets/styles/styles_modal.css";
 
 export default function ResetPassword({ onClose, onSubmit }) {
-  // Initialize form handling with react-hook-form
   const {
     handleSubmit,
     control,
@@ -12,9 +11,9 @@ export default function ResetPassword({ onClose, onSubmit }) {
   } = useForm();
 
   return (
-    <Modal show onHide={onClose} centered>
+    <Modal show={true} onHide={onClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Reset Password</Modal.Title>
+        <Modal.Title>Reset Your Password</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form
@@ -29,7 +28,7 @@ export default function ResetPassword({ onClose, onSubmit }) {
               <Form.Group>
                 <Form.Label>New Password</Form.Label>
                 <Controller
-                  name="password"
+                  name="password_user"
                   control={control}
                   defaultValue=""
                   rules={{
@@ -38,20 +37,21 @@ export default function ResetPassword({ onClose, onSubmit }) {
                       value:
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
                       message:
-                        "Password must be at least 8 characters long, containing an uppercase letter, a lowercase letter, a number, and a special symbol",
+                        "Password must be at least 8 characters long and include an uppercase letter, lowercase letter, number, and special symbol",
                     },
                   }}
-                  render={({ field }) => (
+                  render={({ field: { onChange, value } }) => (
                     <Form.Control
                       type="password"
-                      {...field}
+                      onChange={onChange}
+                      value={value}
                       placeholder="Enter your new password"
                       autoFocus
                     />
                   )}
                 />
-                {errors.password && (
-                  <p className="text-danger">{errors.password.message}</p>
+                {errors.password_user && (
+                  <p className="text-danger">{errors.password_user.message}</p>
                 )}
               </Form.Group>
             </Col>

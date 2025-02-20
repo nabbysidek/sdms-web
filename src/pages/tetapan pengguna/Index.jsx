@@ -79,17 +79,17 @@ function IndexTetapanPengguna() {
   };
 
   // Handle change in peranan
-  const handleChangePeranan = async (userId, perananId) => {
+  const handleChangePeranan = async (id_user, perananId) => {
     try {
       const response = await axiosCustom.put(
-        `/tetapan-pengguna/senarai-pengguna/peranan/${userId}`,
+        `/tetapan-pengguna/senarai-pengguna/peranan/${id_user}`,
         { perananId }
       );
 
       if (response.status === 200) {
         setSenaraiPengguna((prevUsers) =>
           prevUsers.map((user) =>
-            user.id === userId ? { ...user, perananId } : user
+            user.id === id_user ? { ...user, perananId } : user
           )
         );
         Swal.fire({
@@ -138,17 +138,17 @@ function IndexTetapanPengguna() {
               permohonanAkses.map((permohonanAksesData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>{permohonanAksesData.userId}</td>
+                  <td>{permohonanAksesData.id_user}</td>
                   <td>{permohonanAksesData.name}</td>
                   <td>{permohonanAksesData.email}</td>
                   <td>
                     <ModalAllowAccessPermohonanPengguna
-                      userId={permohonanAksesData.id}
+                      id_user={permohonanAksesData.id}
                       refetchPermohonanAkses={fetchPermohonanAkses}
                       refetchSenaraiPengguna={fetchSenaraiPengguna}
                     />
                     <ModalRejectAccessPermohonanPengguna
-                      userId={permohonanAksesData.id}
+                      id_user={permohonanAksesData.id}
                       refetchPermohonanAkses={fetchPermohonanAkses}
                     />
                   </td>
@@ -183,7 +183,7 @@ function IndexTetapanPengguna() {
               senaraiPengguna.map((senaraiPenggunaData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>{senaraiPenggunaData.userId}</td>
+                  <td>{senaraiPenggunaData.id_user}</td>
                   <td>{senaraiPenggunaData.name}</td>
                   <td>{senaraiPenggunaData.email}</td>
                   <td>{senaraiPenggunaData.statusAuditor}</td>
@@ -215,14 +215,14 @@ function IndexTetapanPengguna() {
                       disableButtonBenar={
                         senaraiPenggunaData.statusAuditor === "BENAR"
                       }
-                      userId={senaraiPenggunaData.id}
+                      id_user={senaraiPenggunaData.id}
                       refetchSenaraiPengguna={fetchSenaraiPengguna}
                     />
                     <ModalTerminateAccessSenaraiPengguna
                       disableButtonSekat={
                         senaraiPenggunaData.statusAuditor === "SEKAT"
                       }
-                      userId={senaraiPenggunaData.id}
+                      id_user={senaraiPenggunaData.id}
                       refetchSenaraiPengguna={fetchSenaraiPengguna}
                     />
                   </td>
