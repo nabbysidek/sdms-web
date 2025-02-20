@@ -5,13 +5,10 @@ export default function TooManyRequests() {
   return (
     <div className="error-container">
       <h1>429 - Too Many Requests</h1>
+      <p>Too many requests. You have exceeded the allowed request limit.</p>
       <p>
-        Terlalu banyak permintaan. Anda telah melebihi had permintaan yang
-        dibenarkan.
-      </p>
-      <p>
-        Sila tunggu seketika sebelum membuat permintaan lagi. Jika masalah
-        berterusan, hubungi team sokongan untuk mendapatkan bantuan.
+        Please wait for a while before making another request. If the problem
+        persists, contact the support team for assistance.
       </p>
     </div>
   );

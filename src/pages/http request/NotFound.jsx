@@ -6,9 +6,9 @@ function NotFound() {
   return (
     <div className="error-container">
       <h1>404 - Not Found</h1>
-      <p>Halaman yang anda cari tidak wujud.</p>
+      <p>The page you're looking for does not exist.</p>
       <p>
-        Kembali ke halaman <Link to="/dashboard">dashboard</Link>.
+        Return back to <Link to="/">sign in</Link>.
       </p>
     </div>
   );

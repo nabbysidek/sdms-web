@@ -6,13 +6,14 @@ function Forbidden() {
     <div className="error-container">
       <h1>403 - Forbidden</h1>
       <p>
-        Akses ditolak. Anda tidak mempunyai kebenaran untuk melihat halaman ini.
+        Access denied. You do not have permission to view this page.
       </p>
       <p>
-        Sila log masuk dengan kelayakan yang sesuai atau hubungi team sokongan
-        untuk mendapatkan bantuan.
+        Please log in with the appropriate credentials or contact the support  
+        team for assistance.
       </p>
-    </div>
+</div>
+
   );
 }
 

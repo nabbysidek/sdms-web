@@ -5,10 +5,10 @@ function BadRequest() {
   return (
     <div className="error-container">
       <h1>400 - Bad Request</h1>
-      <p>Permintaan tidak baik. Server tidak dapat memproses permintaan.</p>
+      <p>Bad request. The server could not process the request.</p>
       <p>
-        Sila semak permintaan anda dan cuba lagi. Jika masalah berterusan,
-        hubungi team sokongan untuk mendapatkan bantuan.
+        Please check your request and try again. If the problem persists,
+        contact the support team for assistance.
       </p>
     </div>
   );

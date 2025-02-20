@@ -6,12 +6,12 @@ function UnprocessableEntity() {
     <div className="error-container">
       <h1>422 - Unprocessable Entity</h1>
       <p>
-        Entiti tidak boleh diproses. Server tidak dapat memproses permintaan
-        kerana data tidak sah.
+        The entity cannot be processed. The server is unable to process the
+        request due to invalid data.
       </p>
       <p>
-        Sila semak dan betulkan data input sebelum menyerahkan semula
-        permintaan. Jika anda memerlukan bantuan, hubungi team sokongan.
+        Please check and correct the input data before resubmitting the request.
+        If you need assistance, contact the support team.
       </p>
     </div>
   );

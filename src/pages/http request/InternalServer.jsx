@@ -5,10 +5,10 @@ function InternalServer() {
   return (
     <div className="error-container">
       <h1>500 - Internal Server Error</h1>
-      <p>Oops! Ada sesuatu yang tidak kena pada pihak kami.</p>
+      <p>Oops! Something went wrong on our end.</p>
       <p>
-        Kami sedang berusaha untuk menyelesaikan isu tersebut. Sila cuba lagi
-        kemudian atau hubungi team sokongan untuk mendapatkan bantuan.
+        We are working to resolve the issue. Please try again later or contact
+        the support team for assistance.
       </p>
     </div>
   );

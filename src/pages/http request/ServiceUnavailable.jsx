@@ -5,13 +5,10 @@ export default function ServiceUnavailable() {
   return (
     <div className="error-container">
       <h1>503 - Service Unavailable</h1>
+      <p>Service unavailable. We are currently undergoing maintenance.</p>
       <p>
-        Perkhidmatan tidak tersedia. Pada masa ini kami sedang menjalani
-        penyelenggaraan.
-      </p>
-      <p>
-        Kami memohon maaf atas kesulitan ini. Sila semak semula dalam beberapa
-        jam untuk mendapatkan perkhidmatan yang dipulihkan sepenuhnya.
+        We apologize for the inconvenience. Please check back in a few hours for
+        fully restored service.
       </p>
     </div>
   );

@@ -5,13 +5,10 @@ export default function UnknownError() {
   return (
     <div className="error-container">
       <h1>520 - Unknown Error</h1>
+      <p>An unknown error has occurred while processing your request.</p>
       <p>
-        Ralat yang tidak diketahui telah berlaku semasa memproses permintaan
-        anda.
-      </p>
-      <p>
-        Kami memohon maaf atas kesulitan ini. Sila cuba sebentar lagi. Jika
-        masalah berterusan, hubungi team sokongan untuk mendapatkan bantuan.
+        We apologize for this inconvenience. Please try again later. If the
+        problem persists, contact the support team for assistance.
       </p>
     </div>
   );
