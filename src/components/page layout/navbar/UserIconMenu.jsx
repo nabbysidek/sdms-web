@@ -45,7 +45,7 @@ const UserIconMenu = ({ closeMobileNav }) => {
     </Link>
   ));
 
-  ProfilePageButton.displayName = 'ProfilePageButton';
+  ProfilePageButton.displayName = "ProfilePageButton";
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,16 +65,14 @@ const UserIconMenu = ({ closeMobileNav }) => {
 
   const showUserInfo = useCallback(async () => {
     try {
-      const response = await axiosCustom.get('user');
+      const response = await axiosCustom.get("user");
 
       if (response.status >= 200 && response.status < 300) {
         setUserInfo(response.data);
-      }
-      else {
+      } else {
         console.log(response);
       }
-    }
-    catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }, []);
@@ -108,10 +106,10 @@ const UserIconMenu = ({ closeMobileNav }) => {
             {userInfo && (
               <>
                 <Dropdown.ItemText>
-                  <h6>{userInfo.namaAuditor}</h6>
+                  <h6>{userInfo.name}</h6>
                 </Dropdown.ItemText>
                 <Dropdown.ItemText className="mini-menu-content">
-                  <p>{userInfo.emelAuditor}</p>
+                  <p>{userInfo.email}</p>
                 </Dropdown.ItemText>
                 <Dropdown.Divider />
               </>

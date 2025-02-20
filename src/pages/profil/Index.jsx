@@ -11,16 +11,14 @@ function Profile() {
 
   const showUserInfo = useCallback(async () => {
     try {
-      const response = await axiosCustom.get('user');
+      const response = await axiosCustom.get("user");
 
       if (response.status >= 200 && response.status < 300) {
         setUserInfo(response.data);
-      }
-      else {
+      } else {
         console.log(response);
       }
-    }
-    catch {
+    } catch {
       console.log(error);
     }
   }, []);
@@ -39,9 +37,7 @@ function Profile() {
       <div className="profile-content">
         <div className="user-details-container">
           <BsPersonCircle size={100} />
-          {userInfo && (
-            <p className="profile-user-email">{userInfo.emelAuditor}</p>
-          )}
+          {userInfo && <p className="profile-user-email">{userInfo.email}</p>}
         </div>
 
         {/* Tabs section */}

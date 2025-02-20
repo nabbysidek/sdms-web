@@ -13,7 +13,9 @@ function IndexTetapanPengguna() {
   const [permohonanAkses, setPermohonanAkses] = useState([]);
   const fetchPermohonanAkses = async () => {
     try {
-      const response = await axiosCustom.get(`/tetapan-pengguna/tetapan-akses-pengguna/permohonan-akses`);
+      const response = await axiosCustom.get(
+        `/tetapan-pengguna/tetapan-akses-pengguna/permohonan-akses`
+      );
       if (response.status >= 200 && response.status < 300) {
         setPermohonanAkses(response.data);
         console.log("Updated state:", response.data);
@@ -32,7 +34,9 @@ function IndexTetapanPengguna() {
   const [senaraiPengguna, setSenaraiPengguna] = useState([]);
   const fetchSenaraiPengguna = async () => {
     try {
-      const response = await axiosCustom.get(`/tetapan-pengguna/tetapan-akses-pengguna/senarai-pengguna`);
+      const response = await axiosCustom.get(
+        `/tetapan-pengguna/tetapan-akses-pengguna/senarai-pengguna`
+      );
       if (response.status >= 200 && response.status < 300) {
         setSenaraiPengguna(response.data);
         console.log("Updated state:", response.data);
@@ -53,10 +57,12 @@ function IndexTetapanPengguna() {
     try {
       const response = await axiosCustom.get(`/get-peranan`);
       if (Array.isArray(response.data)) {
-        setPerananOptions(response.data.map((peranan) => ({
-          value: peranan.id,
-          label: peranan.namaPeranan,
-        })));
+        setPerananOptions(
+          response.data.map((peranan) => ({
+            value: peranan.id,
+            label: peranan.namaPeranan,
+          }))
+        );
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +75,7 @@ function IndexTetapanPengguna() {
   // Helper function to get the namaPeranan for a given perananId
   const getPerananLabel = (perananId) => {
     const peranan = perananOptions.find((p) => p.value === perananId);
-    return peranan ? peranan.label : 'Unassigned Role';
+    return peranan ? peranan.label : "Unassigned Role";
   };
 
   // Handle change in peranan
@@ -89,15 +95,15 @@ function IndexTetapanPengguna() {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: response.data.success, 
+          text: response.data.success,
         });
-      } 
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({
         icon: "error",
-          title: "Error",
-          text: error.response.data.error,
+        title: "Error",
+        text: error.response.data.error,
       });
     }
   };
@@ -132,12 +138,19 @@ function IndexTetapanPengguna() {
               permohonanAkses.map((permohonanAksesData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>{permohonanAksesData.idAuditor}</td>
-                  <td>{permohonanAksesData.namaAuditor}</td>
-                  <td>{permohonanAksesData.emelAuditor}</td>
+                  <td>{permohonanAksesData.userId}</td>
+                  <td>{permohonanAksesData.name}</td>
+                  <td>{permohonanAksesData.email}</td>
                   <td>
-                    <ModalAllowAccessPermohonanPengguna userId={permohonanAksesData.id} refetchPermohonanAkses={fetchPermohonanAkses} refetchSenaraiPengguna = {fetchSenaraiPengguna}  />
-                    <ModalRejectAccessPermohonanPengguna userId={permohonanAksesData.id} refetchPermohonanAkses={fetchPermohonanAkses} />
+                    <ModalAllowAccessPermohonanPengguna
+                      userId={permohonanAksesData.id}
+                      refetchPermohonanAkses={fetchPermohonanAkses}
+                      refetchSenaraiPengguna={fetchSenaraiPengguna}
+                    />
+                    <ModalRejectAccessPermohonanPengguna
+                      userId={permohonanAksesData.id}
+                      refetchPermohonanAkses={fetchPermohonanAkses}
+                    />
                   </td>
                 </tr>
               ))
@@ -170,9 +183,9 @@ function IndexTetapanPengguna() {
               senaraiPengguna.map((senaraiPenggunaData, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
-                  <td>{senaraiPenggunaData.idAuditor}</td>
-                  <td>{senaraiPenggunaData.namaAuditor}</td>
-                  <td>{senaraiPenggunaData.emelAuditor}</td>
+                  <td>{senaraiPenggunaData.userId}</td>
+                  <td>{senaraiPenggunaData.name}</td>
+                  <td>{senaraiPenggunaData.email}</td>
                   <td>{senaraiPenggunaData.statusAuditor}</td>
                   <td>
                     <Dropdown>
@@ -182,9 +195,14 @@ function IndexTetapanPengguna() {
 
                       <Dropdown.Menu className="user-level-item">
                         {perananOptions.map((perananOption) => (
-                          <Dropdown.Item 
-                            key={perananOption.value} 
-                            onClick={() => handleChangePeranan(senaraiPenggunaData.id, perananOption.value)}
+                          <Dropdown.Item
+                            key={perananOption.value}
+                            onClick={() =>
+                              handleChangePeranan(
+                                senaraiPenggunaData.id,
+                                perananOption.value
+                              )
+                            }
                           >
                             {perananOption.label}
                           </Dropdown.Item>
@@ -194,12 +212,18 @@ function IndexTetapanPengguna() {
                   </td>
                   <td>
                     <ModalAllowAccessSenaraiPengguna
-                      disableButtonBenar={senaraiPenggunaData.statusAuditor === "BENAR"}
-                      userId={senaraiPenggunaData.id} refetchSenaraiPengguna = {fetchSenaraiPengguna}
+                      disableButtonBenar={
+                        senaraiPenggunaData.statusAuditor === "BENAR"
+                      }
+                      userId={senaraiPenggunaData.id}
+                      refetchSenaraiPengguna={fetchSenaraiPengguna}
                     />
                     <ModalTerminateAccessSenaraiPengguna
-                      disableButtonSekat={senaraiPenggunaData.statusAuditor === "SEKAT"}
-                      userId={senaraiPenggunaData.id} refetchSenaraiPengguna = {fetchSenaraiPengguna}
+                      disableButtonSekat={
+                        senaraiPenggunaData.statusAuditor === "SEKAT"
+                      }
+                      userId={senaraiPenggunaData.id}
+                      refetchSenaraiPengguna={fetchSenaraiPengguna}
                     />
                   </td>
                 </tr>

@@ -8,7 +8,7 @@ function UserDetails({ userInfo }) {
         <Col xs={12}>
           <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" defaultValue={userInfo?.namaAuditor} disabled />
+            <Form.Control type="text" defaultValue={userInfo?.name} disabled />
           </Form.Group>
         </Col>
       </Row>
@@ -16,7 +16,7 @@ function UserDetails({ userInfo }) {
         <Col xs={12}>
           <Form.Group>
             <Form.Label>Staff ID</Form.Label>
-            <Form.Control type="text" defaultValue={userInfo?.emelAuditor} disabled />
+            <Form.Control type="text" defaultValue={userInfo?.email} disabled />
           </Form.Group>
         </Col>
       </Row>

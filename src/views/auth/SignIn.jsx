@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useForm, useController } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import ForgotPasswordModal from "./ForgotPassword/ForgotPasswordModal";
+import Index from "./ForgotPassword/Index";
 import "../../assets/styles/styles_auth.css";
-import { useNavigate } from "react-router-dom";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 
-// NEW
+/**
+ * Custom controlled input component for form fields.
+ * Uses react-hook-form's `useController` for state management.
+ */
 const ControlledInput = ({
   name,
   label,
@@ -25,8 +27,9 @@ const ControlledInput = ({
     fieldState: { error },
   } = useController({ name, control, rules });
 
+  // Custom styling for specific fields
   const inputStyle =
-    name === "idAuditor"
+    name === "userId"
       ? { borderTopRightRadius: "5px", borderBottomRightRadius: "5px" }
       : {};
 
@@ -41,6 +44,7 @@ const ControlledInput = ({
           placeholder={placeholder}
           style={inputStyle}
         />
+        {/* Password visibility toggle button */}
         {togglePassword && (
           <InputGroup.Text
             onClick={handleToggle}
@@ -58,49 +62,36 @@ const ControlledInput = ({
 };
 
 function SignIn() {
-  // -------------------- FE ---------------------------
-  // Forgot Password Modal
-  const [showModal, setShowModal] = useState(false);
-  // State to manage password visibility
-  const [showPassword, setShowPassword] = useState(false);
+  // -------------------- Frontend State ---------------------------
+  const [showModal, setShowModal] = useState(false); // Controls forgot password modal visibility
+  const [showPassword, setShowPassword] = useState(false); // Toggles password visibility
 
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  // -------------------- BE ---------------------------
+  // React Router navigation hook
   const navigate = useNavigate();
 
+  // react-hook-form's control and submit handler
   const { control, handleSubmit } = useForm();
 
-  // Sign in user
+  /**
+   * Handles form submission for user sign-in.
+   * Sends user credentials to the backend and navigates on success.
+   */
   const handleSignIn = async (signInInput) => {
     try {
       const response = await axiosCustom.post(`/auth/sign-in`, signInInput);
 
       if (response.status === 200) {
+        // Store token for authentication
         localStorage.setItem("token", response.data.token);
-
         navigate("/dashboard");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid login attempt. Try again.",
-          text: error.response.data.error,
-        });
-        console.log(response.data);
       }
     } catch (error) {
+      // Handle API errors with a friendly alert
       Swal.fire({
         icon: "error",
         title: "Invalid login attempt. Try again.",
-        text: error.response.data.error,
+        text: error?.response?.data?.error || "Something went wrong!",
       });
-      console.log(error); 
     }
   };
 
@@ -111,12 +102,14 @@ function SignIn() {
         onSubmit={handleSubmit(handleSignIn)}
       >
         <div className="form-header">
-          <h1>Sign in to <span className="span-form-header">SDMS</span></h1>
+          <h1>
+            Sign in to <span className="span-form-header">SDMS</span>
+          </h1>
         </div>
 
-        {/*  NEW */}
+        {/* Staff ID Input Field */}
         <ControlledInput
-          name="idAuditor"
+          name="userId"
           label="Staff ID"
           control={control}
           rules={{ required: "Your staff ID is required" }}
@@ -124,8 +117,9 @@ function SignIn() {
           placeholder="Your staff ID . . ."
         />
 
+        {/* Password Input Field */}
         <ControlledInput
-          name="kataLaluanAuditor"
+          name="password"
           label="Password"
           control={control}
           rules={{
@@ -138,7 +132,7 @@ function SignIn() {
               value:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\.])[A-Za-z\d@$!%*?&\.]{8,}$/,
               message:
-                "Password must contain at least one alphabet, one number and one special character",
+                "Password must contain at least one alphabet, one number, and one special character",
             },
           }}
           type={showPassword ? "text" : "password"}
@@ -147,26 +141,26 @@ function SignIn() {
           handleToggle={() => setShowPassword(!showPassword)}
         />
 
+        {/* Forgot Password Modal */}
         <div className="forgot-password">
-          <Link to="" className="auth-link" onClick={openModal}>
+          <Link to="" className="auth-link" onClick={() => setShowModal(true)}>
             Forgot password?
           </Link>
-          {showModal && <ForgotPasswordModal onClose={closeModal} />}
+          {showModal && <Index onClose={() => setShowModal(false)} />}
         </div>
 
+        {/* Sign In Button */}
         <Button className="auth-btn" type="submit">
-          {" "}
-          Sign in{" "}
+          Sign in
         </Button>
 
+        {/* Redirect to Sign-up Page */}
         <div className="create-acc">
           <p>
             Sign up{" "}
-            {
-              <Link to="/sign-up" className="auth-link">
-                here.
-              </Link>
-            }
+            <Link to="/sign-up" className="auth-link">
+              here.
+            </Link>
           </p>
         </div>
       </Form>
