@@ -6,7 +6,7 @@ import Layout from "./components/page layout/Layout";
 import SignIn from "./views/auth/SignIn";
 import SignUp from "./views/auth/SignUp";
 import NotFound from "./pages/http request/NotFound";
-import Profile from "./pages/profil/Index";
+import Profile from "./pages/profile/Index";
 import Dashboard from "./pages/dashboard/Index";
 import LaporanIndividuIndividu from "./pages/laporan individu/Index";
 import TambahKetidakpatuhan from "./pages/laporan individu/TambahKetidakpatuhan";
