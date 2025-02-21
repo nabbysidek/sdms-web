@@ -2,27 +2,27 @@ import { create } from "zustand";
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useWilayahStore = create((set) => ({
-  wilayahs: [],
+const useYearStore = create((set) => ({
+  years: [],
 
-  // Fetch States
-  fetchWilayahs: async () => {
+  // Fetch Years
+  fetchYears: async () => {
     try {
-      const response = await axiosCustom.get(`tetapan-kriteria/wilayah`);
+      const response = await axiosCustom.get(`manage-data/year`);
       set({
-        wilayahs: response.data,
+        years: response.data,
       });
     } catch (error) {
-      console.error("Error in fetching states:", error);
+      console.error("Error in fetching years:", error);
     }
   },
 
-  // Create State
-  createWilayah: async (wilayahInput, handleCloseCreateWilayah) => {
+  // Create Year
+  createYear: async (yearInput, handleCloseCreateYear) => {
     try {
       const response = await axiosCustom.post(
-        `tetapan-kriteria/wilayah`,
-        wilayahInput
+        `manage-data/year`,
+        yearInput
       );
 
       if (response.status === 200) {
@@ -31,8 +31,8 @@ const useWilayahStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in creating a state.");
-        handleCloseCreateWilayah();
+        console.log("Successful in creating a year.");
+        handleCloseCreateYear();
       }
     } catch (error) {
       Swal.fire({
@@ -43,17 +43,17 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // Update State
-  updateWilayah: async (
-    wilayahId,
-    wilayahInput,
-    handleCloseEditWilayah,
+  // Update Year
+  updateYear: async (
+    yearId,
+    yearInput,
+    handleCloseEditYear,
     onUpdateSuccess
   ) => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-kriteria/wilayah/${wilayahId}`,
-        wilayahInput
+        `manage-data/year/${yearId}`,
+        yearInput
       );
 
       if (response.status === 200) {
@@ -62,8 +62,8 @@ const useWilayahStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in updating the state.");
-        handleCloseEditWilayah();
+        console.log("Successful in updating the year.");
+        handleCloseEditYear();
         onUpdateSuccess();
       }
     } catch (error) {
@@ -75,11 +75,11 @@ const useWilayahStore = create((set) => ({
     }
   },
 
-  // Delete State
-  deleteWilayah: async (wilayahId) => {
+  // Delete Year
+  deleteYear: async (yearId) => {
     try {
       const response = await axiosCustom.delete(
-        `tetapan-kriteria/wilayah/${wilayahId}`
+        `manage-data/year/${yearId}`
       );
 
       if (response.status === 200) {
@@ -90,8 +90,8 @@ const useWilayahStore = create((set) => ({
         });
 
         set((state) => ({
-          wilayahs: state.wilayahs.filter(
-            (wilayah) => wilayah.id !== wilayahId
+          years: state.years.filter(
+            (year) => year.id !== yearId
           ),
         }));
       }
@@ -105,4 +105,4 @@ const useWilayahStore = create((set) => ({
   },
 }));
 
-export default useWilayahStore;
+export default useYearStore;

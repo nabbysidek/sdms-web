@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Row, Container } from "react-bootstrap";
 
-function SearchWilayah({ filterValue, onFilterChange }) {
+function SearchYear({ filterValue, onFilterChange }) {
   return (
     <>
       <Container fluid className="search-bar-section">
@@ -10,7 +10,7 @@ function SearchWilayah({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Search for states . . ."
+                placeholder="Search for classes . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />
@@ -22,4 +22,4 @@ function SearchWilayah({ filterValue, onFilterChange }) {
   );
 }
 
-export default SearchWilayah;
+export default SearchYear;

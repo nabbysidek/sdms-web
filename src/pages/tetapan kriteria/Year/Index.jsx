@@ -1,21 +1,21 @@
 import React from "react";
-import ShowCawanganList from "./Show";
+import ShowYearList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
-function IndexCawangan() {
+function IndexYear() {
   return (
     <>
       <div className="page-title">
-        <h2>Branches</h2>
+        <h2>Years</h2>
         <hr />
-        <h3>Search Branches</h3>
+        <h3>Search Years</h3>
       </div>
 
       <div className="page-content">
-        <ShowCawanganList />
+        <ShowYearList />
       </div>
     </>
   );
 }
 
-export default IndexCawangan;
+export default IndexYear;

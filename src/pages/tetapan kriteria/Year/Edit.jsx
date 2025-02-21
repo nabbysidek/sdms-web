@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import useWilayahStore from "../../../store/wilayah-store";
+import useYearStore from "../../../store/year-store";
 
-function EditWilayah({wilayah, onUpdateSuccess}) {
-  // INITIALIZE EDIT WILAYAH MODAL
-  const [showEditWilayah, setShowEditWilayah] = useState(false);
+function EditYear({ year, onUpdateSuccess }) {
+  // INITIALIZE EDIT YEAR MODAL
+  const [showEditYear, setShowEditYear] = useState(false);
 
-  // HANDLE DISPLAY OF EDIT WILAYAH MODAL
-  const handleCloseEditWilayah = () => setShowEditWilayah(false);
-  const handleShowEditWilayah = () => setShowEditWilayah(true);
+  // HANDLE DISPLAY OF EDIT YEAR MODAL
+  const handleCloseEditYear = () => setShowEditYear(false);
+  const handleShowEditYear = () => setShowEditYear(true);
 
   // FORM VALIDATION FOR MODAL
   const {
@@ -19,60 +19,60 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // USE OF WILAYAH STORE
-  const { updateWilayah } = useWilayahStore();
-  
-  // HANDLE EDIT OF AN WILAYAH
-  const onSubmit = (wilayahInput) => {
-    updateWilayah(wilayah.id, wilayahInput, handleCloseEditWilayah, onUpdateSuccess);
+  // USE OF YEAR STORE
+  const { updateYear } = useYearStore();
+
+  // HANDLE EDIT OF A YEAR
+  const onSubmit = (yearInput) => {
+    updateYear(year.id, yearInput, handleCloseEditYear, onUpdateSuccess);
   };
 
   // RESET EDIT FORM DATA WHEN MODAL IS OPENED
   useEffect(() => {
-    if (showEditWilayah) {
+    if (showEditYear) {
       reset({
-        idWilayah: wilayah.idWilayah,
-        namaWilayah: wilayah.namaWilayah,
+        idYear: year.idYear,
+        namaYear: year.namaYear,
       });
     }
-  }, [showEditWilayah, wilayah, reset]);
+  }, [showEditYear, year, reset]);
 
   return (
     <div>
-      <Button className="edit-tetapan-btn" onClick={handleShowEditWilayah}>
+      <Button className="edit-tetapan-btn" onClick={handleShowEditYear}>
         Edit
       </Button>
 
       <Modal
-        show={showEditWilayah}
-        onHide={handleCloseEditWilayah}
+        show={showEditYear}
+        onHide={handleCloseEditYear}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit State</Modal.Title>
+          <Modal.Title>Edit Year</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>State</Form.Label>
+              <Form.Label>Year</Form.Label>
               <Controller
-                name="namaWilayah"
-                id="namaWilayah"
+                name="namaYear"
+                id="namaYear"
                 control={control}
-                defaultValue={wilayah.namaWilayah}
-                rules={{ required: "A state is required" }}
+                defaultValue={year.namaYear}
+                rules={{ required: "A year is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
                     <Form.Control
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Enter state . . ."
+                      placeholder="Enter year . . ."
                     />
-                    {errors?.namaWilayah && (
+                    {errors?.namaYear && (
                       <span className="error-message">
-                        {errors.namaWilayah.message}
+                        {errors.namaYear.message}
                       </span>
                     )}
                   </>
@@ -91,4 +91,4 @@ function EditWilayah({wilayah, onUpdateSuccess}) {
   );
 }
 
-export default EditWilayah;
+export default EditYear;

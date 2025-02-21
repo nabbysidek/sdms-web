@@ -1,21 +1,21 @@
 import React from "react";
-import ShowWilayahList from "./Show";
+import ShowClassList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
-function IndexWilayah() {
+function IndexClass() {
   return (
     <>
       <div className="page-title">
-        <h2>States</h2>
+        <h2>Classes</h2>
         <hr />
-        <h3>Search States</h3>
+        <h3>Search Classes</h3>
       </div>
 
       <div className="page-content">
-        <ShowWilayahList />
+        <ShowClassList />
       </div>
     </>
   );
 }
 
-export default IndexWilayah;
+export default IndexClass;

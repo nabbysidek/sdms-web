@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import useCawanganStore from "../../../store/cawangan-store.js";
+import useClassStore from "../../../store/class-store.js";
 
-function CreateCawangan({wilayahOptions, onAddSuccess}) {
-  // INITIALIZE CREATE CAWANGAN MODAL
-  const [showCreateCawangan, setShowCreateCawangan] = useState(false);
+function CreateClass({ yearOptions, onAddSuccess }) {
+  // INITIALIZE CREATE CLASS MODAL
+  const [showCreateClass, setShowCreateClass] = useState(false);
 
-  // HANDLE DISPLAY OF CREATE CAWANGAN MODAL
-  const handleShowCreateCawangan = () => setShowCreateCawangan(true);
-  const handleCloseCreateCawangan = () => {
-    setShowCreateCawangan(false);
+  // HANDLE DISPLAY OF CREATE CLASS MODAL
+  const handleShowCreateClass = () => setShowCreateClass(true);
+  const handleCloseCreateClass = () => {
+    setShowCreateClass(false);
     reset();
   };
 
@@ -22,56 +22,58 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
     formState: { errors },
   } = useForm();
 
-  // USE OF CAWANGAN STORE
-  const createCawangan = useCawanganStore((state) => state.createCawangan);
+  // USE OF CLASS STORE
+  const createClass = useClassStore((state) => state.createClass);
 
-  //  HANDLE CREATE A NEW OF CAWANGAN
+  // HANDLE CREATE A NEW CLASS
   const onSubmit = (data) => {
-    createCawangan(data, () => {
-      handleCloseCreateCawangan();
+    createClass(data, () => {
+      handleCloseCreateClass();
       if (onAddSuccess) onAddSuccess();
     });
   };
 
   return (
     <div>
-      <Button className="create-new-btn" onClick={handleShowCreateCawangan}>
-        Add Branch
+      <Button className="create-new-btn" onClick={handleShowCreateClass}>
+        Add Class
       </Button>
 
       <Modal
-        show={showCreateCawangan}
-        onHide={handleCloseCreateCawangan}
+        show={showCreateClass}
+        onHide={handleCloseCreateClass}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Branch</Modal.Title>
+          <Modal.Title>Add Class</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(createCawangan)} onReset={reset}>
+          <Form onSubmit={handleSubmit(createClass)} onReset={reset}>
             <Form.Group>
-              <Form.Label>State</Form.Label>
+              <Form.Label>Year</Form.Label>
               <Controller
-                id="wilayahId"
-                name="wilayahId"
+                id="yearId"
+                name="yearId"
                 control={control}
-                rules={{ required: "A state is required" }}
+                rules={{ required: "A year is required" }}
                 render={({ field: { onChange, value } }) => (
                   <>
-                    <Form.Select aria-label="wilayahSelect" onChange={onChange} value={value}>
-                      <option value="">
-                        Select a State
-                      </option>
-                      {wilayahOptions.map((wilayah) => (
-                        <option key={wilayah.value} value={wilayah.value}>
-                          {wilayah.label}
+                    <Form.Select
+                      aria-label="yearSelect"
+                      onChange={onChange}
+                      value={value}
+                    >
+                      <option value="">Select a Year</option>
+                      {yearOptions.map((year) => (
+                        <option key={year.value} value={year.value}>
+                          {year.label}
                         </option>
                       ))}
                     </Form.Select>
-                    {errors.wilayahId && (
+                    {errors.yearId && (
                       <span className="error-message">
-                        {errors.wilayahId.message}
+                        {errors.yearId.message}
                       </span>
                     )}
                   </>
@@ -79,14 +81,14 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Branch</Form.Label>
+              <Form.Label>Class Name</Form.Label>
               <Controller
-                id="namaCawangan"
-                name="namaCawangan"
+                id="className"
+                name="className"
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "A branch is required",
+                  required: "A class name is required",
                 }}
                 render={({ field: { onChange, value } }) => (
                   <>
@@ -94,12 +96,12 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
                       type="text"
                       onChange={onChange}
                       value={value}
-                      placeholder="Enter branch . . ."
+                      placeholder="Enter class name . . ."
                       autoFocus
                     />
-                    {errors.namaCawangan && (
+                    {errors.className && (
                       <span className="error-message">
-                        {errors.namaCawangan.message}
+                        {errors.className.message}
                       </span>
                     )}
                   </>
@@ -121,4 +123,4 @@ function CreateCawangan({wilayahOptions, onAddSuccess}) {
   );
 }
 
-export default CreateCawangan;
+export default CreateClass;

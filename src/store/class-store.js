@@ -2,34 +2,34 @@ import { create } from "zustand";
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useCawanganStore = create((set) => ({
-  cawangans: [],
-  namaWilayahOptions: [],
+const useClassStore = create((set) => ({
+  classes: [],
+  namaYearOptions: [],
 
-  // Fetch Branches
-  fetchCawangans: async () => {
+  // Fetch Classes
+  fetchClasses: async () => {
     try {
-      const response = await axiosCustom.get(`tetapan-kriteria/cawangan`);
+      const response = await axiosCustom.get(`tetapan-kriteria/class`);
       set({
-        cawangans: response.data,
+        classes: response.data,
       });
     } catch (error) {
-      console.error("Error in fetching branches:", error);
+      console.error("Error in fetching classes:", error);
     }
   },
 
-  // Fetch State Options
-  fetchWilayahs: async () => {
+  // Fetch Year Options
+  fetchYears: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/wilayah/display-wilayah`
+        `tetapan-kriteria/year/display-year`
       );
 
       if (Array.isArray(response.data)) {
         set({
-          namaWilayahOptions: response.data.map((wilayah) => ({
-            value: wilayah.id,
-            label: wilayah.namaWilayah,
+          namaYearOptions: response.data.map((year) => ({
+            value: year.id,
+            label: year.namaYear,
           })),
         });
       } else {
@@ -40,12 +40,12 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // Create Branch
-  createCawangan: async (cawanganInput, handleCloseCreateCawangan) => {
+  // Create Class
+  createClass: async (classInput, handleCloseCreateClass) => {
     try {
       const response = await axiosCustom.post(
-        `tetapan-kriteria/cawangan`,
-        cawanganInput
+        `tetapan-kriteria/class`,
+        classInput
       );
 
       if (response.status === 200) {
@@ -54,8 +54,8 @@ const useCawanganStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in creating a branch.");
-        handleCloseCreateCawangan();
+        console.log("Successful in creating a class.");
+        handleCloseCreateClass();
       }
     } catch (error) {
       Swal.fire({
@@ -66,17 +66,17 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // Update Branch
-  updateCawangan: async (
-    cawanganId,
-    cawanganInput,
-    handleCloseEditCawangan,
+  // Update Class
+  updateClass: async (
+    classId,
+    classInput,
+    handleCloseEditClass,
     onUpdateSuccess
   ) => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-kriteria/cawangan/${cawanganId}`,
-        cawanganInput
+        `tetapan-kriteria/class/${classId}`,
+        classInput
       );
 
       if (response.status === 200) {
@@ -85,8 +85,8 @@ const useCawanganStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in updating the branch.");
-        handleCloseEditCawangan();
+        console.log("Successful in updating the class.");
+        handleCloseEditClass();
         onUpdateSuccess();
       }
     } catch (error) {
@@ -98,11 +98,11 @@ const useCawanganStore = create((set) => ({
     }
   },
 
-  // Delete Branch
-  deleteCawangan: async (cawanganId) => {
+  // Delete Class
+  deleteClass: async (classId) => {
     try {
       const response = await axiosCustom.delete(
-        `tetapan-kriteria/cawangan/${cawanganId}`
+        `tetapan-kriteria/class/${classId}`
       );
 
       if (response.status === 200) {
@@ -113,8 +113,8 @@ const useCawanganStore = create((set) => ({
         });
 
         set((state) => ({
-          cawangans: state.cawangans.filter(
-            (cawangan) => cawangan.id !== cawanganId
+          classes: state.classes.filter(
+            (cls) => cls.id !== classId
           ),
         }));
       }
@@ -128,4 +128,4 @@ const useCawanganStore = create((set) => ({
   },
 }));
 
-export default useCawanganStore;
+export default useClassStore;

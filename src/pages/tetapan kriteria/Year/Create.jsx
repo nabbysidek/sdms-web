@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import useWilayahStore from "../../../store/wilayah-store";
+import useYearStore from "../../../store/year-store";
 
-function CreateWilayah({ onAddSuccess }) {
-  // INITIALIZE CREATE WILAYAH MODAL
-  const [showCreateWilayah, setShowCreateWilayah] = useState(false);
+function CreateYear({ onAddSuccess }) {
+  // INITIALIZE CREATE YEAR MODAL
+  const [showCreateYear, setShowCreateYear] = useState(false);
 
-  // HANDLE DISPLAY OF CREATE WILAYAH MODAL
-  const handleShowCreateWilayah = () => setShowCreateWilayah(true);
-  const handleCloseCreateWilayah = () => {
-    setShowCreateWilayah(false);
+  // HANDLE DISPLAY OF CREATE YEAR MODAL
+  const handleShowCreateYear = () => setShowCreateYear(true);
+  const handleCloseCreateYear = () => {
+    setShowCreateYear(false);
     reset();
   };
 
@@ -22,55 +22,55 @@ function CreateWilayah({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // USE OF WILAYAH STORE
-  const createWilayah = useWilayahStore((state) => state.createWilayah);
+  // USE OF YEAR STORE
+  const createYear = useYearStore((state) => state.createYear);
 
-  //  HANDLE CREATE A NEW OF WILAYAH
+  // HANDLE CREATE A NEW YEAR
   const onSubmit = (data) => {
-    createWilayah(data, () => {
-      handleCloseCreateWilayah();
+    createYear(data, () => {
+      handleCloseCreateYear();
       if (onAddSuccess) onAddSuccess(); 
     });
   };
 
   return (
     <div>
-      <Button className="create-new-btn" onClick={handleShowCreateWilayah}>
-        Add State
+      <Button className="create-new-btn" onClick={handleShowCreateYear}>
+        Add Year
       </Button>
 
       <Modal
-        show={showCreateWilayah}
-        onHide={handleCloseCreateWilayah}
+        show={showCreateYear}
+        onHide={handleCloseCreateYear}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add State</Modal.Title>
+          <Modal.Title>Add Year</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
             <Form.Group>
-              <Form.Label>State</Form.Label>
+              <Form.Label>Year</Form.Label>
               <Controller
-                name="namaWilayah"
-                id="namaWilayah"
+                name="namaYear"
+                id="namaYear"
                 control={control}
                 defaultValue=""
-                rules={{ required: "A state is required" }}
+                rules={{ required: "A year is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Enter state . . ."
+                    placeholder="Enter year . . ."
                     autoFocus
                   />
                 )}
               />
-              {errors.namaWilayah && (
+              {errors.namaYear && (
                 <span className="error-message">
-                  {errors.namaWilayah.message}
+                  {errors.namaYear.message}
                 </span>
               )}
             </Form.Group>
@@ -89,4 +89,4 @@ function CreateWilayah({ onAddSuccess }) {
   );
 }
 
-export default CreateWilayah;
+export default CreateYear;
