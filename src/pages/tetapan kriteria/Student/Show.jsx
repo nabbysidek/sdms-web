@@ -1,38 +1,37 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { Button, Row, Container } from "react-bootstrap";
-import CreateKakitangan from "./Create";
-import EditKakitangan from "./Edit";
-import SearchKakitangan from "./Search";
+import CreateStudent from "./Create";
+import EditStudent from "./Edit";
+import SearchStudent from "./Search";
 import TableComponent from "../../../components/TableComponent";
 import showConfirmationDialog from "../showConfirmationDialog";
-import Pagination from "../../../components/page layout/Pagination";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
-import useKakitanganStore from "../../../store/kakitangan-store";
+import useStudentStore from "../../../store/student-store";
 import * as FileSaver from "file-saver";
 import * as Papa from "papaparse";
 
-function ShowKakitanganList() {
-  // USE OF KAKITANGAN STORE
-  const { kakitangans, fetchKakitangans, deleteKakitangan } = useKakitanganStore();
+function ShowStudentList() {
+  // USE OF STUDENT STORE
+  const { students, fetchStudents, deleteStudent } = useStudentStore();
 
-  // FETCH FROM STORE: KAKITANGAN
+  // FETCH STUDENTS FROM STORE
   useEffect(() => {
-    fetchKakitangans();
-  }, [fetchKakitangans]);
+    fetchStudents();
+  }, [fetchStudents]);
 
-  // HANDLE DELETE OF KAKITANGAN
-  const handleDeleteKakitangan = useCallback(async (kakitanganId) => {
+  // HANDLE DELETE STUDENT
+  const handleDeleteStudent = useCallback(async (studentId) => {
       const confirmResult = await showConfirmationDialog();
 
       if (confirmResult.isConfirmed) {
-        await deleteKakitangan(kakitanganId);
+        await deleteStudent(studentId);
       }
-    }, [deleteKakitangan, fetchKakitangans]);
+    }, [deleteStudent, fetchStudents]);
 
   // USE OF TANSTACK TABLE
   // FETCH DATA AND DECLARE COLUMNS
-  const data = useMemo(() => kakitangans, [kakitangans]);
+  const data = useMemo(() => students, [students]);
   const columns = useMemo(() => [
     {
       header: "Num",
@@ -40,21 +39,21 @@ function ShowKakitanganList() {
       id: "index",
     },
     {
-      header: "Staff ID",
-      accessorKey: "idKakitangan",
+      header: "Student ID",
+      accessorKey: "idStudent",
     },
     {
-      header: "Audited Staff Name",
-      accessorKey: "namaKakitangan",
+      header: "Student Name",
+      accessorKey: "nameStudent",
     },
     {
       header: "Actions",
       cell: ({ row }) => (
         <div>
-          {/* EDIT AND DELETE BUTTONS FOR TINDAKAN COLUMN */}
-          <EditKakitangan kakitangan={row.original} onUpdateSuccess={fetchKakitangans} />
+          {/* EDIT AND DELETE BUTTONS */}
+          <EditStudent student={row.original} onUpdateSuccess={fetchStudents} />
           <Button
-            onClick={() => handleDeleteKakitangan(row.original.id)}
+            onClick={() => handleDeleteStudent(row.original.idStudent)}
             className="delete-btn"
           >
             Delete
@@ -68,13 +67,13 @@ function ShowKakitanganList() {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
   
-  // HANDLE EXPORT KAKITANGAN
-  const handleExportKakitangan = () => {
+  // HANDLE EXPORT STUDENT LIST
+  const handleExportStudent = () => {
     // PREPARE CSV DATA
-    const csvData = data.map((kakitangan, index) => ({
-      Bil: index + 1,
-      "STAFF ID": kakitangan.idKakitangan,
-      "AUDITED STAFF NAME": kakitangan.namaKakitangan,
+    const csvData = data.map((student, index) => ({
+      Num: index + 1,
+      "Student ID": student.idStudent,
+      "Student Name": student.nameStudent,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -82,19 +81,19 @@ function ShowKakitanganList() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "LIST OF AUDITED STAFF.csv");
+    FileSaver.saveAs(blob, "STUDENT_LIST.csv");
   };
 
   return (
     <Container fluid>
-      <SearchKakitangan filterValue={filtering} onFilterChange={setFiltering} />
+      <SearchStudent filterValue={filtering} onFilterChange={setFiltering} />
       <div className="table-section">
         <Row>
           <div className="col-md-9">
-            <h3 className="table-title">List of Audited Staff</h3>
+            <h3 className="table-title">List of Students</h3>
           </div>
           <div className="col-md-3">
-            <CreateKakitangan onAddSuccess={fetchKakitangans} /> 
+            <CreateStudent onAddSuccess={fetchStudents} /> 
           </div>
         </Row>
       </div>
@@ -110,11 +109,11 @@ function ShowKakitanganList() {
 
       {/* IMPORT AND EXPORT */}
       <div className="functional-btns-container">
-        <ExportButton onClick={handleExportKakitangan}/>
+        <ExportButton onClick={handleExportStudent}/>
         <ImportButton />
       </div>
     </Container>
   );
 }
 
-export default ShowKakitanganList;
+export default ShowStudentList;

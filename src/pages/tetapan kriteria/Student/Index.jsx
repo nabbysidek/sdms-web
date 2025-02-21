@@ -1,21 +1,21 @@
 import React from "react";
-import ShowKakitanganList from "./Show";
+import ShowStudentList from "./Show";
 import "../../../assets/styles/styles_tetapan_kriteria.css";
 
-function IndexKakitangan() {
+function IndexStudents() {
   return (
     <>
       <div className="page-title">
-        <h2>Audited Staff</h2>
+        <h2>Students</h2>
         <hr />
-        <h3>Search Audited Staff Records</h3>
+        <h3>Search Students ID</h3>
       </div>
 
       <div className="page-content">
-        <ShowKakitanganList />
+        <ShowStudentList />
       </div>
     </>
   );
 }
 
-export default IndexKakitangan;
+export default IndexStudents;
