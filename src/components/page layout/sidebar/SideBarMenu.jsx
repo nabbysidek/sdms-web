@@ -21,7 +21,7 @@ const SideBarMenu = [
   },
   {
     title: "Manage Users",
-    path: "/tetapanpengguna",
+    path: "/manage-users",
     icon: (
       <FaUsers size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),

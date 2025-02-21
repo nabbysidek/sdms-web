@@ -23,8 +23,8 @@ import IndexJabatan from "./pages/tetapan kriteria/Jabatan/Index";
 import IndexUnit from "./pages/tetapan kriteria/Unit/Index";
 import IndexWilayah from "./pages/tetapan kriteria/Wilayah/Index";
 import IndexCawangan from "./pages/tetapan kriteria/Cawangan/Index";
-import IndexTetapanPengguna from "./pages/tetapan pengguna/Index";
-import ListStaff from "./pages/profil/UserDetails";
+import IndexManageUsers from "./pages/manage users/Index";
+import ListStaff from "./pages/profile/UserDetails";
 
 function App() {
   return (
@@ -41,7 +41,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
 
             {/* ROUTE PELAPORAN */}
-            <Route path="/laporan-individu" element={<LaporanIndividuIndividu />} />
+            <Route
+              path="/laporan-individu"
+              element={<LaporanIndividuIndividu />}
+            />
             <Route
               path="/tambah-ketidakpatuhan"
               element={<TambahKetidakpatuhan />}
@@ -61,7 +64,7 @@ function App() {
             />
             <Route path="/kakitangan" element={<IndexKakitangan />} />
             <Route path="/jenis-audit" element={<IndexJenisAudit />} />
-            <Route path="/aktiviti-semakan" element={<IndexAktivitSemakan />}/>
+            <Route path="/aktiviti-semakan" element={<IndexAktivitSemakan />} />
             <Route path="/skop-kriteria" element={<IndexSkopKriteria />} />
             <Route path="/skop-semakan" element={<IndexSkopSemakan />} />
 
@@ -74,8 +77,8 @@ function App() {
             <Route path="/wilayah" element={<IndexWilayah />} />
             <Route path="/cawangan" element={<IndexCawangan />} />
 
-            {/*  TETAPAN PENGGUNA ROUTE */}
-            <Route path="/tetapan-pengguna" element={<IndexTetapanPengguna />} />
+            {/*  MANAGE USERS ROUTE */}
+            <Route path="manage-users" element={<IndexManageUsers />} />
             <Route path="/listStaff" element={<ListStaff />} />
           </Route>
 
