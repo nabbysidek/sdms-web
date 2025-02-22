@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
-import CreateKakitangan from "../tetapan kriteria/Kakitangan/Create";
+import CreateKakitangan from "../manage data/Student/Create";
 import SearchResultUntukLaporanIndividu from "./Show";
 import "../../assets/styles/styles_laporan_individu.css";
 import axiosCustom from "../../axios";
@@ -41,17 +41,22 @@ function SearchUntukLaporanIndividu() {
       setValidationErrors(null);
       if (Object.keys(errors).length === 0) {
         try {
-          const response = await axiosCustom.post('laporan-individu/carian-laporan-individu', {
-            searchKakitanganInput: data.searchKakitanganInput
-          });
+          const response = await axiosCustom.post(
+            "laporan-individu/carian-laporan-individu",
+            {
+              searchKakitanganInput: data.searchKakitanganInput,
+            }
+          );
           setSearchResults(response.data);
           setLinkClicked(true);
         } catch (error) {
-          console.error('Error fetching search results', error);
+          console.error("Error fetching search results", error);
           setValidationErrors({
-            searchKakitanganInput: { message: "Error finding staff's audit records" },
+            searchKakitanganInput: {
+              message: "Error finding staff's audit records",
+            },
           });
-          console.error('Error fetching search results', error);
+          console.error("Error fetching search results", error);
         }
       } else {
         setValidationErrors(errors);
@@ -105,7 +110,9 @@ function SearchUntukLaporanIndividu() {
       )}
 
       <div className="pelaporan-search-result">
-        {linkClicked && <SearchResultUntukLaporanIndividu searchResults={searchResults} />}
+        {linkClicked && (
+          <SearchResultUntukLaporanIndividu searchResults={searchResults} />
+        )}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import showConfirmationDialog from "../pages/tetapan kriteria/showConfirmationDialog";
+import showConfirmationDialog from "../pages/manage data/showConfirmationDialog";
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
