@@ -4,7 +4,7 @@ import ModalAllowAccessUserRequest from "./ModalAllowAccessUserRequest";
 import ModalAllowAccessUserList from "./ModalAllowAccessUserList";
 import ModalRejectAccessUserRequest from "./ModalRejectAccessUserRequest";
 import ModalTerminateAccessUserList from "./ModalTerminateAccessUserList";
-import "../../assets/styles/styles_tetapan_pengguna.css";
+import "../../assets/styles/styles_manage_users.css";
 import axiosCustom from "../../axios";
 import Swal from "sweetalert2";
 

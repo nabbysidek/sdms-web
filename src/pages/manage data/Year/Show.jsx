@@ -4,7 +4,7 @@ import CreateYear from "./Create";
 import EditYear from "./Edit";
 import SearchYear from "./Search";
 import TableComponent from "../../../components/TableComponent";
-import showConfirmationDialog from "../showConfirmationDialog";
+import showConfirmationDialog from "../../manage data/showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useYearStore from "../../../store/year-store";
@@ -42,7 +42,7 @@ function ShowYearList() {
       },
       {
         header: "Year",
-        accessorKey: "nameYear", 
+        accessorKey: "nameYear",
       },
       {
         header: "Actions",

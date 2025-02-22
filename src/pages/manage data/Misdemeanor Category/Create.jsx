@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Modal, Form } from "react-bootstrap";
-import useSkopSemakanStore from "../../../store/skop-semakan-store";
+import useMisdemeanorCategoryStore from "../../../store/misdemeanor-category-store";
 
-function CreateSkopSemakan({ onAddSuccess }) {
-  // INITIALIZE CREATE SKOP SEMAKAN MODAL
-  const [showCreateSkopSemakan, setShowCreateSkopSemakan] = useState(false);
+function CreateMisdemeanorCategory({ onAddSuccess }) {
+  const [showCreateMisdemeanorCategory, setShowCreateMisdemeanorCategory] = useState(false);
 
-  // HANDLE DISPLAY OF CREATE SKOP SEMAKAN MODAL
-  const handleShowCreateSkopSemakan = () => setShowCreateSkopSemakan(true);
-  const handleCloseCreateSkopSemakan = () => {
-    setShowCreateSkopSemakan(false);
+  const handleShowCreateMisdemeanorCategory = () => setShowCreateMisdemeanorCategory(true);
+  const handleCloseCreateMisdemeanorCategory = () => {
+    setShowCreateMisdemeanorCategory(false);
     reset();
   };
 
-  // FORM VALIDATION FOR MODAL
   const {
     handleSubmit,
     control,
@@ -22,57 +19,55 @@ function CreateSkopSemakan({ onAddSuccess }) {
     formState: { errors },
   } = useForm();
 
-  // USE OF SKOP SEMAKAN STORE
-  const createSkopSemakan = useSkopSemakanStore(
-    (state) => state.createSkopSemakan
+  const createMisdemeanorCategory = useMisdemeanorCategoryStore(
+    (state) => state.createMisdemeanorCategory
   );
 
-  //  HANDLE CREATE A NEW OF SKOP SEMAKAN
   const onSubmit = (data) => {
-    createSkopSemakan(data, () => {
-      handleCloseCreateSkopSemakan();
+    createMisdemeanorCategory(data, () => {
+      handleCloseCreateMisdemeanorCategory();
       if (onAddSuccess) onAddSuccess();
     });
   };
 
   return (
     <div>
-      <Button className="create-new-btn" onClick={handleShowCreateSkopSemakan}>
-        Add Review Scope
+      <Button className="create-new-btn" onClick={handleShowCreateMisdemeanorCategory}>
+        Add Misdemeanor Category
       </Button>
 
       <Modal
-        show={showCreateSkopSemakan}
-        onHide={handleCloseCreateSkopSemakan}
+        show={showCreateMisdemeanorCategory}
+        onHide={handleCloseCreateMisdemeanorCategory}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Review Scope</Modal.Title>
+          <Modal.Title>Add Misdemeanor Category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Review Scope</Form.Label>
+              <Form.Label>Misdemeanor Category</Form.Label>
               <Controller
-                name="namaSkopSemakan"
-                id="namaSkopSemakan"
+                name="namaMisdemeanorCategory"
+                id="namaMisdemeanorCategory"
                 control={control}
                 defaultValue=""
-                rules={{ required: "A review scope is required" }}
+                rules={{ required: "A misdemeanor category is required" }}
                 render={({ field: { onChange, value } }) => (
                   <Form.Control
                     type="text"
                     onChange={onChange}
                     value={value}
-                    placeholder="Enter a review scope . . ."
+                    placeholder="Enter a misdemeanor category . . ."
                     autoFocus
                   />
                 )}
               />
-              {errors.namaSkopSemakan && (
+              {errors.namaMisdemeanorCategory && (
                 <span className="error-message">
-                  {errors.namaSkopSemakan.message}
+                  {errors.namaMisdemeanorCategory.message}
                 </span>
               )}
             </Form.Group>
@@ -91,4 +86,4 @@ function CreateSkopSemakan({ onAddSuccess }) {
   );
 }
 
-export default CreateSkopSemakan;
+export default CreateMisdemeanorCategory;

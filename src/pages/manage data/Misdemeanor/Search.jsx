@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Row, Container } from "react-bootstrap";
 
-function SearchSkopSemakan({ filterValue, onFilterChange }) {
+function SearchMisdemeanor({ filterValue, onFilterChange }) {
   return (
     <>
       <Container fluid className="search-bar-section">
@@ -10,7 +10,7 @@ function SearchSkopSemakan({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Search for Review Scopes . . ."
+                placeholder="Search for misdemeanors . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />
@@ -22,4 +22,4 @@ function SearchSkopSemakan({ filterValue, onFilterChange }) {
   );
 }
 
-export default SearchSkopSemakan;
+export default SearchMisdemeanor;

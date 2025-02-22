@@ -3,7 +3,7 @@ import { Row, Button, Container } from "react-bootstrap";
 import CreateClass from "./Create";
 import EditClass from "./Edit";
 import SearchClass from "./Search";
-import showConfirmationDialog from "../showConfirmationDialog";
+import showConfirmationDialog from "../../manage data/showConfirmationDialog";
 import ExportButton from "../../../components/functional buttons/ExportBtn";
 import ImportButton from "../../../components/functional buttons/ImportBtn";
 import useClassStore from "../../../store/class-store";
@@ -13,13 +13,8 @@ import * as Papa from "papaparse";
 
 function ShowClassList() {
   // USE OF CLASS STORE
-  const {
-    classes,
-    yearOptions,
-    fetchClasses,
-    deleteClass,
-    fetchYears,
-  } = useClassStore();
+  const { classes, yearOptions, fetchClasses, deleteClass, fetchYears } =
+    useClassStore();
 
   // FETCH DATA FROM STORE: CLASSES & YEARS
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React from "react";
 import ShowClassList from "./Show";
-import "../../../assets/styles/styles_tetapan_kriteria.css";
+import "../../../assets/styles/styles_manage_data.css";
 
 function IndexClass() {
   return (

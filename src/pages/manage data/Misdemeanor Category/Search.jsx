@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Row, Container } from "react-bootstrap";
 
-function SearchSkopKriteria({ filterValue, onFilterChange }) {
+function SearchMisdemeanorCategory({ filterValue, onFilterChange }) {
   return (
     <>
       <Container fluid className="search-bar-section">
@@ -10,7 +10,7 @@ function SearchSkopKriteria({ filterValue, onFilterChange }) {
             <Form.Group className="col-md-12">
               <Form.Control
                 type="text"
-                placeholder="Search for noncompliance scopes . . ."
+                placeholder="Search for Misdemeanor Category . . ."
                 value={filterValue}
                 onChange={(e) => onFilterChange(e.target.value)}
               />
@@ -22,4 +22,4 @@ function SearchSkopKriteria({ filterValue, onFilterChange }) {
   );
 }
 
-export default SearchSkopKriteria;
+export default SearchMisdemeanorCategory;
