@@ -9,7 +9,7 @@ const useClassStore = create((set) => ({
   // Fetch Classes
   fetchClasses: async () => {
     try {
-      const response = await axiosCustom.get(`tetapan-kriteria/class`);
+      const response = await axiosCustom.get(`manage-data/class`);
       set({
         classes: response.data,
       });
@@ -21,9 +21,7 @@ const useClassStore = create((set) => ({
   // Fetch Year Options
   fetchYears: async () => {
     try {
-      const response = await axiosCustom.get(
-        `tetapan-kriteria/year/display-year`
-      );
+      const response = await axiosCustom.get(`manage-data/year/display-year`);
 
       if (Array.isArray(response.data)) {
         set({
@@ -43,10 +41,7 @@ const useClassStore = create((set) => ({
   // Create Class
   createClass: async (classInput, handleCloseCreateClass) => {
     try {
-      const response = await axiosCustom.post(
-        `tetapan-kriteria/class`,
-        classInput
-      );
+      const response = await axiosCustom.post(`manage-data/class`, classInput);
 
       if (response.status === 200) {
         Swal.fire({
@@ -75,7 +70,7 @@ const useClassStore = create((set) => ({
   ) => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-kriteria/class/${classId}`,
+        `manage-data/class/${classId}`,
         classInput
       );
 
@@ -101,9 +96,7 @@ const useClassStore = create((set) => ({
   // Delete Class
   deleteClass: async (classId) => {
     try {
-      const response = await axiosCustom.delete(
-        `tetapan-kriteria/class/${classId}`
-      );
+      const response = await axiosCustom.delete(`manage-data/class/${classId}`);
 
       if (response.status === 200) {
         Swal.fire({
@@ -113,9 +106,7 @@ const useClassStore = create((set) => ({
         });
 
         set((state) => ({
-          classes: state.classes.filter(
-            (cls) => cls.id !== classId
-          ),
+          classes: state.classes.filter((cls) => cls.id !== classId),
         }));
       }
     } catch (error) {

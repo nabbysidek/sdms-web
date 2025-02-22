@@ -2,34 +2,34 @@ import { create } from "zustand";
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useSkopKriteriaStore = create((set) => ({
-  skopKriterias: [],
-  namaSkopSemakanOptions: [],
+const useMisdemeanorStore = create((set) => ({
+  misdemeanors: [],
+  misdemeanorCategoryOptions: [],
 
-  // Fetch Noncompliance Scopes
-  fetchSkopKriterias: async () => {
+  // Fetch Misdemeanors
+  fetchMisdemeanors: async () => {
     try {
-      const response = await axiosCustom.get(`tetapan-kriteria/skop-kriteria`);
+      const response = await axiosCustom.get(`manage-data/misdemeanor`);
       set({
-        skopKriterias: response.data,
+        misdemeanors: response.data,
       });
     } catch (error) {
-      console.error("Error in fetching noncompliance scopes:", error);
+      console.error("Error fetching misdemeanors:", error);
     }
   },
 
-  // Fetch Review Scopes options
-  fetchSkopSemakans: async () => {
+  // Fetch Misdemeanor Category options
+  fetchMisdemeanorCategories: async () => {
     try {
       const response = await axiosCustom.get(
-        `tetapan-kriteria/skop-semakan/display-skop-semakan`
+        `manage-data/misdemeanor-category/display-misdemeanor-category`
       );
 
       if (Array.isArray(response.data)) {
         set({
-          namaSkopSemakanOptions: response.data.map((skopSemakan) => ({
-            value: skopSemakan.id,
-            label: skopSemakan.namaSkopSemakan,
+          misdemeanorCategoryOptions: response.data.map((misdemeanorCategory) => ({
+            value: misdemeanorCategory.id,
+            label: misdemeanorCategory.namaMisdemeanorCategory,
           })),
         });
       } else {
@@ -40,15 +40,15 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // Create Noncompliance Scopes
-  createSkopKriteria: async (
-    skopKriteriaInput,
-    handleCloseCreateSkopKriteria
+  // Create Misdemeanor
+  createMisdemeanor: async (
+    misdemeanorInput,
+    handleCloseCreateMisdemeanor
   ) => {
     try {
       const response = await axiosCustom.post(
-        `tetapan-kriteria/skop-kriteria`,
-        skopKriteriaInput
+        `manage-data/misdemeanor`,
+        misdemeanorInput
       );
 
       if (response.status === 200) {
@@ -57,8 +57,8 @@ const useSkopKriteriaStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in creating a noncompliance scope.");
-        handleCloseCreateSkopKriteria();
+        console.log("Successful in creating a misdemeanor.");
+        handleCloseCreateMisdemeanor();
       }
     } catch (error) {
       Swal.fire({
@@ -69,17 +69,17 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // Update Noncompliance Scope
-  updateSkopKriteria: async (
-    skopKriteriaId,
-    skopKriteriaInput,
-    handleCloseEditSkopKriteria,
+  // Update Misdemeanor
+  updateMisdemeanor: async (
+    misdemeanorId,
+    misdemeanorInput,
+    handleCloseEditMisdemeanor,
     onUpdateSuccess
   ) => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-kriteria/skop-kriteria/${skopKriteriaId}`,
-        skopKriteriaInput
+        `manage-data/misdemeanor/${misdemeanorId}`,
+        misdemeanorInput
       );
 
       if (response.status === 200) {
@@ -88,8 +88,8 @@ const useSkopKriteriaStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in updating the noncompliance scope.");
-        handleCloseEditSkopKriteria();
+        console.log("Successful in updating the misdemeanor.");
+        handleCloseEditMisdemeanor();
         onUpdateSuccess();
       }
     } catch (error) {
@@ -101,11 +101,11 @@ const useSkopKriteriaStore = create((set) => ({
     }
   },
 
-  // Delete Noncompliance Scope
-  deleteSkopKriteria: async (skopKriteriaId) => {
+  // Delete Misdemeanor
+  deleteMisdemeanor: async (misdemeanorId) => {
     try {
       const response = await axiosCustom.delete(
-        `tetapan-kriteria/skop-kriteria/${skopKriteriaId}`
+        `manage-data/misdemeanor/${misdemeanorId}`
       );
 
       if (response.status === 200) {
@@ -116,8 +116,8 @@ const useSkopKriteriaStore = create((set) => ({
         });
 
         set((state) => ({
-          skopKriterias: state.skopKriterias.filter(
-            (skopKriteria) => skopKriteria.id !== skopKriteriaId
+          misdemeanors: state.misdemeanors.filter(
+            (misdemeanor) => misdemeanor.id !== misdemeanorId
           ),
         }));
       }
@@ -131,4 +131,4 @@ const useSkopKriteriaStore = create((set) => ({
   },
 }));
 
-export default useSkopKriteriaStore;
+export default useMisdemeanorStore;

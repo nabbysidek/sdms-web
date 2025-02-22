@@ -2,27 +2,27 @@ import { create } from "zustand";
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useSkopSemakanStore = create((set) => ({
-  skopSemakans: [],
+const useMisdemeanorCategoryStore = create((set) => ({
+  misdemeanorCategories: [],
 
-  // Fetch Review Scope
-  fetchSkopSemakans: async () => {
+  // Fetch Misdemeanor Category
+  fetchMisdemeanorCategories: async () => {
     try {
-      const response = await axiosCustom.get(`tetapan-kriteria/skop-semakan`);
+      const response = await axiosCustom.get(`manage-data/misdemeanor-category`);
       set({
-        skopSemakans: response.data,
+        misdemeanorCategories: response.data,
       });
     } catch (error) {
-      console.error("Ralat dalam mengambil maklumat skopSemakan:", error);
+      console.error("Error fetching misdemeanor categories:", error);
     }
   },
 
-  // Create Review Scope
-  createSkopSemakan: async (skopSemakanInput, handleCloseCreateSkopSemakan) => {
+  // Create Misdemeanor Category
+  createMisdemeanorCategory: async (misdemeanorCategoryInput, handleCloseCreateMisdemeanorCategory) => {
     try {
       const response = await axiosCustom.post(
-        `tetapan-kriteria/skop-semakan`,
-        skopSemakanInput
+        `manage-data/misdemeanor-category`,
+        misdemeanorCategoryInput
       );
 
       if (response.status === 200) {
@@ -31,8 +31,8 @@ const useSkopSemakanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("SkopSemakan berjaya ditambah");
-        handleCloseCreateSkopSemakan();
+        console.log("Misdemeanor Category successfully added");
+        handleCloseCreateMisdemeanorCategory();
       }
     } catch (error) {
       Swal.fire({
@@ -43,17 +43,17 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // Update Review Scope
-  updateSkopSemakan: async (
-    skopSemakanId,
-    skopSemakanInput,
-    handleCloseEditSkopSemakan,
+  // Update Misdemeanor Category
+  updateMisdemeanorCategory: async (
+    misdemeanorCategoryId,
+    misdemeanorCategoryInput,
+    handleCloseEditMisdemeanorCategory,
     onUpdateSuccess
   ) => {
     try {
       const response = await axiosCustom.put(
-        `tetapan-kriteria/skop-semakan/${skopSemakanId}`,
-        skopSemakanInput
+        `manage-data/misdemeanor-category/${misdemeanorCategoryId}`,
+        misdemeanorCategoryInput
       );
 
       if (response.status === 200) {
@@ -62,8 +62,8 @@ const useSkopSemakanStore = create((set) => ({
           title: "Success",
           text: response.data.success,
         });
-        console.log("Successful in updating the review scope.");
-        handleCloseEditSkopSemakan();
+        console.log("Successful in updating the misdemeanor category.");
+        handleCloseEditMisdemeanorCategory();
         onUpdateSuccess();
       }
     } catch (error) {
@@ -75,11 +75,11 @@ const useSkopSemakanStore = create((set) => ({
     }
   },
 
-  // Delete Review Scope
-  deleteSkopSemakan: async (skopSemakanId) => {
+  // Delete Misdemeanor Category
+  deleteMisdemeanorCategory: async (misdemeanorCategoryId) => {
     try {
       const response = await axiosCustom.delete(
-        `tetapan-kriteria/skop-semakan/${skopSemakanId}`
+        `manage-data/misdemeanor-category/${misdemeanorCategoryId}`
       );
 
       if (response.status === 200) {
@@ -90,8 +90,8 @@ const useSkopSemakanStore = create((set) => ({
         });
 
         set((state) => ({
-          skopSemakans: state.skopSemakans.filter(
-            (skopSemakan) => skopSemakan.id !== skopSemakanId
+          misdemeanorCategories: state.misdemeanorCategories.filter(
+            (misdemeanorCategory) => misdemeanorCategory.id !== misdemeanorCategoryId
           ),
         }));
       }
@@ -105,4 +105,4 @@ const useSkopSemakanStore = create((set) => ({
   },
 }));
 
-export default useSkopSemakanStore;
+export default useMisdemeanorCategoryStore;
