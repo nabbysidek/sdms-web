@@ -10,58 +10,29 @@ function SubSideBar() {
     return (
       <ul className="mobile-nav-links">
         <li>
-          <NavLink to="/kakitangan" className="sub-nav-link">
-            Audited Staff
+          <NavLink to="/students" className="sub-nav-link">
+            Students
           </NavLink>
         </li>
         <li>
-          <NavLink to="/jenisaudit" className="sub-nav-link">
-            Types of Audit
+          <NavLink to="/misdemeanor-category" className="sub-nav-link">
+            Misdemeanor Category
           </NavLink>
         </li>
         <li>
-          <NavLink to="/skopsemakan" className="sub-nav-link">
-            Review Scopes
+          <NavLink to="/misdemeanor" className="sub-nav-link">
+            Misdemeanor
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to="/year" className="sub-nav-link">
+            Years
           </NavLink>
         </li>
         <li>
-          <NavLink to="/skopkriteria" className="sub-nav-link">
-            Noncompliance Scopes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/aktivitisemakan" className="sub-nav-link">
-            Activity Reviews
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Noncompliances
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/wilayah" className="sub-nav-link">
-            States
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/cawangan" className="sub-nav-link">
-            Branches
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/bahagian" className="sub-nav-link">
-            Divisions
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/jabatan" className="sub-nav-link">
-            Departments
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/unit" className="sub-nav-link">
-            Units
+          <NavLink to="/class" className="sub-nav-link">
+            Classes
           </NavLink>
         </li>
       </ul>
@@ -73,58 +44,30 @@ function SubSideBar() {
     <div className="sub-sidebar">
       <ul>
         <li>
-          <NavLink to="/kakitangan" className="sub-nav-link">
-            Audited Staff
+          <NavLink to="/students" className="sub-nav-link">
+            Students
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to="/misdemeanor-category" className="sub-nav-link">
+            Misdemeanor Category
           </NavLink>
         </li>
         <li>
-          <NavLink to="/jenisaudit" className="sub-nav-link">
-            Types of Audit
+          <NavLink to="/misdemeanor" className="sub-nav-link">
+            Misdemeanor
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to="/year" className="sub-nav-link">
+            Years
           </NavLink>
         </li>
         <li>
-          <NavLink to="/skopsemakan" className="sub-nav-link">
-            Review Scopes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/skopkriteria" className="sub-nav-link">
-            Noncompliance Scopes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/aktivitisemakan" className="sub-nav-link">
-            Activity Reviews
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/kriteriaketidakpatuhan" className="sub-nav-link">
-            Noncompliances
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/wilayah" className="sub-nav-link">
-            States
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/cawangan" className="sub-nav-link">
-            Branches
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/bahagian" className="sub-nav-link">
-            Divisions
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/jabatan" className="sub-nav-link">
-            Departments
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/unit" className="sub-nav-link">
-            Units
+          <NavLink to="/class" className="sub-nav-link">
+            Classes
           </NavLink>
         </li>
       </ul>

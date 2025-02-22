@@ -28,7 +28,7 @@ const SideBarMenu = [
   },
   {
     title: "Manage Data",
-    path: "/kriteriaketidakpatuhan",
+    path: "/misdemeanor",
     icon: (
       <FaTools size={15} style={{ marginRight: "10px", marginLeft: "3px" }} />
     ),

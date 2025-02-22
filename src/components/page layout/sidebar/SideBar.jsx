@@ -22,7 +22,7 @@ function SideBar({ onNavLinkClick }) {
     useState(false);
 
   const tetapanKriteriaItem = SideBarMenu.find(
-    (item) => item.path === "/kriteriaketidakpatuhan"
+    (item) => item.path === "/misdemeanor"
   );
 
   // To check when the screen is equal to or less than 768px
@@ -84,12 +84,12 @@ function SideBar({ onNavLinkClick }) {
           <ListGroup.Item
             key={index}
             className={`list-group-item ${
-              item.path === "/kriteriaketidakpatuhan" ? "tetapan-kriteria" : ""
+              item.path === "/misdemeanor" ? "manage-data" : ""
             }`}
             onMouseEnter={() => {
               if (
                 !isMobileView &&
-                item.path === "/kriteriaketidakpatuhan" &&
+                item.path === "/misdemeanor" &&
                 isSideBarOpen
               ) {
                 setIsTetapanKriteriaHovered(true);
@@ -98,7 +98,7 @@ function SideBar({ onNavLinkClick }) {
             onMouseLeave={() => {
               if (
                 !isMobileView &&
-                item.path === "/kriteriaketidakpatuhan" &&
+                item.path === "/misdemeanor" &&
                 isSideBarOpen
               ) {
                 setIsTetapanKriteriaHovered(false);
@@ -106,7 +106,7 @@ function SideBar({ onNavLinkClick }) {
             }}
           >
             <div>
-              <div className="tetapan-kriteria-group">
+              <div className="manage-data-group">
                 {item.isSignOut ? (
                   <div className="nav-link" onClick={handleSignOut}>
                     {isSideBarOpen || isMobileView ? (
@@ -118,7 +118,7 @@ function SideBar({ onNavLinkClick }) {
                       item.icon
                     )}
                   </div>
-                ) : item.path === "/kriteriaketidakpatuhan" && isMobileView ? (
+                ) : item.path === "/misdemeanor" && isMobileView ? (
                   <NavDropdown
                     title={
                       isSideBarOpen || isMobileView ? (
@@ -156,7 +156,7 @@ function SideBar({ onNavLinkClick }) {
                 )}
               </div>
               {isTetapanKriteriaHovered &&
-                item.path === "/kriteriaketidakpatuhan" &&
+                item.path === "/misdemeanor" &&
                 !isMobileView &&
                 isSideBarOpen && <SubSideBar />}
             </div>
