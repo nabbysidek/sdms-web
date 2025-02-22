@@ -221,7 +221,7 @@
         color: var(--NEUTRALWHITE);
     }
 
-    .tetapan-kriteria-group:hover {
+    .manage data-group:hover {
         color: var(--PRIMARY);
         text-decoration: underline;
     }
