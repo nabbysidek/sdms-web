@@ -3,8 +3,8 @@ import showConfirmationDialog from "../pages/manage data/showConfirmationDialog"
 import axiosCustom from "../axios";
 import Swal from "sweetalert2";
 
-const useLaporanIndividuStore = create((set) => ({
-  // Search Audits
+const useReportStore = create((set) => ({
+  // Search Reports
   linkClicked: false,
   setLinkClicked: (value) => set({ linkClicked: value }),
   validationErrors: null,
@@ -12,11 +12,11 @@ const useLaporanIndividuStore = create((set) => ({
   searchResults: null,
   setSearchResults: (results) => set({ searchResults: results }),
 
-  // Create Audit
-  handleCreateLaporanIndividu: async (data) => {
+  // Create Report
+  handleCreateReport: async (data) => {
     try {
       const response = await axiosCustom.post(
-        `laporan-individu/ketidakpatuhan-kakitangan`,
+        `report/student-misdemeanor`,
         data
       );
 
@@ -37,12 +37,12 @@ const useLaporanIndividuStore = create((set) => ({
     }
   },
 
-  // Edit Audit
-  handleEditLaporanIndividu: async (laporanIndividuInput, auditsId) => {
+  // Edit Report
+  handleEditReport: async (reportInput, reportId) => {
     try {
       const response = await axiosCustom.put(
-        `laporan-individu/ketidakpatuhan-kakitangan/${auditsId}`,
-        laporanIndividuInput
+        `report/student-misdemeanor/${reportId}`,
+        reportInput
       );
       if (response.status === 200) {
         Swal.fire({
@@ -61,14 +61,14 @@ const useLaporanIndividuStore = create((set) => ({
     }
   },
 
-  // Delete Audit
-  handleDeleteLaporanIndividu: async (auditId) => {
+  // Delete Report
+  handleDeleteReport: async (reportId) => {
     const confirmResult = await showConfirmationDialog();
 
     if (confirmResult.isConfirmed) {
       try {
         const response = await axiosCustom.delete(
-          `laporan-individu/ketidakpatuhan-kakitangan/${auditId}`
+          `report/student-misdemeanor/${reportId}`
         );
 
         if (response.status === 200) {
@@ -89,4 +89,4 @@ const useLaporanIndividuStore = create((set) => ({
   },
 }));
 
-export default useLaporanIndividuStore;
+export default useReportStore;

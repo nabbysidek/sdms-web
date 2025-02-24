@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Row, Col, Form, Button, Alert, Container } from "react-bootstrap";
-import CreateKakitangan from "../manage data/Student/Create";
-import SearchResultUntukLaporanIndividu from "./Show";
-import "../../assets/styles/styles_laporan_individu.css";
+import CreateStudent from "../manage data/Student/Create";
+import ShowReport from "./Show";
+import "../../assets/styles/styles_report.css";
 import axiosCustom from "../../axios";
 
-function SearchUntukLaporanIndividu() {
+function SearchReport() {
   // manage visibility of the search result
   const [linkClicked, setLinkClicked] = useState(false);
 
@@ -21,42 +21,38 @@ function SearchUntukLaporanIndividu() {
     control,
     handleSubmit,
     formState: { errors },
-    watch, // adding watch to the destructuring
+    watch,
   } = useForm({
     defaultValues: {
-      searchKakitanganInput: "", // to ensure a default value is set
+      searchStudentInput: "",
     },
   });
 
-  // watch the value of searchKakitanganInput
-  const searchKakitanganInputValue = watch("searchKakitanganInput");
+  // watch the value of searchStudentInput
+  const searchStudentInputValue = watch("searchStudentInput");
 
   // submit for the search
   const onSubmit = async (data) => {
-    if (!data.searchKakitanganInput) {
+    if (!data.searchStudentInput) {
       setValidationErrors({
-        searchKakitanganInput: { message: "Staff ID is required " },
+        searchStudentInput: { message: "Student ID is required" },
       });
     } else {
       setValidationErrors(null);
       if (Object.keys(errors).length === 0) {
         try {
-          const response = await axiosCustom.post(
-            "laporan-individu/carian-laporan-individu",
-            {
-              searchKakitanganInput: data.searchKakitanganInput,
-            }
-          );
+          const response = await axiosCustom.post("report/search-report", {
+            searchStudentInput: data.searchStudentInput,
+          });
           setSearchResults(response.data);
           setLinkClicked(true);
         } catch (error) {
           console.error("Error fetching search results", error);
           setValidationErrors({
-            searchKakitanganInput: {
-              message: "Error finding staff's audit records",
+            searchStudentInput: {
+              message: "Error finding student's report records",
             },
           });
-          console.error("Error fetching search results", error);
         }
       } else {
         setValidationErrors(errors);
@@ -66,21 +62,21 @@ function SearchUntukLaporanIndividu() {
 
   return (
     <>
-      <Container fluid className="laporan-individu-search-container">
+      <Container fluid className="report-search-container">
         <Row>
           <Col xs={12} md={7} xl={7}>
             <Form>
               <Form.Group>
                 <Controller
-                  name="searchKakitanganInput"
+                  name="searchStudentInput"
                   control={control}
                   render={({ field }) => (
                     <Form.Control
                       {...field}
                       type="text"
-                      placeholder="Search staff audit records with their staff ID . . ."
-                      value={searchKakitanganInputValue} // to fix unctrolled to controlled input
-                      isInvalid={!!validationErrors?.searchKakitanganInput}
+                      placeholder="Search student report records with their student ID . . ."
+                      value={searchStudentInputValue}
+                      isInvalid={!!validationErrors?.searchStudentInput}
                     />
                   )}
                 />
@@ -89,7 +85,7 @@ function SearchUntukLaporanIndividu() {
           </Col>
           <Col xs={12} md={2} xl={2} className="remove-padding">
             <Button
-              className="laporan-individu-search-btn"
+              className="report-search-btn"
               onClick={() => {
                 handleSubmit((data) => onSubmit(data))();
               }}
@@ -98,24 +94,24 @@ function SearchUntukLaporanIndividu() {
             </Button>
           </Col>
           <Col xs={12} md={3} xl={3} className="remove-padding">
-            <CreateKakitangan />
+            <CreateStudent />
           </Col>
         </Row>
       </Container>
 
-      {validationErrors?.searchKakitanganInput && (
+      {validationErrors?.searchStudentInput && (
         <Alert className="alert-display" variant="danger">
-          {validationErrors.searchKakitanganInput.message}
+          {validationErrors.searchStudentInput.message}
         </Alert>
       )}
 
-      <div className="pelaporan-search-result">
+      <div className="report-search-result">
         {linkClicked && (
-          <SearchResultUntukLaporanIndividu searchResults={searchResults} />
+          <ShowReport searchResults={searchResults} />
         )}
       </div>
     </>
   );
 }
 
-export default SearchUntukLaporanIndividu;
+export default SearchReport;
