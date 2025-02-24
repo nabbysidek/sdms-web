@@ -8,10 +8,10 @@ import SignUp from "./views/auth/SignUp";
 import NotFound from "./pages/http request/NotFound";
 import Profile from "./pages/profile/Index";
 import Dashboard from "./pages/dashboard/Index";
-import LaporanIndividuIndividu from "./pages/laporan individu/Index";
-import TambahKetidakpatuhan from "./pages/laporan individu/TambahKetidakpatuhan";
-import EditKetidakpatuhan from "./pages/laporan individu/EditKetidakpatuhan";
-import LaporanKumulatif from "./pages/laporan kumulatif/Index";
+import Report from "./pages/report/Index";
+import AddReport from "./pages/report/AddReport";
+import EditReport from "./pages/report/EditReport";
+import Records from "./pages/records/Index";
 import IndexStudents from "./pages/manage data/Student/Index";
 import IndexMisdemeanor from "./pages/manage data/Misdemeanor/Index";
 import IndexMisdemeanorCategory from "./pages/manage data/Misdemeanor Category/Index";
@@ -29,29 +29,20 @@ function App() {
           <Route index element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
 
-          {/* ROUTE PROFIL */}
+          {/* ROUTE PROFILE */}
           <Route path="/" element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
 
-            {/* ROUTE PELAPORAN */}
-            <Route
-              path="/laporan-individu"
-              element={<LaporanIndividuIndividu />}
-            />
-            <Route
-              path="/tambah-ketidakpatuhan"
-              element={<TambahKetidakpatuhan />}
-            />
-            <Route
-              path="/edit-ketidakpatuhan"
-              element={<EditKetidakpatuhan />}
-            />
+            {/* ROUTE REPORTS */}
+            <Route path="/report" element={<Report />} />
+            <Route path="/add-report" element={<AddReport />} />
+            <Route path="/edit-report" element={<EditReport />} />
 
-            {/* ROUTE LAPORAN */}
-            <Route path="/laporan-kumulatif" element={<LaporanKumulatif />} />
+            {/* ROUTE RECORDS*/}
+            <Route path="/records" element={<Records />} />
 
-            {/* TETAPAN SELENGGARA AUDIT */}
+            {/* MANAGE DATA */}
 
             <Route path="/students" element={<IndexStudents />} />
             <Route
