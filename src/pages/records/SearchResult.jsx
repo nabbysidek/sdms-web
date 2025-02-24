@@ -3,7 +3,7 @@ import { Container, Table, Form, Row, Col } from "react-bootstrap";
 import ExportButton from "../../components/functional buttons/ExportBtn";
 import ImportButton from "../../components/functional buttons/ImportBtn";
 import Pagination from "../../components/page layout/Pagination";
-import useLaporanKumulatifStore from "../../store/laporan-kumulatif-store";
+import useRecordsStore from "../../store/records-store";
 import {
   useReactTable,
   getCoreRowModel,
@@ -13,67 +13,35 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
-import "../../assets/styles/styles_laporan_kumulatif.css";
+import "../../assets/styles/styles_records.css";
 import * as FileSaver from "file-saver";
 import * as Papa from "papaparse";
 
-// Filter components to allow different ways of filtering 
-function Filter({ column }) {
-  const columnFilterValue = column.getFilterValue();
-  const { filterVariant } = column.columnDef.meta ?? {};
-
-  // Dropdown filter for Tahap Risiko 
-  if (column.id === "index" || column.id === "tarikhAudit") {
-    return null;
-  }
-
-  return filterVariant === "select" ? (
-    <select
-      className="filter-bar"
-      onChange={(e) => column.setFilterValue(e.target.value)}
-      value={columnFilterValue || ""}
-    >
-      <option value="">Select Risk Level</option>
-      <option value="RENDAH">Low</option>
-      <option value="SEDERHANA">Medium</option>
-      <option value="TINGGI">High</option>
-    </select>
-  ) : (
-    <input
-      type="text"
-      value={columnFilterValue || ""}
-      onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`Tapis`}
-      className="filter-bar"
-    />
-  );
-}
-
-function SearchResultLaporanKumulatif() {
+function SearchResultRecords() {
   // Use of Laporan store
-  const { audits, fetchAudits, columns } = useLaporanKumulatifStore();
+  const { records, fetchRecords, columns } = useRecordsStore();
 
-  // Fetch from store for Audits
+  // Fetch from store for records
   useEffect(() => {
-    fetchAudits();
-  }, [fetchAudits]);
+    fetchRecords();
+  }, [fetchRecords]);
 
-  // Filter reports by a date range
+  // Filter records by a date range
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
   const filteredData = useMemo(() => {
-    return audits.filter((row) => {
-      const date = new Date(row.tarikhAudit);
+    return records.filter((row) => {
+      const date = new Date(row.reportDate);
       const start = startDate ? new Date(startDate) : null;
       const end = endDate ? new Date(endDate) : null;
 
       return (!start || date >= start) && (!end || date <= end);
     });
-  }, [audits, startDate, endDate]);
+  }, [records, startDate, endDate]);
 
   // Fetch data and declare columns
-  const data = useMemo(() => audits, [audits]);
+  const data = useMemo(() => records, [records]);
 
   // Sorting and Filtering
   const [sorting, setSorting] = useState([]);
@@ -97,28 +65,19 @@ function SearchResultLaporanKumulatif() {
     },
   });
 
-  // Handle Export Reports
-  const handleExportLaporan = () => {
+  // Handle Export records
+  const handleExportRecords = () => {
     // PREPARE CSV DATA
-    const csvData = filteredData.map((laporan, index) => ({
+    const csvData = filteredData.map((records, index) => ({
       Bil: index + 1,
-      "AUDIT DATE": laporan.tarikhAudit,
-      "LEVEL OF RISK": laporan.tahapRisikoAudit,
-      "STATE": laporan.wilayah?.namaWilayah,
-      "BRANCH": laporan.cawangan?.namaCawangan,
-      "REPEATED OFFENSE?": laporan.kesalahanBerulang,
-      "TYPES OF AUDIT": laporan.jenis_audit?.namaJenisAudit,
-      "REVIEW SCOPE": laporan.skop_semakan?.namaSkopSemakan,
-      "NONCOMPLIANCE SCOPE": laporan.skop_kriteria?.namaSkopKriteria,
-      "ACTIVITY REVIEW": laporan.aktiviti_semakan?.namaAktivitiSemakan,
-      "NONCOMPLIANCE":
-        laporan.kriteria_ketidakpatuhan?.namaKriteriaKetidakpatuhan,
-      "STAFF ID": laporan.kakitangan?.idKakitangan,
-      "STAFF NAME": laporan.kakitangan?.namaKakitangan,
-      "STAFF POSITION": laporan.jawatanKakitangan,
-      "DIVISION": laporan.bahagian?.namaBahagian,
-      "DEPARTMENT": laporan.jabatan?.namaJabatan,
-      "UNIT": laporan.unit?.namaUnit,
+      "REPORT DATE": records.reportDate,
+      YEAR: records.year?.yearName,
+      CLASS: records.class?.className,
+      "MISDEMEANOR CATEGORY":
+        records.misdemeanor_category?.misdemeanorCategoryName,
+      MISDEMEANOR: records.misdemeanor?.misdemeanorName,
+      "STUDENT ID": records.student?.studentId,
+      "STUDENT NAME": records.student?.studentName,
     }));
 
     // CONVERT TO CSV FORMAT
@@ -126,17 +85,17 @@ function SearchResultLaporanKumulatif() {
 
     // CREATE A BLOB AND SAVE AS CSV
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    FileSaver.saveAs(blob, "NONCOMPLIANCE REPORTS.csv");
+    FileSaver.saveAs(blob, "MSIDEMEANOR RECORDS.csv");
   };
 
   return (
     <Container fluid>
-      <div className="laporan-kumulatif-search-container">
+      <div className="records-search-container">
         <Form>
           <Row>
             <Col xs={12} xl={6}>
               <Form.Group>
-                <Form.Label className="laporan-kumulatif-filter-header">
+                <Form.Label className="records-filter-header">
                   Start Date
                 </Form.Label>
                 <Form.Control
@@ -148,7 +107,7 @@ function SearchResultLaporanKumulatif() {
             </Col>
             <Col xs={12} xl={6}>
               <Form.Group>
-                <Form.Label className="laporan-kumulatif-filter-header">
+                <Form.Label className="records-filter-header">
                   End Date
                 </Form.Label>
                 <Form.Control
@@ -163,8 +122,8 @@ function SearchResultLaporanKumulatif() {
       </div>
       <div className="dates-container">
         <p>
-          Search Results for Time Range: {startDate ? startDate : "DD/MM/YYYY"} -{" "}
-          {endDate ? endDate : "DD/MM/YYYY"}
+          Search Results for Time Range: {startDate ? startDate : "DD/MM/YYYY"}{" "}
+          - {endDate ? endDate : "DD/MM/YYYY"}
         </p>
       </div>
       <Table responsive>
@@ -174,7 +133,7 @@ function SearchResultLaporanKumulatif() {
               {headerGroup.headers.map((header) => {
                 const isNarrowColumn =
                   header.column.id === "index" ||
-                  header.column.id === "tarikhAudit";
+                  header.column.id === "reportDate";
                 return (
                   <th
                     key={header.id}
@@ -196,7 +155,14 @@ function SearchResultLaporanKumulatif() {
                       )}
                     </div>
                     {header.column.getCanFilter() && (
-                      <Filter column={header.column} />
+                      <input
+                        type="text"
+                        value={header.column.getFilterValue() || ""}
+                        onChange={(e) =>
+                          header.column.setFilterValue(e.target.value)
+                        }
+                        placeholder={`Search ${header.column.columnDef.header}`}
+                      />
                     )}
                   </th>
                 );
@@ -209,8 +175,7 @@ function SearchResultLaporanKumulatif() {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
                 const isNarrowColumn =
-                  cell.column.id === "index" ||
-                  cell.column.id === "tarikhAudit";
+                  cell.column.id === "index" || cell.column.id === "reportDate";
                 return (
                   <td
                     key={cell.id}
@@ -229,11 +194,11 @@ function SearchResultLaporanKumulatif() {
       </div>
 
       <div className="functional-btns-container">
-        <ExportButton onClick={handleExportLaporan} />
+        <ExportButton onClick={handleExportRecords} />
         <ImportButton disabled={true} />
       </div>
     </Container>
   );
 }
 
-export default SearchResultLaporanKumulatif;
+export default SearchResultRecords;
