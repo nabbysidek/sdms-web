@@ -11,49 +11,18 @@
 /*******************SEARCH BAR ***********************/
 /*****************************************************/
 
-.laporan-kumulatif-search-container {
+.records-search-container {
   border-radius: 10px;
   padding: 20px 15px 25px 15px;
-  /* padding-top: 10px;
-  padding-bottom: 15px; */
   margin-bottom: 15px;
-  background-color: var(--NEUTRALGRAY);
+  background-color: #cccccc;
 }
 
-.laporan-kumulatif-filter-header {
+.records-filter-header {
   margin-top: 10px;
   font-weight: bold;
   padding-bottom: 2px;
 }
-
-/* .laporan-kumulatif-filter-sub-header {
-  font-size: 14px;
-  font-weight: 700;
-} */
-
-/* .sc-filter-row-end {
-  padding-bottom: 15px;
-} */
-
-/* .laporan-kumulatif-filter-btn-container {
-  margin-top: 10px;
-  float: right;
-} */
-
-/* .laporan-kumulatif-filter-btn {
-  font-weight: 700;
-  border-color: var(--PRIMARY);
-  background-color: var(--PRIMARY);
-  margin-bottom: 5px;
-} */
-
-/* .laporan-kumulatif-filter-result {
-    margin-top: 40px;
-  } */
-
-/* .alert-display {
-  margin-top: 5px;
-} */
 
 .dates-container {
   background-color: var(--NEUTRALWHITE);
@@ -93,14 +62,6 @@
 /************************************************************/
 
 @media (max-width: 767px) {
-  /* .laporan-kumulatif-filter-btn {
-    margin-bottom: 2px;
-  } */
-
-  /* .margin-for-mobile {
-    margin-top: 5px;
-  } */
-
   .col-md-3 {
     padding-top: 0 !important;
   }

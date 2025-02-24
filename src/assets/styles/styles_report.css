@@ -2,13 +2,13 @@
 /*******************SEARCH BAR ***********************/
 /*****************************************************/
 
-.laporan-individu-search-container {
+.report-search-container {
     border-radius: 10px;
     padding-top: 10px;
-    background-color: var(--NEUTRALGRAY);
+    background-color: #cccccc;
   }
 
-.laporan-individu-search-btn {
+.report-search-btn {
   width: 100%;
   font-weight: 700;
   font-size: 1.2em;
@@ -27,17 +27,16 @@
   }
 }
 
-
 /********************************************************/
 /********************** INDEX ***************************/
 /*******************SEARCH RESULT ***********************/
 /********************************************************/
-.kakitangan-info-container {
+.student-info-container {
   margin-top: 30px;
   
 }
 
-.kakitangan-info {
+.student-info {
   margin: 0 auto;
   background-color: var(--NEUTRALWHITE);
   border-radius: 10px;
@@ -48,19 +47,19 @@
 /********************************************************/
 /********************** INDEX ***************************/
 /*******************SEARCH RESULT ***********************/
-/***************TABLE KETIDAKPATUHAN ********************/
+/***************NON-COMPLIANCE TABLE ********************/
 /********************************************************/
 
-.laporan-individu-table {
+.individual-report-table {
   width: 100%;
   margin-top: 4%;
 }
 
-.laporan-individu-table-title {
+.individual-report-table-title {
   text-align: left;
 }
 
-.to-page-tambah-ketidakpatuhan-btn {
+.to-page-add-report-btn {
     width: 100%;
     font-family: "Open Sans", sans-serif;
     font-size: 1.25em;
@@ -70,7 +69,7 @@
     margin-bottom: 10px;
 }
 
-.edit-ketidakpatuhan-btn {
+.edit-report-btn {
   font-size: 0.75em;
   font-weight: 700;
   border-color: var(--PROMPTEDIT);
@@ -80,11 +79,11 @@
 }
 
 /***********************************************************/
-/************** TAMBAH KETIDAKPATUHAN PAGE ****************/
-/************** EDIT KETIDAKPATUHAN PAGE ****************/
+/************** ADD NON-COMPLIANCE PAGE ****************/
+/************** EDIT NON-COMPLIANCE PAGE ****************/
 /*******************************************************/
 
-.tambah-ketidakpatuhan-form-container, .edit-ketidakpatuhan-form-container {
+.add-report-form-container, .edit-report-form-container {
   background-color: var(--NEUTRALWHITE);
   width: 98%;
   margin: 20px auto 0 auto;
@@ -92,33 +91,33 @@
   padding: 20px;
 }
  
-.maklumat-terperinci-container, 
-.audit-terperinci-container {
+.detailed-information-container, 
+.detailed-report-container {
   margin-top: 30px;
 }
 
-.radio-tambah-ketidakpatuhan, .radio-edit-ketidakpatuhan {
+.radio-add-report, .radio-edit-report {
   margin: 10px auto;
   font-size: 14px;
 }
 
-.audit-terperinci-container .row {
+.detailed-report-container .row {
   margin-top: 10px;
 }
 
-.tambah-ketidakpatuhan-actions, .edit-ketidakpatuhan-actions {
+.add-report-actions, .edit-report-actions {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
 }
 
-.tambah-ketidakpatuhan-btn {
+.add-report-btn {
   font-weight: 700;
   border-color: var(--PRIMARY);
   background-color: var(--PRIMARY);
 }
 
-.edit-ketidakpatuhan-btn {
+.edit-report-btn {
   font-weight: 700;
   border-color: var(--PROMPTEDIT);
   background-color: var(--PROMPTEDIT);
@@ -130,6 +129,3 @@
   background-color: var(--NEUTRALGRAY);
   margin-left: 4px;
 }
-
-
-      
