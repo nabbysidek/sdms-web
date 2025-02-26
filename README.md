@@ -10,6 +10,7 @@ SDMS is a web-based system designed to efficiently monitor and track student dis
     - [Built With](#built-with)
   - [Features](#features)
   - [Installation](#installation)
+  - [Backend Repository](#backend-repository)
   - [Contact](#contact)
   - [Acknowledgements](#acknowledgements)
 
@@ -63,6 +64,10 @@ To set up SDMS locally, follow these steps:
    ```sh
    npm run dev
    ```
+
+## Backend Repository
+
+The backend for this project can be found here: [SDMS Backend Repository](https://github.com/nabbysidek/sdms)
 
 ## Contact
 
