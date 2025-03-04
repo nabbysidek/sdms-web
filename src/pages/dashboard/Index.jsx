@@ -1,4 +1,4 @@
-import Clock from "./clock";
+import Clock from "./Clock";
 import "../../assets/styles/styles_dashboard.css";
 
 function Dashboard() {
