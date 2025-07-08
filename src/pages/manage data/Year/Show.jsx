@@ -42,7 +42,7 @@ function ShowYearList() {
       },
       {
         header: "Year",
-        accessorKey: "nameYear",
+        accessorKey: "number_year",
       },
       {
         header: "Actions",

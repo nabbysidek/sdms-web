@@ -8,7 +8,7 @@ const useYearStore = create((set) => ({
   // Fetch Years
   fetchYears: async () => {
     try {
-      const response = await axiosCustom.get(`manage-data/year`);
+      const response = await axiosCustom.get(`data/year`);
       set({
         years: response.data,
       });
