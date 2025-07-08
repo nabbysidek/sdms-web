@@ -40,11 +40,11 @@ function ShowStudentList() {
     },
     {
       header: "Student ID",
-      accessorKey: "idStudent",
+      accessorKey: "id_student",
     },
     {
       header: "Student Name",
-      accessorKey: "nameStudent",
+      accessorKey: "name_student",
     },
     {
       header: "Actions",
@@ -53,7 +53,7 @@ function ShowStudentList() {
           {/* EDIT AND DELETE BUTTONS */}
           <EditStudent student={row.original} onUpdateSuccess={fetchStudents} />
           <Button
-            onClick={() => handleDeleteStudent(row.original.idStudent)}
+            onClick={() => handleDeleteStudent(row.original.id_student)}
             className="delete-btn"
           >
             Delete
@@ -72,8 +72,8 @@ function ShowStudentList() {
     // PREPARE CSV DATA
     const csvData = data.map((student, index) => ({
       Num: index + 1,
-      "Student ID": student.idStudent,
-      "Student Name": student.nameStudent,
+      "Student ID": student.id_student,
+      "Student Name": student.name_student,
     }));
 
     // CONVERT TO CSV FORMAT

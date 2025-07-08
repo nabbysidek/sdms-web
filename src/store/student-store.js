@@ -8,7 +8,7 @@ const useStudentStore = create((set) => ({
   // Fetch Students
   fetchStudents: async () => {
     try {
-      const response = await axiosCustom.get(`manage-data/students`);
+      const response = await axiosCustom.get(`data/student`);
       set({ students: response.data });
     } catch (error) {
       console.error("Error fetching students:", error);
