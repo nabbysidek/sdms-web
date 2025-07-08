@@ -42,7 +42,7 @@ function ShowMisdemeanorCategoryList() {
     },
     {
       header: "Misdemeanor Category",
-      accessorKey: "namaMisdemeanorCategory",
+      accessorKey: "name_misdemeanour_category",
     },
     {
       header: "Actions",
@@ -69,7 +69,7 @@ function ShowMisdemeanorCategoryList() {
   const handleExportMisdemeanorCategory = () => {
     const csvData = data.map((misdemeanorCategory, index) => ({
       Bil: index + 1,
-      "Misdemeanor Category": misdemeanorCategory.namaMisdemeanorCategory,
+      "Misdemeanor Category": misdemeanorCategory.name_misdemeanour_category,
     }));
 
     const csv = Papa.unparse(csvData);

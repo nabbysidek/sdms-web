@@ -8,7 +8,7 @@ const useMisdemeanorCategoryStore = create((set) => ({
   // Fetch Misdemeanor Category
   fetchMisdemeanorCategories: async () => {
     try {
-      const response = await axiosCustom.get(`manage-data/misdemeanor-category`);
+      const response = await axiosCustom.get(`data/misdemeanor-category`);
       set({
         misdemeanorCategories: response.data,
       });
